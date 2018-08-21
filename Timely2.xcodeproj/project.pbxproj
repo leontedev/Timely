@@ -21,6 +21,7 @@
 		894B80C520B968DE002C313E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894B80C320B968DE002C313E /* Alamofire.framework */; };
 		894B80C620B968DE002C313E /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894B80C420B968DE002C313E /* SwiftyJSON.framework */; };
 		897D1106211D56470096F0E0 /* old_mastervc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897D1105211D56470096F0E0 /* old_mastervc.swift */; };
+		8984E5BD212BD4890031C0F3 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8984E5BC212BD4890031C0F3 /* PromiseKit.framework */; };
 		89A0C32E20DA41220019F730 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0C32D20DA41220019F730 /* Comment.swift */; };
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 		894B80C320B968DE002C313E /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		894B80C420B968DE002C313E /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		897D1105211D56470096F0E0 /* old_mastervc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = old_mastervc.swift; sourceTree = "<group>"; };
+		8984E5BC212BD4890031C0F3 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
 		89A0C32D20DA41220019F730 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		89A8A31F20DBA607007A8664 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -53,6 +55,7 @@
 			files = (
 				89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */,
 				894B80C520B968DE002C313E /* Alamofire.framework in Frameworks */,
+				8984E5BD212BD4890031C0F3 /* PromiseKit.framework in Frameworks */,
 				894B80C620B968DE002C313E /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -133,6 +136,7 @@
 		894B80C220B968DE002C313E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8984E5BC212BD4890031C0F3 /* PromiseKit.framework */,
 				89A8A31F20DBA607007A8664 /* StoreKit.framework */,
 				894B80C320B968DE002C313E /* Alamofire.framework */,
 				894B80C420B968DE002C313E /* SwiftyJSON.framework */,
@@ -221,6 +225,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
 			);
 			outputPaths = (
 			);
