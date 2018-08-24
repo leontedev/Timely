@@ -31,8 +31,14 @@ class MasterViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        fetchTopStoryIDs()
-        
+        firstly {
+            fetchTopStoryIDs()
+        }.then {
+            print("Promise ok. fetchedStories.count = ")
+            print(self.fetchedStories.count)
+        }.catch { error in
+            print('Error')
+        }
         //tableView.reloadData() //this might be needed if there's a bug with the Cell height initially...
     }
 
@@ -60,47 +66,52 @@ class MasterViewController: UITableViewController {
     
     // MARK: Fetch Top Stories
     
-    func fetchTopStoryIDs() {
+    
+    func fetchTopStoryIDs() -> Promise<[Item]> {
         let request = URLRequest(url: URL(string: HN_TOP_STORIES_URL)!)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        let task = URLSession(configuration: .default).dataTask(with: request) { data, response, error in
-            
-            let alertController = UIAlertController(title: "Oops!", message: "There was an error fetching HN stories.", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            alertController.addAction(okAction)
-            
-            if let topStories = data {
-                //do {
-                for itemID in topStories.prefix(upTo: 3) { //
-                    let newItem = Item(id: Int(itemID))
-                    self.fetchedStories.append(newItem)
-                }
+        return Promise { seal in
+            URLSession(configuration: .default).dataTask(with: request) { data, response, error in
                 
-                //self.dataSource.update(with: self.fetchedStories)
+                let alertController = UIAlertController(title: "Oops!", message: "There was an error fetching HN stories.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alertController.addAction(okAction)
                 
-                DispatchQueue.main.async {
-                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                    self.tableView.reloadData()
-                    print("fetchTopStoryIDs() count = ")
-                    print(self.fetchedStories.count)
+                if let topStories = data {
+                    //do {
+                    for itemID in topStories.prefix(upTo: 3) { //
+                        let newItem = Item(id: Int(itemID))
+                        self.fetchedStories.append(newItem)
+                    }
+                    
+                    seal.resolve(fetchedStories, error)
                 }
-//                } catch {
+            }.resume()
+        }
+    }
+                    //self.dataSource.update(with: self.fetchedStories)
+                    
 //                    DispatchQueue.main.async {
+//                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+//                        self.tableView.reloadData()
+//                        print("fetchTopStoryIDs() count = ")
+//                        print(self.fetchedStories.count)
+//                    }
+                    //                } catch {
+                    //                    DispatchQueue.main.async {
+                    //                        self.present(alertController, animated: true, completion: nil)
+                    //                    }
+                    //                }
+                
+                
+//                if error != nil {
+//                    DispatchQueue.main.async {
+//                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
 //                        self.present(alertController, animated: true, completion: nil)
 //                    }
 //                }
-            }
-            
-            if error != nil {
-                DispatchQueue.main.async {
-                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                    self.present(alertController, animated: true, completion: nil)
-                }
-            }
-        }
-        task.resume()
-    }
+
 
     
     // MARK - Data Source

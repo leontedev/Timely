@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import SwiftyJSON
+//import SwiftyJSON
 
 // HN Item endpoint
 let ITEM_ENDPOINT = "https://hacker-news.firebaseio.com/v0/item/" //{id}.json
