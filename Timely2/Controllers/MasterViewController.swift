@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import PromiseKit
 
 let HN_TOP_STORIES_URL = "https://hacker-news.firebaseio.com/v0/topstories.json"
 
@@ -31,19 +32,24 @@ class MasterViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        firstly {
-            fetchTopStoryIDs()
-        }.then {
+//        let alertController = UIAlertController(title: "Oops!", message: "There was an error fetching HN stories.", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .default)
+//        alertController.addAction(okAction)
+        
+
+        fetchTopStoryIDs().done { fetched in
             print("Promise ok. fetchedStories.count = ")
-            print(self.fetchedStories.count)
+            print(fetched.count)
+//            for itemID in topStories.prefix(upTo: 3) { //
+//                let newItem = Item(id: Int(itemID))
+//                self.fetchedStories.append(newItem)
+//            }
         }.catch { error in
-            print('Error')
+            print(error)
         }
+        
         //tableView.reloadData() //this might be needed if there's a bug with the Cell height initially...
     }
-
-
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -65,29 +71,26 @@ class MasterViewController: UITableViewController {
     }
     
     // MARK: Fetch Top Stories
-    
-    
-    func fetchTopStoryIDs() -> Promise<[Item]> {
+    func fetchTopStoryIDs() -> Promise<[Int]> {
         let request = URLRequest(url: URL(string: HN_TOP_STORIES_URL)!)
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         return Promise { seal in
-            URLSession(configuration: .default).dataTask(with: request) { data, response, error in
-                
-                let alertController = UIAlertController(title: "Oops!", message: "There was an error fetching HN stories.", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default)
-                alertController.addAction(okAction)
-                
-                if let topStories = data {
-                    //do {
-                    for itemID in topStories.prefix(upTo: 3) { //
-                        let newItem = Item(id: Int(itemID))
-                        self.fetchedStories.append(newItem)
-                    }
-                    
-                    seal.resolve(fetchedStories, error)
+            //URLSession(configuration: .default).dataTask(with: request) { data, response, error in
+            Alamofire.request(request).responseJSON { response in
+                if let result = response.result.value {
+                    let json = JSON(result)
+                    let topStories:[Int] = json.arrayValue.map { $0.intValue }
+                    seal.fulfill(topStories)
+                } else if let error = response.error {
+                    seal.reject(error)
+                } else {
+                    let error = NSError(domain: "PromiseKit", code: 0,
+                                        userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
+                    seal.reject(error)
                 }
-            }.resume()
+            }
+
         }
     }
                     //self.dataSource.update(with: self.fetchedStories)
