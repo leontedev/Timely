@@ -36,7 +36,7 @@ class MasterViewController: UITableViewController {
 //        let okAction = UIAlertAction(title: "OK", style: .default)
 //        alertController.addAction(okAction)
         
-
+        //PromiseKit
         fetchTopStoryIDs().done { fetched in
             print("Promise ok. fetchedStories.count = ")
             print(fetched.count)
