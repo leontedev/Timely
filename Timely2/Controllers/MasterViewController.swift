@@ -49,6 +49,8 @@ class MasterViewController: UITableViewController {
         }
     }
     
+    let pendingOperations = PendingOperations()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -115,9 +117,10 @@ class MasterViewController: UITableViewController {
     }
     
     func fetchItems() {
-        //self.state = State.loadingItems()
-        print("fetched")
-        print(state.currentItems[0])
+        for (index, item) in self.state.currentItems.enumerated() {
+            //print(index, item)
+            startDownload(for: item, at: index)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -160,103 +163,103 @@ class MasterViewController: UITableViewController {
     
     // MARK - Data Source
     
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
-//
-//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return fetchedStories.count
-//    }
-//
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
-//        let item = fetchedStories[indexPath.row]
-//
-//        if cell.accessoryView == nil {
-//            let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-//            cell.accessoryView = indicator
-//        }
-//        let indicator = cell.accessoryView as! UIActivityIndicatorView
-//
-//        if let itemTitle = item.title {
-//            cell.titleLabel?.text = itemTitle
-//        } else {
-//            cell.titleLabel?.text = "Loading..."
-//        }
-//
-//        if let itemURL = item.url?.host {
-//            cell.urlLabel?.text = itemURL
-//        } else {
-//            cell.urlLabel?.text = "Loading..."
-//        }
-//
-//
-//        if let itemDescendants = item.descendants {
-//            cell.commentsCountLabel?.text = String(itemDescendants)
-//        } else {
-//            cell.commentsCountLabel?.text = "-"
-//        }
-//
-//        if let itemScore = item.score {
-//            cell.upvotesCountLabel?.text = String(itemScore)
-//        } else {
-//            cell.upvotesCountLabel?.text = "-"
-//        }
-//
-//        if let epochTime = item.time {
-//            // Display elapsed time
-//            let componentsFormatter = DateComponentsFormatter()
-//            componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
-//            componentsFormatter.maximumUnitCount = 1
-//            componentsFormatter.unitsStyle = .abbreviated
-//
-//            let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
-//            cell.elapsedTimeLabel?.text = timeAgo
-//        } else {
-//            cell.elapsedTimeLabel?.text = "-"
-//        }
-//
-//        switch (item.state) {
-//        case .downloaded:
-//            indicator.stopAnimating()
-//        case .failed:
-//            indicator.stopAnimating()
-//            cell.titleLabel?.text = "Failed to load"
-//        case .downloading:
-//            cell.titleLabel?.text = "Download in progress..."
-//        case .new:
-//            indicator.startAnimating()
-//            //if !tableView.isDragging && !tableView.isDecelerating
-//            startDownload(for: item, at: indexPath)
-//        }
-//
-//
-//        return cell
-//    }
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.state.currentItems.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
+        let item = self.state.currentItems[indexPath.row]
+
+        if cell.accessoryView == nil {
+            let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+            cell.accessoryView = indicator
+        }
+        let indicator = cell.accessoryView as! UIActivityIndicatorView
+
+        if let itemTitle = item.title {
+            cell.titleLabel?.text = itemTitle
+        } else {
+            cell.titleLabel?.text = "Loading..."
+        }
+
+        if let itemURL = item.url?.host {
+            cell.urlLabel?.text = itemURL
+        } else {
+            cell.urlLabel?.text = "Story ID: " + String(item.id)
+        }
+
+
+        if let itemDescendants = item.descendants {
+            cell.commentsCountLabel?.text = String(itemDescendants)
+        } else {
+            cell.commentsCountLabel?.text = "-"
+        }
+
+        if let itemScore = item.score {
+            cell.upvotesCountLabel?.text = String(itemScore)
+        } else {
+            cell.upvotesCountLabel?.text = "-"
+        }
+
+        if let epochTime = item.time {
+            // Display elapsed time
+            let componentsFormatter = DateComponentsFormatter()
+            componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+            componentsFormatter.maximumUnitCount = 1
+            componentsFormatter.unitsStyle = .abbreviated
+
+            let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+            cell.elapsedTimeLabel?.text = timeAgo
+        } else {
+            cell.elapsedTimeLabel?.text = "-"
+        }
+
+        switch (item.state) {
+        case .downloaded:
+            indicator.stopAnimating()
+        case .failed:
+            indicator.stopAnimating()
+            cell.titleLabel?.text = "Failed to load"
+        case .downloading:
+            cell.titleLabel?.text = "Download in progress..."
+        case .new:
+            indicator.startAnimating()
+            //if !tableView.isDragging && !tableView.isDecelerating
+            startDownload(for: item, at: indexPath)
+        }
+
+
+        return cell
+    }
     
-//    func startDownload(for item: Item, at indexPath: IndexPath) {
-//        //check for the particular indexPath to see if there is already an operation in downloadsInProgress for it. If so, ignore this request.
-//        guard pendingOperations.downloadsInProgress[indexPath] == nil else {
-//            return
-//        }
-//        
-//        //create an instance of ItemDownloader by using the designated initializer.
-//        let downloader = ItemDownloader(item)
-//        
-//        downloader.completionBlock = {
-//            if downloader.isCancelled {
-//                return
-//            }
-//            
-//            // this will be executed instantly - before the response comes back, so the final reload will not be made
-//            DispatchQueue.main.async {
-//                self.pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
-//                self.tableView.reloadRows(at: [indexPath], with: .fade)
-//            }
-//        }
-//        
-//        pendingOperations.downloadsInProgress[indexPath] = downloader
-//        pendingOperations.downloadQueue.addOperation(downloader)
-//    }
+    func startDownload(for item: Item, at indexPath: IndexPath) {
+        //check for the particular indexPath to see if there is already an operation in downloadsInProgress for it. If so, ignore this request.
+        guard pendingOperations.downloadsInProgress[indexPath] == nil else {
+            return
+        }
+
+        //create an instance of ItemDownloader by using the designated initializer.
+        let downloader = ItemDownloader(item)
+
+        downloader.completionBlock = {
+            if downloader.isCancelled {
+                return
+            }
+
+            // this will be executed instantly - before the response comes back, so the final reload will not be made
+            DispatchQueue.main.async {
+                self.pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
+                self.tableView.reloadRows(at: [indexPath], with: .fade)
+            }
+        }
+
+        pendingOperations.downloadsInProgress[indexPath] = downloader
+        pendingOperations.downloadQueue.addOperation(downloader)
+    }
 
 }
