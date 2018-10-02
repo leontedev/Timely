@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "mach_msg_trap:(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "data">
+            </PersistentString>
+            <PersistentString
+               value = "detail">
+            </PersistentString>
+            <PersistentString
+               value = "newStory">
+            </PersistentString>
+            <PersistentString
+               value = "comments">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DetailViewController.configureView():DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "refreshCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in DetailViewController.getComments(from:):DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.comments">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
