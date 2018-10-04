@@ -7,30 +7,13 @@
 //
 
 import UIKit
-import Alamofire
-import SwiftyJSON
-import PromiseKit
+//import Alamofire
+//import SwiftyJSON
 
-enum State {
-    case loadingCatalogue
-    case loadingItems([Item])
-    case populated([Item])
-    case empty
-    case error(Error)
-    
-    var currentItems: [Item] {
-        switch self {
-        case .loadingItems(let items):
-            return items
-        case .populated(let items):
-            return items
-        default:
-            return []
-        }
-    }
-}
 
 class MasterViewController: UITableViewController {
+    
+    var topStories: [Item] = []
     
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var errorLabel: UILabel!
@@ -38,18 +21,8 @@ class MasterViewController: UITableViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
     
-    
     var detailViewController: DetailViewController? = nil
     let darkGreen = UIColor(red: 11/255, green: 86/255, blue: 14/255, alpha: 1)
-    
-    var state = State.loadingCatalogue {
-        didSet {
-            setFooterView()
-            tableView.reloadData()
-        }
-    }
-    
-    let pendingOperations = PendingOperations()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,17 +40,17 @@ class MasterViewController: UITableViewController {
         
         let topStoriesURL = URL(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
         fetchStoryIDs(from: topStoriesURL)
-        state = State.loadingCatalogue
+        
+
     }
     
     func fetchStoryIDs(from url: URL) {
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            
+            // TODO - could this be moved only on the reload of the tableView?
             DispatchQueue.main.async {
-                
                 if let error = error {
-                    // TODO: Handle error (call function) - client
+                    // TODO: Handle error (call function) - client side
                     print(error)
                     return
                 }
@@ -92,71 +65,104 @@ class MasterViewController: UITableViewController {
                     do {
                         let decoder = JSONDecoder()
                         let stories = try decoder.decode([Int].self, from: data)
-                        
-                        self.update(withIDs: stories)
+                        for storyId in stories.prefix(10) {
+                            self.topStories.append(Item(id: storyId))
+                        }
+                        self.tableView.reloadData()
+                        self.fetchItems()
                         
                     } catch let error {
                         print(error)
                         // TODO: Handle error (parse Json)
                     }
                 }
-                
             }
         }
         task.resume()
     }
-    
-    func update(withIDs:[Int]) {
-        var allItems = self.state.currentItems
-        for id in withIDs {
-            allItems.append(Item(id: id))
-        }
-        
-        self.state = State.loadingItems(allItems)
-        self.fetchItems()
-    }
-    
-    func fetchItems() {
-        for (index, item) in self.state.currentItems.enumerated() {
-            //print(index, item)
-            startDownload(for: item, at: index)
-        }
-    }
 
+    func fetchItems() {
+        for (index, item) in self.topStories.enumerated() {
+            
+            self.topStories[index].state = .downloading
+            
+            // Construct the URLRequest
+            let itemID = String(item.id)
+            let urlString = "https://hacker-news.firebaseio.com/v0/item/\(itemID).json"
+            let requestItem = URLRequest(url: URL(string: urlString)!)
+            
+            let configuration = URLSessionConfiguration.default
+            configuration.waitsForConnectivity = true
+            
+            let taskItem = URLSession(configuration: configuration).dataTask(with: requestItem) { data, response, error in
+                let statusCode = (response as! HTTPURLResponse).statusCode
+                
+                if let data = data, statusCode == 200 {
+                    //print("200 OK on Item ID = \(itemID)")
+                    self.topStories[index].state = .downloaded
+                    print(data)
+                    
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .secondsSince1970
+                        let story = try decoder.decode(Item.self, from: data)
+
+                        guard story.deleted == nil else {
+                            print("Deleted HN Item \(itemID) was ignored")
+                            return
+                        }
+                        
+                        guard story.type == .story else {
+                            print("HN Item \(itemID) was ignored because it was not a story type.")
+                            return
+                        }
+                        
+                        self.topStories[index].title = story.title
+                        self.topStories[index].url = story.url
+                        self.topStories[index].by = story.by
+                        self.topStories[index].descendants = story.descendants
+                        self.topStories[index].score = story.score
+                        self.topStories[index].time = story.time
+                        self.topStories[index].kids = story.kids
+                        
+                        DispatchQueue.main.async {
+                            //reloadRows has an expected argument type of [IndexPath]
+                            self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                        }
+                    }
+                    catch let error {
+                        print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
+                        print(error)
+                        self.topStories[index].state = .failed
+                        DispatchQueue.main.async {
+                            self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                        }
+                    }
+                }
+                
+            }
+            taskItem.resume()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    // MARK: - View Configuration
-    
-    func setFooterView() {
-        switch state {
-        case .error(let error):
-            errorLabel.text = error.localizedDescription
-            tableView.tableFooterView = errorView
-        case .loadingCatalogue:
-            tableView.tableFooterView = loadingView
-        case .loadingItems:
-            tableView.tableFooterView = nil
-        case .empty:
-            tableView.tableFooterView = emptyView
-        case .populated:
-            tableView.tableFooterView = nil
-        }
-    }
 
+    
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "showDetail" {
-//            if let indexPath = tableView.indexPathForSelectedRow {
-//                let selectedItem = fetchedStories[indexPath.row]
-//                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-//                controller.detailItem = selectedItem
-//                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-//                controller.navigationItem.leftItemsSupplementBackButton = true
-//            }
-//        }
+        if segue.identifier == "showDetail" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let selectedItem = topStories[indexPath.row]
+                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+                controller.detailItem = selectedItem
+                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+                controller.navigationItem.leftItemsSupplementBackButton = true
+            }
+        }
     }
     
 
@@ -168,12 +174,12 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.state.currentItems.count
+        return self.topStories.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
-        let item = self.state.currentItems[indexPath.row]
+        let item = self.topStories[indexPath.row]
 
         if cell.accessoryView == nil {
             let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -212,6 +218,7 @@ class MasterViewController: UITableViewController {
             componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
             componentsFormatter.maximumUnitCount = 1
             componentsFormatter.unitsStyle = .abbreviated
+            
 
             let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
             cell.elapsedTimeLabel?.text = timeAgo
@@ -220,46 +227,21 @@ class MasterViewController: UITableViewController {
         }
 
         switch (item.state) {
-        case .downloaded:
+        case .downloaded?:
             indicator.stopAnimating()
-        case .failed:
+        case .failed?:
             indicator.stopAnimating()
             cell.titleLabel?.text = "Failed to load"
-        case .downloading:
+        case .downloading?:
             cell.titleLabel?.text = "Download in progress..."
-        case .new:
+        case .new?:
             indicator.startAnimating()
             //if !tableView.isDragging && !tableView.isDecelerating
-            startDownload(for: item, at: indexPath)
+            //startDownload(for: item, at: indexPath)
+        case nil:
+            print("Error nil state to be displayed")
         }
-
 
         return cell
     }
-    
-    func startDownload(for item: Item, at indexPath: IndexPath) {
-        //check for the particular indexPath to see if there is already an operation in downloadsInProgress for it. If so, ignore this request.
-        guard pendingOperations.downloadsInProgress[indexPath] == nil else {
-            return
-        }
-
-        //create an instance of ItemDownloader by using the designated initializer.
-        let downloader = ItemDownloader(item)
-
-        downloader.completionBlock = {
-            if downloader.isCancelled {
-                return
-            }
-
-            // this will be executed instantly - before the response comes back, so the final reload will not be made
-            DispatchQueue.main.async {
-                self.pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
-                self.tableView.reloadRows(at: [indexPath], with: .fade)
-            }
-        }
-
-        pendingOperations.downloadsInProgress[indexPath] = downloader
-        pendingOperations.downloadQueue.addOperation(downloader)
-    }
-
 }

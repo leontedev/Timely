@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8918A73420BC784E00129A0E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8918A73320BC784E00129A0E /* CommentCell.swift */; };
-		8918A73620BC7EEC00129A0E /* CommentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8918A73520BC7EEC00129A0E /* CommentsDataSource.swift */; };
 		891E119A2143CD2900871615 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891E11992143CD2900871615 /* Item.swift */; };
-		892E2FED215370D3001E05BF /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892E2FEC215370D3001E05BF /* AsyncOperation.swift */; };
 		893FB66820B8494A007771A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66720B8494A007771A3 /* AppDelegate.swift */; };
 		893FB66A20B8494B007771A3 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66920B8494B007771A3 /* MasterViewController.swift */; };
 		893FB66C20B8494B007771A3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66B20B8494B007771A3 /* DetailViewController.swift */; };
@@ -18,17 +16,12 @@
 		893FB67120B8494D007771A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893FB67020B8494D007771A3 /* Assets.xcassets */; };
 		893FB67420B8494D007771A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893FB67220B8494D007771A3 /* LaunchScreen.storyboard */; };
 		894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894B80BC20B95D7E002C313E /* ItemCell.swift */; };
-		894B80C520B968DE002C313E /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894B80C320B968DE002C313E /* Alamofire.framework */; };
-		894B80C620B968DE002C313E /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894B80C420B968DE002C313E /* SwiftyJSON.framework */; };
-		8984E5BD212BD4890031C0F3 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8984E5BC212BD4890031C0F3 /* PromiseKit.framework */; };
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8918A73320BC784E00129A0E /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
-		8918A73520BC7EEC00129A0E /* CommentsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsDataSource.swift; sourceTree = "<group>"; };
 		891E11992143CD2900871615 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
-		892E2FEC215370D3001E05BF /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		893FB66420B8494A007771A3 /* Timely2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timely2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		893FB66720B8494A007771A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		893FB66920B8494B007771A3 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -50,9 +43,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */,
-				894B80C520B968DE002C313E /* Alamofire.framework in Frameworks */,
-				8984E5BD212BD4890031C0F3 /* PromiseKit.framework in Frameworks */,
-				894B80C620B968DE002C313E /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				891E11992143CD2900871615 /* Item.swift */,
-				892E2FEC215370D3001E05BF /* AsyncOperation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -113,7 +102,6 @@
 		894B80BA20B95D43002C313E /* Data Sources */ = {
 			isa = PBXGroup;
 			children = (
-				8918A73520BC7EEC00129A0E /* CommentsDataSource.swift */,
 			);
 			path = "Data Sources";
 			sourceTree = "<group>";
@@ -217,15 +205,12 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -237,10 +222,8 @@
 				894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */,
 				893FB66C20B8494B007771A3 /* DetailViewController.swift in Sources */,
 				891E119A2143CD2900871615 /* Item.swift in Sources */,
-				8918A73620BC7EEC00129A0E /* CommentsDataSource.swift in Sources */,
 				893FB66A20B8494B007771A3 /* MasterViewController.swift in Sources */,
 				893FB66820B8494A007771A3 /* AppDelegate.swift in Sources */,
-				892E2FED215370D3001E05BF /* AsyncOperation.swift in Sources */,
 				8918A73420BC784E00129A0E /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
