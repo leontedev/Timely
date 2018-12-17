@@ -17,4 +17,10 @@ class ItemCell: UITableViewCell {
     @IBOutlet weak var commentsCountLabel: UILabel!
     @IBOutlet weak var upvotesCountLabel: UILabel!
     @IBOutlet weak var elapsedTimeLabel: UILabel!
+    
+    override func layoutSubviews() {
+        // Custom layout cells don't apply indentationLevel automatically. We need to update layoutMargins manually
+        super.layoutSubviews()
+        contentView.layoutMargins.left = layoutMargins.left + CGFloat(indentationLevel) * indentationWidth
+    }
 }
