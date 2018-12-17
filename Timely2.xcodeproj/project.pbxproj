@@ -31,9 +31,6 @@
 		893FB67320B8494D007771A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		893FB67520B8494D007771A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		894B80BC20B95D7E002C313E /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
-		894B80C320B968DE002C313E /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		894B80C420B968DE002C313E /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
-		8984E5BC212BD4890031C0F3 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
 		89A8A31F20DBA607007A8664 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -70,7 +67,6 @@
 			isa = PBXGroup;
 			children = (
 				894B80BB20B95D4B002C313E /* Controllers */,
-				894B80BA20B95D43002C313E /* Data Sources */,
 				894B80B920B95D38002C313E /* Models */,
 				894B80B820B95CC7002C313E /* Views */,
 				893FB66720B8494A007771A3 /* AppDelegate.swift */,
@@ -99,13 +95,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		894B80BA20B95D43002C313E /* Data Sources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Data Sources";
-			sourceTree = "<group>";
-		};
 		894B80BB20B95D4B002C313E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,10 +107,7 @@
 		894B80C220B968DE002C313E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8984E5BC212BD4890031C0F3 /* PromiseKit.framework */,
 				89A8A31F20DBA607007A8664 /* StoreKit.framework */,
-				894B80C320B968DE002C313E /* Alamofire.framework */,
-				894B80C420B968DE002C313E /* SwiftyJSON.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
