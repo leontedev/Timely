@@ -7,8 +7,6 @@
 //
 
 import UIKit
-//import Alamofire
-//import SwiftyJSON
 
 
 class MasterViewController: UITableViewController {
@@ -23,9 +21,16 @@ class MasterViewController: UITableViewController {
     
     var detailViewController: DetailViewController? = nil
     let darkGreen = UIColor(red: 11/255, green: 86/255, blue: 14/255, alpha: 1)
+    var myRefreshControl: UIRefreshControl?
+    let topStoriesURL = URL(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        myRefreshControl = UIRefreshControl()
+        myRefreshControl?.addTarget(self, action: #selector(refreshData(sender:)), for: .valueChanged)
+        myRefreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.tableView.refreshControl = myRefreshControl
         
         activityIndicator.color = darkGreen
         
@@ -38,10 +43,23 @@ class MasterViewController: UITableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         tableView.dataSource = self
         
-        let topStoriesURL = URL(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
+        
         fetchStoryIDs(from: topStoriesURL)
         
-
+    }
+    
+    @objc func refreshData(sender: UIRefreshControl) {
+        print("refreshing data")
+        
+        fetchStoryIDs(from: topStoriesURL)
+        
+        sender.endRefreshing()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let index = self.tableView.indexPathForSelectedRow{
+            self.tableView.deselectRow(at: index, animated: true)
+        }
     }
     
     func fetchStoryIDs(from url: URL) {
@@ -65,7 +83,7 @@ class MasterViewController: UITableViewController {
                     do {
                         let decoder = JSONDecoder()
                         let stories = try decoder.decode([Int].self, from: data)
-                        for storyId in stories.prefix(10) {
+                        for storyId in stories.prefix(20) {
                             self.topStories.append(Item(id: storyId))
                         }
                         self.tableView.reloadData()
@@ -82,6 +100,11 @@ class MasterViewController: UITableViewController {
     }
 
     func fetchItems() {
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.waitsForConnectivity = true
+        let defaultSession = URLSession(configuration: configuration)
+        
         for (index, item) in self.topStories.enumerated() {
             
             self.topStories[index].state = .downloading
@@ -91,51 +114,50 @@ class MasterViewController: UITableViewController {
             let urlString = "https://hacker-news.firebaseio.com/v0/item/\(itemID).json"
             let requestItem = URLRequest(url: URL(string: urlString)!)
             
-            let configuration = URLSessionConfiguration.default
-            configuration.waitsForConnectivity = true
-            
-            let taskItem = URLSession(configuration: configuration).dataTask(with: requestItem) { data, response, error in
-                let statusCode = (response as! HTTPURLResponse).statusCode
+            let taskItem = defaultSession.dataTask(with: requestItem) { data, response, error in
                 
-                if let data = data, statusCode == 200 {
-                    //print("200 OK on Item ID = \(itemID)")
-                    self.topStories[index].state = .downloaded
-                    print(data)
+                if let data = data, let response = response as? HTTPURLResponse {
+                    let statusCode = response.statusCode
+                    if statusCode == 200 {
+                        //print("200 OK on Item ID = \(itemID)")
+                        self.topStories[index].state = .downloaded
+                        print(data)
                     
-                    do {
-                        let decoder = JSONDecoder()
-                        decoder.dateDecodingStrategy = .secondsSince1970
-                        let story = try decoder.decode(Item.self, from: data)
+                        do {
+                            let decoder = JSONDecoder()
+                            decoder.dateDecodingStrategy = .secondsSince1970
+                            let story = try decoder.decode(Item.self, from: data)
 
-                        guard story.deleted == nil else {
-                            print("Deleted HN Item \(itemID) was ignored")
-                            return
+                            guard story.deleted == nil else {
+                                print("Deleted HN Item \(itemID) was ignored")
+                                return
+                            }
+                            
+                            guard story.type == .story else {
+                                print("HN Item \(itemID) was ignored because it was not a story type.")
+                                return
+                            }
+                            
+                            self.topStories[index].title = story.title
+                            self.topStories[index].url = story.url
+                            self.topStories[index].by = story.by
+                            self.topStories[index].descendants = story.descendants
+                            self.topStories[index].score = story.score
+                            self.topStories[index].time = story.time
+                            self.topStories[index].kids = story.kids
+                            //print(story.kids)
+                            DispatchQueue.main.async {
+                                //reloadRows has an expected argument type of [IndexPath]
+                                self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                            }
                         }
-                        
-                        guard story.type == .story else {
-                            print("HN Item \(itemID) was ignored because it was not a story type.")
-                            return
-                        }
-                        
-                        self.topStories[index].title = story.title
-                        self.topStories[index].url = story.url
-                        self.topStories[index].by = story.by
-                        self.topStories[index].descendants = story.descendants
-                        self.topStories[index].score = story.score
-                        self.topStories[index].time = story.time
-                        self.topStories[index].kids = story.kids
-                        
-                        DispatchQueue.main.async {
-                            //reloadRows has an expected argument type of [IndexPath]
-                            self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
-                        }
-                    }
-                    catch let error {
-                        print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
-                        print(error)
-                        self.topStories[index].state = .failed
-                        DispatchQueue.main.async {
-                            self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                        catch let error {
+                            print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
+                            print(error)
+                            self.topStories[index].state = .failed
+                            DispatchQueue.main.async {
+                                self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                            }
                         }
                     }
                 }
