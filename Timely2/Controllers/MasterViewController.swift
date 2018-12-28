@@ -18,19 +18,27 @@ class MasterViewController: UITableViewController {
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var feedButton: UIBarButtonItem!
+    @IBOutlet var feedPopoverView: UIView!
+    @IBOutlet weak var cancelFeedButton: UIBarButtonItem!
+    @IBOutlet weak var feedTableView: UITableView!
+    @IBOutlet weak var headerTitle: UINavigationItem!
     
     var detailViewController: DetailViewController? = nil
     let darkGreen = UIColor(red: 11/255, green: 86/255, blue: 14/255, alpha: 1)
     var myRefreshControl: UIRefreshControl?
     let topStoriesURL = URL(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
+    var blurEffectView: UIView = UIView()
+    var feedDataSource: FeedDataSource!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        myRefreshControl = UIRefreshControl()
-        myRefreshControl?.addTarget(self, action: #selector(refreshData(sender:)), for: .valueChanged)
-        myRefreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.tableView.refreshControl = myRefreshControl
+        let myFeeds: [Feed] = loadFeedsFromFile()
+        setFeedTableView(with: myFeeds)
+        customizeFeedPopoverView()
+        setUpPullToRefresh()
         
         activityIndicator.color = darkGreen
         
@@ -43,9 +51,58 @@ class MasterViewController: UITableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         tableView.dataSource = self
         
-        
+        self.headerTitle.title = "HN Top Stories"
         fetchStoryIDs(from: topStoriesURL)
         
+    }
+    
+    /// Loads Feed data from FeedList.plist and parses it in an array of Feed type.
+    ///
+    /// - Returns: a Feed array
+    func loadFeedsFromFile() -> [Feed] {
+        var myFeeds: [Feed] = []
+        if let feedListURL = Bundle.main.url(forResource: "FeedList", withExtension: "plist") {
+            do {
+                let feedListData = try Data(contentsOf: feedListURL)
+                let plistDecoder = PropertyListDecoder()
+                myFeeds = try plistDecoder.decode([Feed].self, from: feedListData)
+            } catch {
+                print(error)
+            }
+        }
+        return myFeeds
+    }
+    
+    /// Sets up a new TableView to select the Feed/Sort option.
+    ///
+    /// - Parameter feed: the [Feed] object - FeedList.plist parsed
+    func setFeedTableView(with feed: [Feed]) {
+        feedDataSource = FeedDataSource()
+        feedDataSource.setData(feedList: feed)
+        feedDataSource.cellDelegate = self
+        self.feedTableView.dataSource = feedDataSource
+        self.feedTableView.delegate = feedDataSource
+        self.feedTableView.register(FeedCell.self, forCellReuseIdentifier: "TableViewCell")
+    }
+    
+    /// Sets up the Popover View which contains the Feed/Sort TableView. And sets a Blur effect which will sit under.
+    func customizeFeedPopoverView() {
+        self.feedPopoverView.layer.cornerRadius = 8.0
+        self.feedPopoverView.clipsToBounds = true
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.alpha = 0.5
+        self.cancelFeedButton.tintColor = .clear
+    }
+    
+    /// Sets up Pull To Refresh - and calls refreshData()
+    func setUpPullToRefresh() {
+        myRefreshControl = UIRefreshControl()
+        myRefreshControl?.addTarget(self, action: #selector(refreshData(sender:)), for: .valueChanged)
+        myRefreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.tableView.refreshControl = myRefreshControl
     }
     
     @objc func refreshData(sender: UIRefreshControl) {
@@ -56,10 +113,41 @@ class MasterViewController: UITableViewController {
         sender.endRefreshing()
     }
     
+    // feedButton pressed
+    @IBAction func changeFeed(_ sender: Any) {
+        self.view.addSubview(blurEffectView)
+        self.view.addSubview(feedPopoverView)
+        feedPopoverView.translatesAutoresizingMaskIntoConstraints = false
+        feedPopoverView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        feedPopoverView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        feedPopoverView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        feedPopoverView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        //Show the Cancel button
+        self.cancelFeedButton.isEnabled = true
+        self.cancelFeedButton.tintColor = nil
+    }
+    
+    // When pressing Cancel Bar Button
+    @IBAction func cancelFeedPopover(_ sender: Any) {
+        closePopoverView()
+    }
+    
+    func closePopoverView() {
+        self.feedPopoverView.removeFromSuperview()
+        self.blurEffectView.removeFromSuperview()
+        self.cancelFeedButton.isEnabled = false
+        self.cancelFeedButton.tintColor = .clear
+    }
     override func viewWillAppear(_ animated: Bool) {
         if let index = self.tableView.indexPathForSelectedRow{
             self.tableView.deselectRow(at: index, animated: true)
         }
+    }
+    
+    fetchAlgoliaStories(from url: URL) {
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+    
     }
     
     func fetchStoryIDs(from url: URL) {
@@ -83,6 +171,7 @@ class MasterViewController: UITableViewController {
                     do {
                         let decoder = JSONDecoder()
                         let stories = try decoder.decode([Int].self, from: data)
+                        self.topStories.removeAll()
                         for storyId in stories.prefix(20) {
                             self.topStories.append(Item(id: storyId))
                         }
@@ -121,7 +210,7 @@ class MasterViewController: UITableViewController {
                     if statusCode == 200 {
                         //print("200 OK on Item ID = \(itemID)")
                         self.topStories[index].state = .downloaded
-                        print(data)
+                        //print(data)
                     
                         do {
                             let decoder = JSONDecoder()
@@ -266,4 +355,22 @@ class MasterViewController: UITableViewController {
 
         return cell
     }
+}
+
+extension MasterViewController: CellFeedProtocol {
+    func didTapCell(feedURL: URL, title: String, type: HNFeedType) {
+        closePopoverView()
+        
+        self.headerTitle.title = title
+        
+        switch type {
+        case .official:
+            fetchStoryIDs(from: feedURL)
+        case .timely:
+            fetchStoryIDs(from: feedURL)
+        case .algolia:
+            fetchAlgoliaStories(from: feedURL)
+        }
+    }
+    
 }

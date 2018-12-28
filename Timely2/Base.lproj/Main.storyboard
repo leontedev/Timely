@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -59,8 +59,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comment" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ScU-O9-osD">
-                                                    <rect key="frame" x="11.666666666666657" y="13" width="350.33333333333337" height="47"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <rect key="frame" x="11.666666666666686" y="13" width="743.33333333333326" height="47"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -165,27 +165,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="ghY-Rp-XF7">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Showing Top Stories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32K-7u-Nxv">
-                                    <rect key="frame" x="15" y="6" width="356" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                    <color key="textColor" red="0.57380741830000004" green="0.56553578380000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstItem="32K-7u-Nxv" firstAttribute="leading" secondItem="ghY-Rp-XF7" secondAttribute="leading" constant="15" id="OAe-By-n0f"/>
-                                <constraint firstAttribute="trailing" secondItem="32K-7u-Nxv" secondAttribute="trailing" constant="4" id="iDo-ER-EVr"/>
-                                <constraint firstItem="32K-7u-Nxv" firstAttribute="top" secondItem="ghY-Rp-XF7" secondAttribute="top" constant="6" id="jj5-jq-jLj"/>
-                            </constraints>
-                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItemCell" rowHeight="100" id="WCw-Qf-5nD" customClass="ItemCell" customModule="Timely2" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="99.666666666666671"/>
@@ -282,16 +264,78 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Hacker News" largeTitleDisplayMode="always" id="Zdf-7t-Un8"/>
+                    <navigationItem key="navigationItem" title="Hacker News" largeTitleDisplayMode="always" id="Zdf-7t-Un8">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="bookmarks" id="E4u-zL-6Ra">
+                                <connections>
+                                    <action selector="changeFeed:" destination="7bK-jq-Zjz" id="4rK-Ab-C27"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem enabled="NO" systemItem="cancel" id="M4K-Un-5Ua">
+                                <connections>
+                                    <action selector="cancelFeedPopover:" destination="7bK-jq-Zjz" id="bkR-gr-UXn"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="l2H-tu-Lfx" id="4op-1V-m8W"/>
+                        <outlet property="cancelFeedButton" destination="M4K-Un-5Ua" id="Uty-69-9kI"/>
                         <outlet property="emptyView" destination="KCK-SZ-W86" id="yen-lY-Jeg"/>
                         <outlet property="errorLabel" destination="Phl-mY-eTE" id="QzO-Ml-bB4"/>
                         <outlet property="errorView" destination="Zis-D4-Pxe" id="LQZ-g9-Klx"/>
+                        <outlet property="feedButton" destination="E4u-zL-6Ra" id="wHZ-mi-jnb"/>
+                        <outlet property="feedPopoverView" destination="Hrd-MF-nfC" id="bOf-cf-vMh"/>
+                        <outlet property="feedTableView" destination="H8Z-cx-VwJ" id="g7S-Q1-5SO"/>
+                        <outlet property="headerTitle" destination="Zdf-7t-Un8" id="KgZ-Jg-Myr"/>
                         <outlet property="loadingView" destination="IZx-5E-Msj" id="VzD-ic-z2I"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="Hrd-MF-nfC">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="300"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="H8Z-cx-VwJ">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="300"/>
+                            <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                            <prototypes>
+                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FeedCell" id="fib-wR-lEP" customClass="FeedCell" customModule="Timely2" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="28" width="240" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fib-wR-lEP" id="PHc-6c-G0e">
+                                        <rect key="frame" x="0.0" y="0.0" width="207" height="43.666666666666664"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HN Top Stories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32W-kP-Jv1">
+                                                <rect key="frame" x="17.000000000000007" y="13" width="103.66666666666669" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="32W-kP-Jv1" firstAttribute="leading" secondItem="PHc-6c-G0e" secondAttribute="leadingMargin" constant="2" id="d0x-a0-P7u"/>
+                                            <constraint firstItem="32W-kP-Jv1" firstAttribute="centerY" secondItem="PHc-6c-G0e" secondAttribute="centerY" id="kIA-8m-hT4"/>
+                                        </constraints>
+                                    </tableViewCellContentView>
+                                    <connections>
+                                        <outlet property="feedNameLabel" destination="32W-kP-Jv1" id="bdC-SU-XPO"/>
+                                    </connections>
+                                </tableViewCell>
+                            </prototypes>
+                            <sections/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="H8Z-cx-VwJ" firstAttribute="trailing" secondItem="1qJ-0J-bO8" secondAttribute="trailing" id="Efe-i0-P6b"/>
+                        <constraint firstAttribute="bottom" secondItem="H8Z-cx-VwJ" secondAttribute="bottom" id="M9t-xu-ErY"/>
+                        <constraint firstItem="H8Z-cx-VwJ" firstAttribute="top" secondItem="Hrd-MF-nfC" secondAttribute="top" id="PLj-Pg-uhZ"/>
+                        <constraint firstItem="H8Z-cx-VwJ" firstAttribute="leading" secondItem="1qJ-0J-bO8" secondAttribute="leading" id="T0f-ww-3Fv"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="1qJ-0J-bO8"/>
+                </view>
                 <view contentMode="scaleToFill" id="IZx-5E-Msj" userLabel="Loading View">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
