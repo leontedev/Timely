@@ -97,8 +97,8 @@
 		893FB66620B8494A007771A3 /* Timely2 */ = {
 			isa = PBXGroup;
 			children = (
-				89095A2521E08ED400FAEDF2 /* Extensions */,
 				89095A2221DFB03100FAEDF2 /* Playgrounds */,
+				89095A2521E08ED400FAEDF2 /* Extensions */,
 				894B80BB20B95D4B002C313E /* Controllers */,
 				894B80B920B95D38002C313E /* Models */,
 				894B80B820B95CC7002C313E /* Views */,

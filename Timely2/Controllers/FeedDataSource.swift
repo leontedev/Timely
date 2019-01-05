@@ -39,7 +39,12 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let feedURLstring = feed[indexPath.row].feedURL
-        var feedURLComponents = URLComponents(string: feedURLstring)
+        guard var feedURLComponents = URLComponents(string: feedURLstring) else {
+            #warning("FeedList didSelectRowAt - when URL is malformed error message")
+            return
+        }
+        
+        
         let feedName = feed[indexPath.row].feedName
         let feedType = feed[indexPath.row].feedType
         
@@ -52,13 +57,13 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                     let priorTimestamp = Int(priorDate!.timeIntervalSince1970)
                     
                     let queryItemTimeRange = URLQueryItem(name: "numericFilters", value: "created_at_i>\(priorTimestamp),created_at_i<\(currentTimestamp)")
-                    feedURLComponents?.queryItems?.append(queryItemTimeRange)
-                    
+                    //feedURLComponents?.queryItems?.append(queryItemTimeRange)
+                    feedURLComponents.addOrModify(queryItemTimeRange)
                 }
             }
         }
         
-        if let feedURL = feedURLComponents?.url {
+        if let feedURL = feedURLComponents.url {
             print(feedURL)
             self.cellDelegate?.didTapCell(feedURL: feedURL, title: feedName, type: feedType)
         }
