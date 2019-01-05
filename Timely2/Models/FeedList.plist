@@ -4,49 +4,45 @@
 <array>
 	<dict>
 		<key>feedName</key>
-		<string>HN Timely Timeline</string>
-		<key>feedURL</key>
-		<string>https://hacker-news.firebaseio.com/v0/topstories.json</string>
-		<key>feedType</key>
-		<string>timely</string>
-	</dict>
-	<dict>
-		<key>feedName</key>
 		<string>HN Top Stories</string>
-		<key>feedURL</key>
-		<string>https://hacker-news.firebaseio.com/v0/topstories.json</string>
 		<key>feedType</key>
 		<string>official</string>
+		<key>feedURL</key>
+		<string>https://hacker-news.firebaseio.com/v0/topstories.json</string>
 	</dict>
 	<dict>
 		<key>feedName</key>
 		<string>HN New Stories</string>
-		<key>feedURL</key>
-		<string>https://hacker-news.firebaseio.com/v0/newstories.json</string>
 		<key>feedType</key>
 		<string>official</string>
+		<key>feedURL</key>
+		<string>https://hacker-news.firebaseio.com/v0/newstories.json</string>
 	</dict>
 	<dict>
 		<key>feedName</key>
 		<string>HN Best Stories</string>
-		<key>feedURL</key>
-		<string>https://hacker-news.firebaseio.com/v0/beststories.json</string>
 		<key>feedType</key>
 		<string>official</string>
+		<key>feedURL</key>
+		<string>https://hacker-news.firebaseio.com/v0/beststories.json</string>
 	</dict>
 	<dict>
 		<key>feedName</key>
-		<string>HN Last 24h</string>
-		<key>feedURL</key>
-		<string>https://hn.algolia.com/?sort=byPopularity&amp;prefix&amp;page=0&amp;dateRange=last24h&amp;type=story</string>
+		<string>HN Yesterday</string>
 		<key>feedType</key>
 		<string>algolia</string>
+		<key>feedURL</key>
+		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
+		<key>fromCalendarComponentByAdding</key>
+		<string>day</string>
+		<key>fromCalendarComponentValue</key>
+		<integer>-1</integer>
 	</dict>
 	<dict>
 		<key>feedName</key>
 		<string>HN Past Week</string>
 		<key>feedURL</key>
-		<string>https://hn.algolia.com/?sort=byPopularity&amp;prefix&amp;page=0&amp;dateRange=pastWeek&amp;type=story</string>
+		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
 		<key>feedType</key>
 		<string>algolia</string>
 	</dict>
@@ -54,7 +50,7 @@
 		<key>feedName</key>
 		<string>HN Past Month</string>
 		<key>feedURL</key>
-		<string>https://hn.algolia.com/?sort=byPopularity&amp;prefix&amp;page=0&amp;dateRange=pastMonth&amp;type=story</string>
+		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
 		<key>feedType</key>
 		<string>algolia</string>
 	</dict>
@@ -62,7 +58,7 @@
 		<key>feedName</key>
 		<string>HN Past Year</string>
 		<key>feedURL</key>
-		<string>https://hn.algolia.com/?sort=byPopularity&amp;prefix&amp;page=0&amp;dateRange=pastYear&amp;type=story</string>
+		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
 		<key>feedType</key>
 		<string>algolia</string>
 	</dict>

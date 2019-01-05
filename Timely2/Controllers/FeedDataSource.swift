@@ -39,11 +39,29 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let feedURLstring = feed[indexPath.row].feedURL
-        let feedURL = URL(string: feedURLstring)!
+        var feedURLComponents = URLComponents(string: feedURLstring)
         let feedName = feed[indexPath.row].feedName
         let feedType = feed[indexPath.row].feedType
         
-        self.cellDelegate?.didTapCell(feedURL: feedURL, title: feedName, type: feedType)
+        if feedType == .algolia {
+            if let feedFromCalendarComponentByAdding = feed[indexPath.row].fromCalendarComponentByAdding {
+                if let feedFromCalendarComponentValue = feed[indexPath.row].fromCalendarComponentValue {
+                    let currentTimestamp = Int(NSDate().timeIntervalSince1970)
+                    let today = Date()
+                    let priorDate = Calendar.current.date(byAdding: feedFromCalendarComponentByAdding, value: feedFromCalendarComponentValue, to: today)
+                    let priorTimestamp = Int(priorDate!.timeIntervalSince1970)
+                    
+                    let queryItemTimeRange = URLQueryItem(name: "numericFilters", value: "created_at_i>\(priorTimestamp),created_at_i<\(currentTimestamp)")
+                    feedURLComponents?.queryItems?.append(queryItemTimeRange)
+                    
+                }
+            }
+        }
+        
+        if let feedURL = feedURLComponents?.url {
+            print(feedURL)
+            self.cellDelegate?.didTapCell(feedURL: feedURL, title: feedName, type: feedType)
+        }
     }
 }
 

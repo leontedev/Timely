@@ -145,9 +145,10 @@ class MasterViewController: UITableViewController {
         }
     }
     
-    fetchAlgoliaStories(from url: URL) {
+    func fetchAlgoliaStories(from url: URL) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-    
+        
+        }
     }
     
     func fetchStoryIDs(from url: URL) {
