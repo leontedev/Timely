@@ -30,14 +30,14 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var urlDescriptionLabel: UILabel!
     
     var detailItem: Item?
-    
+    var fetchedComment: Comment? = nil
     typealias Depth = Int
-    var commentsArray: [(Item, Depth)] = []
-    var commentsCount: Int = 0
+    var commentsFlatArray: [(Comment, Depth)] = []
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Detail Controller")
+        
         commentsTableView.delegate = self
         commentsTableView.estimatedRowHeight = 100
         commentsTableView.rowHeight = UITableViewAutomaticDimension
@@ -49,45 +49,14 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.urlDescriptionLabel?.text = story.url?.absoluteString
             print("story.id ", story.id)
             
-            //self.commentsTableView.reloadData()
-//            DispatchQueue.main.async {
-//            }
-            //Update self.detailItem object with comments
             fetchComments(forItem: story)
             
-
-            //Waits for all comments to finish downloading before continuing with reloading the UI
-            var count = 0
-            while self.commentsCount < (self.detailItem?.descendants)! && count < 100 {
-                #warning("wait for multiple async comment requests to finish")
-                //0.1s
-                usleep(100000)
-                //print("wait 0.1s, downloaded count: " + String(self.commentsCount) + " /descendants: "  + String((self.detailItem?.descendants)!))
-                count += 1
-            }
-            print("Total waited in seconds: " + String(Double(count)*0.1))
-            
-            
             //Construct a 'flat' array structure of the comments by traversing the tree depth first
-            if let comments = story.kids {
-                for comment in comments {
-                    commentsArray.append((comment, 0))
-                    DFS(forItem: comment, depth: 1)
-                }
-            }
+
             
-            //DispatchQueue.main.async {
-            //self.commentsTableView.reloadData()
+            
         }
-    }
     
-    func DFS(forItem item: Item, depth: Int) {
-        if let nestedItems = item.kids, !nestedItems.isEmpty {
-            for nestedItem in nestedItems {
-                commentsArray.append((nestedItem, depth))
-                DFS(forItem: nestedItem, depth: depth+1)
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,6 +65,18 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func fetchComments(forItem item: Item) {
+        
+        func DFS(forItem item: Comment, depth: Int) {
+            if let nestedItems = item.children {
+                if !nestedItems.isEmpty {
+                    for nestedItem in nestedItems {
+                        commentsFlatArray.append((nestedItem, depth))
+                        DFS(forItem: nestedItem, depth: depth+1)
+                    }
+                }
+            }
+        }
+            
         //if let item = item {
         if let kids = item.kids, kids.isEmpty == false {
             
@@ -104,43 +85,48 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             configuration.httpMaximumConnectionsPerHost = 2
             let defaultSession = URLSession(configuration: configuration)
             
-            for item in kids {
-                let commentUrl = "https://hacker-news.firebaseio.com/v0/item/\(String(item.id)).json"
-                let commentRequest = URLRequest(url: URL(string: commentUrl)!)
-                
-                let taskComment = defaultSession.dataTask(with: commentRequest) { data, response, error in
-                    #warning("Thread 12: Fatal error: Unexpectedly found nil while unwrapping an Optional value")
-                    let statusCode = (response as! HTTPURLResponse).statusCode
-                    self.commentsCount += 1
-                    
-                    if let data = data, statusCode == 200 {
-                        do {
-                            let decoder = JSONDecoder()
-                            decoder.dateDecodingStrategy = .secondsSince1970
-                            let comment = try decoder.decode(Item.self, from: data)
-                            
-                            if let deleted = comment.deleted {
-                                //print(".deleted comment")
+            
+            let commentUrl = "http://hn.algolia.com/api/v1/items/\(String(item.id))"
+            let commentRequest = URLRequest(url: URL(string: commentUrl)!)
+            
+            _ = defaultSession.dataTask(with: commentRequest) { data, response, error in
+        
+                let statusCode = (response as! HTTPURLResponse).statusCode
+                //print(statusCode)
+                if let data = data, statusCode == 200 {
+                    do {
+                        //print(data)
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                        
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                        self.fetchedComment = try decoder.decode(Comment.self, from: data)
+                        
+                        if let comments = self.fetchedComment {
+                            if let childrenComments = comments.children {
+                                for childComment in childrenComments {
+                                    self.commentsFlatArray.append((childComment, 0))
+                                    DFS(forItem: childComment, depth: 1)
+                                }
                             }
-                            self.detailItem?.update(withComment: comment)
-                            self.fetchComments(forItem: comment)
                         }
-                        catch let error {
-                            print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
-                            print(error)
-                            #warning("Handle UI here")
+                        
+                        DispatchQueue.main.async {
+                            self.commentsTableView.reloadData()
                         }
+                        
                     }
-                    
-                }.resume()
-                let d = Date()
-                let df = DateFormatter()
-                df.dateFormat = "H:m:ss.SSSS"
+                    catch let error {
+                        print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
+                        print(error)
+                        #warning("Handle UI here")
+                    }
+                }
                 
-                print(item.id, " ", df.string(from: d))
-            }
-        }  else {
-            return
+            }.resume()
+            
         }
         
     }
@@ -152,17 +138,17 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        #warning("Remove Force Unwrap. And check if count is correct - do you need to ignore certain comments (dead, etc)")
-        print("numberOfRowsInSection " + String(self.commentsArray.count))
-        return self.commentsArray.count
+        print("numberOfRowsInSection " + String(self.commentsFlatArray.count))
+        
+        return self.commentsFlatArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //if let and cast "as?"
         let cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifier, for: indexPath) as! CommentCell
         
-        let item = self.commentsArray[indexPath.row].0
-        let depth = self.commentsArray[indexPath.row].1
+        let item = self.commentsFlatArray[indexPath.row].0
+        let depth = self.commentsFlatArray[indexPath.row].1
                 
         // Indent cell based on comment depth
         cell.indentationWidth = 15
@@ -173,7 +159,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.separatorInset = UIEdgeInsetsMake(0, separatorIndent, 0, 0)
         
         cell.commentLabel?.text = item.text?.htmlToString
-        cell.byUserLabel?.text = item.by
+        cell.byUserLabel?.text = item.author
         //cell.depthLabel?.text = String(depth)
         
         // Display elapsed time
@@ -181,10 +167,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
         componentsFormatter.maximumUnitCount = 1
         componentsFormatter.unitsStyle = .abbreviated
-        if let epochTime = item.time {
-            let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
-            cell.elapsedTimeLabel?.text = timeAgo
-        }
+        let epochTime = item.created_at
+        let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+        cell.elapsedTimeLabel?.text = timeAgo
+        
         return cell
     }
 }
