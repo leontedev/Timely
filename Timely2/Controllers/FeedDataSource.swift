@@ -57,7 +57,7 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                     let priorTimestamp = Int(priorDate!.timeIntervalSince1970)
                     
                     let queryItemTimeRange = URLQueryItem(name: "numericFilters", value: "created_at_i>\(priorTimestamp),created_at_i<\(currentTimestamp)")
-                    //feedURLComponents?.queryItems?.append(queryItemTimeRange)
+                    
                     feedURLComponents.addOrModify(queryItemTimeRange)
                 }
             }
