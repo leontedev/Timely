@@ -12,6 +12,7 @@
 		89089F5D21CD49B7005E42B3 /* FeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5C21CD49B7005E42B3 /* FeedDataSource.swift */; };
 		89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5E21CD4DC2005E42B3 /* FeedCell.swift */; };
 		89095A2721E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89095A2621E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift */; };
+		89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89095A2821E321F100FAEDF2 /* AlgoliaItem.swift */; };
 		8918A73420BC784E00129A0E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8918A73320BC784E00129A0E /* CommentCell.swift */; };
 		891E119A2143CD2900871615 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891E11992143CD2900871615 /* Item.swift */; };
 		892749ED21D50BF100E67546 /* FeedList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 892749EC21D50BF100E67546 /* FeedList.plist */; };
@@ -33,6 +34,7 @@
 		89095A2321DFB05A00FAEDF2 /* Timestamps.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Timestamps.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		89095A2421DFB06E00FAEDF2 /* URLComponents.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = URLComponents.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		89095A2621E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+addOrModifyQueryItem.swift"; sourceTree = "<group>"; };
+		89095A2821E321F100FAEDF2 /* AlgoliaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaItem.swift; sourceTree = "<group>"; };
 		8918A73320BC784E00129A0E /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		891E11992143CD2900871615 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		892749EC21D50BF100E67546 /* FeedList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FeedList.plist; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				891E11992143CD2900871615 /* Item.swift */,
+				89095A2821E321F100FAEDF2 /* AlgoliaItem.swift */,
 				89089F5821C7FA43005E42B3 /* Comment.swift */,
 				89089F5A21CD2C20005E42B3 /* Feed.swift */,
 				892749EC21D50BF100E67546 /* FeedList.plist */,
@@ -244,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */,
 				894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */,
 				89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */,
 				89089F5D21CD49B7005E42B3 /* FeedDataSource.swift in Sources */,

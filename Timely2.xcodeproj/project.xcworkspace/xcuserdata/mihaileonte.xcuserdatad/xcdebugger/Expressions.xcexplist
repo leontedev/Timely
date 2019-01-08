@@ -3,6 +3,47 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "MasterViewController.fetchAlgoliaStories(from:):MasterViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "requestItem.url">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MasterViewController.didTapCell(feedURL:title:type:):MasterViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in DetailViewController.getComments(from:):DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.comments">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in MasterViewController.fetchAlgoliaStories(from:):MasterViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "httpResponse.statusCode">
+            </PersistentString>
+            <PersistentString
+               value = "httpResponse.mimeType">
+            </PersistentString>
+            <PersistentString
+               value = "requestItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DetailViewController.configureView():DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "refreshCount">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "mach_msg_trap:(null)">
          <PersistentStrings>
             <PersistentString
@@ -16,22 +57,6 @@
             </PersistentString>
             <PersistentString
                value = "comments">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "DetailViewController.configureView():DetailViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "refreshCount">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in DetailViewController.getComments(from:):DetailViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.comments">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

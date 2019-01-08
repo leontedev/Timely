@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol CellFeedProtocol {
-    func didTapCell(feedURL: URL, title: String, type: HNFeedType)
+    func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType)
 }
 
 class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
@@ -63,9 +63,10 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             }
         }
         
+
+        self.cellDelegate?.didTapCell(feedURL: feedURLComponents, title: feedName, type: feedType)
         if let feedURL = feedURLComponents.url {
             print(feedURL)
-            self.cellDelegate?.didTapCell(feedURL: feedURL, title: feedName, type: feedType)
         }
     }
 }

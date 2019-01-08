@@ -8,10 +8,16 @@
 
 import UIKit
 
+//enum sourceAPI {
+//    case official
+//    case algolia
+//}
 
 class MasterViewController: UITableViewController {
     
     var topStories: [Item] = []
+    var algoliaStories: [AlgoliaItem] = []
+    var currentSourceAPI: HNFeedType = .official
     
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var errorLabel: UILabel!
@@ -27,7 +33,7 @@ class MasterViewController: UITableViewController {
     var detailViewController: DetailViewController? = nil
     let darkGreen = UIColor(red: 11/255, green: 86/255, blue: 14/255, alpha: 1)
     var myRefreshControl: UIRefreshControl?
-    let topStoriesURL = URL(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
+    let topStoriesURL = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     var blurEffectView: UIView = UIView()
     var feedDataSource: FeedDataSource!
     
@@ -145,48 +151,93 @@ class MasterViewController: UITableViewController {
         }
     }
     
-    func fetchAlgoliaStories(from url: URL) {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+    func fetchAlgoliaStories(from urlComponents: URLComponents) {
         
+        self.topStories.removeAll()
+        self.tableView.reloadData()
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.waitsForConnectivity = true
+        let defaultSession = URLSession(configuration: configuration)
+
+        
+        if let url = urlComponents.url {
+        
+            let task = defaultSession.dataTask(with: url) { responseData, response, error in
+                
+                    if let error = error {
+                        // TODO: Handle error (call function) - client side
+                        print(error)
+                        return
+                    }
+                
+                    guard let httpResponse = response as? HTTPURLResponse,
+                        (200...299).contains(httpResponse.statusCode) else {
+                            // TODO: Handle error (call function) - server side
+                            return
+                    }
+                
+                    if let mimeType = httpResponse.mimeType, mimeType == "application/json", let data = responseData {
+                        print("JSON String: \(String(data: data, encoding: .utf8))")
+                        
+                        do {
+                            let decoder = JSONDecoder()
+                            //decoder.dateDecodingStrategy = .iso8601(options: .withInternetDateTimeExtended)
+                            let stories = try decoder.decode(AlgoliaItemList.self, from: data)
+                            //print(stories)
+                            
+                            DispatchQueue.main.async {
+                                self.algoliaStories = stories.hits
+                                self.tableView.reloadData()
+                            }
+                        } catch let error {
+                            print(error)
+                            // TODO: Handle error (parse Json)
+                        }
+                    }
+            }.resume()
         }
     }
     
-    func fetchStoryIDs(from url: URL) {
+    func fetchStoryIDs(from urlComponents: URLComponents) {
         
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            // TODO - could this be moved only on the reload of the tableView?
-            DispatchQueue.main.async {
-                if let error = error {
-                    // TODO: Handle error (call function) - client side
-                    print(error)
-                    return
-                }
-                
-                guard let httpResponse = response as? HTTPURLResponse,
-                    (200...299).contains(httpResponse.statusCode) else {
-                        // TODO: Handle error (call function) - server side
-                        return
-                }
-                
-                if let mimeType = httpResponse.mimeType, mimeType == "application/json", let data = data {
-                    do {
-                        let decoder = JSONDecoder()
-                        let stories = try decoder.decode([Int].self, from: data)
-                        self.topStories.removeAll()
-                        for storyId in stories.prefix(20) {
-                            self.topStories.append(Item(id: storyId))
-                        }
-                        self.tableView.reloadData()
-                        self.fetchItems()
-                        
-                    } catch let error {
+        if let url = urlComponents.url {
+        
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                // TODO - could this be moved only on the reload of the tableView?
+                DispatchQueue.main.async {
+                    if let error = error {
+                        // TODO: Handle error (call function) - client side
                         print(error)
-                        // TODO: Handle error (parse Json)
+                        return
+                    }
+                    
+                    guard let httpResponse = response as? HTTPURLResponse,
+                        (200...299).contains(httpResponse.statusCode) else {
+                            // TODO: Handle error (call function) - server side
+                            return
+                    }
+                    
+                    if let mimeType = httpResponse.mimeType, mimeType == "application/json", let data = data {
+                        do {
+                            let decoder = JSONDecoder()
+                            let stories = try decoder.decode([Int].self, from: data)
+                            self.topStories.removeAll()
+                            for storyId in stories.prefix(20) {
+                                self.topStories.append(Item(id: storyId))
+                            }
+                            self.tableView.reloadData()
+                            self.fetchItems()
+                            
+                        } catch let error {
+                            print(error)
+                            // TODO: Handle error (parse Json)
+                        }
                     }
                 }
             }
+            task.resume()
         }
-        task.resume()
     }
 
     func fetchItems() {
@@ -286,72 +337,124 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.topStories.count
+        switch self.currentSourceAPI {
+        case .official:
+            return self.topStories.count
+        case .algolia, .timely:
+            return self.algoliaStories.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
-        let item = self.topStories[indexPath.row]
-
-        if cell.accessoryView == nil {
-            let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-            cell.accessoryView = indicator
-        }
-        let indicator = cell.accessoryView as! UIActivityIndicatorView
-
-        if let itemTitle = item.title {
-            cell.titleLabel?.text = itemTitle
-        } else {
-            cell.titleLabel?.text = "Loading..."
-        }
-
-        if let itemURL = item.url?.host {
-            cell.urlLabel?.text = itemURL
-        } else {
-            cell.urlLabel?.text = "Story ID: " + String(item.id)
-        }
-
-
-        if let itemDescendants = item.descendants {
-            cell.commentsCountLabel?.text = String(itemDescendants)
-        } else {
-            cell.commentsCountLabel?.text = "-"
-        }
-
-        if let itemScore = item.score {
-            cell.upvotesCountLabel?.text = String(itemScore)
-        } else {
-            cell.upvotesCountLabel?.text = "-"
-        }
-
-        if let epochTime = item.time {
-            // Display elapsed time
-            let componentsFormatter = DateComponentsFormatter()
-            componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
-            componentsFormatter.maximumUnitCount = 1
-            componentsFormatter.unitsStyle = .abbreviated
+        
+        switch self.currentSourceAPI {
+        case .official:
+            let item = self.topStories[indexPath.row]
             
-
-            let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
-            cell.elapsedTimeLabel?.text = timeAgo
-        } else {
-            cell.elapsedTimeLabel?.text = "-"
-        }
-
-        switch (item.state) {
-        case .downloaded?:
-            indicator.stopAnimating()
-        case .failed?:
-            indicator.stopAnimating()
-            cell.titleLabel?.text = "Failed to load"
-        case .downloading?:
-            cell.titleLabel?.text = "Download in progress..."
-        case .new?:
-            indicator.startAnimating()
-            //if !tableView.isDragging && !tableView.isDecelerating
+            if cell.accessoryView == nil {
+                let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+                cell.accessoryView = indicator
+            }
+            let indicator = cell.accessoryView as! UIActivityIndicatorView
+            
+            if let itemTitle = item.title {
+                cell.titleLabel?.text = itemTitle
+            } else {
+                cell.titleLabel?.text = "Loading..."
+            }
+            
+            if let itemURL = item.url?.host {
+                cell.urlLabel?.text = itemURL
+            } else {
+                cell.urlLabel?.text = "Story ID: " + String(item.id)
+            }
+            
+            
+            if let itemDescendants = item.descendants {
+                cell.commentsCountLabel?.text = String(itemDescendants)
+            } else {
+                cell.commentsCountLabel?.text = "-"
+            }
+            
+            if let itemScore = item.score {
+                cell.upvotesCountLabel?.text = String(itemScore)
+            } else {
+                cell.upvotesCountLabel?.text = "-"
+            }
+            
+            if let epochTime = item.time {
+                // Display elapsed time
+                let componentsFormatter = DateComponentsFormatter()
+                componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+                componentsFormatter.maximumUnitCount = 1
+                componentsFormatter.unitsStyle = .abbreviated
+                
+                
+                let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+                cell.elapsedTimeLabel?.text = timeAgo
+            } else {
+                cell.elapsedTimeLabel?.text = "-"
+            }
+            
+            switch (item.state) {
+            case .downloaded?:
+                indicator.stopAnimating()
+            case .failed?:
+                indicator.stopAnimating()
+                cell.titleLabel?.text = "Failed to load"
+            case .downloading?:
+                cell.titleLabel?.text = "Download in progress..."
+            case .new?:
+                indicator.startAnimating()
+                //if !tableView.isDragging && !tableView.isDecelerating
             //startDownload(for: item, at: indexPath)
-        case nil:
-            print("Error nil state to be displayed")
+            case nil:
+                print("Error nil state to be displayed")
+            }
+            
+        case .algolia, .timely:
+            let item = self.algoliaStories[indexPath.row]
+            
+//            if let itemTitle = item.title {
+//                cell.titleLabel?.text = itemTitle
+//            } else {
+//                cell.titleLabel?.text = "Loading..."
+//            }
+//
+//            if let itemURL = item.url?.host {
+//                cell.urlLabel?.text = itemURL
+//            } else {
+//                cell.urlLabel?.text = "Story ID: " + String(item.id)
+//            }
+//
+//
+//            if let itemDescendants = item.descendants {
+//                cell.commentsCountLabel?.text = String(itemDescendants)
+//            } else {
+//                cell.commentsCountLabel?.text = "-"
+//            }
+//
+//            if let itemScore = item.score {
+//                cell.upvotesCountLabel?.text = String(itemScore)
+//            } else {
+//                cell.upvotesCountLabel?.text = "-"
+//            }
+//
+//            if let epochTime = item.time {
+//                // Display elapsed time
+//                let componentsFormatter = DateComponentsFormatter()
+//                componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+//                componentsFormatter.maximumUnitCount = 1
+//                componentsFormatter.unitsStyle = .abbreviated
+//
+//
+//                let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+//                cell.elapsedTimeLabel?.text = timeAgo
+//            } else {
+//                cell.elapsedTimeLabel?.text = "-"
+//            }
+            
         }
 
         return cell
@@ -359,10 +462,11 @@ class MasterViewController: UITableViewController {
 }
 
 extension MasterViewController: CellFeedProtocol {
-    func didTapCell(feedURL: URL, title: String, type: HNFeedType) {
+    func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
         closePopoverView()
         
         self.headerTitle.title = title
+        self.currentSourceAPI = type
         
         switch type {
         case .official:

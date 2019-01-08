@@ -80,34 +80,50 @@ import UIKit
 
 
 //: > Modifying a Query Item's Value - Extension to URLComponents
-let oldURL = URL(string: "https://hn.algolia.com/api/v1/search?tags=story&page=0&hitsPerPage=100")!
+//let oldURL = URL(string: "https://hn.algolia.com/api/v1/search?tags=story&page=0&hitsPerPage=100")!
+//
+//var oldComponents = URLComponents(url: oldURL, resolvingAgainstBaseURL: false)!
+//oldComponents.addOrModify(URLQueryItem(name: "hitsPerPage", value: "200"))
+//
+//print(oldComponents.url!)
+//
+//extension URLComponents {
+//    mutating func addOrModify(_ queryItem: URLQueryItem) {
+//
+//        if let _ = self.queryItems {
+//
+//            var queryItemWasFound: Bool = false
+//
+//            for (index, item) in self.queryItems!.enumerated() {
+//                if item.name == queryItem.name {
+//                    queryItemWasFound = true
+//                    self.queryItems?[index].value = queryItem.value
+//                }
+//            }
+//
+//            if !queryItemWasFound {
+//                self.queryItems?.append(queryItem)
+//            }
+//
+//        } else {
+//            self.queryItems = [queryItem]
+//        }
+//
+//    }
+//}
 
-var oldComponents = URLComponents(url: oldURL, resolvingAgainstBaseURL: false)!
-oldComponents.addOrModify(URLQueryItem(name: "hitsPerPage", value: "200"))
-
-print(oldComponents.url!)
-
-extension URLComponents {
-    mutating func addOrModify(_ queryItem: URLQueryItem) {
-
-        if let _ = self.queryItems {
-            
-            var queryItemWasFound: Bool = false
-            
-            for (index, item) in self.queryItems!.enumerated() {
-                if item.name == queryItem.name {
-                    queryItemWasFound = true
-                    self.queryItems?[index].value = queryItem.value
-                }
-            }
-            
-            if !queryItemWasFound {
-                self.queryItems?.append(queryItem)
-            }
-            
-        } else {
-            self.queryItems = [queryItem]
-        }
-        
+let host = "https://hn.algolia.com/api/v1/search"
+let path = "https://hn.algolia.com/api/v1/search?tags=story&page=0&hitsPerPage=100&numericFilters=created_at_i>1455638317,created_at_i<1455698317".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+if let url = URL(string: path) {
+    
+    do {
+        let contents = try String(contentsOf: url)
+        print(contents)
+    } catch {
+        print("contents could not be loaded")
     }
+} else {
+    print("the URL was bad!")
 }
+
+
