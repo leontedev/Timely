@@ -182,15 +182,8 @@ class MasterViewController: UITableViewController {
                         
                         do {
                             let decoder = JSONDecoder()
-                            
-                            //decoder.dateDecodingStrategy = .iso8601(options: .withInternetDateTimeExtended)
-                            let dateFormatter = DateFormatter()
-                            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-                            decoder.dateDecodingStrategy = .formatted(dateFormatter)
-                            
+                            decoder.dateDecodingStrategy = .customISO8601
                             let stories = try decoder.decode(AlgoliaItemList.self, from: data)
-                            //print(stories)
                             
                             DispatchQueue.main.async {
                                 self.algoliaStories = stories.hits

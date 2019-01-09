@@ -101,13 +101,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             //print(statusCode)
             if let data = data, statusCode == 200 {
                 do {
-                    //print(data)
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                    
                     let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                    decoder.dateDecodingStrategy = .customISO8601
                     self.fetchedComment = try decoder.decode(Comment.self, from: data)
                     
                     if let comments = self.fetchedComment {
