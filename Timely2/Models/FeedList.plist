@@ -12,22 +12,6 @@
 	</dict>
 	<dict>
 		<key>feedName</key>
-		<string>HN New Stories</string>
-		<key>feedType</key>
-		<string>official</string>
-		<key>feedURL</key>
-		<string>https://hacker-news.firebaseio.com/v0/newstories.json</string>
-	</dict>
-	<dict>
-		<key>feedName</key>
-		<string>HN Best Stories</string>
-		<key>feedType</key>
-		<string>official</string>
-		<key>feedURL</key>
-		<string>https://hacker-news.firebaseio.com/v0/beststories.json</string>
-	</dict>
-	<dict>
-		<key>feedName</key>
 		<string>HN Yesterday</string>
 		<key>feedType</key>
 		<string>algolia</string>
@@ -41,34 +25,62 @@
 	<dict>
 		<key>feedName</key>
 		<string>HN Past Week</string>
-		<key>feedURL</key>
-		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
 		<key>feedType</key>
 		<string>algolia</string>
+		<key>feedURL</key>
+		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
+		<key>fromCalendarComponentByAdding</key>
+		<string>day</string>
+		<key>fromCalendarComponentValue</key>
+		<integer>-7</integer>
 	</dict>
 	<dict>
 		<key>feedName</key>
 		<string>HN Past Month</string>
-		<key>feedURL</key>
-		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
 		<key>feedType</key>
 		<string>algolia</string>
+		<key>feedURL</key>
+		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
+		<key>fromCalendarComponentByAdding</key>
+		<string>month</string>
+		<key>fromCalendarComponentValue</key>
+		<integer>-1</integer>
 	</dict>
 	<dict>
 		<key>feedName</key>
 		<string>HN Past Year</string>
-		<key>feedURL</key>
-		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
 		<key>feedType</key>
 		<string>algolia</string>
+		<key>feedURL</key>
+		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
+		<key>fromCalendarComponentByAdding</key>
+		<string>year</string>
+		<key>fromCalendarComponentValue</key>
+		<integer>-1</integer>
 	</dict>
 	<dict>
 		<key>feedName</key>
 		<string>HN Front Page</string>
-		<key>feedURL</key>
-		<string>https://hn.algolia.com/api/v1/search?tags=front_page</string>
 		<key>feedType</key>
 		<string>algolia</string>
+		<key>feedURL</key>
+		<string>https://hn.algolia.com/api/v1/search?tags=front_page</string>
+	</dict>
+	<dict>
+		<key>feedName</key>
+		<string>HN New Stories</string>
+		<key>feedType</key>
+		<string>official</string>
+		<key>feedURL</key>
+		<string>https://hacker-news.firebaseio.com/v0/newstories.json</string>
+	</dict>
+	<dict>
+		<key>feedName</key>
+		<string>HN Best Stories</string>
+		<key>feedType</key>
+		<string>official</string>
+		<key>feedURL</key>
+		<string>https://hacker-news.firebaseio.com/v0/beststories.json</string>
 	</dict>
 </array>
 </plist>

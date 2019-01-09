@@ -30,6 +30,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var urlDescriptionLabel: UILabel!
     
     var detailItem: Item?
+    var algoliaItem: AlgoliaItem?
+    
     var fetchedComment: Comment? = nil
     typealias Depth = Int
     var commentsFlatArray: [(Comment, Depth)] = []
@@ -48,13 +50,17 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.detailDescriptionLabel?.text = story.title
             self.urlDescriptionLabel?.text = story.url?.absoluteString
             print("story.id ", story.id)
-            
-            fetchComments(forItem: story)
-            
-            //Construct a 'flat' array structure of the comments by traversing the tree depth first
-
-            
-            
+            if let _ = story.kids {
+                fetchComments(forItemID: String(story.id))
+            }
+        }
+        if let story = self.algoliaItem {
+            self.detailDescriptionLabel?.text = story.title
+            self.urlDescriptionLabel?.text = story.url?.absoluteString
+            print("story.id ", story.objectID)
+            if let _ = story.num_comments {
+                fetchComments(forItemID: story.objectID)
+            }
         }
     
     }
@@ -64,7 +70,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
-    func fetchComments(forItem item: Item) {
+    func fetchComments(forItemID storyID: String) {
         
         func DFS(forItem item: Comment, depth: Int) {
             if let nestedItems = item.children {
@@ -78,56 +84,56 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
             
         //if let item = item {
-        if let kids = item.kids, kids.isEmpty == false {
+        //if let kids = item.kids, kids.isEmpty == false {
             
-            let configuration = URLSessionConfiguration.default
-            configuration.waitsForConnectivity = true
-            configuration.httpMaximumConnectionsPerHost = 2
-            let defaultSession = URLSession(configuration: configuration)
-            
-            
-            let commentUrl = "http://hn.algolia.com/api/v1/items/\(String(item.id))"
-            let commentRequest = URLRequest(url: URL(string: commentUrl)!)
-            
-            _ = defaultSession.dataTask(with: commentRequest) { data, response, error in
+        let configuration = URLSessionConfiguration.default
+        configuration.waitsForConnectivity = true
+        configuration.httpMaximumConnectionsPerHost = 2
+        let defaultSession = URLSession(configuration: configuration)
         
-                let statusCode = (response as! HTTPURLResponse).statusCode
-                //print(statusCode)
-                if let data = data, statusCode == 200 {
-                    do {
-                        //print(data)
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                        
-                        let decoder = JSONDecoder()
-                        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-                        self.fetchedComment = try decoder.decode(Comment.self, from: data)
-                        
-                        if let comments = self.fetchedComment {
-                            if let childrenComments = comments.children {
-                                for childComment in childrenComments {
-                                    self.commentsFlatArray.append((childComment, 0))
-                                    DFS(forItem: childComment, depth: 1)
-                                }
+        
+        let commentUrl = "http://hn.algolia.com/api/v1/items/\(storyID)"
+        let commentRequest = URLRequest(url: URL(string: commentUrl)!)
+        
+        _ = defaultSession.dataTask(with: commentRequest) { data, response, error in
+    
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            //print(statusCode)
+            if let data = data, statusCode == 200 {
+                do {
+                    //print(data)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                    
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                    self.fetchedComment = try decoder.decode(Comment.self, from: data)
+                    
+                    if let comments = self.fetchedComment {
+                        if let childrenComments = comments.children {
+                            for childComment in childrenComments {
+                                self.commentsFlatArray.append((childComment, 0))
+                                DFS(forItem: childComment, depth: 1)
                             }
                         }
-                        
-                        DispatchQueue.main.async {
-                            self.commentsTableView.reloadData()
-                        }
-                        
                     }
-                    catch let error {
-                        print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
-                        print(error)
-                        #warning("Handle UI here")
+                    
+                    DispatchQueue.main.async {
+                        self.commentsTableView.reloadData()
                     }
+                    
                 }
-                
-            }.resume()
+                catch let error {
+                    print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
+                    print(error)
+                    #warning("Handle UI here")
+                }
+            }
             
-        }
+        }.resume()
+            
+        //}
         
     }
     

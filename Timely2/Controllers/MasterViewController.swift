@@ -182,7 +182,13 @@ class MasterViewController: UITableViewController {
                         
                         do {
                             let decoder = JSONDecoder()
+                            
                             //decoder.dateDecodingStrategy = .iso8601(options: .withInternetDateTimeExtended)
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                            decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                            
                             let stories = try decoder.decode(AlgoliaItemList.self, from: data)
                             //print(stories)
                             
@@ -199,8 +205,8 @@ class MasterViewController: UITableViewController {
         }
     }
     
+    // Official API
     func fetchStoryIDs(from urlComponents: URLComponents) {
-        
         if let url = urlComponents.url {
         
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -240,8 +246,8 @@ class MasterViewController: UITableViewController {
         }
     }
 
+    // Official API
     func fetchItems() {
-        
         let configuration = URLSessionConfiguration.default
         configuration.waitsForConnectivity = true
         let defaultSession = URLSession(configuration: configuration)
@@ -319,9 +325,17 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let selectedItem = topStories[indexPath.row]
+                
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = selectedItem
+                switch currentSourceAPI {
+                case .official:
+                    let selectedItem = topStories[indexPath.row]
+                    controller.detailItem = selectedItem
+                case .algolia, .timely:
+                    let selectedItem = algoliaStories[indexPath.row]
+                    controller.algoliaItem = selectedItem
+                }
+                
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -416,41 +430,39 @@ class MasterViewController: UITableViewController {
         case .algolia, .timely:
             let item = self.algoliaStories[indexPath.row]
             
-//            if let itemTitle = item.title {
-//                cell.titleLabel?.text = itemTitle
-//            } else {
-//                cell.titleLabel?.text = "Loading..."
-//            }
-//
-//            if let itemURL = item.url?.host {
-//                cell.urlLabel?.text = itemURL
-//            } else {
-//                cell.urlLabel?.text = "Story ID: " + String(item.id)
-//            }
-//
-//
-//            if let itemDescendants = item.descendants {
-//                cell.commentsCountLabel?.text = String(itemDescendants)
-//            } else {
-//                cell.commentsCountLabel?.text = "-"
-//            }
-//
-//            if let itemScore = item.score {
-//                cell.upvotesCountLabel?.text = String(itemScore)
-//            } else {
-//                cell.upvotesCountLabel?.text = "-"
-//            }
-//
-//            if let epochTime = item.time {
-//                // Display elapsed time
-//                let componentsFormatter = DateComponentsFormatter()
-//                componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
-//                componentsFormatter.maximumUnitCount = 1
-//                componentsFormatter.unitsStyle = .abbreviated
-//
-//
-//                let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
-//                cell.elapsedTimeLabel?.text = timeAgo
+            if let itemTitle = item.title {
+                cell.titleLabel?.text = itemTitle
+            } else {
+                cell.titleLabel?.text = "Loading..."
+            }
+
+            if let itemURL = item.url?.host {
+                cell.urlLabel?.text = itemURL
+            } else {
+                cell.urlLabel?.text = "Story ID: " + String(item.objectID)
+            }
+
+
+            if let itemDescendants = item.num_comments {
+                cell.commentsCountLabel?.text = String(itemDescendants)
+            } else {
+                cell.commentsCountLabel?.text = "-"
+            }
+
+            if let itemScore = item.points {
+                cell.upvotesCountLabel?.text = String(itemScore)
+            } else {
+                cell.upvotesCountLabel?.text = "-"
+            }
+
+            //if let epochTime = item.created_at {
+            // Display elapsed time
+            let componentsFormatter = DateComponentsFormatter()
+            componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+            componentsFormatter.maximumUnitCount = 1
+            componentsFormatter.unitsStyle = .abbreviated
+            let timeAgo = componentsFormatter.string(from: item.created_at, to: Date())
+            cell.elapsedTimeLabel?.text = timeAgo
 //            } else {
 //                cell.elapsedTimeLabel?.text = "-"
 //            }
