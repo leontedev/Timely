@@ -12,7 +12,7 @@
 	</dict>
 	<dict>
 		<key>feedName</key>
-		<string>HN Yesterday</string>
+		<string>HN Last 24h</string>
 		<key>feedType</key>
 		<string>algolia</string>
 		<key>feedURL</key>

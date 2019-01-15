@@ -9,7 +9,7 @@
 import UIKit
 
 class CommentCell: UITableViewCell {
-    static let reuseIdentifier = "CommentCell"
+    static let reuseIdentifierComment = "CommentCell"
     
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var elapsedTimeLabel: UILabel!
@@ -21,4 +21,16 @@ class CommentCell: UITableViewCell {
         super.layoutSubviews()
         contentView.layoutMargins.left = layoutMargins.left + CGFloat(indentationLevel) * indentationWidth
     }
+    
+    static let reuseIdentifierStory = "StoryCell"
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var urlLabel: UILabel!
+    @IBOutlet weak var storyElapsedLabel: UILabel!
+    @IBOutlet weak var storyUsernameLabel: UILabel!
+    @IBOutlet weak var storyNumComments: UILabel!
+    @IBOutlet weak var storyPoints: UILabel!
+    @IBOutlet weak var storyText: UILabel!
+    
+    static let reuseIdentifierStoryButtons = "StoryButtonsCell"
 }

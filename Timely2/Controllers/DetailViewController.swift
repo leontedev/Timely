@@ -8,21 +8,6 @@
 
 import UIKit
 
-
-extension String {
-    var htmlToAttributedString: NSAttributedString? {
-        guard let data = data(using: .unicode) else { return NSAttributedString() }
-        do {
-            return try NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType:  NSAttributedString.DocumentType.html], documentAttributes: nil)
-        } catch {
-            return NSAttributedString()
-        }
-    }
-    var htmlToString: String {
-        return htmlToAttributedString?.string ?? ""
-    }
-}
-
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var commentsTableView: UITableView!
@@ -35,7 +20,18 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var fetchedComment: Comment? = nil
     typealias Depth = Int
     var commentsFlatArray: [(Comment, Depth)] = []
-
+    
+    let STORY_CELL_SECTION = 0
+    let STORY_BUTTONS_CELL_SECTION = 1
+    let COMMENT_CELL_SECTION = 2
+    
+    var storyURL: URL? = nil
+    var storyTitle: String? = nil
+    var storyAuthor: String? = nil
+    var storyCreatedAt: Date? = nil
+    var storyNumComments: Int? = nil
+    var storyPoints: Int? = nil
+    var storyText: String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,22 +43,42 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if let story = self.detailItem {
             //Update UI
-            self.detailDescriptionLabel?.text = story.title
-            self.urlDescriptionLabel?.text = story.url?.absoluteString
+            self.storyTitle = story.title
+            self.storyURL = story.url
+            self.storyAuthor = story.by
+            self.storyCreatedAt = story.time
+            self.storyNumComments = story.descendants
+            self.storyPoints = story.score
+            self.storyText = story.text
+            
             print("story.id ", story.id)
             if let _ = story.kids {
                 fetchComments(forItemID: String(story.id))
             }
         }
         if let story = self.algoliaItem {
-            self.detailDescriptionLabel?.text = story.title
-            self.urlDescriptionLabel?.text = story.url?.absoluteString
+            self.storyTitle = story.title
+            self.storyURL = story.url
+            self.storyAuthor = story.author
+            self.storyCreatedAt = story.created_at
+            self.storyNumComments = story.num_comments
+            self.storyPoints = story.points
+            self.storyText = story.story_text
+            
             print("story.id ", story.objectID)
             if let _ = story.num_comments {
                 fetchComments(forItemID: story.objectID)
             }
         }
+        
+        
     
+    }
+    
+    @objc func labelTapped(sender:UITapGestureRecognizer) {
+        if let url = storyURL {
+            UIApplication.shared.open(url)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,8 +92,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if let nestedItems = item.children {
                 if !nestedItems.isEmpty {
                     for nestedItem in nestedItems {
-                        commentsFlatArray.append((nestedItem, depth))
-                        DFS(forItem: nestedItem, depth: depth+1)
+                        if let _ = nestedItem.text {
+                            commentsFlatArray.append((nestedItem, depth))
+                            DFS(forItem: nestedItem, depth: depth+1)
+                        }
                     }
                 }
             }
@@ -108,8 +126,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     if let comments = self.fetchedComment {
                         if let childrenComments = comments.children {
                             for childComment in childrenComments {
-                                self.commentsFlatArray.append((childComment, 0))
-                                DFS(forItem: childComment, depth: 1)
+                                if let _ = childComment.text {
+                                    self.commentsFlatArray.append((childComment, 0))
+                                    DFS(forItem: childComment, depth: 1)
+                                }
+                                
                             }
                         }
                     }
@@ -135,43 +156,136 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK - Data Source
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("numberOfRowsInSection " + String(self.commentsFlatArray.count))
-        
-        return self.commentsFlatArray.count
+        if section == COMMENT_CELL_SECTION {
+            print("numberOfRowsInSection " + String(self.commentsFlatArray.count))
+            return self.commentsFlatArray.count
+        }
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //if let and cast "as?"
-        let cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifier, for: indexPath) as! CommentCell
+        var cell: CommentCell!
         
-        let item = self.commentsFlatArray[indexPath.row].0
-        let depth = self.commentsFlatArray[indexPath.row].1
+        if indexPath.section == COMMENT_CELL_SECTION {
+        
+            cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierComment, for: indexPath) as! CommentCell
+            
+            let item = self.commentsFlatArray[indexPath.row].0
+            let depth = self.commentsFlatArray[indexPath.row].1
+            
+            // Indent cell based on comment depth
+            cell.indentationWidth = 15
+            cell.indentationLevel = Int(depth)
+            
+            // Indent the separator line between the cells
+            let separatorIndent = CGFloat(15 + Int(cell.indentationWidth) * Int(cell.indentationLevel))
+            cell.separatorInset = UIEdgeInsetsMake(0, separatorIndent, 0, 0)
+            
+            cell.commentLabel?.text = item.text?.htmlToString
+            cell.byUserLabel?.text = item.author
+            //cell.depthLabel?.text = String(depth)
+            
+            // Display elapsed time
+            let componentsFormatter = DateComponentsFormatter()
+            componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+            componentsFormatter.maximumUnitCount = 1
+            componentsFormatter.unitsStyle = .abbreviated
+            let epochTime = item.created_at
+            let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+            cell.elapsedTimeLabel?.text = timeAgo
+            
+        } else if indexPath.section == STORY_CELL_SECTION {
+            cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStory, for: indexPath) as? CommentCell
+            
+            if let title = self.storyTitle {
+                cell.titleLabel.text = title
+            }
+            
+            if let url = self.storyURL {
+                cell.urlLabel.text = url.absoluteString
                 
-        // Indent cell based on comment depth
-        cell.indentationWidth = 15
-        cell.indentationLevel = Int(depth)
-        
-        // Indent the separator line between the cells
-        let separatorIndent = CGFloat(15 + Int(cell.indentationWidth) * Int(cell.indentationLevel))
-        cell.separatorInset = UIEdgeInsetsMake(0, separatorIndent, 0, 0)
-        
-        cell.commentLabel?.text = item.text?.htmlToString
-        cell.byUserLabel?.text = item.author
-        //cell.depthLabel?.text = String(depth)
-        
-        // Display elapsed time
-        let componentsFormatter = DateComponentsFormatter()
-        componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
-        componentsFormatter.maximumUnitCount = 1
-        componentsFormatter.unitsStyle = .abbreviated
-        let epochTime = item.created_at
-        let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
-        cell.elapsedTimeLabel?.text = timeAgo
+                let tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.labelTapped))
+                cell.urlLabel.isUserInteractionEnabled = true
+                cell.urlLabel.addGestureRecognizer(tap)
+            }
+            
+            if let author = self.storyAuthor {
+                cell.storyUsernameLabel.text = author
+            }
+            
+            if let createdAt = self.storyCreatedAt {
+                let componentsFormatter = DateComponentsFormatter()
+                componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+                componentsFormatter.maximumUnitCount = 1
+                componentsFormatter.unitsStyle = .abbreviated
+                
+                let timeAgo = componentsFormatter.string(from: createdAt, to: Date())
+                cell.storyElapsedLabel.text = timeAgo
+            }
+            
+            if let numComments = self.storyNumComments {
+                cell.storyNumComments.text = String(numComments)
+                
+            }
+            
+            if let points = self.storyPoints {
+                cell.storyPoints.text = String(points)
+            }
+            
+            if let text = self.storyText {
+                cell.storyText.text = text.htmlToString
+            }
+            
+        } else if indexPath.section == STORY_BUTTONS_CELL_SECTION {
+            cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStoryButtons, for: indexPath) as? CommentCell
+        }
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == COMMENT_CELL_SECTION {
+            
+            let selectedItem = self.commentsFlatArray[indexPath.row].0
+            let selectedItemDepth = self.commentsFlatArray[indexPath.row].1
+            
+            self.collapsedCellsIndexPaths.append(indexPath)
+            
+            // Find all the child comments, and add them to the hiddenCells array
+            var index = indexPath.row + 1
+            while self.commentsFlatArray[index].1 > selectedItemDepth {
+                self.hiddenCellsIndexPaths.append(IndexPath(row: index, section: COMMENT_CELL_SECTION))
+                index = index + 1
+            }
+            
+            //these tell the tableview something changed, and it checks cell heights and animates changes
+            self.commentsTableView.beginUpdates()
+            self.commentsTableView.endUpdates()
+        }
+        
+        
+    }
+    
+    internal var hiddenCellsIndexPaths: [IndexPath] = []
+    internal var collapsedCellsIndexPaths: [IndexPath] = []
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if self.collapsedCellsIndexPaths.contains(indexPath) {
+            let size = CGFloat(integerLiteral: 25)
+            
+            return size
+        } else if self.hiddenCellsIndexPaths.contains(indexPath) {
+            let size = CGFloat(integerLiteral: 0)
+            
+            return size
+        } else {
+            return UITableViewAutomaticDimension
+        }
+    }
+
+    
 }

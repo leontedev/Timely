@@ -8,11 +8,6 @@
 
 import UIKit
 
-//enum sourceAPI {
-//    case official
-//    case algolia
-//}
-
 class MasterViewController: UITableViewController {
     
     var topStories: [Item] = []
