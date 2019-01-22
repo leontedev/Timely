@@ -3,6 +3,42 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "mach_msg_trap:(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "data">
+            </PersistentString>
+            <PersistentString
+               value = "detail">
+            </PersistentString>
+            <PersistentString
+               value = "newStory">
+            </PersistentString>
+            <PersistentString
+               value = "comments">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DetailViewController.tableView(_:didSelectRowAt:):DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+            <PersistentString
+               value = "self.commentsArray[index].depth">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in DetailViewController.getComments(from:):DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.comments">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "MasterViewController.fetchAlgoliaStories(from:):MasterViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -14,10 +50,10 @@
          contextName = "MasterViewController.didTapCell(feedURL:title:type:):MasterViewController.swift">
       </ContextState>
       <ContextState
-         contextName = "closure #1 in DetailViewController.getComments(from:):DetailViewController.swift">
+         contextName = "DetailViewController.configureView():DetailViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self.comments">
+               value = "refreshCount">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -32,31 +68,6 @@
             </PersistentString>
             <PersistentString
                value = "requestItem">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "DetailViewController.configureView():DetailViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "refreshCount">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "mach_msg_trap:(null)">
-         <PersistentStrings>
-            <PersistentString
-               value = "data">
-            </PersistentString>
-            <PersistentString
-               value = "detail">
-            </PersistentString>
-            <PersistentString
-               value = "newStory">
-            </PersistentString>
-            <PersistentString
-               value = "comments">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

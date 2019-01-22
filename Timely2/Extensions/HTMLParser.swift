@@ -12,7 +12,13 @@ extension String {
     var htmlToAttributedString: NSAttributedString? {
         guard let data = data(using: .unicode) else { return NSAttributedString() }
         do {
-            return try NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType:  NSAttributedString.DocumentType.html], documentAttributes: nil)
+            //return try NSAttributedString(data: data, options: [NSAttributedString.DocumentReadingOptionKey.documentType:  NSAttributedString.DocumentType.html], documentAttributes: nil)
+            
+            
+            return try NSAttributedString(data: data,
+                                          options: [.documentType: NSAttributedString.DocumentType.html,
+                                                    .characterEncoding: String.Encoding.utf8.rawValue],
+                                          documentAttributes: nil)
         } catch {
             return NSAttributedString()
         }

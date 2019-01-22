@@ -8,6 +8,16 @@
 
 import UIKit
 
+struct CommentSource {
+    var comment: Comment
+    var depth: Int
+    var timeAgo: String?
+    var height: Int?
+    var collapsed: Bool
+    var removedComments: [CommentSource]
+    var attributedString: NSAttributedString?
+}
+
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var commentsTableView: UITableView!
@@ -19,7 +29,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var fetchedComment: Comment? = nil
     typealias Depth = Int
-    var commentsFlatArray: [(Comment, Depth)] = []
+    //var commentsFlatArray: [(Comment, Depth)] = []
+    var commentsArray: [CommentSource] = []
     
     let STORY_CELL_SECTION = 0
     let STORY_BUTTONS_CELL_SECTION = 1
@@ -93,16 +104,21 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if !nestedItems.isEmpty {
                     for nestedItem in nestedItems {
                         if let _ = nestedItem.text {
-                            commentsFlatArray.append((nestedItem, depth))
+                            //commentsFlatArray.append((nestedItem, depth))
+                            self.commentsArray.append(CommentSource(comment: nestedItem,
+                                                                    depth: depth,
+                                                                    timeAgo: nil,
+                                                                    height: nil,
+                                                                    collapsed: false,
+                                                                    removedComments: [],
+                                                                    attributedString: nil))
                             DFS(forItem: nestedItem, depth: depth+1)
                         }
                     }
                 }
             }
         }
-            
-        //if let item = item {
-        //if let kids = item.kids, kids.isEmpty == false {
+        
             
         let configuration = URLSessionConfiguration.default
         configuration.waitsForConnectivity = true
@@ -127,42 +143,70 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         if let childrenComments = comments.children {
                             for childComment in childrenComments {
                                 if let _ = childComment.text {
-                                    self.commentsFlatArray.append((childComment, 0))
-                                    DFS(forItem: childComment, depth: 1)
+                                    self.commentsArray.append(CommentSource(comment: childComment,
+                                                                            depth: 0,
+                                                                            timeAgo: nil,
+                                                                            height: nil,
+                                                                            collapsed: false,
+                                                                            removedComments: [], attributedString: nil))
+                                    DFS(forItem: childComment,
+                                        depth: 1)
                                 }
                                 
                             }
                         }
                     }
+                    let t0 = CFAbsoluteTimeGetCurrent()
+                    let componentsFormatter = DateComponentsFormatter()
+                    //Parse the Date to String representing 'Elapsed Time'
+                    componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+                    componentsFormatter.maximumUnitCount = 1
+                    componentsFormatter.unitsStyle = .abbreviated
+                    
+                    for (index, comment) in self.commentsArray.enumerated() {
+                        
+                        let epochTime = comment.comment.created_at
+                        let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+                        self.commentsArray[index].timeAgo = timeAgo
+                        
+                        //Parse html in the .text parameter to NSAttributedString
+                        //Start working on a background thread - if parsing will not be ready, it will be done 'live' when displaying the row on the main thread
+                        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                            guard let self = self else {
+                                return
+                            }
+                            self.commentsArray[index].attributedString = comment.comment.text?.htmlToAttributedString
+                        }
+                    }
+                    let delta = CFAbsoluteTimeGetCurrent() - t0
+                    print("#LOG Date Formatting & HTML Parsing took \(delta) seconds")
                     
                     DispatchQueue.main.async {
                         self.commentsTableView.reloadData()
                     }
                     
+                    
                 }
                 catch let error {
                     print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
                     print(error)
-                    #warning("Handle UI here")
+                    // TODO: #warning("Handle UI here")
                 }
             }
             
         }.resume()
-            
-        //}
-        
+
     }
     
     // MARK - Data Source
-
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == COMMENT_CELL_SECTION {
-            print("numberOfRowsInSection " + String(self.commentsFlatArray.count))
-            return self.commentsFlatArray.count
+            print("numberOfRowsInSection " + String(self.commentsArray.count))
+            return self.commentsArray.count
         }
         return 1
     }
@@ -172,33 +216,33 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if indexPath.section == COMMENT_CELL_SECTION {
         
-            cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierComment, for: indexPath) as! CommentCell
-            
-            let item = self.commentsFlatArray[indexPath.row].0
-            let depth = self.commentsFlatArray[indexPath.row].1
+            cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierComment, for: indexPath) as? CommentCell
+
+            let item = self.commentsArray[indexPath.row].comment
+            let depth = self.commentsArray[indexPath.row].depth
             
             // Indent cell based on comment depth
             cell.indentationWidth = 15
             cell.indentationLevel = Int(depth)
-            
             // Indent the separator line between the cells
             let separatorIndent = CGFloat(15 + Int(cell.indentationWidth) * Int(cell.indentationLevel))
             cell.separatorInset = UIEdgeInsetsMake(0, separatorIndent, 0, 0)
             
-            cell.commentLabel?.text = item.text?.htmlToString
-            cell.byUserLabel?.text = item.author
-            //cell.depthLabel?.text = String(depth)
+            if let attributedString = self.commentsArray[indexPath.row].attributedString {
+                cell.commentLabel?.attributedText = attributedString
+                print("#LOG Text was already parsed")
+            } else {
+                print("#LOG Parsed text not found. Parsing on the Main Thread.")
+                if let commentText = item.text {
+                    cell.commentLabel.attributedText = commentText.htmlToAttributedString
+                }
+            }
             
-            // Display elapsed time
-            let componentsFormatter = DateComponentsFormatter()
-            componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
-            componentsFormatter.maximumUnitCount = 1
-            componentsFormatter.unitsStyle = .abbreviated
-            let epochTime = item.created_at
-            let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
-            cell.elapsedTimeLabel?.text = timeAgo
+            cell.byUserLabel?.text = item.author
+            cell.elapsedTimeLabel?.text = self.commentsArray[indexPath.row].timeAgo
             
         } else if indexPath.section == STORY_CELL_SECTION {
+            
             cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStory, for: indexPath) as? CommentCell
             
             if let title = self.storyTitle {
@@ -237,10 +281,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             
             if let text = self.storyText {
-                cell.storyText.text = text.htmlToString
+                cell.storyText.attributedText = text.htmlToAttributedString
             }
             
         } else if indexPath.section == STORY_BUTTONS_CELL_SECTION {
+            
             cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStoryButtons, for: indexPath) as? CommentCell
         }
         
@@ -249,42 +294,73 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == COMMENT_CELL_SECTION {
+            if !self.commentsArray[indexPath.row].collapsed {
+                
+                let selectedItemDepth = self.commentsArray[indexPath.row].depth
             
-            let selectedItem = self.commentsFlatArray[indexPath.row].0
-            let selectedItemDepth = self.commentsFlatArray[indexPath.row].1
+                //self.collapsedCellsIndexPaths.append(indexPath)
+                self.commentsArray[indexPath.row].height = 28
+                self.commentsArray[indexPath.row].collapsed = true
+                
+                // Find all the child comments
+                var index = indexPath.row + 1
+                var childCommentsForRemoval: [IndexPath] = []
+                while index < self.commentsArray.count && self.commentsArray[index].depth > selectedItemDepth {
+                    // Construct the array of removed Comments to be able to retrieve them on Expanding the collapsed comment tree
+                    self.commentsArray[indexPath.row].removedComments.append(self.commentsArray[index])
+                    // FIXME: [IndexPath] for rows to be deleted
+                    childCommentsForRemoval.append(IndexPath(row: index, section: COMMENT_CELL_SECTION))
+                    
+                    index = index + 1
+                }
+                
+                if childCommentsForRemoval.count > 0 {
+                    
+                    for childComment in childCommentsForRemoval.sorted(by: >) {
+                        self.commentsArray.remove(at: childComment.row)
+                    }
+                    
+                    self.commentsTableView.performBatchUpdates({
+                        self.commentsTableView.deleteRows(at: childCommentsForRemoval, with: UITableViewRowAnimation.bottom)
+                    }, completion: nil)
+                }
             
-            self.collapsedCellsIndexPaths.append(indexPath)
-            
-            // Find all the child comments, and add them to the hiddenCells array
-            var index = indexPath.row + 1
-            while self.commentsFlatArray[index].1 > selectedItemDepth {
-                self.hiddenCellsIndexPaths.append(IndexPath(row: index, section: COMMENT_CELL_SECTION))
-                index = index + 1
+                //these tell the tableview something changed, and it checks cell heights and animates changes
+                self.commentsTableView.beginUpdates()
+                self.commentsTableView.endUpdates()
+            } else {
+                self.commentsArray[indexPath.row].height = nil
+                self.commentsArray[indexPath.row].collapsed = false
+                
+                if self.commentsArray[indexPath.row].removedComments.count > 0 {
+                    //re-insert the previously removed child comments (with higher depths)
+                    self.commentsArray.insert(contentsOf: self.commentsArray[indexPath.row].removedComments, at: indexPath.row + 1)
+                    
+                    var indexPaths: [IndexPath] = []
+                    for (index, _) in self.commentsArray[indexPath.row].removedComments.enumerated() {
+                        indexPaths.append(IndexPath(row: index + indexPath.row + 1, section: COMMENT_CELL_SECTION))
+                    }
+                    self.commentsTableView.insertRows(at: indexPaths, with: UITableViewRowAnimation.bottom)
+                    self.commentsArray[indexPath.row].removedComments.removeAll()
+                    
+                }
+                self.commentsTableView.beginUpdates()
+                self.commentsTableView.endUpdates()
+                
             }
-            
-            //these tell the tableview something changed, and it checks cell heights and animates changes
-            self.commentsTableView.beginUpdates()
-            self.commentsTableView.endUpdates()
         }
         
         
     }
     
-    internal var hiddenCellsIndexPaths: [IndexPath] = []
-    internal var collapsedCellsIndexPaths: [IndexPath] = []
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if self.collapsedCellsIndexPaths.contains(indexPath) {
-            let size = CGFloat(integerLiteral: 25)
-            
-            return size
-        } else if self.hiddenCellsIndexPaths.contains(indexPath) {
-            let size = CGFloat(integerLiteral: 0)
-            
-            return size
-        } else {
-            return UITableViewAutomaticDimension
+        if indexPath.section == COMMENT_CELL_SECTION && self.commentsArray.count > 0 {
+            if let height = self.commentsArray[indexPath.row].height {
+                return CGFloat(integerLiteral: height)
+            }
         }
+        return UITableViewAutomaticDimension
     }
 
     

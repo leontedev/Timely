@@ -158,7 +158,7 @@ class MasterViewController: UITableViewController {
         
         if let url = urlComponents.url {
         
-            let task = defaultSession.dataTask(with: url) { responseData, response, error in
+            _ = defaultSession.dataTask(with: url) { responseData, response, error in
                 
                     if let error = error {
                         // TODO: Handle error (call function) - client side
@@ -173,7 +173,7 @@ class MasterViewController: UITableViewController {
                     }
                 
                     if let mimeType = httpResponse.mimeType, mimeType == "application/json", let data = responseData {
-                        print("JSON String: \(String(data: data, encoding: .utf8))")
+                        //print("JSON String: \(String(data: data, encoding: .utf8))")
                         
                         do {
                             let decoder = JSONDecoder()
