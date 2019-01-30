@@ -171,15 +171,15 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         
                         //Parse html in the .text parameter to NSAttributedString
                         //Start working on a background thread - if parsing will not be ready, it will be done 'live' when displaying the row on the main thread
-                        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                            guard let self = self else {
-                                return
-                            }
-                            self.commentsArray[index].attributedString = comment.comment.text?.htmlToAttributedString
-                        }
+//                        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+//                            guard let self = self else {
+//                                return
+//                            }
+//                            self.commentsArray[index].attributedString = comment.comment.text?.htmlToAttributedString
+//                        }
                     }
                     let delta = CFAbsoluteTimeGetCurrent() - t0
-                    print("#LOG Date Formatting & HTML Parsing took \(delta) seconds")
+                    print("#LOG Date Formatting took \(delta) seconds")
                     
                     DispatchQueue.main.async {
                         self.commentsTableView.reloadData()
@@ -228,15 +228,18 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let separatorIndent = CGFloat(15 + Int(cell.indentationWidth) * Int(cell.indentationLevel))
             cell.separatorInset = UIEdgeInsetsMake(0, separatorIndent, 0, 0)
             
-            if let attributedString = self.commentsArray[indexPath.row].attributedString {
-                cell.commentLabel?.attributedText = attributedString
-                print("#LOG Text was already parsed")
-            } else {
-                print("#LOG Parsed text not found. Parsing on the Main Thread.")
-                if let commentText = item.text {
-                    cell.commentLabel.attributedText = commentText.htmlToAttributedString
-                }
+            if let commentText = item.text {
+                cell.configure(htmlText: commentText)
             }
+//            if let attributedString = self.commentsArray[indexPath.row].attributedString {
+//                cell.commentLabel?.attributedText = attributedString
+//                print("#LOG Text was already parsed")
+//            } else {
+//                print("#LOG Parsed text not found. Parsing on the Main Thread.")
+//                if let commentText = item.text {
+//                    cell.commentLabel.attributedText = commentText.htmlToAttributedString
+//                }
+//            }
             
             cell.byUserLabel?.text = item.author
             cell.elapsedTimeLabel?.text = self.commentsArray[indexPath.row].timeAgo

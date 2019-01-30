@@ -26,9 +26,12 @@
 		893FB67420B8494D007771A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893FB67220B8494D007771A3 /* LaunchScreen.storyboard */; };
 		894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894B80BC20B95D7E002C313E /* ItemCell.swift */; };
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
+		89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */; };
+		BB51F4A25D03D00A13F46680 /* Pods_Timely2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Timely2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89089F5821C7FA43005E42B3 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		89089F5A21CD2C20005E42B3 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		89089F5C21CD49B7005E42B3 /* FeedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDataSource.swift; sourceTree = "<group>"; };
@@ -52,6 +55,11 @@
 		893FB67520B8494D007771A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		894B80BC20B95D7E002C313E /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		89A8A31F20DBA607007A8664 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		89DAB65721FF4CBE004390D9 /* DTCoreTextStub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTCoreTextStub.h; sourceTree = "<group>"; };
+		89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTCoreTextStub.m; sourceTree = "<group>"; };
+		89DAB65B21FF4D8C004390D9 /* Timely2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Timely2-Bridging-Header.h"; sourceTree = "<group>"; };
+		99349D8584915D52F7F05DBB /* Pods-Timely2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Timely2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Timely2/Pods-Timely2.debug.xcconfig"; sourceTree = "<group>"; };
+		CCEC6EF8B0C70B4D3CCFF889 /* Pods-Timely2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Timely2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Timely2/Pods-Timely2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +68,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */,
+				BB51F4A25D03D00A13F46680 /* Pods_Timely2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		39D440D4B7363C3287E3CC2B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				99349D8584915D52F7F05DBB /* Pods-Timely2.debug.xcconfig */,
+				CCEC6EF8B0C70B4D3CCFF889 /* Pods-Timely2.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		89095A2221DFB03100FAEDF2 /* Playgrounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +99,9 @@
 				89095A2621E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift */,
 				89336B2421E6237D00822673 /* JSONResponseParser.swift */,
 				89336B2621E7918C00822673 /* HTMLParser.swift */,
+				89DAB65721FF4CBE004390D9 /* DTCoreTextStub.h */,
+				89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */,
+				89DAB65B21FF4D8C004390D9 /* Timely2-Bridging-Header.h */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -91,6 +112,7 @@
 				893FB66620B8494A007771A3 /* Timely2 */,
 				893FB66520B8494A007771A3 /* Products */,
 				894B80C220B968DE002C313E /* Frameworks */,
+				39D440D4B7363C3287E3CC2B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -155,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				89A8A31F20DBA607007A8664 /* StoreKit.framework */,
+				4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -166,10 +189,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 893FB67820B8494D007771A3 /* Build configuration list for PBXNativeTarget "Timely2" */;
 			buildPhases = (
+				8E1B1FCFFBDC72925DF86F7F /* [CP] Check Pods Manifest.lock */,
 				893FB66020B8494A007771A3 /* Sources */,
 				893FB66120B8494A007771A3 /* Frameworks */,
 				893FB66220B8494A007771A3 /* Resources */,
 				894B80C720B9695D002C313E /* ShellScript */,
+				5829065095D51424AE626D2D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -192,6 +217,7 @@
 				TargetAttributes = {
 					893FB66320B8494A007771A3 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1010;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -233,6 +259,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5829065095D51424AE626D2D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Timely2/Pods-Timely2-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DTCoreText/DTCoreText.framework",
+				"${BUILT_PRODUCTS_DIR}/DTFoundation/DTFoundation.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTCoreText.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTFoundation.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Timely2/Pods-Timely2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		894B80C720B9695D002C313E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -246,6 +292,24 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
+		8E1B1FCFFBDC72925DF86F7F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Timely2-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -258,6 +322,7 @@
 				89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */,
 				89089F5D21CD49B7005E42B3 /* FeedDataSource.swift in Sources */,
 				89089F5B21CD2C20005E42B3 /* Feed.swift in Sources */,
+				89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */,
 				893FB66C20B8494B007771A3 /* DetailViewController.swift in Sources */,
 				891E119A2143CD2900871615 /* Item.swift in Sources */,
 				89336B2521E6237D00822673 /* JSONResponseParser.swift in Sources */,
@@ -408,8 +473,10 @@
 		};
 		893FB67920B8494D007771A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99349D8584915D52F7F05DBB /* Pods-Timely2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V7S7GB28P7;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -423,6 +490,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mihaileonte.Timely2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Timely2/Extensions/Timely2-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -430,8 +499,10 @@
 		};
 		893FB67A20B8494D007771A3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCEC6EF8B0C70B4D3CCFF889 /* Pods-Timely2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V7S7GB28P7;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -445,6 +516,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mihaileonte.Timely2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Timely2/Extensions/Timely2-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
