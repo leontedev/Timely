@@ -25,6 +25,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var urlDescriptionLabel: UILabel!
     @IBOutlet weak var commentStackView: UIStackView!
     
+    @IBOutlet weak var noCommentsLabel: UILabel!
+    
     
     var detailItem: Item?
     var algoliaItem: AlgoliaItem?
@@ -82,6 +84,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if let _ = story.num_comments {
                 fetchComments(forItemID: story.objectID)
             }
+        }
+        
+        if storyNumComments == 0 {
+            print("Story contains No Comments")
+            self.noCommentsLabel.isHidden = false
         }
         
         
