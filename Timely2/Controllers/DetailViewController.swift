@@ -266,15 +266,12 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
 
             if let attributedString = self.commentsArray[indexPath.row].attributedString {
-                // cell.commentLabel?.attributedText = attributedString
                 cell.commentTextView?.attributedText = attributedString
-                //print("#LOG Text was already parsed")
             } else {
                 print("#LOG Parsed text not found. Parsing on the Main Thread.")
                 if let commentText = item.text {
-                    
-                    // cell.commentLabel.attributedText = commentText.htmlToAttributedString
-                    cell.commentTextView.attributedText = commentText.htmlToAttributedString
+                    // Use Apple's HTML to Attributed String parser and trimit whitespaces and extra new lines
+                    cell.commentTextView.attributedText = commentText.htmlToAttributedString?.trimmingCharacters(in: .whitespacesAndNewlines)
                 }
             }
             
