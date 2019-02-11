@@ -23,6 +23,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var commentsTableView: UITableView!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var urlDescriptionLabel: UILabel!
+    @IBOutlet weak var commentStackView: UIStackView!
+    
     
     var detailItem: Item?
     var algoliaItem: AlgoliaItem?
@@ -169,8 +171,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     
                     var options = [
                         DTCoreTextStub.kDTCoreTextOptionKeyFontSize(): NSNumber(value: Float(fontSize)),
-                        DTCoreTextStub.kDTCoreTextOptionKeyFontName(): "HelveticaNeue",
-                        DTCoreTextStub.kDTCoreTextOptionKeyFontFamily(): "Helvetica Neue",
+                        DTCoreTextStub.kDTCoreTextOptionKeyFontName(): UIFont.systemFont(ofSize: 14).fontName, //"HelveticaNeue",
+                        DTCoreTextStub.kDTCoreTextOptionKeyFontFamily(): UIFont.systemFont(ofSize: 14).familyName, //"Helvetica Neue",
                         DTCoreTextStub.kDTCoreTextOptionKeyUseiOS6Attributes(): NSNumber(value: true),
                         DTCoreTextStub.kDTCoreTextOptionKeyTextColor(): color] as [String? : Any]
                     
@@ -193,9 +195,10 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                                     return
                                 }
                                 
-                                let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+                                let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString.trimmingCharacters(in: .whitespacesAndNewlines))
+                                
                                 let range = NSMakeRange(0, attributedString.length)
-                                mutableAttributedString.mutableString.replaceOccurrences(of: "\n", with: "", options: NSString.CompareOptions.caseInsensitive, range: range)
+                                mutableAttributedString.mutableString.replaceOccurrences(of: "\n\n", with: "\n", options: NSString.CompareOptions.caseInsensitive, range: range)
                                 
 //                                var style = NSMutableParagraphStyle()
 //                                style.lineSpacing = 3.5
@@ -208,7 +211,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
                     }
                     let delta = CFAbsoluteTimeGetCurrent() - t0
-                    print("#LOG Date Formatting & HTML Parsing took \(delta) seconds")
+                    print("#LOG Date Formatting & starting HTML Parsing (on a background thread) took \(delta) seconds")
                     
                     DispatchQueue.main.async {
                         self.commentsTableView.reloadData()
@@ -251,23 +254,27 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let depth = self.commentsArray[indexPath.row].depth
             
             // Indent cell based on comment depth
-            cell.indentationWidth = 15
-            cell.indentationLevel = Int(depth)
+            let indent = CGFloat(depth) * 15
+            cell.commentStackView.layoutMargins = UIEdgeInsets(top: 0, left: indent, bottom: 0, right: 0)
+            cell.commentStackView.isLayoutMarginsRelativeArrangement = true
+            //cell.indentationWidth = 15
+            //cell.indentationLevel = Int(depth)
+            
             // Indent the separator line between the cells
-            let separatorIndent = CGFloat(15 + Int(cell.indentationWidth) * Int(cell.indentationLevel))
+            let separatorIndent = CGFloat(15 + indent)
             cell.separatorInset = UIEdgeInsetsMake(0, separatorIndent, 0, 0)
             
-            
-//            if let commentText = item.text {
-//                cell.configure(htmlText: commentText)
-//            }
+
             if let attributedString = self.commentsArray[indexPath.row].attributedString {
-                cell.commentLabel?.attributedText = attributedString
+                // cell.commentLabel?.attributedText = attributedString
+                cell.commentTextView?.attributedText = attributedString
                 //print("#LOG Text was already parsed")
             } else {
                 print("#LOG Parsed text not found. Parsing on the Main Thread.")
                 if let commentText = item.text {
-                    cell.commentLabel.attributedText = commentText.htmlToAttributedString
+                    
+                    // cell.commentLabel.attributedText = commentText.htmlToAttributedString
+                    cell.commentTextView.attributedText = commentText.htmlToAttributedString
                 }
             }
             

@@ -11,19 +11,7 @@ import UIKit
 //import DTFoundation
 
 class CommentCell: UITableViewCell {
-    static let reuseIdentifierComment = "CommentCell"
-    
-    @IBOutlet weak var commentLabel: UILabel!
-    @IBOutlet weak var elapsedTimeLabel: UILabel!
-    @IBOutlet weak var byUserLabel: UILabel!
-    @IBOutlet weak var depthLabel: UILabel!
-    
-    override func layoutSubviews() {
-        // Custom layout cells don't apply indentationLevel automatically. We need to update layoutMargins manually
-        super.layoutSubviews()
-        contentView.layoutMargins.left = layoutMargins.left + CGFloat(indentationLevel) * indentationWidth
-    }
-    
+    // First static cell which contains the Story Information
     static let reuseIdentifierStory = "StoryCell"
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -34,7 +22,26 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var storyPoints: UILabel!
     @IBOutlet weak var storyText: UILabel!
     
+    
+    // Second static cell which contains the buttons for the Story actions
     static let reuseIdentifierStoryButtons = "StoryButtonsCell"
+    
+    
+    // Third dynamic cell - which contain the comments
+    static let reuseIdentifierComment = "CommentCell"
+    
+    //@IBOutlet weak var commentLabel: UILabel!
+    @IBOutlet weak var commentTextView: UITextView!
+    @IBOutlet weak var elapsedTimeLabel: UILabel!
+    @IBOutlet weak var byUserLabel: UILabel!
+    @IBOutlet weak var depthLabel: UILabel!
+    @IBOutlet weak var commentStackView: UIStackView!
+    
+    override func layoutSubviews() {
+        // Custom layout cells don't apply indentationLevel automatically. We need to update layoutMargins manually
+        super.layoutSubviews()
+        contentView.layoutMargins.left = layoutMargins.left + CGFloat(indentationLevel) * indentationWidth
+    }
     
 
 }
