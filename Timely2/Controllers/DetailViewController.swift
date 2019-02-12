@@ -19,6 +19,8 @@ struct CommentSource {
 }
 
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    let COLLAPSED_ROW_HEIGHT = 38
 
     @IBOutlet weak var commentsTableView: UITableView!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
@@ -33,7 +35,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var fetchedComment: Comment? = nil
     typealias Depth = Int
-    //var commentsFlatArray: [(Comment, Depth)] = []
+
     var commentsArray: [CommentSource] = []
     
     let STORY_CELL_SECTION = 0
@@ -89,9 +91,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if storyNumComments == 0 {
             print("Story contains No Comments")
             self.noCommentsLabel.isHidden = false
+        } else {
+            
         }
-        
-        
     
     }
     
@@ -343,7 +345,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let selectedItemDepth = self.commentsArray[indexPath.row].depth
             
                 //self.collapsedCellsIndexPaths.append(indexPath)
-                self.commentsArray[indexPath.row].height = 28
+                self.commentsArray[indexPath.row].height = self.COLLAPSED_ROW_HEIGHT
                 self.commentsArray[indexPath.row].collapsed = true
                 
                 // Find all the child comments
@@ -365,7 +367,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                     
                     self.commentsTableView.performBatchUpdates({
-                        self.commentsTableView.deleteRows(at: childCommentsForRemoval, with: UITableViewRowAnimation.bottom)
+                        self.commentsTableView.deleteRows(at: childCommentsForRemoval, with: UITableViewRowAnimation.fade)
                     }, completion: nil)
                 }
             
@@ -394,7 +396,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         
-        
+        commentsTableView.deselectRow(at: indexPath, animated: false)
     }
     
     
@@ -406,6 +408,13 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         return UITableViewAutomaticDimension
     }
+    
+    // To deselect the collapsed/expanded cell upon reload (otherwise it remains highligted)
+//    override func viewWillAppear(_ animated: Bool) {
+//        if let index = self.commentsTableView.indexPathForSelectedRow{
+//            self.commentsTableView.deselectRow(at: index, animated: true)
+//        }
+//    }
 
     
 }
