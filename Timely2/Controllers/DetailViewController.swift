@@ -396,6 +396,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         
+        // To deselect the collapsed/expanded cell upon reload (otherwise it remains highligted)
         commentsTableView.deselectRow(at: indexPath, animated: false)
     }
     
@@ -408,13 +409,5 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         return UITableViewAutomaticDimension
     }
-    
-    // To deselect the collapsed/expanded cell upon reload (otherwise it remains highligted)
-//    override func viewWillAppear(_ animated: Bool) {
-//        if let index = self.commentsTableView.indexPathForSelectedRow{
-//            self.commentsTableView.deselectRow(at: index, animated: true)
-//        }
-//    }
-
     
 }
