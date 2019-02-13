@@ -8,6 +8,26 @@
 
 import UIKit
 
+enum State {
+    
+    case loading
+    //case paging([Recording], next: Int)
+    case populated
+    case empty
+    case error(Error)
+    
+//    var currentRecordings: [Recording] {
+//        switch self {
+//        case .paging(let recordings, _):
+//            return recordings
+//        case .populated(let recordings):
+//            return recordings
+//        default:
+//            return []
+//        }
+//    }
+}
+
 struct CommentSource {
     var comment: Comment
     var depth: Int
