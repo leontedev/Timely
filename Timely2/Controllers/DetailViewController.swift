@@ -7,6 +7,8 @@
 //
 
 import UIKit
+//
+import Network
 
 enum State {
     
@@ -41,21 +43,33 @@ struct CommentSource {
 class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let COLLAPSED_ROW_HEIGHT = 38
-
+    
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var emptyView: UIView!
+    @IBOutlet weak var errorView: UIView!
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     @IBOutlet weak var commentsTableView: UITableView!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var urlDescriptionLabel: UILabel!
     @IBOutlet weak var commentStackView: UIStackView!
-    
     @IBOutlet weak var noCommentsLabel: UILabel!
     
+    //let monitor = NWPathMonitor()
+    
+    var state = State.loading {
+        didSet {
+            print(state)
+            setFooterView()
+            commentsTableView.reloadData()
+        }
+    }
     
     var detailItem: Item?
     var algoliaItem: AlgoliaItem?
-    
     var fetchedComment: Comment? = nil
     typealias Depth = Int
-
     var commentsArray: [CommentSource] = []
     
     let STORY_CELL_SECTION = 0
@@ -77,6 +91,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         commentsTableView.estimatedRowHeight = 100
         commentsTableView.rowHeight = UITableViewAutomaticDimension
         commentsTableView.dataSource = self
+        
+        activityIndicator.color = UIColor.lightGray
         
         if let story = self.detailItem {
             //Update UI
@@ -110,9 +126,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if storyNumComments == 0 {
             print("Story contains No Comments")
-            self.noCommentsLabel.isHidden = false
-        } else {
-            
+            self.state = .empty
+            // FIXME
+            //self.noCommentsLabel.isHidden = false
         }
     
     }
@@ -150,7 +166,12 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         
-            
+        // TODO: implement network check - requires iOS 12.0
+//        if monitor.currentPath == NWPath.Status.unsatisfied {
+//            self.state = .error(HNError.network)
+//        } else {
+        self.state = .loading
+        
         let configuration = URLSessionConfiguration.default
         configuration.waitsForConnectivity = true
         configuration.httpMaximumConnectionsPerHost = 2
@@ -158,12 +179,21 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         
         let commentUrl = "http://hn.algolia.com/api/v1/items/\(storyID)"
-        let commentRequest = URLRequest(url: URL(string: commentUrl)!)
+        guard let url = URL(string: commentUrl) else {
+            state = .error(HNError.badURL(fromString: commentUrl))
+            return
+        }
+        let commentRequest = URLRequest(url: url)
         
         _ = defaultSession.dataTask(with: commentRequest) { data, response, error in
-    
+            
+            if let responseError = error {
+                self.state = .error(responseError)
+                return
+            }
+            
             let statusCode = (response as! HTTPURLResponse).statusCode
-            //print(statusCode)
+            
             if let data = data, statusCode == 200 {
                 do {
                     let decoder = JSONDecoder()
@@ -198,7 +228,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     let color = UIColor.black
                     let fontSize: Float = 14
                     
-                    var options = [
+                    let options = [
                         DTCoreTextStub.kDTCoreTextOptionKeyFontSize(): NSNumber(value: Float(fontSize)),
                         DTCoreTextStub.kDTCoreTextOptionKeyFontName(): UIFont.systemFont(ofSize: 14).fontName, //"HelveticaNeue",
                         DTCoreTextStub.kDTCoreTextOptionKeyFontFamily(): UIFont.systemFont(ofSize: 14).familyName, //"Helvetica Neue",
@@ -243,6 +273,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     print("#LOG Date Formatting & starting HTML Parsing (on a background thread) took \(delta) seconds")
                     
                     DispatchQueue.main.async {
+                        self.state = .populated
                         self.commentsTableView.reloadData()
                     }
                     
@@ -250,9 +281,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
                 catch let error {
                     print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
-                    print(error)
-                    // TODO: #warning("Handle UI here")
+                    self.state = .error(HNError.parsingJSON("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription))
                 }
+            } else {
+                // FIXME: Attach response status code
+                self.state = .error(HNError.network)
             }
             
         }.resume()
@@ -430,4 +463,26 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return UITableViewAutomaticDimension
     }
     
+    // MARK: - View Config
+    
+    func setFooterView() {
+        
+        switch state {
+            
+        case .error(let error):
+            errorLabel.text = error.localizedDescription
+            commentsTableView.tableFooterView = errorView
+        case .loading:
+            commentsTableView.tableFooterView = loadingView
+        //    case .paging:
+        //        tableView.tableFooterView = loadingView
+        case .empty:
+            commentsTableView.tableFooterView = emptyView
+        case .populated:
+            commentsTableView.tableFooterView = nil
+        }
+        
+    }
 }
+
+

@@ -19,6 +19,7 @@ class MasterViewController: UITableViewController {
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
+    
     @IBOutlet weak var feedButton: UIBarButtonItem!
     @IBOutlet var feedPopoverView: UIView!
     @IBOutlet weak var cancelFeedButton: UIBarButtonItem!
@@ -39,9 +40,11 @@ class MasterViewController: UITableViewController {
         let myFeeds: [Feed] = loadFeedsFromFile()
         setFeedTableView(with: myFeeds)
         customizeFeedPopoverView()
+        
+        
         setUpPullToRefresh()
         
-        activityIndicator.color = darkGreen
+        activityIndicator.color = UIColor.lightGray
         
         if let split = splitViewController {
             let controllers = split.viewControllers
