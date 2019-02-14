@@ -10,15 +10,19 @@ import UIKit
 
 class MasterViewController: UITableViewController {
     
-    var topStories: [Item] = []
-    var algoliaStories: [AlgoliaItem] = []
-    var currentSourceAPI: HNFeedType = .official
-    
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
+    
+    var state = State.loading {
+        didSet {
+            print(state)
+            setFooterView()
+            tableView.reloadData()
+        }
+    }
     
     @IBOutlet weak var feedButton: UIBarButtonItem!
     @IBOutlet var feedPopoverView: UIView!
@@ -27,8 +31,12 @@ class MasterViewController: UITableViewController {
     @IBOutlet weak var headerTitle: UINavigationItem!
     
     var detailViewController: DetailViewController? = nil
-    let darkGreen = UIColor(red: 11/255, green: 86/255, blue: 14/255, alpha: 1)
     var myRefreshControl: UIRefreshControl?
+    
+    var topStories: [Item] = []
+    var algoliaStories: [AlgoliaItem] = []
+    var currentSourceAPI: HNFeedType = .official
+    
     let topStoriesURL = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     var blurEffectView: UIView = UIView()
     var feedDataSource: FeedDataSource!
@@ -37,14 +45,13 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        activityIndicator.color = UIColor.lightGray
+        
         let myFeeds: [Feed] = loadFeedsFromFile()
         setFeedTableView(with: myFeeds)
         customizeFeedPopoverView()
         
-        
         setUpPullToRefresh()
-        
-        activityIndicator.color = UIColor.lightGray
         
         if let split = splitViewController {
             let controllers = split.viewControllers
@@ -55,6 +62,8 @@ class MasterViewController: UITableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         tableView.dataSource = self
         
+        
+        // FIXME: default Feed on opening the app
         self.headerTitle.title = "HN Top Stories"
         fetchStoryIDs(from: topStoriesURL)
         
@@ -110,10 +119,8 @@ class MasterViewController: UITableViewController {
     }
     
     @objc func refreshData(sender: UIRefreshControl) {
-        print("refreshing data")
-        
+        self.state = .loading
         fetchStoryIDs(from: topStoriesURL)
-        
         sender.endRefreshing()
     }
     
@@ -164,14 +171,13 @@ class MasterViewController: UITableViewController {
             _ = defaultSession.dataTask(with: url) { responseData, response, error in
                 
                     if let error = error {
-                        // TODO: Handle error (call function) - client side
-                        print(error)
+                        self.state = .error(error)
                         return
                     }
                 
                     guard let httpResponse = response as? HTTPURLResponse,
                         (200...299).contains(httpResponse.statusCode) else {
-                            // TODO: Handle error (call function) - server side
+                            self.state = .error(HNError.network)
                             return
                     }
                 
@@ -185,11 +191,11 @@ class MasterViewController: UITableViewController {
                             
                             DispatchQueue.main.async {
                                 self.algoliaStories = stories.hits
-                                self.tableView.reloadData()
+                                self.state = .populated
+                                //self.tableView.reloadData()
                             }
                         } catch let error {
-                            print(error)
-                            // TODO: Handle error (parse Json)
+                            self.state = .error(HNError.parsingJSON(error.localizedDescription))
                         }
                     }
             }.resume()
@@ -204,14 +210,13 @@ class MasterViewController: UITableViewController {
                 // TODO - could this be moved only on the reload of the tableView?
                 DispatchQueue.main.async {
                     if let error = error {
-                        // TODO: Handle error (call function) - client side
-                        print(error)
+                        self.state = .error(error)
                         return
                     }
                     
                     guard let httpResponse = response as? HTTPURLResponse,
                         (200...299).contains(httpResponse.statusCode) else {
-                            // TODO: Handle error (call function) - server side
+                            self.state = .error(HNError.network)
                             return
                     }
                     
@@ -223,12 +228,13 @@ class MasterViewController: UITableViewController {
                             for storyId in stories.prefix(20) {
                                 self.topStories.append(Item(id: storyId))
                             }
-                            self.tableView.reloadData()
+                            
+                            self.state = .populated
+                            //self.tableView.reloadData()
                             self.fetchItems()
                             
                         } catch let error {
-                            print(error)
-                            // TODO: Handle error (parse Json)
+                            self.state = .error(HNError.parsingJSON(error.localizedDescription))
                         }
                     }
                 }
@@ -462,11 +468,35 @@ class MasterViewController: UITableViewController {
 
         return cell
     }
+    
+    func setFooterView() {
+        
+        switch state {
+            
+        case .error(let error):
+            errorLabel.text = error.localizedDescription
+            tableView.tableFooterView = errorView
+
+        case .loading:
+            tableView.tableFooterView = loadingView
+
+//      case .paging:
+//          tableView.tableFooterView = loadingView
+            
+        case .empty:
+            tableView.tableFooterView = emptyView
+            
+        case .populated:
+            tableView.tableFooterView = nil
+        }
+        
+    }
 }
 
 extension MasterViewController: CellFeedProtocol {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
         closePopoverView()
+        self.state = .loading
         
         self.headerTitle.title = title
         self.currentSourceAPI = type

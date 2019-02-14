@@ -15,6 +15,7 @@
 		89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89095A2821E321F100FAEDF2 /* AlgoliaItem.swift */; };
 		8918A73420BC784E00129A0E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8918A73320BC784E00129A0E /* CommentCell.swift */; };
 		891E03A72213E9240001DB63 /* HNError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891E03A62213E9240001DB63 /* HNError.swift */; };
+		891E03A92215C2DD0001DB63 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891E03A82215C2DD0001DB63 /* State.swift */; };
 		891E119A2143CD2900871615 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891E11992143CD2900871615 /* Item.swift */; };
 		892749ED21D50BF100E67546 /* FeedList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 892749EC21D50BF100E67546 /* FeedList.plist */; };
 		89336B2521E6237D00822673 /* JSONResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89336B2421E6237D00822673 /* JSONResponseParser.swift */; };
@@ -44,6 +45,7 @@
 		89095A2821E321F100FAEDF2 /* AlgoliaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaItem.swift; sourceTree = "<group>"; };
 		8918A73320BC784E00129A0E /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		891E03A62213E9240001DB63 /* HNError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HNError.swift; sourceTree = "<group>"; };
+		891E03A82215C2DD0001DB63 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		891E11992143CD2900871615 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		892749EC21D50BF100E67546 /* FeedList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FeedList.plist; sourceTree = "<group>"; };
 		89336B2421E6237D00822673 /* JSONResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResponseParser.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				89089F5A21CD2C20005E42B3 /* Feed.swift */,
 				892749EC21D50BF100E67546 /* FeedList.plist */,
 				891E03A62213E9240001DB63 /* HNError.swift */,
+				891E03A82215C2DD0001DB63 /* State.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */,
 				891E03A72213E9240001DB63 /* HNError.swift in Sources */,
 				89089F5D21CD49B7005E42B3 /* FeedDataSource.swift in Sources */,
+				891E03A92215C2DD0001DB63 /* State.swift in Sources */,
 				89089F5B21CD2C20005E42B3 /* Feed.swift in Sources */,
 				89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */,
 				893FB66C20B8494B007771A3 /* DetailViewController.swift in Sources */,

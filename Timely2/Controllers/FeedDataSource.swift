@@ -41,6 +41,7 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         let feedURLstring = feed[indexPath.row].feedURL
         guard var feedURLComponents = URLComponents(string: feedURLstring) else {
             #warning("FeedList didSelectRowAt - when URL is malformed error message")
+            //self.state = .error(HNError.badURL(fromString: feedURLstring))
             return
         }
         
@@ -65,6 +66,7 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         
 
         self.cellDelegate?.didTapCell(feedURL: feedURLComponents, title: feedName, type: feedType)
+        
         if let feedURL = feedURLComponents.url {
             print(feedURL)
         }

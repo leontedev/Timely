@@ -7,28 +7,6 @@
 //
 
 import UIKit
-//
-import Network
-
-enum State {
-    
-    case loading
-    //case paging([Recording], next: Int)
-    case populated
-    case empty
-    case error(Error)
-    
-//    var currentRecordings: [Recording] {
-//        switch self {
-//        case .paging(let recordings, _):
-//            return recordings
-//        case .populated(let recordings):
-//            return recordings
-//        default:
-//            return []
-//        }
-//    }
-}
 
 struct CommentSource {
     var comment: Comment
@@ -60,7 +38,6 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var state = State.loading {
         didSet {
-            print(state)
             setFooterView()
             commentsTableView.reloadData()
         }
@@ -127,6 +104,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if storyNumComments == 0 {
             print("Story contains No Comments")
             self.state = .empty
+            
             // FIXME
             //self.noCommentsLabel.isHidden = false
         }
