@@ -361,109 +361,118 @@ class MasterViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
         
         switch self.currentSourceAPI {
+            
         case .official:
-            let item = self.topStories[indexPath.row]
             
-            if cell.accessoryView == nil {
-                let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-                cell.accessoryView = indicator
-            }
-            let indicator = cell.accessoryView as! UIActivityIndicatorView
-            
-            if let itemTitle = item.title {
-                cell.titleLabel?.text = itemTitle
+            if self.topStories.indices.contains(indexPath.row) {
+                let item = self.topStories[indexPath.row]
+                
+                if cell.accessoryView == nil {
+                    let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+                    cell.accessoryView = indicator
+                }
+                let indicator = cell.accessoryView as! UIActivityIndicatorView
+                
+                if let itemTitle = item.title {
+                    cell.titleLabel?.text = itemTitle
+                } else {
+                    cell.titleLabel?.text = "Loading..."
+                }
+                
+                if let itemURL = item.url?.host {
+                    cell.urlLabel?.text = itemURL
+                } else {
+                    cell.urlLabel?.text = "Story ID: " + String(item.id)
+                }
+                
+                
+                if let itemDescendants = item.descendants {
+                    cell.commentsCountLabel?.text = String(itemDescendants)
+                } else {
+                    cell.commentsCountLabel?.text = "-"
+                }
+                
+                if let itemScore = item.score {
+                    cell.upvotesCountLabel?.text = String(itemScore)
+                } else {
+                    cell.upvotesCountLabel?.text = "-"
+                }
+                
+                if let epochTime = item.time {
+                    // Display elapsed time
+                    let componentsFormatter = DateComponentsFormatter()
+                    componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+                    componentsFormatter.maximumUnitCount = 1
+                    componentsFormatter.unitsStyle = .abbreviated
+                    
+                    
+                    let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+                    cell.elapsedTimeLabel?.text = timeAgo
+                } else {
+                    cell.elapsedTimeLabel?.text = "-"
+                }
+                
+                switch (item.state) {
+                case .downloaded?:
+                    indicator.stopAnimating()
+                case .failed?:
+                    indicator.stopAnimating()
+                    cell.titleLabel?.text = "Failed to load"
+                case .downloading?:
+                    cell.titleLabel?.text = "Download in progress..."
+                case .new?:
+                    indicator.startAnimating()
+                    //if !tableView.isDragging && !tableView.isDecelerating
+                //startDownload(for: item, at: indexPath)
+                case nil:
+                    print("Error nil state to be displayed")
+                }
             } else {
-                cell.titleLabel?.text = "Loading..."
+                self.state = .error(HNError.network("Invalid Response."))
+                
             }
             
-            if let itemURL = item.url?.host {
-                cell.urlLabel?.text = itemURL
-            } else {
-                cell.urlLabel?.text = "Story ID: " + String(item.id)
-            }
+        case .algolia, .timely:
             
-            
-            if let itemDescendants = item.descendants {
-                cell.commentsCountLabel?.text = String(itemDescendants)
-            } else {
-                cell.commentsCountLabel?.text = "-"
-            }
-            
-            if let itemScore = item.score {
-                cell.upvotesCountLabel?.text = String(itemScore)
-            } else {
-                cell.upvotesCountLabel?.text = "-"
-            }
-            
-            if let epochTime = item.time {
-                // Display elapsed time
+            if self.algoliaStories.indices.contains(indexPath.row) {
+                let item = self.algoliaStories[indexPath.row]
+                
+                if let itemTitle = item.title {
+                    cell.titleLabel?.text = itemTitle
+                } else {
+                    cell.titleLabel?.text = "Loading..."
+                }
+
+                if let itemURL = item.url?.host {
+                    cell.urlLabel?.text = itemURL
+                } else {
+                    cell.urlLabel?.text = "Story ID: " + String(item.objectID)
+                }
+
+
+                if let itemDescendants = item.num_comments {
+                    cell.commentsCountLabel?.text = String(itemDescendants)
+                } else {
+                    cell.commentsCountLabel?.text = "-"
+                }
+
+                if let itemScore = item.points {
+                    cell.upvotesCountLabel?.text = String(itemScore)
+                } else {
+                    cell.upvotesCountLabel?.text = "-"
+                }
+
+                
+                
                 let componentsFormatter = DateComponentsFormatter()
                 componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
                 componentsFormatter.maximumUnitCount = 1
                 componentsFormatter.unitsStyle = .abbreviated
-                
-                
-                let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+                let timeAgo = componentsFormatter.string(from: item.created_at, to: Date())
                 cell.elapsedTimeLabel?.text = timeAgo
             } else {
-                cell.elapsedTimeLabel?.text = "-"
+                self.state = .error(HNError.network("Invalid Response."))
             }
-            
-            switch (item.state) {
-            case .downloaded?:
-                indicator.stopAnimating()
-            case .failed?:
-                indicator.stopAnimating()
-                cell.titleLabel?.text = "Failed to load"
-            case .downloading?:
-                cell.titleLabel?.text = "Download in progress..."
-            case .new?:
-                indicator.startAnimating()
-                //if !tableView.isDragging && !tableView.isDecelerating
-            //startDownload(for: item, at: indexPath)
-            case nil:
-                print("Error nil state to be displayed")
-            }
-            
-        case .algolia, .timely:
-            let item = self.algoliaStories[indexPath.row]
-            
-            if let itemTitle = item.title {
-                cell.titleLabel?.text = itemTitle
-            } else {
-                cell.titleLabel?.text = "Loading..."
-            }
-
-            if let itemURL = item.url?.host {
-                cell.urlLabel?.text = itemURL
-            } else {
-                cell.urlLabel?.text = "Story ID: " + String(item.objectID)
-            }
-
-
-            if let itemDescendants = item.num_comments {
-                cell.commentsCountLabel?.text = String(itemDescendants)
-            } else {
-                cell.commentsCountLabel?.text = "-"
-            }
-
-            if let itemScore = item.points {
-                cell.upvotesCountLabel?.text = String(itemScore)
-            } else {
-                cell.upvotesCountLabel?.text = "-"
-            }
-
-            //if let epochTime = item.created_at {
-            // Display elapsed time
-            let componentsFormatter = DateComponentsFormatter()
-            componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
-            componentsFormatter.maximumUnitCount = 1
-            componentsFormatter.unitsStyle = .abbreviated
-            let timeAgo = componentsFormatter.string(from: item.created_at, to: Date())
-            cell.elapsedTimeLabel?.text = timeAgo
-//            } else {
-//                cell.elapsedTimeLabel?.text = "-"
-//            }
             
         }
 

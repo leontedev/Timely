@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Timely2/Controllers/MasterViewController.swift"
-            timestampString = "571905529.480948"
+            timestampString = "571935077.324785"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "516"
-            endingLineNumber = "516">
+            startingLineNumber = "525"
+            endingLineNumber = "525">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -120,11 +120,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Timely2/Controllers/MasterViewController.swift"
-            timestampString = "571905529.481451"
+            timestampString = "571935077.343502"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "507"
-            endingLineNumber = "507"
+            startingLineNumber = "516"
+            endingLineNumber = "516"
             landmarkName = "didTapCell(feedURL:title:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -136,7 +136,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Timely2/Controllers/DetailViewController.swift"
-            timestampString = "571905529.48199"
+            timestampString = "571935077.344475"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "383"
@@ -152,7 +152,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Timely2/Controllers/DetailViewController.swift"
-            timestampString = "571905529.482049"
+            timestampString = "571935077.344877"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "286"
@@ -168,7 +168,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Timely2/Controllers/DetailViewController.swift"
-            timestampString = "571905529.4821351"
+            timestampString = "571935077.345221"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "285"

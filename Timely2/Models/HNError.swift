@@ -25,7 +25,7 @@ extension HNError: LocalizedError {
             return "JSON parsing failed. \(message)"
             
         case .network(let message):
-            return "Call request failure. Status Code: \(message)"
+            return "Call request failure. Status: \(message)"
             
         }
     }
