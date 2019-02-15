@@ -156,7 +156,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let defaultSession = URLSession(configuration: configuration)
         
         
-        let commentUrl = "http://hn.algolia.com/api/v1/items/\(storyID)"
+        let commentUrl = "https://hn.algolia.com/api/v1/items/\(storyID)"
         guard let url = URL(string: commentUrl) else {
             state = .error(HNError.badURL(fromString: commentUrl))
             return
@@ -258,12 +258,12 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     
                 }
                 catch let error {
-                    print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
+                    //print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
                     self.state = .error(HNError.parsingJSON("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription))
                 }
             } else {
                 // FIXME: Attach response status code
-                self.state = .error(HNError.network)
+                self.state = .error(HNError.network(String(statusCode)))
             }
             
         }.resume()

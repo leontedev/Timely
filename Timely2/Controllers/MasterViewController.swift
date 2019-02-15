@@ -177,7 +177,8 @@ class MasterViewController: UITableViewController {
                 
                     guard let httpResponse = response as? HTTPURLResponse,
                         (200...299).contains(httpResponse.statusCode) else {
-                            self.state = .error(HNError.network)
+                            // FIXME: add response status code
+                            self.state = .error(HNError.network(""))
                             return
                     }
                 
@@ -216,7 +217,7 @@ class MasterViewController: UITableViewController {
                     
                     guard let httpResponse = response as? HTTPURLResponse,
                         (200...299).contains(httpResponse.statusCode) else {
-                            self.state = .error(HNError.network)
+                            self.state = .error(HNError.network(""))
                             return
                     }
                     

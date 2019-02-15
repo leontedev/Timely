@@ -11,5 +11,22 @@ import Foundation
 enum HNError: Error {
     case badURL(fromString: String)
     case parsingJSON(String)
-    case network
+    case network(String)
+}
+
+extension HNError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+            
+        case .badURL(fromString: let string):
+            return NSLocalizedString("Error with status Bad URL was thrown.\nMalformed URL:  \(string)", comment: "Bad URL")
+            
+        case .parsingJSON(let message):
+            return "JSON parsing failed. \(message)"
+            
+        case .network(let message):
+            return "Call request failure. Status Code: \(message)"
+            
+        }
+    }
 }
