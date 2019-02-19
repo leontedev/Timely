@@ -30,6 +30,8 @@ class CommentCell: UITableViewCell {
     // Second static cell which contains the buttons for the Story actions
     static let reuseIdentifierStoryButtons = "StoryButtonsCell"
     
+    @IBOutlet weak var shareButton: UIButton!
+    
     func showSafariVC(for url: URL?) {
         if let url = url {
             let safariVC = SFSafariViewController(url: url)

@@ -321,6 +321,9 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStory, for: indexPath) as? CommentCell
             
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            
+            
             if let title = self.storyTitle {
                 cell.titleLabel.text = title
             }
@@ -363,6 +366,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else if indexPath.section == STORY_BUTTONS_CELL_SECTION {
             
             cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStoryButtons, for: indexPath) as? CommentCell
+            
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
             
             cell.storyURL = self.storyURL
             cell.parentVC = self
