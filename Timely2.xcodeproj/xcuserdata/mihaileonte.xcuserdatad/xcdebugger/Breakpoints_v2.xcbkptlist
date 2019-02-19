@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Timely2/Controllers/MasterViewController.swift"
-            timestampString = "572278080.99321"
+            timestampString = "572285785.918179"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "556"
-            endingLineNumber = "556">
+            startingLineNumber = "554"
+            endingLineNumber = "554">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -120,11 +120,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Timely2/Controllers/MasterViewController.swift"
-            timestampString = "572278080.993503"
+            timestampString = "572285785.918926"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "544"
-            endingLineNumber = "544"
+            startingLineNumber = "542"
+            endingLineNumber = "542"
             landmarkName = "didTapCell(feedURL:title:type:)"
             landmarkType = "7">
          </BreakpointContent>

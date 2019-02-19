@@ -26,7 +26,6 @@ class MasterViewController: UITableViewController {
     
     @IBOutlet weak var feedButton: UIBarButtonItem!
     @IBOutlet var feedPopoverView: UIView!
-    @IBOutlet weak var cancelFeedButton: UIBarButtonItem!
     @IBOutlet weak var feedTableView: UITableView!
     @IBOutlet weak var headerTitle: UINavigationItem!
     
@@ -38,6 +37,8 @@ class MasterViewController: UITableViewController {
     var currentSourceAPI: HNFeedType = .official
     var blurEffectView: UIView = UIView()
     var feedDataSource: FeedDataSource!
+    
+    var feedSelectionViewIsOpen: Bool = false
     
     // FIXME: Default Feed - load from user defaults
     var currentSelectedFeedURL: URLComponents = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
@@ -110,7 +111,7 @@ class MasterViewController: UITableViewController {
         blurEffectView.frame = self.view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         blurEffectView.alpha = 0.5
-        self.cancelFeedButton.tintColor = .clear
+        
     }
     
     /// Sets up Pull To Refresh - and calls refreshData()
@@ -138,42 +139,37 @@ class MasterViewController: UITableViewController {
     
     // feedButton pressed
     @IBAction func changeFeed(_ sender: Any) {
-        self.view.addSubview(blurEffectView)
-        self.view.addSubview(feedPopoverView)
-        feedPopoverView.translatesAutoresizingMaskIntoConstraints = false
-        feedPopoverView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        feedPopoverView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
-        feedPopoverView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        feedPopoverView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
-        //Show the Cancel button
-        self.cancelFeedButton.isEnabled = true
-        self.cancelFeedButton.tintColor = nil
+        self.feedSelectionViewIsOpen.toggle()
         
-        //Hide the Open Feed button
-        //let button = self.feedButton.customView as! UIButton
-        //button.setTitle("Cancel", for: .normal)
-        //self.feedButton.isEnabled = false
-        //self.feedButton.tintColor = .clear
+        if feedSelectionViewIsOpen {
+            self.feedButton.image = nil
+            self.feedButton.title = "Cancel"
+            
+            self.view.addSubview(blurEffectView)
+            self.view.addSubview(feedPopoverView)
+            
+            feedPopoverView.translatesAutoresizingMaskIntoConstraints = false
+            feedPopoverView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            feedPopoverView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+            feedPopoverView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+            feedPopoverView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+            
+        } else {
+            closePopoverView()
+        }
+        
     }
     
-    // When pressing Cancel Bar Button
-    @IBAction func cancelFeedPopover(_ sender: Any) {
-        closePopoverView()
-    }
     
     func closePopoverView() {
         self.feedPopoverView.removeFromSuperview()
         self.blurEffectView.removeFromSuperview()
         
-        //Hide the Cancel button
-        self.cancelFeedButton.isEnabled = false
-        self.cancelFeedButton.tintColor = .clear
-        
-        //Show the Open Feed button
-        self.feedButton.isEnabled = true
-        self.feedButton.tintColor = nil
+        self.feedButton.image = UIImage(named: "icn_feedSelect")
+        self.feedButton.title = nil
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         if let index = self.tableView.indexPathForSelectedRow{
             self.tableView.deselectRow(at: index, animated: true)
@@ -531,8 +527,10 @@ class MasterViewController: UITableViewController {
     }
 }
 
+//A new Feed was Selected from the Feed Selection View Controller
 extension MasterViewController: CellFeedProtocol {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
+        self.feedSelectionViewIsOpen.toggle()
         closePopoverView()
         
         self.headerTitle.title = title
