@@ -7,12 +7,13 @@
 //
 
 import UIKit
-//import DTCoreText
-//import DTFoundation
+import SafariServices
 
 class CommentCell: UITableViewCell {
     
-    
+    var shareItems: [Any] = []
+    var storyURL: URL?
+    weak var parentVC: UIViewController?
     
     // First static cell which contains the Story Information
     static let reuseIdentifierStory = "StoryCell"
@@ -28,6 +29,37 @@ class CommentCell: UITableViewCell {
     
     // Second static cell which contains the buttons for the Story actions
     static let reuseIdentifierStoryButtons = "StoryButtonsCell"
+    
+    func showSafariVC(for url: URL?) {
+        if let url = url {
+            let safariVC = SFSafariViewController(url: url)
+            if let detailViewController = parentVC {
+                detailViewController.present(safariVC, animated: true)
+            }
+        }
+    }
+    
+    func displayShareSheet() {
+        let activityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+        
+        if let detailViewController = parentVC {
+            detailViewController.present(activityViewController, animated: true)
+        }
+    }
+    
+    @IBAction func safariButtonPressed() {
+        if let url = storyURL {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @IBAction func webviewButtonPressed() {
+        showSafariVC(for: self.storyURL)
+    }
+    
+    @IBAction func shareButtonPressed() {
+        displayShareSheet()
+    }
     
     
     // Third dynamic cell - which contain the comments

@@ -36,10 +36,12 @@ class MasterViewController: UITableViewController {
     var topStories: [Item] = []
     var algoliaStories: [AlgoliaItem] = []
     var currentSourceAPI: HNFeedType = .official
-    
-    let topStoriesURL = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     var blurEffectView: UIView = UIView()
     var feedDataSource: FeedDataSource!
+    
+    // FIXME: Default Feed - load from user defaults
+    var currentSelectedFeedURL: URLComponents = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
+    let topStoriesURL = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     
     
     override func viewDidLoad() {
@@ -56,6 +58,7 @@ class MasterViewController: UITableViewController {
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            
         }
 
         self.tableView.estimatedRowHeight = 100
@@ -118,9 +121,18 @@ class MasterViewController: UITableViewController {
         self.tableView.refreshControl = myRefreshControl
     }
     
+    // FIXME: Defect use Refresh Control animation instead of the state.loading animation
     @objc func refreshData(sender: UIRefreshControl) {
-        self.state = .loading
-        fetchStoryIDs(from: topStoriesURL)
+        
+        switch self.currentSourceAPI {
+        case .official:
+            fetchStoryIDs(from: self.currentSelectedFeedURL)
+        case .timely:
+            fetchStoryIDs(from: self.currentSelectedFeedURL)
+        case .algolia:
+            fetchAlgoliaStories(from: self.currentSelectedFeedURL)
+        }
+        
         sender.endRefreshing()
     }
     
@@ -137,6 +149,12 @@ class MasterViewController: UITableViewController {
         //Show the Cancel button
         self.cancelFeedButton.isEnabled = true
         self.cancelFeedButton.tintColor = nil
+        
+        //Hide the Open Feed button
+        //let button = self.feedButton.customView as! UIButton
+        //button.setTitle("Cancel", for: .normal)
+        //self.feedButton.isEnabled = false
+        //self.feedButton.tintColor = .clear
     }
     
     // When pressing Cancel Bar Button
@@ -147,8 +165,14 @@ class MasterViewController: UITableViewController {
     func closePopoverView() {
         self.feedPopoverView.removeFromSuperview()
         self.blurEffectView.removeFromSuperview()
+        
+        //Hide the Cancel button
         self.cancelFeedButton.isEnabled = false
         self.cancelFeedButton.tintColor = .clear
+        
+        //Show the Open Feed button
+        self.feedButton.isEnabled = true
+        self.feedButton.tintColor = nil
     }
     override func viewWillAppear(_ animated: Bool) {
         if let index = self.tableView.indexPathForSelectedRow{
@@ -159,7 +183,8 @@ class MasterViewController: UITableViewController {
     func fetchAlgoliaStories(from urlComponents: URLComponents) {
         
         self.topStories.removeAll()
-        self.tableView.reloadData()
+        self.state = .loading
+        
         
         let configuration = URLSessionConfiguration.default
         configuration.waitsForConnectivity = true
@@ -205,6 +230,9 @@ class MasterViewController: UITableViewController {
     
     // Official API
     func fetchStoryIDs(from urlComponents: URLComponents) {
+        self.topStories.removeAll()
+        self.state = .loading
+        
         if let url = urlComponents.url {
         
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -225,7 +253,7 @@ class MasterViewController: UITableViewController {
                         do {
                             let decoder = JSONDecoder()
                             let stories = try decoder.decode([Int].self, from: data)
-                            self.topStories.removeAll()
+                            
                             for storyId in stories.prefix(20) {
                                 self.topStories.append(Item(id: storyId))
                             }
@@ -506,10 +534,10 @@ class MasterViewController: UITableViewController {
 extension MasterViewController: CellFeedProtocol {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
         closePopoverView()
-        self.state = .loading
         
         self.headerTitle.title = title
         self.currentSourceAPI = type
+        self.currentSelectedFeedURL = feedURL
         
         switch type {
         case .official:
@@ -519,6 +547,9 @@ extension MasterViewController: CellFeedProtocol {
         case .algolia:
             fetchAlgoliaStories(from: feedURL)
         }
+        
+        self.state = .loading
+        
     }
     
 }

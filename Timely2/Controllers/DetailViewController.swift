@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 struct CommentSource {
     var comment: Comment
     var depth: Int
@@ -32,7 +33,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var urlDescriptionLabel: UILabel!
     @IBOutlet weak var commentStackView: UIStackView!
-    @IBOutlet weak var noCommentsLabel: UILabel!
+    
     
     //let monitor = NWPathMonitor()
     
@@ -102,14 +103,12 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         if storyNumComments == 0 {
-            print("Story contains No Comments")
             self.state = .empty
-            
-            // FIXME
-            //self.noCommentsLabel.isHidden = false
         }
     
     }
+    
+ 
     
     @objc func labelTapped(sender:UITapGestureRecognizer) {
         if let url = storyURL {
@@ -364,6 +363,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else if indexPath.section == STORY_BUTTONS_CELL_SECTION {
             
             cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStoryButtons, for: indexPath) as? CommentCell
+            
+            cell.storyURL = self.storyURL
+            cell.parentVC = self
+            cell.shareItems = [storyTitle, storyURL]
+        
         }
         
         return cell
@@ -461,6 +465,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
     }
+    
+    
 }
 
 
