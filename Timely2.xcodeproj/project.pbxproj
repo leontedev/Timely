@@ -29,6 +29,8 @@
 		894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894B80BC20B95D7E002C313E /* ItemCell.swift */; };
 		895B424C2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */; };
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
+		89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CD221E9E5500288A6D /* FeedSelectView.swift */; };
+		89C435D0221EA34F00288A6D /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CF221EA34F00288A6D /* UIView.swift */; };
 		89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */; };
 		BB51F4A25D03D00A13F46680 /* Pods_Timely2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +63,8 @@
 		894B80BC20B95D7E002C313E /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString_TrimmingCharacters.swift; sourceTree = "<group>"; };
 		89A8A31F20DBA607007A8664 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		89C435CD221E9E5500288A6D /* FeedSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectView.swift; sourceTree = "<group>"; };
+		89C435CF221EA34F00288A6D /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		89DAB65721FF4CBE004390D9 /* DTCoreTextStub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTCoreTextStub.h; sourceTree = "<group>"; };
 		89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTCoreTextStub.m; sourceTree = "<group>"; };
 		89DAB65B21FF4D8C004390D9 /* Timely2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Timely2-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 				89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */,
 				89DAB65B21FF4D8C004390D9 /* Timely2-Bridging-Header.h */,
 				895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */,
+				89C435CF221EA34F00288A6D /* UIView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -154,6 +159,7 @@
 				894B80BC20B95D7E002C313E /* ItemCell.swift */,
 				8918A73320BC784E00129A0E /* CommentCell.swift */,
 				89089F5E21CD4DC2005E42B3 /* FeedCell.swift */,
+				89C435CD221E9E5500288A6D /* FeedSelectView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -326,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89C435D0221EA34F00288A6D /* UIView.swift in Sources */,
 				89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */,
 				894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */,
 				89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */,
@@ -333,6 +340,7 @@
 				89089F5D21CD49B7005E42B3 /* FeedDataSource.swift in Sources */,
 				891E03A92215C2DD0001DB63 /* State.swift in Sources */,
 				89089F5B21CD2C20005E42B3 /* Feed.swift in Sources */,
+				89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */,
 				89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */,
 				893FB66C20B8494B007771A3 /* DetailViewController.swift in Sources */,
 				891E119A2143CD2900871615 /* Item.swift in Sources */,

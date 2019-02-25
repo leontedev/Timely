@@ -371,7 +371,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             cell.storyURL = self.storyURL
             cell.parentVC = self
-            cell.shareItems = [storyTitle, storyURL]
+            cell.shareItems = [storyTitle as Any, storyURL as Any]
         
         }
         

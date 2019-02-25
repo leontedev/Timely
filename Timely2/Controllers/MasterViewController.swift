@@ -16,6 +16,14 @@ class MasterViewController: UITableViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
     
+    
+    @IBOutlet var tapGesture: UITapGestureRecognizer!
+    @IBAction func tapBlurEffectView(_ sender: Any) {
+        self.feedSelectionViewIsOpen.toggle()
+        closePopoverView()
+    }
+    
+    
     var state = State.loading {
         didSet {
             print(state)
@@ -26,6 +34,7 @@ class MasterViewController: UITableViewController {
     
     @IBOutlet weak var feedButton: UIBarButtonItem!
     @IBOutlet var feedPopoverView: UIView!
+    @IBOutlet weak var visualBlurEffectView: UIVisualEffectView!
     @IBOutlet weak var feedTableView: UITableView!
     @IBOutlet weak var headerTitle: UINavigationItem!
     
@@ -50,6 +59,7 @@ class MasterViewController: UITableViewController {
         
         activityIndicator.color = UIColor.lightGray
         
+        //Feed Selection Setup
         let myFeeds: [Feed] = loadFeedsFromFile()
         setFeedTableView(with: myFeeds)
         customizeFeedPopoverView()
@@ -65,7 +75,6 @@ class MasterViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
         tableView.dataSource = self
-        
         
         // FIXME: default Feed on opening the app
         self.headerTitle.title = "HN Top Stories"
@@ -97,20 +106,46 @@ class MasterViewController: UITableViewController {
         feedDataSource = FeedDataSource()
         feedDataSource.setData(feedList: feed)
         feedDataSource.cellDelegate = self
+        
+        //Set height of the Feed Select tableview to be set automatic (based on the number of rows)
+        let tableHeight = self.feedTableView.rowHeight * CGFloat(feed.count) + self.feedTableView.sectionHeaderHeight
+        self.feedTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.feedTableView.heightAnchor.constraint(equalToConstant: tableHeight).isActive = true
+        
+        self.feedTableView.layer.borderColor = UIColor.lightGray.cgColor
+        self.feedTableView.layer.borderWidth = 1
+        
         self.feedTableView.dataSource = feedDataSource
         self.feedTableView.delegate = feedDataSource
         self.feedTableView.register(FeedCell.self, forCellReuseIdentifier: "TableViewCell")
+        
+        //self.tapGesture.delegate = self
     }
     
-    /// Sets up the Popover View which contains the Feed/Sort TableView. And sets a Blur effect which will sit under.
+    /// Sets up the Popover View which contains the Feed/Sort TableView.
     func customizeFeedPopoverView() {
-        self.feedPopoverView.layer.cornerRadius = 8.0
-        self.feedPopoverView.clipsToBounds = true
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = self.view.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurEffectView.alpha = 0.5
+        
+        self.view.addSubview(feedPopoverView)
+        feedPopoverView.translatesAutoresizingMaskIntoConstraints = false
+        feedPopoverView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        feedPopoverView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        feedPopoverView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        feedPopoverView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        //feedPopoverView.heightAnchor.constraint(equalToConstant: 600).isActive = true
+        //feedPopoverView.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        
+        feedTableView.layer.cornerRadius = 8.0
+        feedTableView.clipsToBounds = true
+//        feedPopoverView.layer.cornerRadius = 8.0
+//        feedPopoverView.clipsToBounds = true
+        
+//        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
+//        blurEffectView = UIVisualEffectView(effect: blurEffect)
+//        blurEffectView.frame = self.view.bounds
+//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        blurEffectView.alpha = 0.5
+        
+        //self.view.addSubview(blurEffectView)
         
     }
     
@@ -146,28 +181,24 @@ class MasterViewController: UITableViewController {
             self.feedButton.image = nil
             self.feedButton.title = "Cancel"
             
-            self.view.addSubview(blurEffectView)
-            self.view.addSubview(feedPopoverView)
-            
-            feedPopoverView.translatesAutoresizingMaskIntoConstraints = false
-            feedPopoverView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            feedPopoverView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
-            feedPopoverView.widthAnchor.constraint(equalToConstant: 300).isActive = true
-            feedPopoverView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-            
+            self.feedPopoverView.isHidden = false
+            //self.tableView.isUserInteractionEnabled = false
+            //self.feedPopoverView.isUserInteractionEnabled = true
         } else {
             closePopoverView()
         }
-        
     }
     
-    
     func closePopoverView() {
-        self.feedPopoverView.removeFromSuperview()
-        self.blurEffectView.removeFromSuperview()
+        //self.feedPopoverView.removeFromSuperview()
+        //self.blurEffectView.removeFromSuperview()
+        
+        //self.tableView.isUserInteractionEnabled = true
         
         self.feedButton.image = UIImage(named: "icn_feedSelect")
         self.feedButton.title = nil
+        
+        self.feedPopoverView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -551,3 +582,12 @@ extension MasterViewController: CellFeedProtocol {
     }
     
 }
+
+//extension MasterViewController: UIGestureRecognizerDelegate {
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+//        // dis-allow button press for the stories table view
+//        print("Gesture Recognized touch.view === self.tableView")
+//        print(touch.view === self.tableView)
+//        return !(touch.view === self.tableView)
+//    }
+//}
