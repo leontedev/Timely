@@ -15,7 +15,7 @@
             <objects>
                 <navigationController title="MasterNavigationController" id="RMx-3f-FxP" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" largeTitles="YES" id="Pmd-2v-anx">
-                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -541,7 +541,7 @@
                                 <gestureRecognizers/>
                             </view>
                             <gestureRecognizers/>
-                            <blurEffect style="light"/>
+                            <blurEffect style="extraLight"/>
                             <connections>
                                 <outletCollection property="gestureRecognizers" destination="0YN-6Z-efK" appends="YES" id="Qm7-7V-LE2"/>
                                 <outletCollection property="gestureRecognizers" destination="QHk-Rd-kRK" appends="YES" id="aoy-Vi-XtN"/>
