@@ -53,6 +53,7 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         let feedName = feed[indexPath.row].feedName
         let feedType = feed[indexPath.row].feedType
         
+        
         if feedType == .algolia {
             if let feedFromCalendarComponentByAdding = feed[indexPath.row].fromCalendarComponentByAdding {
                 if let feedFromCalendarComponentValue = feed[indexPath.row].fromCalendarComponentValue {
@@ -67,6 +68,10 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
+        
+        //Save the newly selected feed into Userdefaults (to load on next app open)
+        let feedID = feed[indexPath.row].feedID
+        UserDefaults.standard.set(feedID, forKey: "feedID")
         
 
         self.cellDelegate?.didTapCell(feedURL: feedURLComponents, title: feedName, type: feedType)

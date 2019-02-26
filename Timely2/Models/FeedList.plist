@@ -3,6 +3,8 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>feedID</key>
+		<integer>1</integer>
 		<key>feedName</key>
 		<string>HN Top Stories</string>
 		<key>feedType</key>
@@ -11,6 +13,8 @@
 		<string>https://hacker-news.firebaseio.com/v0/topstories.json</string>
 	</dict>
 	<dict>
+		<key>feedID</key>
+		<integer>2</integer>
 		<key>feedName</key>
 		<string>HN Last 24h</string>
 		<key>feedType</key>
@@ -23,6 +27,8 @@
 		<integer>-1</integer>
 	</dict>
 	<dict>
+		<key>feedID</key>
+		<integer>3</integer>
 		<key>feedName</key>
 		<string>HN Past Week</string>
 		<key>feedType</key>
@@ -35,6 +41,8 @@
 		<integer>-7</integer>
 	</dict>
 	<dict>
+		<key>feedID</key>
+		<integer>4</integer>
 		<key>feedName</key>
 		<string>HN Past Month</string>
 		<key>feedType</key>
@@ -47,6 +55,8 @@
 		<integer>-1</integer>
 	</dict>
 	<dict>
+		<key>feedID</key>
+		<integer>5</integer>
 		<key>feedName</key>
 		<string>HN Past Year</string>
 		<key>feedType</key>
@@ -59,6 +69,8 @@
 		<integer>-1</integer>
 	</dict>
 	<dict>
+		<key>feedID</key>
+		<integer>6</integer>
 		<key>feedName</key>
 		<string>HN Front Page</string>
 		<key>feedType</key>
@@ -67,6 +79,8 @@
 		<string>https://hn.algolia.com/api/v1/search?tags=front_page</string>
 	</dict>
 	<dict>
+		<key>feedID</key>
+		<integer>7</integer>
 		<key>feedName</key>
 		<string>HN New Stories</string>
 		<key>feedType</key>
@@ -75,6 +89,8 @@
 		<string>https://hacker-news.firebaseio.com/v0/newstories.json</string>
 	</dict>
 	<dict>
+		<key>feedID</key>
+		<integer>8</integer>
 		<key>feedName</key>
 		<string>HN Best Stories</string>
 		<key>feedType</key>

@@ -13,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let splitViewController = window!.rootViewController?.childViewControllers[0] as! UISplitViewController
@@ -24,8 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         splitViewController.delegate = self
         
-        // Forces t
+        // Forces devices where there is sufficient display estate to display both the master and detail VCs
         splitViewController.preferredDisplayMode = .allVisible
+        
+        
+       
+        
         
         return true
     }

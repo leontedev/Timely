@@ -43,16 +43,16 @@ class MasterViewController: UITableViewController {
     
     var topStories: [Item] = []
     var algoliaStories: [AlgoliaItem] = []
-    var currentSourceAPI: HNFeedType = .official
     var blurEffectView: UIView = UIView()
     var feedDataSource: FeedDataSource!
     
     var feedSelectionViewIsOpen: Bool = false
     
-    // FIXME: Default Feed - load from user defaults
-    var currentSelectedFeedURL: URLComponents = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
-    let topStoriesURL = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
-    
+    let defaults = UserDefaults.standard
+    var currentSourceAPI: HNFeedType = .official
+    var currentSelectedFeedURL = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
+    var currentSelectedFeedTitle = "HN Top Stories"
+    var myFeeds: [Feed] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,7 @@ class MasterViewController: UITableViewController {
         activityIndicator.color = UIColor.lightGray
         
         //Feed Selection Setup
-        let myFeeds: [Feed] = loadFeedsFromFile()
+        myFeeds = loadFeedsFromFile()
         setFeedTableView(with: myFeeds)
         customizeFeedPopoverView()
         
@@ -69,16 +69,27 @@ class MasterViewController: UITableViewController {
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-            
         }
 
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
         tableView.dataSource = self
         
-        // FIXME: default Feed on opening the app
-        self.headerTitle.title = "HN Top Stories"
-        fetchStoryIDs(from: topStoriesURL)
+        loadDefaultFeed()
+        
+        
+        self.headerTitle.title = currentSelectedFeedTitle
+        
+        switch currentSourceAPI {
+        case .official:
+            fetchStoryIDs(from: currentSelectedFeedURL)
+        case .timely:
+            fetchStoryIDs(from: currentSelectedFeedURL)
+        case .algolia:
+            fetchAlgoliaStories(from: currentSelectedFeedURL)
+        }
+        
+        self.state = .loading
         
     }
     
@@ -147,6 +158,44 @@ class MasterViewController: UITableViewController {
         
         //self.view.addSubview(blurEffectView)
         
+    }
+    
+    //Load The Previously Selected Feed ID from Userdefaults and load data from Feed List (in order to recreate updated timestamps)
+    func loadDefaultFeed() {
+        
+        var feedID = defaults.integer(forKey: "feedID")
+        
+        //defaults.integer(forKey: "feedID") will return 0 if the value is not found
+        if feedID == 0 {
+            feedID = 1
+        }
+        
+        let selectedFeed = myFeeds.filter { $0.feedID == feedID }[0]
+        let feedType = selectedFeed.feedType
+        
+        let feedURLstring = selectedFeed.feedURL
+        guard var feedURLComponents = URLComponents(string: feedURLstring) else {
+            return
+        }
+        
+        if feedType == .algolia {
+            if let feedFromCalendarComponentByAdding = selectedFeed.fromCalendarComponentByAdding {
+                if let feedFromCalendarComponentValue = selectedFeed.fromCalendarComponentValue {
+                    let currentTimestamp = Int(NSDate().timeIntervalSince1970)
+                    let today = Date()
+                    let priorDate = Calendar.current.date(byAdding: feedFromCalendarComponentByAdding, value: feedFromCalendarComponentValue, to: today)
+                    let priorTimestamp = Int(priorDate!.timeIntervalSince1970)
+                    
+                    let queryItemTimeRange = URLQueryItem(name: "numericFilters", value: "created_at_i>\(priorTimestamp),created_at_i<\(currentTimestamp)")
+                    
+                    feedURLComponents.addOrModify(queryItemTimeRange)
+                }
+            }
+        }
+        
+        currentSourceAPI = feedType
+        currentSelectedFeedTitle = selectedFeed.feedName
+        currentSelectedFeedURL = feedURLComponents
     }
     
     /// Sets up Pull To Refresh - and calls refreshData()
@@ -564,9 +613,13 @@ extension MasterViewController: CellFeedProtocol {
         self.feedSelectionViewIsOpen.toggle()
         closePopoverView()
         
-        self.headerTitle.title = title
+        self.currentSelectedFeedTitle = title
         self.currentSourceAPI = type
         self.currentSelectedFeedURL = feedURL
+        
+        
+        
+        self.headerTitle.title = currentSelectedFeedTitle
         
         switch type {
         case .official:

@@ -34,12 +34,13 @@ extension Calendar.Component: Decodable {
 }
 
 enum HNFeedType: String, Decodable {
-    case timely
-    case official
-    case algolia
+    case timely = "timely"
+    case official = "official"
+    case algolia = "algolia"
 }
 
 struct Feed: Decodable {
+    var feedID: Int8
     var feedName: String
     var feedURL: String
     var feedType: HNFeedType
