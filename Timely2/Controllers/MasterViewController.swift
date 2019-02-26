@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class MasterViewController: UITableViewController {
     
     @IBOutlet weak var errorView: UIView!
@@ -27,7 +29,8 @@ class MasterViewController: UITableViewController {
         didSet {
             print(state)
             setFooterView()
-            tableView.reloadData()
+            // Reload Table View and scrolls to first row
+            tableView.scrollToFirst()
         }
     }
     
@@ -246,7 +249,6 @@ class MasterViewController: UITableViewController {
         
         self.topStories.removeAll()
         self.state = .loading
-        
         
         let configuration = URLSessionConfiguration.default
         configuration.waitsForConnectivity = true
@@ -594,15 +596,15 @@ class MasterViewController: UITableViewController {
 // A new Feed was Selected from the Feed Selection View Controller
 extension MasterViewController: CellFeedProtocol {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
+        //Close the Feed Selection popup
         self.feedSelectionViewIsOpen.toggle()
         closePopoverView()
         
+        //Fetch the new stories for the new Feed & Update the TableView
         self.currentSelectedFeedTitle = title
         self.currentSourceAPI = type
         self.currentSelectedFeedURL = feedURL
-        
-        
-        
+        updateStories()
     }
     
 }

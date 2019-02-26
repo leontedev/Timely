@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8907AE6A2225A03B00A1B6EC /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8907AE692225A03B00A1B6EC /* UITableView.swift */; };
 		89089F5921C7FA43005E42B3 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5821C7FA43005E42B3 /* Comment.swift */; };
 		89089F5B21CD2C20005E42B3 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5A21CD2C20005E42B3 /* Feed.swift */; };
 		89089F5D21CD49B7005E42B3 /* FeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5C21CD49B7005E42B3 /* FeedDataSource.swift */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Timely2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8907AE692225A03B00A1B6EC /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		89089F5821C7FA43005E42B3 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		89089F5A21CD2C20005E42B3 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		89089F5C21CD49B7005E42B3 /* FeedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDataSource.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				89DAB65B21FF4D8C004390D9 /* Timely2-Bridging-Header.h */,
 				895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */,
 				89C435CF221EA34F00288A6D /* UIView.swift */,
+				8907AE692225A03B00A1B6EC /* UITableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				89336B2721E7918C00822673 /* HTMLParser.swift in Sources */,
 				89095A2721E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift in Sources */,
 				8918A73420BC784E00129A0E /* CommentCell.swift in Sources */,
+				8907AE6A2225A03B00A1B6EC /* UITableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
