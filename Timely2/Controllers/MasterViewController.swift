@@ -23,7 +23,6 @@ class MasterViewController: UITableViewController {
         closePopoverView()
     }
     
-    
     var state = State.loading {
         didSet {
             print(state)
@@ -70,26 +69,12 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
-
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
         tableView.dataSource = self
         
         loadDefaultFeed()
-        
-        
-        self.headerTitle.title = currentSelectedFeedTitle
-        
-        switch currentSourceAPI {
-        case .official:
-            fetchStoryIDs(from: currentSelectedFeedURL)
-        case .timely:
-            fetchStoryIDs(from: currentSelectedFeedURL)
-        case .algolia:
-            fetchAlgoliaStories(from: currentSelectedFeedURL)
-        }
-        
-        self.state = .loading
+        updateStories()
         
     }
     
@@ -147,20 +132,9 @@ class MasterViewController: UITableViewController {
         
         feedTableView.layer.cornerRadius = 8.0
         feedTableView.clipsToBounds = true
-//        feedPopoverView.layer.cornerRadius = 8.0
-//        feedPopoverView.clipsToBounds = true
-        
-//        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.dark)
-//        blurEffectView = UIVisualEffectView(effect: blurEffect)
-//        blurEffectView.frame = self.view.bounds
-//        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        blurEffectView.alpha = 0.5
-        
-        //self.view.addSubview(blurEffectView)
-        
     }
     
-    //Load The Previously Selected Feed ID from Userdefaults and load data from Feed List (in order to recreate updated timestamps)
+    /// Load The Previously Selected Feed ID from Userdefaults and load data from Feed List (in order to recreate updated timestamps)
     func loadDefaultFeed() {
         
         var feedID = defaults.integer(forKey: "feedID")
@@ -196,6 +170,23 @@ class MasterViewController: UITableViewController {
         currentSourceAPI = feedType
         currentSelectedFeedTitle = selectedFeed.feedName
         currentSelectedFeedURL = feedURLComponents
+    }
+    
+    
+    /// Initiate updating the Stories TableView based on the currently selected Feed (title, feedType/currentSourceAPI and feedURL)
+    func updateStories() {
+        self.headerTitle.title = currentSelectedFeedTitle
+        
+        switch currentSourceAPI {
+        case .official:
+            fetchStoryIDs(from: currentSelectedFeedURL)
+        case .timely:
+            fetchStoryIDs(from: currentSelectedFeedURL)
+        case .algolia:
+            fetchAlgoliaStories(from: currentSelectedFeedURL)
+        }
+        
+        self.state = .loading
     }
     
     /// Sets up Pull To Refresh - and calls refreshData()
@@ -239,11 +230,6 @@ class MasterViewController: UITableViewController {
     }
     
     func closePopoverView() {
-        //self.feedPopoverView.removeFromSuperview()
-        //self.blurEffectView.removeFromSuperview()
-        
-        //self.tableView.isUserInteractionEnabled = true
-        
         self.feedButton.image = UIImage(named: "icn_feedSelect")
         self.feedButton.title = nil
         
@@ -423,7 +409,6 @@ class MasterViewController: UITableViewController {
 
     
     // MARK: - Segues
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
@@ -443,7 +428,6 @@ class MasterViewController: UITableViewController {
             }
         }
     }
-    
 
     
     // MARK - Data Source
@@ -607,7 +591,7 @@ class MasterViewController: UITableViewController {
     }
 }
 
-//A new Feed was Selected from the Feed Selection View Controller
+// A new Feed was Selected from the Feed Selection View Controller
 extension MasterViewController: CellFeedProtocol {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
         self.feedSelectionViewIsOpen.toggle()
@@ -618,19 +602,6 @@ extension MasterViewController: CellFeedProtocol {
         self.currentSelectedFeedURL = feedURL
         
         
-        
-        self.headerTitle.title = currentSelectedFeedTitle
-        
-        switch type {
-        case .official:
-            fetchStoryIDs(from: feedURL)
-        case .timely:
-            fetchStoryIDs(from: feedURL)
-        case .algolia:
-            fetchAlgoliaStories(from: feedURL)
-        }
-        
-        self.state = .loading
         
     }
     
