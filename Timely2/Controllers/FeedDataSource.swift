@@ -50,7 +50,7 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         
         
-        let feedName = feed[indexPath.row].feedName
+        var feedName = feed[indexPath.row].feedName
         let feedType = feed[indexPath.row].feedType
         let currentTimestamp = Int(NSDate().timeIntervalSince1970)
         
@@ -75,6 +75,19 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                         sinceTimestamp = currentTimestamp
                     }
                     let queryItemTimeRange = URLQueryItem(name: "numericFilters", value: "created_at_i>\(sinceTimestamp),created_at_i<\(currentTimestamp)")
+                    
+                    // Display elapsed time in the Feed Title, eg: Since Last Visit - 2h ago
+                    let componentsFormatter = DateComponentsFormatter()
+                    componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+                    componentsFormatter.maximumUnitCount = 1
+                    componentsFormatter.unitsStyle = .abbreviated
+                    
+                    let epochTime = Date(timeIntervalSince1970: TimeInterval(sinceTimestamp))
+                    let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+                    
+                    if let validTime = timeAgo {
+                        feedName = "Since " + validTime + " ago"
+                    }
                     
                     feedURLComponents.addOrModify(queryItemTimeRange)
                 }
