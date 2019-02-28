@@ -97,9 +97,6 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         //Save the newly selected feed into Userdefaults (to load on next app open)
         let feedID = feed[indexPath.row].feedID
         UserDefaults.standard.set(feedID, forKey: "feedID")
-        //Save the current timestamp to be used in the "Since Last Visit" feed
-        UserDefaults.standard.set(currentTimestamp, forKey: "lastFeedLoadTimestamp")
-        
 
         self.cellDelegate?.didTapCell(feedURL: feedURLComponents, title: feedName, type: feedType)
         

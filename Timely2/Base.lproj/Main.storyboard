@@ -46,7 +46,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" alignment="top" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-FO-45W" userLabel="Vertical Stack View">
-                                                    <rect key="frame" x="6" y="8" width="310" height="81.666666666666671"/>
+                                                    <rect key="frame" x="6" y="8" width="365" height="81.666666666666671"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ScU-O9-osD">
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
@@ -151,7 +151,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="left" distribution="equalCentering" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="SMH-yM-gHv">
-                                                    <rect key="frame" x="60" y="0.0" width="200" height="51"/>
+                                                    <rect key="frame" x="60" y="0.0" width="255" height="51"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ash-GZ-rFM" userLabel="Open in Safari">
                                                             <rect key="frame" x="8" y="13" width="25" height="25"/>
@@ -165,7 +165,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAG-kT-mdU" userLabel="Open in Webview">
-                                                            <rect key="frame" x="87.666666666666657" y="13" width="25" height="25"/>
+                                                            <rect key="frame" x="115" y="13" width="25" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="NAK-Jj-EBk"/>
                                                                 <constraint firstAttribute="width" constant="25" id="pPo-PX-BM3"/>
@@ -176,7 +176,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0e-qC-viY" userLabel="Share">
-                                                            <rect key="frame" x="167" y="13" width="25" height="25"/>
+                                                            <rect key="frame" x="222" y="13" width="25" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="Kph-Fg-3Pp"/>
                                                                 <constraint firstAttribute="width" constant="25" id="QuN-Z9-BwW"/>
@@ -209,10 +209,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="IoF-2V-2rN">
-                                                    <rect key="frame" x="6" y="1" width="312" height="32.666666666666664"/>
+                                                    <rect key="frame" x="6" y="1" width="367" height="32.666666666666664"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" scrollEnabled="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iIv-kX-g5p" userLabel="Comment Text View">
-                                                            <rect key="frame" x="10" y="0.0" width="302" height="4.666666666666667"/>
+                                                            <rect key="frame" x="10" y="0.0" width="357" height="4.666666666666667"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <accessibility key="accessibilityConfiguration">
                                                                 <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
@@ -385,11 +385,11 @@
             </objects>
             <point key="canvasLocation" x="-1934" y="-330"/>
         </scene>
-        <!--Item-->
+        <!--Stories-->
         <scene sceneID="Nki-YV-4Qg">
             <objects>
                 <splitViewController id="H1p-Uh-vWS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="iRu-TP-u7X"/>
+                    <tabBarItem key="tabBarItem" title="Stories" image="tab_stories" id="iRu-TP-u7X"/>
                     <toolbarItems/>
                     <connections>
                         <segue destination="RMx-3f-FxP" kind="relationship" relationship="masterViewController" id="BlO-5A-QYV"/>
@@ -697,8 +697,9 @@
         <image name="icn_safari" width="112.5" height="112.5"/>
         <image name="icn_share" width="67.5" height="67.5"/>
         <image name="icn_upvotes" width="159" height="90"/>
+        <image name="tab_stories" width="67.5" height="67.5"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6S0-TO-JiA"/>
+        <segue reference="Tll-UG-LXB"/>
     </inferredMetricsTieBreakers>
 </document>

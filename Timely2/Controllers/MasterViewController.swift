@@ -55,9 +55,18 @@ class MasterViewController: UITableViewController {
     var currentSelectedFeedURL = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     var currentSelectedFeedTitle = "HN Top Stories"
     var myFeeds: [Feed] = []
+
+    let configuration = URLSessionConfiguration.default
+    var defaultSession: URLSession = URLSession(configuration: .default)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Don't use the URLSession.shared as calling invalidateAndCancel() on the session returned by the shared method has no effect.
+        self.configuration.waitsForConnectivity = true
+        self.defaultSession = URLSession(configuration: configuration)
+        
+        
         
         activityIndicator.color = UIColor.lightGray
         
@@ -95,7 +104,7 @@ class MasterViewController: UITableViewController {
                 print(error)
             }
         }
-        return myFeeds
+        return myFeeds.filter { $0.isHidden == false }
     }
     
     /// Sets up a new TableView to select the Feed/Sort option.
@@ -240,6 +249,7 @@ class MasterViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         if let index = self.tableView.indexPathForSelectedRow{
             self.tableView.deselectRow(at: index, animated: true)
         }
@@ -250,14 +260,9 @@ class MasterViewController: UITableViewController {
         self.topStories.removeAll()
         self.state = .loading
         
-        let configuration = URLSessionConfiguration.default
-        configuration.waitsForConnectivity = true
-        let defaultSession = URLSession(configuration: configuration)
-
-        
         if let url = urlComponents.url {
         
-            _ = defaultSession.dataTask(with: url) { responseData, response, error in
+            _ = self.defaultSession.dataTask(with: url) { responseData, response, error in
                 
                     if let error = error {
                         self.state = .error(error)
@@ -299,7 +304,7 @@ class MasterViewController: UITableViewController {
         
         if let url = urlComponents.url {
         
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            let task = self.defaultSession.dataTask(with: url) { data, response, error in
                 // TODO - could this be moved only on the reload of the tableView?
                 DispatchQueue.main.async {
                     if let error = error {
@@ -338,10 +343,7 @@ class MasterViewController: UITableViewController {
 
     // Official API
     func fetchItems() {
-        let configuration = URLSessionConfiguration.default
-        configuration.waitsForConnectivity = true
-        let defaultSession = URLSession(configuration: configuration)
-        
+
         for (index, item) in self.topStories.enumerated() {
             
             self.topStories[index].state = .downloading
@@ -351,12 +353,13 @@ class MasterViewController: UITableViewController {
             let urlString = "https://hacker-news.firebaseio.com/v0/item/\(itemID).json"
             let requestItem = URLRequest(url: URL(string: urlString)!)
             
-            let taskItem = defaultSession.dataTask(with: requestItem) { data, response, error in
+            let taskItem = self.defaultSession.dataTask(with: requestItem) { data, response, error in
                 
                 if let data = data, let response = response as? HTTPURLResponse {
                     let statusCode = response.statusCode
                     if statusCode == 200 {
                         //print("200 OK on Item ID = \(itemID)")
+                        
                         self.topStories[index].state = .downloaded
                         //print(data)
                     
@@ -596,6 +599,17 @@ class MasterViewController: UITableViewController {
 // A new Feed was Selected from the Feed Selection View Controller
 extension MasterViewController: CellFeedProtocol {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
+        
+        //Cancel all existing requests which are in progress
+        //self.defaultSession.invalidateAndCancel()
+        
+        self.defaultSession.getTasksWithCompletionHandler{ dataTasks, uploadTasks, downloadTasks in
+            for task in dataTasks {
+                task.cancel()
+            }
+        }
+        
+        
         //Close the Feed Selection popup
         self.feedSelectionViewIsOpen.toggle()
         closePopoverView()

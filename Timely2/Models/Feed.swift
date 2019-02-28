@@ -46,4 +46,5 @@ struct Feed: Decodable {
     var feedType: HNFeedType
     var fromCalendarComponentByAdding: Calendar.Component?
     var fromCalendarComponentValue: Int?
+    var isHidden: Bool
 }

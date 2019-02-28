@@ -4,13 +4,15 @@
 <array>
 	<dict>
 		<key>feedID</key>
-		<integer>1</integer>
+		<integer>8</integer>
 		<key>feedName</key>
-		<string>HN Top Stories</string>
+		<string>Since Last Visit</string>
 		<key>feedType</key>
-		<string>official</string>
+		<string>algolia</string>
 		<key>feedURL</key>
-		<string>https://hacker-news.firebaseio.com/v0/topstories.json</string>
+		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
+		<key>isHidden</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>feedID</key>
@@ -25,6 +27,8 @@
 		<string>day</string>
 		<key>fromCalendarComponentValue</key>
 		<integer>-1</integer>
+		<key>isHidden</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>feedID</key>
@@ -39,6 +43,8 @@
 		<string>day</string>
 		<key>fromCalendarComponentValue</key>
 		<integer>-7</integer>
+		<key>isHidden</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>feedID</key>
@@ -53,6 +59,8 @@
 		<string>month</string>
 		<key>fromCalendarComponentValue</key>
 		<integer>-1</integer>
+		<key>isHidden</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>feedID</key>
@@ -67,6 +75,20 @@
 		<string>year</string>
 		<key>fromCalendarComponentValue</key>
 		<integer>-1</integer>
+		<key>isHidden</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>feedID</key>
+		<integer>1</integer>
+		<key>feedName</key>
+		<string>HN Top Stories</string>
+		<key>feedType</key>
+		<string>official</string>
+		<key>feedURL</key>
+		<string>https://hacker-news.firebaseio.com/v0/topstories.json</string>
+		<key>isHidden</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>feedID</key>
@@ -77,6 +99,8 @@
 		<string>algolia</string>
 		<key>feedURL</key>
 		<string>https://hn.algolia.com/api/v1/search?tags=front_page</string>
+		<key>isHidden</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>feedID</key>
@@ -87,6 +111,8 @@
 		<string>official</string>
 		<key>feedURL</key>
 		<string>https://hacker-news.firebaseio.com/v0/newstories.json</string>
+		<key>isHidden</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>feedID</key>
@@ -97,16 +123,8 @@
 		<string>official</string>
 		<key>feedURL</key>
 		<string>https://hacker-news.firebaseio.com/v0/beststories.json</string>
-	</dict>
-	<dict>
-		<key>feedID</key>
-		<integer>8</integer>
-		<key>feedName</key>
-		<string>Since Last Visit</string>
-		<key>feedType</key>
-		<string>algolia</string>
-		<key>feedURL</key>
-		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
+		<key>isHidden</key>
+		<true/>
 	</dict>
 </array>
 </plist>
