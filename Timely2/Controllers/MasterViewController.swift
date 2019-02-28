@@ -233,7 +233,13 @@ class MasterViewController: UITableViewController {
             self.feedButton.image = nil
             self.feedButton.title = "Cancel"
             
+            // Fade in the Transluscent View (Feed Selection)
+            self.feedPopoverView.alpha = 0.0
             self.feedPopoverView.isHidden = false
+            UIView.animate(withDuration: 0.2) {
+                self.feedPopoverView.alpha = 1.0
+            }
+            
             //self.tableView.isUserInteractionEnabled = false
             //self.feedPopoverView.isUserInteractionEnabled = true
         } else {
@@ -246,6 +252,8 @@ class MasterViewController: UITableViewController {
         self.feedButton.title = nil
         
         self.feedPopoverView.isHidden = true
+
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -601,14 +609,13 @@ extension MasterViewController: CellFeedProtocol {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
         
         //Cancel all existing requests which are in progress
-        //self.defaultSession.invalidateAndCancel()
-        
         self.defaultSession.getTasksWithCompletionHandler{ dataTasks, uploadTasks, downloadTasks in
             for task in dataTasks {
                 task.cancel()
             }
         }
-        
+        //I can't just invalidate and cancel the session as I am reusing it - and if its invalidated it can't be reused.
+        //self.defaultSession.invalidateAndCancel()
         
         //Close the Feed Selection popup
         self.feedSelectionViewIsOpen.toggle()
