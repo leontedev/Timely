@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 
-protocol CellFeedProtocol {
+protocol FeedDataSourceDelegate: class {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType)
 }
 
 class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
+    weak var delegate: FeedDataSourceDelegate?
     var feed: [Feed] = []
-    var cellDelegate: CellFeedProtocol?
-
     
+
     func setData(feedList: [Feed]){
         self.feed = feedList
     }
@@ -98,7 +98,7 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         let feedID = feed[indexPath.row].feedID
         UserDefaults.standard.set(feedID, forKey: "feedID")
 
-        self.cellDelegate?.didTapCell(feedURL: feedURLComponents, title: feedName, type: feedType)
+        self.delegate?.didTapCell(feedURL: feedURLComponents, title: feedName, type: feedType)
         
         if let feedURL = feedURLComponents.url {
             print(feedURL)

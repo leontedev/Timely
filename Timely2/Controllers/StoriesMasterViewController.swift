@@ -8,92 +8,75 @@
 
 import UIKit
 
-
-
 class StoriesMasterViewController: UITableViewController {
     
+    @IBOutlet weak var headerTitle: UINavigationItem!
+    
+    // State Outlets
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
-    @IBOutlet var tapGesture: UITapGestureRecognizer!
+    
+    // Feed Selection View Outlets
     @IBOutlet weak var feedButton: UIBarButtonItem!
     @IBOutlet var feedPopoverView: UIView!
     @IBOutlet weak var visualBlurEffectView: UIVisualEffectView!
     @IBOutlet weak var feedTableView: UITableView!
-    @IBOutlet weak var headerTitle: UINavigationItem!
-    
+    @IBOutlet var tapGesture: UITapGestureRecognizer!
     @IBAction func tapBlurEffectView(_ sender: Any) {
         self.feedSelectionViewIsOpen.toggle()
         closePopoverView()
     }
     
-    var storiesDataSource: StoriesDataSource? = nil
-    var feedDataSource: FeedDataSource? = nil
-    
-    var blurEffectView: UIView = UIView()
-    var detailViewController: StoriesDetailViewController? = nil
-    var myRefreshControl: UIRefreshControl?
-    
+    private let storiesDataSource = StoriesDataSource()
+    private let feedDataSource = FeedDataSource()
     
     var state = State.loading {
         didSet {
-            print(state)
-            setFooterView()
-            
+            self.updateFooterView()
             // Refresh DataSource
-            storiesDataSource?.setData(sourceAPI: currentSourceAPI, stories: topStories, algoliaStories: algoliaStories)
-            
-            // Reload Table View and scrolls to first row
-            tableView.scrollToFirst()
+            storiesDataSource.setData(sourceAPI: currentSelectedSourceAPI, stories: storiesOfficialAPI, algoliaStories: storiesAlgoliaAPI)
+            tableView.reloadAndScrollToFirstRow()
         }
     }
     
-    var topStories: [Item] = []
-    var algoliaStories: [AlgoliaItem] = []
-    var feedSelectionViewIsOpen: Bool = false
+    var defaultSession: URLSession = URLSession(configuration: .default)
     
-    let defaults = UserDefaults.standard
-    var currentSourceAPI: HNFeedType = .official
+    var currentSelectedSourceAPI: HNFeedType = .official
     var currentSelectedFeedURL = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     var currentSelectedFeedTitle = "HN Top Stories"
-    var myFeeds: [Feed] = []
-
-    let configuration = URLSessionConfiguration.default
-    var defaultSession: URLSession = URLSession(configuration: .default)
+    var feedSelectionViewIsOpen: Bool = false
+    
+    var feeds: [Feed] = []
+    var storiesOfficialAPI: [Item] = []
+    var storiesAlgoliaAPI: [AlgoliaItem] = []
+    
+    // FIXME: Should they be global???
+    var blurEffectView: UIView = UIView()
+    var myRefreshControl: UIRefreshControl?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // DataSource Configuration
-        storiesDataSource = StoriesDataSource()
-        storiesDataSource?.delegate = self
-        self.tableView.dataSource = storiesDataSource
-        storiesDataSource?.setData(sourceAPI: currentSourceAPI, stories: topStories, algoliaStories: algoliaStories)
-        
-        // Don't use the URLSession.shared as calling invalidateAndCancel() on the session returned by the shared method has no effect.
-        self.configuration.waitsForConnectivity = true
-        self.defaultSession = URLSession(configuration: configuration)
-        
-        activityIndicator.color = UIColor.lightGray
-        
-        //Feed Selection Setup
-        myFeeds = loadFeedsFromFile()
-        setFeedTableView(with: myFeeds)
-        customizeFeedPopoverView()
-        
-        setUpPullToRefresh()
-        
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? StoriesDetailViewController
-        }
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        activityIndicator.color = UIColor.lightGray
+        setUpPullToRefresh()
         
+        storiesDataSource.delegate = self
+        self.tableView.dataSource = storiesDataSource
+
+        let configuration = URLSessionConfiguration.default
+        configuration.waitsForConnectivity = true
+        self.defaultSession = URLSession(configuration: configuration)
         
-        loadDefaultFeed()
+        self.feeds = loadFeedsFromFile()
+        configureFeedTableView(with: self.feeds)
+        customizeFeedPopoverView()
+        
+        loadCurrentFeedFromUserDefaults()
         updateStories()
         
     }
@@ -118,10 +101,9 @@ class StoriesMasterViewController: UITableViewController {
     /// Sets up a new TableView to select the Feed/Sort option.
     ///
     /// - Parameter feed: the [Feed] object - FeedList.plist parsed
-    func setFeedTableView(with feed: [Feed]) {
-        feedDataSource = FeedDataSource()
-        feedDataSource?.setData(feedList: feed)
-        feedDataSource?.cellDelegate = self
+    func configureFeedTableView(with feed: [Feed]) {
+        feedDataSource.setData(feedList: feed)
+        feedDataSource.delegate = self
         
         //Set height of the Feed Select tableview to be set automatic (based on the number of rows)
         let tableHeight = self.feedTableView.rowHeight * CGFloat(feed.count) + self.feedTableView.sectionHeaderHeight
@@ -134,8 +116,6 @@ class StoriesMasterViewController: UITableViewController {
         self.feedTableView.dataSource = feedDataSource
         self.feedTableView.delegate = feedDataSource
         self.feedTableView.register(FeedCell.self, forCellReuseIdentifier: "TableViewCell")
-        
-        //self.tapGesture.delegate = self
     }
     
     /// Sets up the Popover View which contains the Feed/Sort TableView.
@@ -154,17 +134,17 @@ class StoriesMasterViewController: UITableViewController {
         feedTableView.clipsToBounds = true
     }
     
-    /// Load The Previously Selected Feed ID from Userdefaults and load data from Feed List (in order to recreate updated timestamps)
-    func loadDefaultFeed() {
+    /// Load The Previously Selected Feed ID from Userdefaults and update timestamps for feed URLs
+    func loadCurrentFeedFromUserDefaults() {
         
-        var feedID = defaults.integer(forKey: "feedID")
+        var feedID = UserDefaults.standard.integer(forKey: "feedID")
         
         //defaults.integer(forKey: "feedID") will return 0 if the value is not found
         if feedID == 0 {
             feedID = 1
         }
         
-        let selectedFeed = myFeeds.filter { $0.feedID == feedID }[0]
+        let selectedFeed = feeds.filter { $0.feedID == feedID }[0]
         let feedType = selectedFeed.feedType
         
         let feedURLstring = selectedFeed.feedURL
@@ -187,7 +167,7 @@ class StoriesMasterViewController: UITableViewController {
             }
         }
         
-        currentSourceAPI = feedType
+        currentSelectedSourceAPI = feedType
         currentSelectedFeedTitle = selectedFeed.feedName
         currentSelectedFeedURL = feedURLComponents
     }
@@ -197,7 +177,8 @@ class StoriesMasterViewController: UITableViewController {
     func updateStories() {
         self.headerTitle.title = currentSelectedFeedTitle
         
-        switch currentSourceAPI {
+        switch currentSelectedSourceAPI {
+            
         case .official:
             fetchStoryIDs(from: currentSelectedFeedURL)
         case .timely:
@@ -220,7 +201,7 @@ class StoriesMasterViewController: UITableViewController {
     // FIXME: Defect use Refresh Control animation instead of the state.loading animation
     @objc func refreshData(sender: UIRefreshControl) {
         
-        switch self.currentSourceAPI {
+        switch self.currentSelectedSourceAPI {
         case .official:
             fetchStoryIDs(from: self.currentSelectedFeedURL)
         case .timely:
@@ -273,7 +254,7 @@ class StoriesMasterViewController: UITableViewController {
     
     func fetchAlgoliaStories(from urlComponents: URLComponents) {
         
-        self.topStories.removeAll()
+        self.storiesOfficialAPI.removeAll()
         self.state = .loading
         
         if let url = urlComponents.url {
@@ -301,7 +282,7 @@ class StoriesMasterViewController: UITableViewController {
                             let stories = try decoder.decode(AlgoliaItemList.self, from: data)
                             
                             DispatchQueue.main.async {
-                                self.algoliaStories = stories.hits
+                                self.storiesAlgoliaAPI = stories.hits
                                 self.state = .populated
                                 //self.tableView.reloadData()
                             }
@@ -315,7 +296,7 @@ class StoriesMasterViewController: UITableViewController {
     
     // Official API
     func fetchStoryIDs(from urlComponents: URLComponents) {
-        self.topStories.removeAll()
+        self.storiesOfficialAPI.removeAll()
         self.state = .loading
         
         if let url = urlComponents.url {
@@ -340,7 +321,7 @@ class StoriesMasterViewController: UITableViewController {
                             let stories = try decoder.decode([Int].self, from: data)
                             
                             for storyId in stories.prefix(20) {
-                                self.topStories.append(Item(id: storyId))
+                                self.storiesOfficialAPI.append(Item(id: storyId))
                             }
                             
                             self.state = .populated
@@ -360,9 +341,9 @@ class StoriesMasterViewController: UITableViewController {
     // Official API
     func fetchItems() {
 
-        for (index, item) in self.topStories.enumerated() {
+        for (index, item) in self.storiesOfficialAPI.enumerated() {
             
-            self.topStories[index].state = .downloading
+            self.storiesOfficialAPI[index].state = .downloading
             
             // Construct the URLRequest
             let itemID = String(item.id)
@@ -376,7 +357,7 @@ class StoriesMasterViewController: UITableViewController {
                     if statusCode == 200 {
                         //print("200 OK on Item ID = \(itemID)")
                         
-                        self.topStories[index].state = .downloaded
+                        self.storiesOfficialAPI[index].state = .downloaded
                         //print(data)
                     
                         do {
@@ -394,13 +375,13 @@ class StoriesMasterViewController: UITableViewController {
                                 return
                             }
                             
-                            self.topStories[index].title = story.title
-                            self.topStories[index].url = story.url
-                            self.topStories[index].by = story.by
-                            self.topStories[index].descendants = story.descendants
-                            self.topStories[index].score = story.score
-                            self.topStories[index].time = story.time
-                            self.topStories[index].kids = story.kids
+                            self.storiesOfficialAPI[index].title = story.title
+                            self.storiesOfficialAPI[index].url = story.url
+                            self.storiesOfficialAPI[index].by = story.by
+                            self.storiesOfficialAPI[index].descendants = story.descendants
+                            self.storiesOfficialAPI[index].score = story.score
+                            self.storiesOfficialAPI[index].time = story.time
+                            self.storiesOfficialAPI[index].kids = story.kids
                             //print(story.kids)
                             DispatchQueue.main.async {
                                 //reloadRows has an expected argument type of [IndexPath]
@@ -410,7 +391,7 @@ class StoriesMasterViewController: UITableViewController {
                         catch let error {
                             print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
                             print(error)
-                            self.topStories[index].state = .failed
+                            self.storiesOfficialAPI[index].state = .failed
                             DispatchQueue.main.async {
                                 self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
                             }
@@ -435,12 +416,12 @@ class StoriesMasterViewController: UITableViewController {
             if let indexPath = tableView.indexPathForSelectedRow {
                 
                 let controller = (segue.destination as! UINavigationController).topViewController as! StoriesDetailViewController
-                switch currentSourceAPI {
+                switch currentSelectedSourceAPI {
                 case .official:
-                    let selectedItem = topStories[indexPath.row]
+                    let selectedItem = storiesOfficialAPI[indexPath.row]
                     controller.detailItem = selectedItem
                 case .algolia, .timely:
-                    let selectedItem = algoliaStories[indexPath.row]
+                    let selectedItem = storiesAlgoliaAPI[indexPath.row]
                     controller.algoliaItem = selectedItem
                 }
                 
@@ -451,7 +432,7 @@ class StoriesMasterViewController: UITableViewController {
     }
     
     
-    func setFooterView() {
+    func updateFooterView() {
         
         switch state {
             
@@ -472,13 +453,13 @@ class StoriesMasterViewController: UITableViewController {
 }
 
 extension StoriesMasterViewController: StoriesDataSourceDelegate {
-    func updateState(_ newState: State) {
+    func didUpdateState(_ newState: State) {
         self.state = newState
     }
 }
 
 // A new Feed was Selected from the Feed Selection View Controller
-extension StoriesMasterViewController: CellFeedProtocol {
+extension StoriesMasterViewController: FeedDataSourceDelegate {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
         
         //Cancel all existing requests which are in progress
@@ -494,7 +475,7 @@ extension StoriesMasterViewController: CellFeedProtocol {
         
         //Fetch the new stories for the new Feed & Update the TableView
         self.currentSelectedFeedTitle = title
-        self.currentSourceAPI = type
+        self.currentSelectedSourceAPI = type
         self.currentSelectedFeedURL = feedURL
         updateStories()
     }

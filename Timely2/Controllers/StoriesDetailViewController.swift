@@ -39,7 +39,7 @@ class StoriesDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     var state = State.loading {
         didSet {
-            setFooterView()
+            updateFooterView()
             commentsTableView.reloadData()
         }
     }
@@ -452,7 +452,7 @@ class StoriesDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     // MARK: - View Config
     
-    func setFooterView() {
+    func updateFooterView() {
         
         switch state {
             

@@ -10,7 +10,7 @@ import Foundation
 
 extension UITableView {
     
-    func scrollToFirst() {
+    func reloadAndScrollToFirstRow() {
         
         self.reloadData()
         for i in 0..<self.numberOfSections {

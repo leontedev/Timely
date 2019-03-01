@@ -8,17 +8,17 @@
 
 import Foundation
 
-protocol StoriesDataSourceDelegate {
-    func updateState(_ newState: State)
+protocol StoriesDataSourceDelegate: class {
+    func didUpdateState(_ newState: State)
 }
 
 class StoriesDataSource: NSObject, UITableViewDataSource {
     
-    var delegate: StoriesDataSourceDelegate?
-    
+    weak var delegate: StoriesDataSourceDelegate?
     var currentSourceAPI: HNFeedType = .algolia
     var topStories: [Item] = []
     var algoliaStories: [AlgoliaItem] = []
+  
     
     func setData(sourceAPI: HNFeedType, stories: [Item], algoliaStories: [AlgoliaItem]) {
         self.currentSourceAPI = sourceAPI
@@ -110,7 +110,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                     print("Error nil state to be displayed")
                 }
             } else {
-                self.delegate?.updateState(.error(HNError.network("Invalid Response.")))
+                self.delegate?.didUpdateState(.error(HNError.network("Invalid Response.")))
             }
             
         case .algolia, .timely:
@@ -151,7 +151,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                 cell.elapsedTimeLabel?.text = timeAgo
             } else {
                 //viewController.state = .error(HNError.network("Invalid Response."))
-                self.delegate?.updateState(.error(HNError.network("Invalid Response.")))
+                self.delegate?.didUpdateState(.error(HNError.network("Invalid Response.")))
             }
             
         }
