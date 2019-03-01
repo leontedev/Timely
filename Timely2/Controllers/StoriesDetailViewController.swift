@@ -19,7 +19,7 @@ struct CommentSource {
     var attributedString: NSAttributedString?
 }
 
-class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class StoriesDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let COLLAPSED_ROW_HEIGHT = 38
     
@@ -331,7 +331,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if let url = self.storyURL {
                 cell.urlLabel.text = url.absoluteString
                 
-                let tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.labelTapped))
+                let tap = UITapGestureRecognizer(target: self, action: #selector(StoriesDetailViewController.labelTapped))
                 cell.urlLabel.isUserInteractionEnabled = true
                 cell.urlLabel.addGestureRecognizer(tap)
             }

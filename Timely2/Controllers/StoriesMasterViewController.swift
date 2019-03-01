@@ -10,44 +10,48 @@ import UIKit
 
 
 
-class MasterViewController: UITableViewController {
+class StoriesMasterViewController: UITableViewController {
     
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var emptyView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var loadingView: UIView!
-    
-    
     @IBOutlet var tapGesture: UITapGestureRecognizer!
-    @IBAction func tapBlurEffectView(_ sender: Any) {
-        self.feedSelectionViewIsOpen.toggle()
-        closePopoverView()
-    }
-    
-    var state = State.loading {
-        didSet {
-            print(state)
-            setFooterView()
-            // Reload Table View and scrolls to first row
-            tableView.scrollToFirst()
-        }
-    }
-    
     @IBOutlet weak var feedButton: UIBarButtonItem!
     @IBOutlet var feedPopoverView: UIView!
     @IBOutlet weak var visualBlurEffectView: UIVisualEffectView!
     @IBOutlet weak var feedTableView: UITableView!
     @IBOutlet weak var headerTitle: UINavigationItem!
     
-    var detailViewController: DetailViewController? = nil
+    @IBAction func tapBlurEffectView(_ sender: Any) {
+        self.feedSelectionViewIsOpen.toggle()
+        closePopoverView()
+    }
+    
+    var storiesDataSource: StoriesDataSource? = nil
+    var feedDataSource: FeedDataSource? = nil
+    
+    var blurEffectView: UIView = UIView()
+    var detailViewController: StoriesDetailViewController? = nil
     var myRefreshControl: UIRefreshControl?
+    
+    
+    var state = State.loading {
+        didSet {
+            print(state)
+            setFooterView()
+            
+            // Refresh DataSource
+            storiesDataSource?.setData(sourceAPI: currentSourceAPI, stories: topStories, algoliaStories: algoliaStories)
+            
+            // Reload Table View and scrolls to first row
+            tableView.scrollToFirst()
+        }
+    }
     
     var topStories: [Item] = []
     var algoliaStories: [AlgoliaItem] = []
-    var blurEffectView: UIView = UIView()
-    var feedDataSource: FeedDataSource!
-    
     var feedSelectionViewIsOpen: Bool = false
     
     let defaults = UserDefaults.standard
@@ -62,11 +66,15 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // DataSource Configuration
+        storiesDataSource = StoriesDataSource()
+        storiesDataSource?.delegate = self
+        self.tableView.dataSource = storiesDataSource
+        storiesDataSource?.setData(sourceAPI: currentSourceAPI, stories: topStories, algoliaStories: algoliaStories)
+        
         // Don't use the URLSession.shared as calling invalidateAndCancel() on the session returned by the shared method has no effect.
         self.configuration.waitsForConnectivity = true
         self.defaultSession = URLSession(configuration: configuration)
-        
-        
         
         activityIndicator.color = UIColor.lightGray
         
@@ -79,11 +87,11 @@ class MasterViewController: UITableViewController {
         
         if let split = splitViewController {
             let controllers = split.viewControllers
-            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? StoriesDetailViewController
         }
         self.tableView.estimatedRowHeight = 100
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.dataSource = self
+        
         
         loadDefaultFeed()
         updateStories()
@@ -112,8 +120,8 @@ class MasterViewController: UITableViewController {
     /// - Parameter feed: the [Feed] object - FeedList.plist parsed
     func setFeedTableView(with feed: [Feed]) {
         feedDataSource = FeedDataSource()
-        feedDataSource.setData(feedList: feed)
-        feedDataSource.cellDelegate = self
+        feedDataSource?.setData(feedList: feed)
+        feedDataSource?.cellDelegate = self
         
         //Set height of the Feed Select tableview to be set automatic (based on the number of rows)
         let tableHeight = self.feedTableView.rowHeight * CGFloat(feed.count) + self.feedTableView.sectionHeaderHeight
@@ -426,7 +434,7 @@ class MasterViewController: UITableViewController {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 
-                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+                let controller = (segue.destination as! UINavigationController).topViewController as! StoriesDetailViewController
                 switch currentSourceAPI {
                 case .official:
                     let selectedItem = topStories[indexPath.row]
@@ -441,144 +449,7 @@ class MasterViewController: UITableViewController {
             }
         }
     }
-
     
-    // MARK - Data Source
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch self.currentSourceAPI {
-        case .official:
-            return self.topStories.count
-        case .algolia, .timely:
-            return self.algoliaStories.count
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
-        
-        switch self.currentSourceAPI {
-            
-        case .official:
-            
-            if self.topStories.indices.contains(indexPath.row) {
-                let item = self.topStories[indexPath.row]
-                
-                if cell.accessoryView == nil {
-                    let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-                    cell.accessoryView = indicator
-                }
-                let indicator = cell.accessoryView as! UIActivityIndicatorView
-                
-                if let itemTitle = item.title {
-                    cell.titleLabel?.text = itemTitle
-                } else {
-                    cell.titleLabel?.text = "Loading..."
-                }
-                
-                if let itemURL = item.url?.host {
-                    cell.urlLabel?.text = itemURL
-                } else {
-                    cell.urlLabel?.text = "Story ID: " + String(item.id)
-                }
-                
-                
-                if let itemDescendants = item.descendants {
-                    cell.commentsCountLabel?.text = String(itemDescendants)
-                } else {
-                    cell.commentsCountLabel?.text = "-"
-                }
-                
-                if let itemScore = item.score {
-                    cell.upvotesCountLabel?.text = String(itemScore)
-                } else {
-                    cell.upvotesCountLabel?.text = "-"
-                }
-                
-                if let epochTime = item.time {
-                    // Display elapsed time
-                    let componentsFormatter = DateComponentsFormatter()
-                    componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
-                    componentsFormatter.maximumUnitCount = 1
-                    componentsFormatter.unitsStyle = .abbreviated
-                    
-                    
-                    let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
-                    cell.elapsedTimeLabel?.text = timeAgo
-                } else {
-                    cell.elapsedTimeLabel?.text = "-"
-                }
-                
-                switch (item.state) {
-                case .downloaded?:
-                    indicator.stopAnimating()
-                case .failed?:
-                    indicator.stopAnimating()
-                    cell.titleLabel?.text = "Failed to load"
-                case .downloading?:
-                    cell.titleLabel?.text = "Download in progress..."
-                case .new?:
-                    indicator.startAnimating()
-                    //if !tableView.isDragging && !tableView.isDecelerating
-                //startDownload(for: item, at: indexPath)
-                case nil:
-                    print("Error nil state to be displayed")
-                }
-            } else {
-                self.state = .error(HNError.network("Invalid Response."))
-                
-            }
-            
-        case .algolia, .timely:
-            
-            if self.algoliaStories.indices.contains(indexPath.row) {
-                let item = self.algoliaStories[indexPath.row]
-                
-                if let itemTitle = item.title {
-                    cell.titleLabel?.text = itemTitle
-                } else {
-                    cell.titleLabel?.text = "Loading..."
-                }
-
-                if let itemURL = item.url?.host {
-                    cell.urlLabel?.text = itemURL
-                } else {
-                    cell.urlLabel?.text = "Story ID: " + String(item.objectID)
-                }
-
-
-                if let itemDescendants = item.num_comments {
-                    cell.commentsCountLabel?.text = String(itemDescendants)
-                } else {
-                    cell.commentsCountLabel?.text = "-"
-                }
-
-                if let itemScore = item.points {
-                    cell.upvotesCountLabel?.text = String(itemScore)
-                } else {
-                    cell.upvotesCountLabel?.text = "-"
-                }
-
-                
-                
-                let componentsFormatter = DateComponentsFormatter()
-                componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
-                componentsFormatter.maximumUnitCount = 1
-                componentsFormatter.unitsStyle = .abbreviated
-                let timeAgo = componentsFormatter.string(from: item.created_at, to: Date())
-                cell.elapsedTimeLabel?.text = timeAgo
-            } else {
-                self.state = .error(HNError.network("Invalid Response."))
-            }
-            
-        }
-
-        return cell
-    }
     
     func setFooterView() {
         
@@ -587,16 +458,12 @@ class MasterViewController: UITableViewController {
         case .error(let error):
             errorLabel.text = error.localizedDescription
             tableView.tableFooterView = errorView
-
         case .loading:
             tableView.tableFooterView = loadingView
-
 //      case .paging:
 //          tableView.tableFooterView = loadingView
-            
         case .empty:
             tableView.tableFooterView = emptyView
-            
         case .populated:
             tableView.tableFooterView = nil
         }
@@ -604,8 +471,14 @@ class MasterViewController: UITableViewController {
     }
 }
 
+extension StoriesMasterViewController: StoriesDataSourceDelegate {
+    func updateState(_ newState: State) {
+        self.state = newState
+    }
+}
+
 // A new Feed was Selected from the Feed Selection View Controller
-extension MasterViewController: CellFeedProtocol {
+extension StoriesMasterViewController: CellFeedProtocol {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
         
         //Cancel all existing requests which are in progress
@@ -614,8 +487,6 @@ extension MasterViewController: CellFeedProtocol {
                 task.cancel()
             }
         }
-        //I can't just invalidate and cancel the session as I am reusing it - and if its invalidated it can't be reused.
-        //self.defaultSession.invalidateAndCancel()
         
         //Close the Feed Selection popup
         self.feedSelectionViewIsOpen.toggle()
@@ -629,12 +500,3 @@ extension MasterViewController: CellFeedProtocol {
     }
     
 }
-
-//extension MasterViewController: UIGestureRecognizerDelegate {
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-//        // dis-allow button press for the stories table view
-//        print("Gesture Recognized touch.view === self.tableView")
-//        print(touch.view === self.tableView)
-//        return !(touch.view === self.tableView)
-//    }
-//}

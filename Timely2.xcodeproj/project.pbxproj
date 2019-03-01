@@ -22,8 +22,8 @@
 		89336B2521E6237D00822673 /* JSONResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89336B2421E6237D00822673 /* JSONResponseParser.swift */; };
 		89336B2721E7918C00822673 /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89336B2621E7918C00822673 /* HTMLParser.swift */; };
 		893FB66820B8494A007771A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66720B8494A007771A3 /* AppDelegate.swift */; };
-		893FB66A20B8494B007771A3 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66920B8494B007771A3 /* MasterViewController.swift */; };
-		893FB66C20B8494B007771A3 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66B20B8494B007771A3 /* DetailViewController.swift */; };
+		893FB66A20B8494B007771A3 /* StoriesMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66920B8494B007771A3 /* StoriesMasterViewController.swift */; };
+		893FB66C20B8494B007771A3 /* StoriesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66B20B8494B007771A3 /* StoriesDetailViewController.swift */; };
 		893FB66F20B8494B007771A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893FB66D20B8494B007771A3 /* Main.storyboard */; };
 		893FB67120B8494D007771A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893FB67020B8494D007771A3 /* Assets.xcassets */; };
 		893FB67420B8494D007771A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893FB67220B8494D007771A3 /* LaunchScreen.storyboard */; };
@@ -32,6 +32,8 @@
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
 		89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CD221E9E5500288A6D /* FeedSelectView.swift */; };
 		89C435D0221EA34F00288A6D /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CF221EA34F00288A6D /* UIView.swift */; };
+		89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001642228F8CD003EBD5F /* StoriesDataSource.swift */; };
+		89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001672228F8F5003EBD5F /* CommentsDataSource.swift */; };
 		89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */; };
 		BB51F4A25D03D00A13F46680 /* Pods_Timely2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */; };
 /* End PBXBuildFile section */
@@ -56,8 +58,8 @@
 		89336B2621E7918C00822673 /* HTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
 		893FB66420B8494A007771A3 /* Timely2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timely2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		893FB66720B8494A007771A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		893FB66920B8494B007771A3 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
-		893FB66B20B8494B007771A3 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		893FB66920B8494B007771A3 /* StoriesMasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesMasterViewController.swift; sourceTree = "<group>"; };
+		893FB66B20B8494B007771A3 /* StoriesDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesDetailViewController.swift; sourceTree = "<group>"; };
 		893FB66E20B8494B007771A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		893FB67020B8494D007771A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		893FB67320B8494D007771A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,6 +69,8 @@
 		89A8A31F20DBA607007A8664 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		89C435CD221E9E5500288A6D /* FeedSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectView.swift; sourceTree = "<group>"; };
 		89C435CF221EA34F00288A6D /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		89D001642228F8CD003EBD5F /* StoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesDataSource.swift; sourceTree = "<group>"; };
+		89D001672228F8F5003EBD5F /* CommentsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsDataSource.swift; sourceTree = "<group>"; };
 		89DAB65721FF4CBE004390D9 /* DTCoreTextStub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTCoreTextStub.h; sourceTree = "<group>"; };
 		89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTCoreTextStub.m; sourceTree = "<group>"; };
 		89DAB65B21FF4D8C004390D9 /* Timely2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Timely2-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -145,6 +149,7 @@
 				89095A2221DFB03100FAEDF2 /* Playgrounds */,
 				89095A2521E08ED400FAEDF2 /* Extensions */,
 				894B80BB20B95D4B002C313E /* Controllers */,
+				89D001662228F8D4003EBD5F /* Datasources */,
 				894B80B920B95D38002C313E /* Models */,
 				894B80B820B95CC7002C313E /* Views */,
 				893FB66720B8494A007771A3 /* AppDelegate.swift */,
@@ -184,9 +189,8 @@
 		894B80BB20B95D4B002C313E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				893FB66920B8494B007771A3 /* MasterViewController.swift */,
-				893FB66B20B8494B007771A3 /* DetailViewController.swift */,
-				89089F5C21CD49B7005E42B3 /* FeedDataSource.swift */,
+				893FB66920B8494B007771A3 /* StoriesMasterViewController.swift */,
+				893FB66B20B8494B007771A3 /* StoriesDetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -198,6 +202,16 @@
 				4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89D001662228F8D4003EBD5F /* Datasources */ = {
+			isa = PBXGroup;
+			children = (
+				89D001642228F8CD003EBD5F /* StoriesDataSource.swift */,
+				89089F5C21CD49B7005E42B3 /* FeedDataSource.swift */,
+				89D001672228F8F5003EBD5F /* CommentsDataSource.swift */,
+			);
+			path = Datasources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,7 +350,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C435D0221EA34F00288A6D /* UIView.swift in Sources */,
+				89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */,
 				89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */,
+				89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */,
 				894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */,
 				89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */,
 				891E03A72213E9240001DB63 /* HNError.swift in Sources */,
@@ -345,11 +361,11 @@
 				89089F5B21CD2C20005E42B3 /* Feed.swift in Sources */,
 				89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */,
 				89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */,
-				893FB66C20B8494B007771A3 /* DetailViewController.swift in Sources */,
+				893FB66C20B8494B007771A3 /* StoriesDetailViewController.swift in Sources */,
 				891E119A2143CD2900871615 /* Item.swift in Sources */,
 				89336B2521E6237D00822673 /* JSONResponseParser.swift in Sources */,
 				89089F5921C7FA43005E42B3 /* Comment.swift in Sources */,
-				893FB66A20B8494B007771A3 /* MasterViewController.swift in Sources */,
+				893FB66A20B8494B007771A3 /* StoriesMasterViewController.swift in Sources */,
 				893FB66820B8494A007771A3 /* AppDelegate.swift in Sources */,
 				895B424C2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift in Sources */,
 				89336B2721E7918C00822673 /* HTMLParser.swift in Sources */,
