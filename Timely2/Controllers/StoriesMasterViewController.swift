@@ -35,6 +35,7 @@ class StoriesMasterViewController: UITableViewController {
     
     var state = State.loading {
         didSet {
+            debugLog()
             self.updateFooterView()
             // Refresh DataSource
             storiesDataSource.setData(sourceAPI: currentSelectedSourceAPI, stories: storiesOfficialAPI, algoliaStories: storiesAlgoliaAPI)
@@ -43,19 +44,14 @@ class StoriesMasterViewController: UITableViewController {
     }
     
     var defaultSession: URLSession = URLSession(configuration: .default)
-    
+
     var currentSelectedSourceAPI: HNFeedType = .official
     var currentSelectedFeedURL = URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     var currentSelectedFeedTitle = "HN Top Stories"
     var feedSelectionViewIsOpen: Bool = false
-    
     var feeds: [Feed] = []
     var storiesOfficialAPI: [Item] = []
     var storiesAlgoliaAPI: [AlgoliaItem] = []
-    
-    // FIXME: Should they be global???
-    var blurEffectView: UIView = UIView()
-    var myRefreshControl: UIRefreshControl?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,8 +72,8 @@ class StoriesMasterViewController: UITableViewController {
         configureFeedTableView(with: self.feeds)
         customizeFeedPopoverView()
         
-        loadCurrentFeedFromUserDefaults()
-        updateStories()
+        loadCurrentlySelectedFeedFromUserDefaults()
+        fetchStories()
         
     }
     
@@ -135,7 +131,7 @@ class StoriesMasterViewController: UITableViewController {
     }
     
     /// Load The Previously Selected Feed ID from Userdefaults and update timestamps for feed URLs
-    func loadCurrentFeedFromUserDefaults() {
+    func loadCurrentlySelectedFeedFromUserDefaults() {
         
         var feedID = UserDefaults.standard.integer(forKey: "feedID")
         
@@ -167,24 +163,26 @@ class StoriesMasterViewController: UITableViewController {
             }
         }
         
+        
         currentSelectedSourceAPI = feedType
         currentSelectedFeedTitle = selectedFeed.feedName
+        debugLog()
         currentSelectedFeedURL = feedURLComponents
     }
     
     
     /// Initiate updating the Stories TableView based on the currently selected Feed (title, feedType/currentSourceAPI and feedURL)
-    func updateStories() {
+    func fetchStories() {
         self.headerTitle.title = currentSelectedFeedTitle
         
         switch currentSelectedSourceAPI {
             
         case .official:
-            fetchStoryIDs(from: currentSelectedFeedURL)
+            fetchOfficialApiStories(from: currentSelectedFeedURL)
         case .timely:
-            fetchStoryIDs(from: currentSelectedFeedURL)
+            fetchOfficialApiStories(from: currentSelectedFeedURL)
         case .algolia:
-            fetchAlgoliaStories(from: currentSelectedFeedURL)
+            fetchAlgoliaApiStories(from: currentSelectedFeedURL)
         }
         
         self.state = .loading
@@ -192,9 +190,9 @@ class StoriesMasterViewController: UITableViewController {
     
     /// Sets up Pull To Refresh - and calls refreshData()
     func setUpPullToRefresh() {
-        myRefreshControl = UIRefreshControl()
-        myRefreshControl?.addTarget(self, action: #selector(refreshData(sender:)), for: .valueChanged)
-        myRefreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        let myRefreshControl = UIRefreshControl()
+        myRefreshControl.addTarget(self, action: #selector(refreshData(sender:)), for: .valueChanged)
+        myRefreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.tableView.refreshControl = myRefreshControl
     }
     
@@ -203,11 +201,11 @@ class StoriesMasterViewController: UITableViewController {
         
         switch self.currentSelectedSourceAPI {
         case .official:
-            fetchStoryIDs(from: self.currentSelectedFeedURL)
+            fetchOfficialApiStories(from: self.currentSelectedFeedURL)
         case .timely:
-            fetchStoryIDs(from: self.currentSelectedFeedURL)
+            fetchOfficialApiStories(from: self.currentSelectedFeedURL)
         case .algolia:
-            fetchAlgoliaStories(from: self.currentSelectedFeedURL)
+            fetchAlgoliaApiStories(from: self.currentSelectedFeedURL)
         }
         
         sender.endRefreshing()
@@ -252,7 +250,7 @@ class StoriesMasterViewController: UITableViewController {
         }
     }
     
-    func fetchAlgoliaStories(from urlComponents: URLComponents) {
+    func fetchAlgoliaApiStories(from urlComponents: URLComponents) {
         
         self.storiesOfficialAPI.removeAll()
         self.state = .loading
@@ -284,7 +282,6 @@ class StoriesMasterViewController: UITableViewController {
                             DispatchQueue.main.async {
                                 self.storiesAlgoliaAPI = stories.hits
                                 self.state = .populated
-                                //self.tableView.reloadData()
                             }
                         } catch let error {
                             self.state = .error(HNError.parsingJSON(error.localizedDescription))
@@ -295,7 +292,7 @@ class StoriesMasterViewController: UITableViewController {
     }
     
     // Official API
-    func fetchStoryIDs(from urlComponents: URLComponents) {
+    func fetchOfficialApiStories(from urlComponents: URLComponents) {
         self.storiesOfficialAPI.removeAll()
         self.state = .loading
         
@@ -326,7 +323,7 @@ class StoriesMasterViewController: UITableViewController {
                             
                             self.state = .populated
                             //self.tableView.reloadData()
-                            self.fetchItems()
+                            self.fetchOfficialApiStoryItem()
                             
                         } catch let error {
                             self.state = .error(HNError.parsingJSON(error.localizedDescription))
@@ -339,7 +336,7 @@ class StoriesMasterViewController: UITableViewController {
     }
 
     // Official API
-    func fetchItems() {
+    func fetchOfficialApiStoryItem() {
 
         for (index, item) in self.storiesOfficialAPI.enumerated() {
             
@@ -419,10 +416,10 @@ class StoriesMasterViewController: UITableViewController {
                 switch currentSelectedSourceAPI {
                 case .official:
                     let selectedItem = storiesOfficialAPI[indexPath.row]
-                    controller.detailItem = selectedItem
+                    controller.officialStoryItem = selectedItem
                 case .algolia, .timely:
                     let selectedItem = storiesAlgoliaAPI[indexPath.row]
-                    controller.algoliaItem = selectedItem
+                    controller.algoliaStoryItem = selectedItem
                 }
                 
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
@@ -477,7 +474,7 @@ extension StoriesMasterViewController: FeedDataSourceDelegate {
         self.currentSelectedFeedTitle = title
         self.currentSelectedSourceAPI = type
         self.currentSelectedFeedURL = feedURL
-        updateStories()
+        fetchStories()
     }
     
 }

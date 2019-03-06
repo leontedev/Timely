@@ -34,6 +34,8 @@
 		89C435D0221EA34F00288A6D /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CF221EA34F00288A6D /* UIView.swift */; };
 		89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001642228F8CD003EBD5F /* StoriesDataSource.swift */; };
 		89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001672228F8F5003EBD5F /* CommentsDataSource.swift */; };
+		89D0016A2229852A003EBD5F /* BreakpointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001692229852A003EBD5F /* BreakpointManager.swift */; };
+		89D26093222E8D6D00FB0087 /* DebugLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D26092222E8D6D00FB0087 /* DebugLog.swift */; };
 		89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */; };
 		BB51F4A25D03D00A13F46680 /* Pods_Timely2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */; };
 /* End PBXBuildFile section */
@@ -71,6 +73,8 @@
 		89C435CF221EA34F00288A6D /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		89D001642228F8CD003EBD5F /* StoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesDataSource.swift; sourceTree = "<group>"; };
 		89D001672228F8F5003EBD5F /* CommentsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsDataSource.swift; sourceTree = "<group>"; };
+		89D001692229852A003EBD5F /* BreakpointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakpointManager.swift; sourceTree = "<group>"; };
+		89D26092222E8D6D00FB0087 /* DebugLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLog.swift; sourceTree = "<group>"; };
 		89DAB65721FF4CBE004390D9 /* DTCoreTextStub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTCoreTextStub.h; sourceTree = "<group>"; };
 		89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTCoreTextStub.m; sourceTree = "<group>"; };
 		89DAB65B21FF4D8C004390D9 /* Timely2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Timely2-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 				895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */,
 				89C435CF221EA34F00288A6D /* UIView.swift */,
 				8907AE692225A03B00A1B6EC /* UITableView.swift */,
+				89D26092222E8D6D00FB0087 /* DebugLog.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -157,6 +162,7 @@
 				893FB67020B8494D007771A3 /* Assets.xcassets */,
 				893FB67220B8494D007771A3 /* LaunchScreen.storyboard */,
 				893FB67520B8494D007771A3 /* Info.plist */,
+				89D001692229852A003EBD5F /* BreakpointManager.swift */,
 			);
 			path = Timely2;
 			sourceTree = "<group>";
@@ -353,6 +359,8 @@
 				89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */,
 				89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */,
 				89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */,
+				89D0016A2229852A003EBD5F /* BreakpointManager.swift in Sources */,
+				89D26093222E8D6D00FB0087 /* DebugLog.swift in Sources */,
 				894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */,
 				89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */,
 				891E03A72213E9240001DB63 /* HNError.swift in Sources */,
