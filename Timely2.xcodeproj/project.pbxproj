@@ -29,7 +29,11 @@
 		893FB67420B8494D007771A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893FB67220B8494D007771A3 /* LaunchScreen.storyboard */; };
 		894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894B80BC20B95D7E002C313E /* ItemCell.swift */; };
 		895B424C2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */; };
+		897D066E2230EB57006B831F /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897D066D2230EB57006B831F /* SettingsSplitViewController.swift */; };
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
+		89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */; };
+		89BE85B322326E98001D7870 /* DefaultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */; };
+		89BE85B522327762001D7870 /* AppearanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85B422327762001D7870 /* AppearanceTableViewController.swift */; };
 		89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CD221E9E5500288A6D /* FeedSelectView.swift */; };
 		89C435D0221EA34F00288A6D /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CF221EA34F00288A6D /* UIView.swift */; };
 		89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001642228F8CD003EBD5F /* StoriesDataSource.swift */; };
@@ -68,7 +72,11 @@
 		893FB67520B8494D007771A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		894B80BC20B95D7E002C313E /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString_TrimmingCharacters.swift; sourceTree = "<group>"; };
+		897D066D2230EB57006B831F /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		89A8A31F20DBA607007A8664 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMasterViewController.swift; sourceTree = "<group>"; };
+		89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsTableViewController.swift; sourceTree = "<group>"; };
+		89BE85B422327762001D7870 /* AppearanceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceTableViewController.swift; sourceTree = "<group>"; };
 		89C435CD221E9E5500288A6D /* FeedSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectView.swift; sourceTree = "<group>"; };
 		89C435CF221EA34F00288A6D /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		89D001642228F8CD003EBD5F /* StoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesDataSource.swift; sourceTree = "<group>"; };
@@ -195,8 +203,8 @@
 		894B80BB20B95D4B002C313E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				893FB66920B8494B007771A3 /* StoriesMasterViewController.swift */,
-				893FB66B20B8494B007771A3 /* StoriesDetailViewController.swift */,
+				89BE85AF22326E2F001D7870 /* Stories */,
+				89BE85AE22326E1A001D7870 /* Settings */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -208,6 +216,26 @@
 				4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89BE85AE22326E1A001D7870 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				897D066D2230EB57006B831F /* SettingsSplitViewController.swift */,
+				89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */,
+				89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */,
+				89BE85B422327762001D7870 /* AppearanceTableViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		89BE85AF22326E2F001D7870 /* Stories */ = {
+			isa = PBXGroup;
+			children = (
+				893FB66920B8494B007771A3 /* StoriesMasterViewController.swift */,
+				893FB66B20B8494B007771A3 /* StoriesDetailViewController.swift */,
+			);
+			path = Stories;
 			sourceTree = "<group>";
 		};
 		89D001662228F8D4003EBD5F /* Datasources */ = {
@@ -359,6 +387,7 @@
 				89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */,
 				89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */,
 				89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */,
+				89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */,
 				89D0016A2229852A003EBD5F /* BreakpointManager.swift in Sources */,
 				89D26093222E8D6D00FB0087 /* DebugLog.swift in Sources */,
 				894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */,
@@ -372,12 +401,15 @@
 				893FB66C20B8494B007771A3 /* StoriesDetailViewController.swift in Sources */,
 				891E119A2143CD2900871615 /* Item.swift in Sources */,
 				89336B2521E6237D00822673 /* JSONResponseParser.swift in Sources */,
+				89BE85B322326E98001D7870 /* DefaultsTableViewController.swift in Sources */,
 				89089F5921C7FA43005E42B3 /* Comment.swift in Sources */,
 				893FB66A20B8494B007771A3 /* StoriesMasterViewController.swift in Sources */,
 				893FB66820B8494A007771A3 /* AppDelegate.swift in Sources */,
+				897D066E2230EB57006B831F /* SettingsSplitViewController.swift in Sources */,
 				895B424C2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift in Sources */,
 				89336B2721E7918C00822673 /* HTMLParser.swift in Sources */,
 				89095A2721E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift in Sources */,
+				89BE85B522327762001D7870 /* AppearanceTableViewController.swift in Sources */,
 				8918A73420BC784E00129A0E /* CommentCell.swift in Sources */,
 				8907AE6A2225A03B00A1B6EC /* UITableView.swift in Sources */,
 			);

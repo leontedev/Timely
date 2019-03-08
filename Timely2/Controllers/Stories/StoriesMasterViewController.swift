@@ -413,6 +413,7 @@ class StoriesMasterViewController: UITableViewController {
             if let indexPath = tableView.indexPathForSelectedRow {
                 
                 let controller = (segue.destination as! UINavigationController).topViewController as! StoriesDetailViewController
+
                 switch currentSelectedSourceAPI {
                 case .official:
                     let selectedItem = storiesOfficialAPI[indexPath.row]
