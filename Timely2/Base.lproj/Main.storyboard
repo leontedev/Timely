@@ -842,7 +842,7 @@
                             </tableViewSection>
                             <tableViewSection id="LWb-uN-ado">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="KhF-oZ-ySw">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="KhF-oZ-ySw" userLabel="Privacy Policy Cell">
                                         <rect key="frame" x="0.0" y="159" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KhF-oZ-ySw" id="oHj-Y3-5n6">
@@ -869,6 +869,9 @@
                                                 <constraint firstItem="ZPb-XC-3jh" firstAttribute="leading" secondItem="oHj-Y3-5n6" secondAttribute="leading" constant="17" id="os0-PR-gbB"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Oxu-fc-HA7" kind="showDetail" id="DGH-Ds-9Zn"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="JSg-QD-crp">
                                         <rect key="frame" x="0.0" y="203" width="375" height="44"/>
@@ -1134,6 +1137,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k54-59-2oC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1604" y="1568"/>
+        </scene>
+        <!--Privacy View Controller-->
+        <scene sceneID="tfa-Ol-CmT">
+            <objects>
+                <viewController id="Oxu-fc-HA7" userLabel="Privacy View Controller" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dvZ-cu-6yB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upF-C0-oHK">
+                                <rect key="frame" x="8" y="186" width="359" height="553"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <mutableString key="text">Timely collects absolutely no data from or about its users., inlcuding usage statistics. Besides the direct requests made to the Official Hacker News API and the wrapper Algolia API, no other server-side communication is established by this app (no ads, no tracking).
+
+Data required for the implementation of features such as bookmarks or history are being stored solely on device. When deleting the app, the data is deleted forever.
+
+For some features you are required to signin into your Hacker News account and therby granting Timely permission to control your account on your behalf. Timely never performs any actions without you clearly requesting it from the app's interface. All sign-in data (tokens) are stored only on your own device and at no point are they being stored server-side. Upon deletion of the app, all sign-in information is deleted forever.
+
+By using Timely you're subject to the Hacker News Privacy Policy.
+
+
+</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kkl-kY-rKM">
+                                <rect key="frame" x="112" y="118" width="151" height="28"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="kkl-kY-rKM" firstAttribute="centerX" secondItem="dvZ-cu-6yB" secondAttribute="centerX" id="1A4-Ur-pVy"/>
+                            <constraint firstItem="upF-C0-oHK" firstAttribute="bottom" secondItem="uM4-Hl-hgW" secondAttribute="bottom" constant="10" id="OCw-CB-mkk"/>
+                            <constraint firstItem="upF-C0-oHK" firstAttribute="leading" secondItem="uM4-Hl-hgW" secondAttribute="leading" constant="8" id="W0Q-fB-L1l"/>
+                            <constraint firstItem="upF-C0-oHK" firstAttribute="top" secondItem="kkl-kY-rKM" secondAttribute="bottom" constant="40" id="ech-tm-Yf9"/>
+                            <constraint firstItem="upF-C0-oHK" firstAttribute="trailing" secondItem="uM4-Hl-hgW" secondAttribute="trailing" constant="-8" id="rbl-WS-V5f"/>
+                            <constraint firstItem="kkl-kY-rKM" firstAttribute="top" secondItem="uM4-Hl-hgW" secondAttribute="top" constant="30" id="rt8-sp-KI9"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uM4-Hl-hgW"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EjT-3O-yxA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2468" y="1561.3300492610838"/>
         </scene>
     </scenes>
     <resources>
