@@ -34,6 +34,7 @@
 		89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */; };
 		89BE85B322326E98001D7870 /* DefaultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */; };
 		89BE85B522327762001D7870 /* AppearanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85B422327762001D7870 /* AppearanceTableViewController.swift */; };
+		89BE85B92236B5D3001D7870 /* Timely.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85B72236B5D3001D7870 /* Timely.xcdatamodeld */; };
 		89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CD221E9E5500288A6D /* FeedSelectView.swift */; };
 		89C435D0221EA34F00288A6D /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CF221EA34F00288A6D /* UIView.swift */; };
 		89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001642228F8CD003EBD5F /* StoriesDataSource.swift */; };
@@ -77,6 +78,7 @@
 		89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMasterViewController.swift; sourceTree = "<group>"; };
 		89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsTableViewController.swift; sourceTree = "<group>"; };
 		89BE85B422327762001D7870 /* AppearanceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceTableViewController.swift; sourceTree = "<group>"; };
+		89BE85B82236B5D3001D7870 /* Timely.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Timely.xcdatamodel; sourceTree = "<group>"; };
 		89C435CD221E9E5500288A6D /* FeedSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectView.swift; sourceTree = "<group>"; };
 		89C435CF221EA34F00288A6D /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		89D001642228F8CD003EBD5F /* StoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesDataSource.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 		89095A2521E08ED400FAEDF2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				89D001692229852A003EBD5F /* BreakpointManager.swift */,
 				89095A2621E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift */,
 				89336B2421E6237D00822673 /* JSONResponseParser.swift */,
 				89336B2621E7918C00822673 /* HTMLParser.swift */,
@@ -159,6 +162,7 @@
 		893FB66620B8494A007771A3 /* Timely2 */ = {
 			isa = PBXGroup;
 			children = (
+				89BE85B62236B588001D7870 /* Resources */,
 				89095A2221DFB03100FAEDF2 /* Playgrounds */,
 				89095A2521E08ED400FAEDF2 /* Extensions */,
 				894B80BB20B95D4B002C313E /* Controllers */,
@@ -166,11 +170,7 @@
 				894B80B920B95D38002C313E /* Models */,
 				894B80B820B95CC7002C313E /* Views */,
 				893FB66720B8494A007771A3 /* AppDelegate.swift */,
-				893FB66D20B8494B007771A3 /* Main.storyboard */,
-				893FB67020B8494D007771A3 /* Assets.xcassets */,
-				893FB67220B8494D007771A3 /* LaunchScreen.storyboard */,
 				893FB67520B8494D007771A3 /* Info.plist */,
-				89D001692229852A003EBD5F /* BreakpointManager.swift */,
 			);
 			path = Timely2;
 			sourceTree = "<group>";
@@ -238,12 +238,39 @@
 			path = Stories;
 			sourceTree = "<group>";
 		};
-		89D001662228F8D4003EBD5F /* Datasources */ = {
+		89BE85B62236B588001D7870 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				893FB66D20B8494B007771A3 /* Main.storyboard */,
+				893FB67020B8494D007771A3 /* Assets.xcassets */,
+				893FB67220B8494D007771A3 /* LaunchScreen.storyboard */,
+				89BE85B72236B5D3001D7870 /* Timely.xcdatamodeld */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		89BE85BC2237D17B001D7870 /* Stories */ = {
 			isa = PBXGroup;
 			children = (
 				89D001642228F8CD003EBD5F /* StoriesDataSource.swift */,
 				89089F5C21CD49B7005E42B3 /* FeedDataSource.swift */,
 				89D001672228F8F5003EBD5F /* CommentsDataSource.swift */,
+			);
+			path = Stories;
+			sourceTree = "<group>";
+		};
+		89BE85BD2237D186001D7870 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		89D001662228F8D4003EBD5F /* Datasources */ = {
+			isa = PBXGroup;
+			children = (
+				89BE85BD2237D186001D7870 /* Settings */,
+				89BE85BC2237D17B001D7870 /* Stories */,
 			);
 			path = Datasources;
 			sourceTree = "<group>";
@@ -392,6 +419,7 @@
 				89D26093222E8D6D00FB0087 /* DebugLog.swift in Sources */,
 				894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */,
 				89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */,
+				89BE85B92236B5D3001D7870 /* Timely.xcdatamodeld in Sources */,
 				891E03A72213E9240001DB63 /* HNError.swift in Sources */,
 				89089F5D21CD49B7005E42B3 /* FeedDataSource.swift in Sources */,
 				891E03A92215C2DD0001DB63 /* State.swift in Sources */,
@@ -624,6 +652,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		89BE85B72236B5D3001D7870 /* Timely.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				89BE85B82236B5D3001D7870 /* Timely.xcdatamodel */,
+			);
+			currentVersion = 89BE85B82236B5D3001D7870 /* Timely.xcdatamodel */;
+			path = Timely.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 893FB65C20B8494A007771A3 /* Project object */;
 }

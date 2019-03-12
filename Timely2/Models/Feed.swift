@@ -48,3 +48,26 @@ struct Feed: Decodable {
     var fromCalendarComponentValue: Int?
     var isHidden: Bool
 }
+
+/// Loads Feed data from FeedList.plist and parses it in an array of Feed type.
+struct LoadDefaultFeeds {
+    var feeds: [Feed]
+    
+    init() {
+        
+        self.feeds = []
+        
+        if let feedListURL = Bundle.main.url(forResource: "FeedList", withExtension: "plist") {
+            do {
+                let feedListData = try Data(contentsOf: feedListURL)
+                let plistDecoder = PropertyListDecoder()
+                self.feeds = try plistDecoder.decode([Feed].self, from: feedListData)
+            } catch {
+                print(error)
+                
+            }
+        }
+        
+        self.feeds = self.feeds.filter { $0.isHidden == false }
+    }
+}

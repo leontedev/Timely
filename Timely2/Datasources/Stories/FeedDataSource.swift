@@ -94,10 +94,17 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             }
         }
         
-        //Save the newly selected feed into Userdefaults (to load on next app open)
+        // Save the newly selected feed into Userdefaults (to load on next app open) if the default feed setting is set to "Previously Used"
         let feedID = feed[indexPath.row].feedID
-        UserDefaults.standard.set(feedID, forKey: "feedID")
-
+        
+        // It will return false if the key does not exist
+        let isPreviouslySelectedFeed = UserDefaults.standard.bool(forKey: "isPreviouslySelectedFeed")
+        
+        // Overwrite the default feed if the "Previously Selected" setting was selected in the Defaults section of Settings
+        if isPreviouslySelectedFeed {
+            UserDefaults.standard.set(feedID, forKey: "initialFeedID")
+        }
+        
         self.delegate?.didTapCell(feedURL: feedURLComponents, title: feedName, type: feedType)
         
         if let feedURL = feedURLComponents.url {

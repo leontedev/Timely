@@ -670,7 +670,6 @@
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SLD-UC-DBI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="vC3-pB-5Vb" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -680,6 +679,7 @@
                         <segue destination="JEX-9P-axG" kind="relationship" relationship="rootViewController" id="GKi-kA-LjT"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SLD-UC-DBI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1318" y="-177"/>
         </scene>
@@ -694,7 +694,7 @@
                         <sections>
                             <tableViewSection id="oDh-t1-NmW">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="vWX-ya-vH0">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="vWX-ya-vH0" userLabel="Default Feed Cell">
                                         <rect key="frame" x="0.0" y="35" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vWX-ya-vH0" id="Zjq-S1-jx7">
@@ -722,21 +722,21 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="rvz-Vb-Dea">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="rvz-Vb-Dea" userLabel="Open Links In Cell">
                                         <rect key="frame" x="0.0" y="79" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rvz-Vb-Dea" id="lQB-bB-rbQ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Links" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ie3-Ai-9Df">
-                                                    <rect key="frame" x="20" y="11.333333333333336" width="85.666666666666671" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Links In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ie3-Ai-9Df" userLabel="Open Links In">
+                                                    <rect key="frame" x="20.000000000000007" y="11.333333333333336" width="103.66666666666669" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dwJ-FF-KdU">
-                                                    <rect key="frame" x="293" y="11.333333333333336" width="62" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="In Safari" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dwJ-FF-KdU">
+                                                    <rect key="frame" x="293" y="11" width="62" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -758,10 +758,16 @@
                             <outlet property="delegate" destination="3Kq-Ig-ZoA" id="5qz-aI-E2R"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="defaultFeedCell" destination="vWX-ya-vH0" id="fx5-8s-JSi"/>
+                        <outlet property="defaultFeedLabel" destination="vci-Xe-7MK" id="oSm-Yb-FvD"/>
+                        <outlet property="openLinksInCell" destination="rvz-Vb-Dea" id="Gex-XG-yyX"/>
+                        <outlet property="openLinksInLabel" destination="dwJ-FF-KdU" id="rOw-Qa-p58"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8HC-2M-0La" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="135" y="1586"/>
+            <point key="canvasLocation" x="133.59999999999999" y="1585.7142857142858"/>
         </scene>
         <!--Settings-->
         <scene sceneID="hbL-2c-WcX">
@@ -990,7 +996,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Fhe-QD-7gP">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Fhe-QD-7gP" userLabel="Rate Cell">
                                         <rect key="frame" x="0.0" y="379" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Fhe-QD-7gP" id="yk8-6n-FHq">
@@ -1027,6 +1033,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="Vf1-5w-xX8"/>
+                    <connections>
+                        <outlet property="feedbackCell" destination="DvO-IR-iOh" id="IJ3-Ym-E0j"/>
+                        <outlet property="rateCell" destination="Fhe-QD-7gP" id="vWY-2E-trO"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vrG-mk-gbg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1259,11 +1269,11 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="upF-C0-oHK">
                                 <rect key="frame" x="8" y="186" width="359" height="553"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Timely collects absolutely no data from or about its users., inlcuding usage statistics. Besides the direct requests made to the Official Hacker News API and the wrapper Algolia API, no other server-side communication is established by this app (no ads, no tracking).
+                                <mutableString key="text">Timely collects absolutely no data from or about its users, including usage statistics. Except the direct requests made to the Official Hacker News API and its wrapper API provided by Algolia, no other server-side communication is established by this app (no ads, no tracking).
 
-Data required for the implementation of features such as bookmarks or history are being stored solely on device. When deleting the app, the data is deleted forever.
+Data required for the implementation of features such as bookmarks or history are being stored solely on your own device. When deleting the app, the data is deleted forever.
 
-For some features you are required to signin into your Hacker News account and therby granting Timely permission to control your account on your behalf. Timely never performs any actions without you clearly requesting it from the app's interface. All sign-in data (tokens) are stored only on your own device and at no point are they being stored server-side. Upon deletion of the app, all sign-in information is deleted forever.
+For some features you are required to sign-in into your Hacker News account and therby grant Timely access to control your account on your behalf. Timely never performs any actions without you clearly requesting it from the app's interface. All sign-in data (tokens) is stored only on your own device and at no point is it being stored server-side or anywhere else. Upon deletion of the app, all sign-in information is deleted forever.
 
 By using Timely you're subject to the Hacker News Privacy Policy.
 

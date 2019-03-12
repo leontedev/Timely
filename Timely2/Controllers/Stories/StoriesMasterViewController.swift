@@ -68,31 +68,15 @@ class StoriesMasterViewController: UITableViewController {
         configuration.waitsForConnectivity = true
         self.defaultSession = URLSession(configuration: configuration)
         
-        self.feeds = loadFeedsFromFile()
+    
+        self.feeds = LoadDefaultFeeds().feeds
         configureFeedTableView(with: self.feeds)
         customizeFeedPopoverView()
         
         loadCurrentlySelectedFeedFromUserDefaults()
         fetchStories()
-        
     }
     
-    /// Loads Feed data from FeedList.plist and parses it in an array of Feed type.
-    ///
-    /// - Returns: a Feed array
-    func loadFeedsFromFile() -> [Feed] {
-        var myFeeds: [Feed] = []
-        if let feedListURL = Bundle.main.url(forResource: "FeedList", withExtension: "plist") {
-            do {
-                let feedListData = try Data(contentsOf: feedListURL)
-                let plistDecoder = PropertyListDecoder()
-                myFeeds = try plistDecoder.decode([Feed].self, from: feedListData)
-            } catch {
-                print(error)
-            }
-        }
-        return myFeeds.filter { $0.isHidden == false }
-    }
     
     /// Sets up a new TableView to select the Feed/Sort option.
     ///
@@ -133,11 +117,12 @@ class StoriesMasterViewController: UITableViewController {
     /// Load The Previously Selected Feed ID from Userdefaults and update timestamps for feed URLs
     func loadCurrentlySelectedFeedFromUserDefaults() {
         
-        var feedID = UserDefaults.standard.integer(forKey: "feedID")
+        var feedID = UserDefaults.standard.integer(forKey: "initialFeedID")
         
-        //defaults.integer(forKey: "feedID") will return 0 if the value is not found
+        //defaults.integer(forKey: "initialFeedID") will return 0 if the value is not found
         if feedID == 0 {
-            feedID = 1
+            // automatically select the default feed if the setting was never changed by the user: "Last 24h"
+            feedID = 2
         }
         
         let selectedFeed = feeds.filter { $0.feedID == feedID }[0]

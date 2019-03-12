@@ -116,7 +116,7 @@
 	</dict>
 	<dict>
 		<key>feedID</key>
-		<integer>8</integer>
+		<integer>9</integer>
 		<key>feedName</key>
 		<string>HN Best Stories</string>
 		<key>feedType</key>
