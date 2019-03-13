@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SafariServices
 
 struct CommentSource {
     var comment: Comment
@@ -51,7 +51,7 @@ class StoriesDetailViewController: UIViewController {
             debugLog()
             updateFooterView()
             
-            storiesDetailDataSource.setData(story: self.story, comments: self.comments)
+            storiesDetailDataSource.setData(parent: self, story: self.story, comments: self.comments)
             commentsTableView.reloadData()
         }
     }
@@ -110,7 +110,27 @@ class StoriesDetailViewController: UIViewController {
     
     @objc func labelTapped(sender:UITapGestureRecognizer) {
         if let url = story.url {
-            UIApplication.shared.open(url)
+            
+            let defaultAppToOpenLinks = UserDefaults.standard.string(forKey: "defaultAppToOpenLinks")
+            if let defaultApp = defaultAppToOpenLinks {
+                guard let defaultAppCase = LinkOpener(rawValue: defaultApp) else {
+                    return
+                }
+                
+                switch defaultAppCase {
+                case .safari:
+                    UIApplication.shared.open(url)
+                case .webview:
+                    let safariVC = SFSafariViewController(url: url)
+                    self.present(safariVC, animated: true)
+                }
+            } else {
+                // Default option - if the UserDefault key does not exist, the setting was not modified
+                let safariVC = SFSafariViewController(url: url)
+                self.present(safariVC, animated: true)
+            }
+        
+            
         }
     }
 

@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum LinkOpener: String, CaseIterable {
+    case safari = "Safari"
+    case webview = "Webview"
+}
+
 class DefaultsTableViewController: UITableViewController {
 
     @IBOutlet weak var defaultFeedCell: UITableViewCell!
@@ -65,17 +70,30 @@ class DefaultsTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
                 alertController.addAction(defaultFeedAction)
-                
             }
             
-            
-            self.present(alertController, animated: true) {
-                // ...
-            }
-            
+            self.present(alertController, animated: true) { }
             
         } else if cell === openLinksInCell {
+            let alertController = UIAlertController(title: nil, message: "Select the default way to open links", preferredStyle: .actionSheet)
             
+            // Cancel option
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                self.tableView.deselectRow(at: indexPath, animated: true)
+            }
+            alertController.addAction(cancelAction)
+            
+            for appOption in LinkOpener.allCases {
+                let appAction = UIAlertAction(title: appOption.rawValue, style: .default) { (action) in
+                    UserDefaults.standard.set(appOption.rawValue, forKey: "defaultAppToOpenLinks")
+                    
+                    self.updateTableViewDataSource()
+                    self.tableView.reloadData()
+                }
+                alertController.addAction(appAction)
+            }
+            
+            self.present(alertController, animated: true) { }
         }
     }
     
@@ -97,6 +115,15 @@ class DefaultsTableViewController: UITableViewController {
                 self.defaultFeedLabel.text = selectedFeed.feedName
             }
         }
+        
+        let defaultAppToOpenLinks = UserDefaults.standard.string(forKey: "defaultAppToOpenLinks")
+        
+        if let defaultApp = defaultAppToOpenLinks {
+            openLinksInLabel.text = defaultApp
+        } else {
+            openLinksInLabel.text = LinkOpener.webview.rawValue
+        }
+        
     }
 
 

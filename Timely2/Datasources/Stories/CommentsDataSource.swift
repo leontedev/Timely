@@ -12,6 +12,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     var story: Story?
     var comments: [CommentSource] = []
+    weak var parentVC: UIViewController?
     
     // Section indexes
     let STORY_CELL_SECTION = 0
@@ -20,9 +21,10 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     let COLLAPSED_ROW_HEIGHT = 38
     
-    func setData(story: Story, comments: [CommentSource]) {
+    func setData(parent: UIViewController, story: Story, comments: [CommentSource]) {
         self.story = story
         self.comments = comments
+        self.parentVC = parent
     }
     
     //MARK: - DataSource
@@ -129,7 +131,9 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             cell.selectionStyle = UITableViewCellSelectionStyle.none
             
             cell.storyURL = self.story?.url
-            //cell.parentVC = self
+            
+            cell.parentVC = self.parentVC
+            
             cell.shareItems = [story?.title as Any, story?.url as Any]
             
         }
