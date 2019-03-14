@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SafariServices
+
 
 struct CommentSource {
     var comment: Comment
@@ -107,32 +107,7 @@ class StoriesDetailViewController: UIViewController {
     
     }
     
-    
-    @objc func labelTapped(sender:UITapGestureRecognizer) {
-        if let url = story.url {
-            
-            let defaultAppToOpenLinks = UserDefaults.standard.string(forKey: "defaultAppToOpenLinks")
-            if let defaultApp = defaultAppToOpenLinks {
-                guard let defaultAppCase = LinkOpener(rawValue: defaultApp) else {
-                    return
-                }
-                
-                switch defaultAppCase {
-                case .safari:
-                    UIApplication.shared.open(url)
-                case .webview:
-                    let safariVC = SFSafariViewController(url: url)
-                    self.present(safariVC, animated: true)
-                }
-            } else {
-                // Default option - if the UserDefault key does not exist, the setting was not modified
-                let safariVC = SFSafariViewController(url: url)
-                self.present(safariVC, animated: true)
-            }
-        
-            
-        }
-    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

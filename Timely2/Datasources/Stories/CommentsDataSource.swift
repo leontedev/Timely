@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SafariServices
+
 
 class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
@@ -92,7 +94,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             if let url = self.story?.url {
                 cell.urlLabel.text = url.absoluteString
                 
-                let tap = UITapGestureRecognizer(target: self, action: #selector(StoriesDetailViewController.labelTapped))
+                let tap = UITapGestureRecognizer(target: self, action: #selector(CommentsDataSource.labelTapped))
                 cell.urlLabel.isUserInteractionEnabled = true
                 cell.urlLabel.addGestureRecognizer(tap)
             }
@@ -213,5 +215,31 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             }
         }
         return UITableViewAutomaticDimension
+    }
+    
+    @objc func labelTapped(sender:UITapGestureRecognizer) {
+        if let url = story?.url {
+            
+            let defaultAppToOpenLinks = UserDefaults.standard.string(forKey: "defaultAppToOpenLinks")
+            if let defaultApp = defaultAppToOpenLinks {
+                guard let defaultAppCase = LinkOpener(rawValue: defaultApp) else {
+                    return
+                }
+                
+                switch defaultAppCase {
+                case .safari:
+                    UIApplication.shared.open(url)
+                case .webview:
+                    let safariVC = SFSafariViewController(url: url)
+                    parentVC?.present(safariVC, animated: true)
+                }
+            } else {
+                // Default option - if the UserDefault key does not exist, the setting was not modified
+                let safariVC = SFSafariViewController(url: url)
+                parentVC?.present(safariVC, animated: true)
+            }
+            
+            
+        }
     }
 }

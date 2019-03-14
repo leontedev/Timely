@@ -35,6 +35,7 @@
 		89BE85B322326E98001D7870 /* DefaultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */; };
 		89BE85B522327762001D7870 /* AppearanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85B422327762001D7870 /* AppearanceTableViewController.swift */; };
 		89BE85B92236B5D3001D7870 /* Timely.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85B72236B5D3001D7870 /* Timely.xcdatamodeld */; };
+		89BE85BF223A2748001D7870 /* UISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85BE223A2748001D7870 /* UISlider.swift */; };
 		89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CD221E9E5500288A6D /* FeedSelectView.swift */; };
 		89C435D0221EA34F00288A6D /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CF221EA34F00288A6D /* UIView.swift */; };
 		89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001642228F8CD003EBD5F /* StoriesDataSource.swift */; };
@@ -79,6 +80,7 @@
 		89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsTableViewController.swift; sourceTree = "<group>"; };
 		89BE85B422327762001D7870 /* AppearanceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceTableViewController.swift; sourceTree = "<group>"; };
 		89BE85B82236B5D3001D7870 /* Timely.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Timely.xcdatamodel; sourceTree = "<group>"; };
+		89BE85BE223A2748001D7870 /* UISlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISlider.swift; sourceTree = "<group>"; };
 		89C435CD221E9E5500288A6D /* FeedSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectView.swift; sourceTree = "<group>"; };
 		89C435CF221EA34F00288A6D /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		89D001642228F8CD003EBD5F /* StoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesDataSource.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				89C435CF221EA34F00288A6D /* UIView.swift */,
 				8907AE692225A03B00A1B6EC /* UITableView.swift */,
 				89D26092222E8D6D00FB0087 /* DebugLog.swift */,
+				89BE85BE223A2748001D7870 /* UISlider.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				89095A2721E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift in Sources */,
 				89BE85B522327762001D7870 /* AppearanceTableViewController.swift in Sources */,
 				8918A73420BC784E00129A0E /* CommentCell.swift in Sources */,
+				89BE85BF223A2748001D7870 /* UISlider.swift in Sources */,
 				8907AE6A2225A03B00A1B6EC /* UITableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

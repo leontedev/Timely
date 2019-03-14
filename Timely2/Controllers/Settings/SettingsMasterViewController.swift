@@ -13,6 +13,7 @@ class SettingsMasterViewController: UITableViewController, MFMailComposeViewCont
     
     @IBOutlet weak var feedbackCell: UITableViewCell!
     @IBOutlet weak var rateCell: UITableViewCell!
+    @IBOutlet weak var twitterCell: UITableViewCell!
     
     
     override func viewDidLoad() {
@@ -39,6 +40,26 @@ class SettingsMasterViewController: UITableViewController, MFMailComposeViewCont
             rateApp(appId: "id959379869") { success in
                 print("RateApp \(success)")
             }
+        } else if cell === twitterCell {
+            let screenName =  "lmihai"
+            let appURL = NSURL(string: "twitter://user?screen_name=\(screenName)")!
+            let webURL = NSURL(string: "https://twitter.com/\(screenName)")!
+            
+            if UIApplication.shared.canOpenURL(appURL as URL) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(appURL as URL)
+                }
+            } else {
+                //redirect to safari because the user doesn't have Instagram
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(webURL as URL)
+                }
+            }
+            self.tableView.deselectRow(at: indexPath, animated: true)
         }
     }
         
