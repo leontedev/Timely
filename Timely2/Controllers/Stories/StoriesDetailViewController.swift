@@ -258,9 +258,6 @@ class StoriesDetailViewController: UIViewController {
     }
     
     
-    
-    
-    
     // MARK: - View Config
     
     func updateFooterView() {

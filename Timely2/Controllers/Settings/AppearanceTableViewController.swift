@@ -8,16 +8,129 @@
 
 import UIKit
 
-class AppearanceTableViewController: UITableViewController {
+extension Notification.Name {
+    static var storiesLabelAppearanceChanged: Notification.Name {
+        return .init(rawValue: "AppearanceTableViewController.storiesLabelAppearanceChanged")
+    }
+    
+    static var commentsLabelAppearanceChanged: Notification.Name {
+        return .init(rawValue: "AppearanceTableViewController.commentsLabelAppearanceChanged")
+    }
+}
 
+
+class AppearanceTableViewController: UITableViewController {
+    
+    private let notificationCenter = NotificationCenter.default
+    
+    // If the userdefault was never previously set it will return false (which coincides with the default configuration - to use the system font)
+    var isSetToUseCustomFontForStories: Bool = UserDefaults.standard.bool(forKey: "isSetToUseCustomFontForStories") {
+        didSet {
+            UserDefaults.standard.set(isSetToUseCustomFontForStories, forKey: "isSetToUseCustomFontForStories")
+        }
+    }
+    
+    // Default value is 17
+    var customFontSizeStories: Float = UserDefaults.standard.float(forKey: "customFontSizeStories") == 0 ? Float(17) : UserDefaults.standard.float(forKey: "customFontSizeStories") {
+        didSet {
+            UserDefaults.standard.set(customFontSizeStories, forKey: "customFontSizeStories")
+        }
+    }
+    
+    var isSetToUseCustomFontForComments: Bool = UserDefaults.standard.bool(forKey: "isSetToUseCustomFontForComments") {
+        didSet {
+            UserDefaults.standard.set(isSetToUseCustomFontForComments, forKey: "isSetToUseCustomFontForComments")
+        }
+    }
+    
+    // Default value is 14.
+    var customFontSizeComments: Float = UserDefaults.standard.float(forKey: "customFontSizeComments") == 0 ? Float(14) : UserDefaults.standard.float(forKey: "customFontSizeComments") {
+        didSet {
+            UserDefaults.standard.set(customFontSizeComments, forKey: "customFontSizeComments")
+        }
+    }
+    
+    
+    @IBOutlet weak var storiesSystemFontSwitch: UISwitch!
+    @IBOutlet weak var storiesSystemFontLabel: UILabel!
+    @IBOutlet weak var storiesFontSizeSlider: UISlider!
+    @IBOutlet weak var commentsSystemFontSwitch: UISwitch!
+    @IBOutlet weak var commentsSystemFontLabel: UILabel!
+    @IBOutlet weak var commentsFontSizeSlider: UISlider!
+    
+    
+    @IBAction func toggleStoriesSwitchUseSystemFont(_ sender: Any) {
+        isSetToUseCustomFontForStories = !storiesSystemFontSwitch.isOn
+        updateStoriesUI()
+        notificationCenter.post(name: .storiesLabelAppearanceChanged, object: nil)
+    }
+    
+    @IBAction func moveStoriesSliderFontSize(_ sender: Any) {
+        if let newSliderPosition = storiesFontSizeSlider {
+            customFontSizeStories = newSliderPosition.value
+            updateStoriesUI()
+            notificationCenter.post(name: .storiesLabelAppearanceChanged, object: nil)
+        }
+    }
+    
+    @IBAction func toggleCommentsSwitchUseSystemFont() {
+        isSetToUseCustomFontForComments = !commentsSystemFontSwitch.isOn
+        updateCommentsUI()
+        notificationCenter.post(name: .commentsLabelAppearanceChanged, object: nil)
+    }
+    
+    @IBAction func moveCommentsSliderFontSize() {
+        if let newSliderPosition = commentsFontSizeSlider {
+            customFontSizeComments = newSliderPosition.value
+            updateCommentsUI()
+            notificationCenter.post(name: .commentsLabelAppearanceChanged, object: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Automatically resize when font changes are initiated
+        storiesSystemFontLabel.adjustsFontForContentSizeCategory = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
         if let index = self.tableView.indexPathForSelectedRow{
             self.tableView.deselectRow(at: index, animated: true)
+        }
+        
+        // Initial config of the UISlider with the position saved in UserDefaults
+        storiesFontSizeSlider.setValue(customFontSizeStories, animated: false)
+        commentsFontSizeSlider.setValue(customFontSizeComments, animated: false)
+        
+        // Initial config of the stories label font size, UISwitch on/off and if the UISlider is enabled
+        updateStoriesUI()
+        updateCommentsUI()
+    }
+    
+    func updateStoriesUI() {
+        // Configure the Switch toggle
+        storiesSystemFontSwitch.setOn(!isSetToUseCustomFontForStories, animated: false)
+        
+        if isSetToUseCustomFontForStories {
+            storiesSystemFontLabel.font = storiesSystemFontLabel.font.withSize(CGFloat(customFontSizeStories))
+            storiesFontSizeSlider.isEnabled = true
+        } else {
+            storiesSystemFontLabel.font = .preferredFont(forTextStyle: .body)
+            storiesFontSizeSlider.isEnabled = false
+        }
+    }
+    
+    func updateCommentsUI() {
+        // Configure the Switch toggle
+        commentsSystemFontSwitch.setOn(!isSetToUseCustomFontForComments, animated: false)
+        
+        if isSetToUseCustomFontForComments {
+            commentsSystemFontLabel.font = commentsSystemFontLabel.font.withSize(CGFloat(customFontSizeComments))
+            commentsFontSizeSlider.isEnabled = true
+        } else {
+            commentsSystemFontLabel.font = .preferredFont(forTextStyle: .body)
+            commentsFontSizeSlider.isEnabled = false
         }
     }
 

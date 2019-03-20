@@ -42,6 +42,8 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
         
+        //cell.titleLabel.adjustsFontForContentSizeCategory = true
+        
         switch self.currentSourceAPI {
             
         case .official:

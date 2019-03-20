@@ -11,6 +11,8 @@ import SafariServices
 
 class CommentCell: UITableViewCell {
     
+    private let notificationCenter: NotificationCenter = NotificationCenter.default
+    
     var shareItems: [Any] = []
     var storyURL: URL?
     weak var parentVC: UIViewController?
@@ -67,18 +69,51 @@ class CommentCell: UITableViewCell {
     // Third dynamic cell - which contain the comments
     static let reuseIdentifierComment = "CommentCell"
     
-    //@IBOutlet weak var commentLabel: UILabel!
+    
+    @IBOutlet weak var commentStackView: UIStackView!
+    
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var elapsedTimeLabel: UILabel!
     @IBOutlet weak var byUserLabel: UILabel!
-    @IBOutlet weak var depthLabel: UILabel!
-    @IBOutlet weak var commentStackView: UIStackView!
+    
     
     override func layoutSubviews() {
         // Custom layout cells don't apply indentationLevel automatically. We need to update layoutMargins manually
         super.layoutSubviews()
         contentView.layoutMargins.left = layoutMargins.left + CGFloat(indentationLevel) * indentationWidth
+        
+        
+        if commentTextView != nil {
+            
+            // Automatically resize when font changes are initiated
+            commentTextView.adjustsFontForContentSizeCategory = true
+            
+            updateFontSizeUI()
+            
+            notificationCenter.addObserver(self,
+                                           selector: #selector(fontSizeDidModify),
+                                           name: .commentsLabelAppearanceChanged,
+                                           object: nil
+            )
+            
+        }
+        
+        
     }
     
+    @objc private func fontSizeDidModify(_ notification: Notification) {
+        updateFontSizeUI()
+    }
+    
+    func updateFontSizeUI() {
+        let isSetToUseCustomFontForComments: Bool = UserDefaults.standard.bool(forKey: "isSetToUseCustomFontForComments")
+        let customFontSizeComments: Float = UserDefaults.standard.float(forKey: "customFontSizeComments")
+        
+        if isSetToUseCustomFontForComments {
+            commentTextView.font = UIFont.systemFont(ofSize: CGFloat(customFontSizeComments))
+        } else {
+            commentTextView.font = .preferredFont(forTextStyle: .body)
+        }
+    }
 
 }
