@@ -18,12 +18,15 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
     var currentSourceAPI: HNFeedType = .algolia
     var topStories: [Item] = []
     var algoliaStories: [AlgoliaItem] = []
-  
+    
+    
     
     func setData(sourceAPI: HNFeedType, stories: [Item], algoliaStories: [AlgoliaItem]) {
         self.currentSourceAPI = sourceAPI
         self.topStories = stories
         self.algoliaStories = algoliaStories
+        
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -39,10 +42,12 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
         }
     }
     
+
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ItemCell.reuseIdentifier, for: indexPath) as! ItemCell
         
-        //cell.titleLabel.adjustsFontForContentSizeCategory = true
         
         switch self.currentSourceAPI {
             

@@ -65,29 +65,26 @@ class CommentCell: UITableViewCell {
         displayShareSheet()
     }
     
-    
     // Third dynamic cell - which contain the comments
     static let reuseIdentifierComment = "CommentCell"
     
-    
     @IBOutlet weak var commentStackView: UIStackView!
-    
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var elapsedTimeLabel: UILabel!
     @IBOutlet weak var byUserLabel: UILabel!
-    
     
     override func layoutSubviews() {
         // Custom layout cells don't apply indentationLevel automatically. We need to update layoutMargins manually
         super.layoutSubviews()
         contentView.layoutMargins.left = layoutMargins.left + CGFloat(indentationLevel) * indentationWidth
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
         
+        commentTextView.adjustsFontForContentSizeCategory = true
         
         if commentTextView != nil {
-            
-            // Automatically resize when font changes are initiated
-            commentTextView.adjustsFontForContentSizeCategory = true
-            
             updateFontSizeUI()
             
             notificationCenter.addObserver(self,
@@ -95,14 +92,12 @@ class CommentCell: UITableViewCell {
                                            name: .commentsLabelAppearanceChanged,
                                            object: nil
             )
-            
         }
-        
-        
     }
     
     @objc private func fontSizeDidModify(_ notification: Notification) {
         updateFontSizeUI()
+        
     }
     
     func updateFontSizeUI() {
@@ -111,8 +106,10 @@ class CommentCell: UITableViewCell {
         
         if isSetToUseCustomFontForComments {
             commentTextView.font = UIFont.systemFont(ofSize: CGFloat(customFontSizeComments))
+            layoutIfNeeded()
         } else {
             commentTextView.font = .preferredFont(forTextStyle: .body)
+            layoutIfNeeded()
         }
     }
 

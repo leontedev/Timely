@@ -33,6 +33,7 @@ class StoriesMasterViewController: UITableViewController {
     private let storiesDataSource = StoriesDataSource()
     private let feedDataSource = FeedDataSource()
     
+    
     var state = State.loading {
         didSet {
             debugLog()
@@ -56,13 +57,15 @@ class StoriesMasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.estimatedRowHeight = 100
+        self.tableView.estimatedRowHeight = 120
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
         activityIndicator.color = UIColor.lightGray
         setUpPullToRefresh()
         
         storiesDataSource.delegate = self
         self.tableView.dataSource = storiesDataSource
+        
 
         let configuration = URLSessionConfiguration.default
         configuration.waitsForConnectivity = true
@@ -75,8 +78,17 @@ class StoriesMasterViewController: UITableViewController {
         
         loadCurrentlySelectedFeedFromUserDefaults()
         fetchStories()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(fontSizeDidModify),
+                                               name: .storiesLabelAppearanceChanged,
+                                               object: nil
+        )
     }
     
+    @objc private func fontSizeDidModify(_ notification: Notification) {
+        tableView.reloadData()
+    }
     
     /// Sets up a new TableView to select the Feed/Sort option.
     ///

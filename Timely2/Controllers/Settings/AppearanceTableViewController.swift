@@ -92,6 +92,7 @@ class AppearanceTableViewController: UITableViewController {
         
         // Automatically resize when font changes are initiated
         storiesSystemFontLabel.adjustsFontForContentSizeCategory = true
+        commentsSystemFontLabel.adjustsFontForContentSizeCategory = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -112,8 +113,12 @@ class AppearanceTableViewController: UITableViewController {
         // Configure the Switch toggle
         storiesSystemFontSwitch.setOn(!isSetToUseCustomFontForStories, animated: false)
         
+        
         if isSetToUseCustomFontForStories {
-            storiesSystemFontLabel.font = storiesSystemFontLabel.font.withSize(CGFloat(customFontSizeStories))
+            let font = UIFont.systemFont(ofSize: CGFloat(customFontSizeStories))
+            storiesSystemFontLabel.font = UIFontMetrics.default.scaledFont(for: font)
+            
+            //storiesSystemFontLabel.font = storiesSystemFontLabel.font.withSize(CGFloat(customFontSizeStories))
             storiesFontSizeSlider.isEnabled = true
         } else {
             storiesSystemFontLabel.font = .preferredFont(forTextStyle: .body)
