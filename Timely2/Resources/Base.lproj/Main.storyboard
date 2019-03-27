@@ -1311,6 +1311,7 @@
                                                     <rect key="frame" x="23" y="7" width="329" height="31"/>
                                                     <connections>
                                                         <action selector="dragStoriesSliderFontSize:" destination="lhK-XQ-Bjt" eventType="valueChanged" id="ash-Lh-bwI"/>
+                                                        <action selector="finishedDraggingStoriesSliderFontSize:" destination="lhK-XQ-Bjt" eventType="touchUpInside" id="9O7-F1-JfQ"/>
                                                     </connections>
                                                 </slider>
                                             </subviews>

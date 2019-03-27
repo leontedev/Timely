@@ -81,7 +81,7 @@ class StoriesMasterViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(fontSizeDidModify),
-                                               name: .storiesLabelAppearanceChanged,
+                                               name: .storiesLabelAppearanceChangingFinished,
                                                object: nil
         )
     }

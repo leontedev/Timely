@@ -74,7 +74,7 @@ class AppearanceTableViewController: UITableViewController {
     @IBAction func toggleStoriesSwitchUseSystemFont(_ sender: Any) {
         isSetToUseCustomFontForStories = !storiesSystemFontSwitch.isOn
         updateStoriesUI()
-        notificationCenter.post(name: .storiesLabelAppearanceChanged, object: nil)
+        notificationCenter.post(name: .storiesLabelAppearanceChangingFinished, object: nil)
     }
     
     @IBAction func dragStoriesSliderFontSize(_ sender: Any) {
@@ -84,6 +84,13 @@ class AppearanceTableViewController: UITableViewController {
             notificationCenter.post(name: .storiesLabelAppearanceChanged, object: nil)
         }
     }
+    
+    @IBAction func finishedDraggingStoriesSliderFontSize(_ sender: Any) {
+        if let finalSliderPosition = storiesFontSizeSlider {
+            notificationCenter.post(name: .storiesLabelAppearanceChangingFinished, object: nil)
+        }
+    }
+    
     
     @IBAction func toggleCommentsSwitchUseSystemFont() {
         isSetToUseCustomFontForComments = !commentsSystemFontSwitch.isOn

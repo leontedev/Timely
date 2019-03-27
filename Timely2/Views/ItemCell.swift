@@ -26,7 +26,7 @@ class ItemCell: UITableViewCell {
         
         notificationCenter.addObserver(self,
                                        selector: #selector(fontSizeDidModify),
-                                       name: .storiesLabelAppearanceChanged,
+                                       name: .storiesLabelAppearanceChangingFinished,
                                        object: nil
         )
         
