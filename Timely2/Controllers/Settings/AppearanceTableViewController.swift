@@ -9,12 +9,24 @@
 import UIKit
 
 extension Notification.Name {
+    // to update continuously the font size of the label storiesSystemFontLabel: "Use System Font Size" in this View
     static var storiesLabelAppearanceChanged: Notification.Name {
         return .init(rawValue: "AppearanceTableViewController.storiesLabelAppearanceChanged")
     }
     
+    // to update the Stories ItemCell font size, once, after the stories slider is released with the final value
+    static var storiesLabelAppearanceChangingFinished: Notification.Name {
+        return .init(rawValue: "AppearanceTableViewController.storiesLabelAppearanceChangingFinished")
+    }
+    
+    // to update continuously the font size of the label commentsSystemFontLabel: "Use System Font Size" in this View
     static var commentsLabelAppearanceChanged: Notification.Name {
         return .init(rawValue: "AppearanceTableViewController.commentsLabelAppearanceChanged")
+    }
+    
+    // to update the Comments attributed string, once, after the comments slider is released with the final value
+    static var commentsLabelAppearanceChangingFinished: Notification.Name {
+        return .init(rawValue: "AppearanceTableViewController.commentsLabelAppearanceChangingFinished")
     }
 }
 
@@ -65,7 +77,7 @@ class AppearanceTableViewController: UITableViewController {
         notificationCenter.post(name: .storiesLabelAppearanceChanged, object: nil)
     }
     
-    @IBAction func moveStoriesSliderFontSize(_ sender: Any) {
+    @IBAction func dragStoriesSliderFontSize(_ sender: Any) {
         if let newSliderPosition = storiesFontSizeSlider {
             customFontSizeStories = newSliderPosition.value
             updateStoriesUI()
@@ -76,14 +88,20 @@ class AppearanceTableViewController: UITableViewController {
     @IBAction func toggleCommentsSwitchUseSystemFont() {
         isSetToUseCustomFontForComments = !commentsSystemFontSwitch.isOn
         updateCommentsUI()
-        notificationCenter.post(name: .commentsLabelAppearanceChanged, object: nil)
+        notificationCenter.post(name: .commentsLabelAppearanceChangingFinished, object: nil)
     }
     
-    @IBAction func moveCommentsSliderFontSize() {
+    @IBAction func dragCommentsSliderFontSize() {
         if let newSliderPosition = commentsFontSizeSlider {
             customFontSizeComments = newSliderPosition.value
             updateCommentsUI()
             notificationCenter.post(name: .commentsLabelAppearanceChanged, object: nil)
+        }
+    }
+    
+    @IBAction func finishedDraggingCommentsSliderFontSize(_ sender: Any) {
+        if let finalSliderPosition = commentsFontSizeSlider {
+            notificationCenter.post(name: .commentsLabelAppearanceChangingFinished, object: nil)
         }
     }
     

@@ -264,13 +264,6 @@
 			path = Stories;
 			sourceTree = "<group>";
 		};
-		89BE85BD2237D186001D7870 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		89C97E53224817D30092C9BA /* LICENSE */ = {
 			isa = PBXGroup;
 			children = (
@@ -282,7 +275,6 @@
 		89D001662228F8D4003EBD5F /* Datasources */ = {
 			isa = PBXGroup;
 			children = (
-				89BE85BD2237D186001D7870 /* Settings */,
 				89BE85BC2237D17B001D7870 /* Stories */,
 			);
 			path = Datasources;
@@ -323,7 +315,7 @@
 				TargetAttributes = {
 					893FB66320B8494A007771A3 = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -614,7 +606,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Timely2/Extensions/Timely2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -639,7 +631,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mihaileonte.Timely2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Timely2/Extensions/Timely2-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

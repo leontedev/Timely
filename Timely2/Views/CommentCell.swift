@@ -82,9 +82,8 @@ class CommentCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        commentTextView.adjustsFontForContentSizeCategory = true
-        
         if commentTextView != nil {
+            commentTextView.adjustsFontForContentSizeCategory = true
             updateFontSizeUI()
             
             notificationCenter.addObserver(self,
@@ -97,7 +96,6 @@ class CommentCell: UITableViewCell {
     
     @objc private func fontSizeDidModify(_ notification: Notification) {
         updateFontSizeUI()
-        
     }
     
     func updateFontSizeUI() {
@@ -105,12 +103,12 @@ class CommentCell: UITableViewCell {
         let customFontSizeComments: Float = UserDefaults.standard.float(forKey: "customFontSizeComments")
         
         if isSetToUseCustomFontForComments {
-            commentTextView.font = UIFont.systemFont(ofSize: CGFloat(customFontSizeComments))
-            layoutIfNeeded()
+            let font = UIFont.systemFont(ofSize: CGFloat(customFontSizeComments))
+            commentTextView.font = UIFontMetrics.default.scaledFont(for: font)
         } else {
             commentTextView.font = .preferredFont(forTextStyle: .body)
-            layoutIfNeeded()
         }
+        
     }
 
 }

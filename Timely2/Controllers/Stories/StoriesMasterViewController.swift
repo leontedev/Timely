@@ -58,7 +58,7 @@ class StoriesMasterViewController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.estimatedRowHeight = 120
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         
         activityIndicator.color = UIColor.lightGray
         setUpPullToRefresh()

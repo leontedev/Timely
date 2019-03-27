@@ -57,7 +57,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                 let item = self.topStories[indexPath.row]
                 
                 if cell.accessoryView == nil {
-                    let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+                    let indicator = UIActivityIndicatorView(style: .gray)
                     cell.accessoryView = indicator
                 }
                 let indicator = cell.accessoryView as! UIActivityIndicatorView

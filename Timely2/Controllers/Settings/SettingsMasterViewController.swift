@@ -47,14 +47,14 @@ class SettingsMasterViewController: UITableViewController, MFMailComposeViewCont
             
             if UIApplication.shared.canOpenURL(appURL as URL) {
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(appURL as URL, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(appURL as URL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
                 } else {
                     UIApplication.shared.openURL(appURL as URL)
                 }
             } else {
                 //redirect to safari because the user doesn't have Instagram
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(webURL as URL, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(webURL as URL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
                 } else {
                     UIApplication.shared.openURL(webURL as URL)
                 }
@@ -74,7 +74,7 @@ class SettingsMasterViewController: UITableViewController, MFMailComposeViewCont
             completion(UIApplication.shared.openURL(url))
             return
         }
-        UIApplication.shared.open(url, options: [:], completionHandler: completion)
+        UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: completion)
     }
     
     func sendEmail() {
@@ -95,4 +95,9 @@ class SettingsMasterViewController: UITableViewController, MFMailComposeViewCont
         controller.dismiss(animated: true)
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

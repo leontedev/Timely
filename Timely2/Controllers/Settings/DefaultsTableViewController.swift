@@ -10,7 +10,7 @@ import UIKit
 
 enum LinkOpener: String, CaseIterable {
     case safari = "Safari"
-    case webview = "Webview"
+    case webview = "Timely"
 }
 
 class DefaultsTableViewController: UITableViewController {

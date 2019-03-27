@@ -64,7 +64,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             
             // Indent the separator line between the cells
             let separatorIndent = CGFloat(15 + indent)
-            cell.separatorInset = UIEdgeInsetsMake(0, separatorIndent, 0, 0)
+            cell.separatorInset = UIEdgeInsets.init(top: 0, left: separatorIndent, bottom: 0, right: 0)
             
             
             if let attributedString = self.comments[indexPath.row].attributedString {
@@ -84,7 +84,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             
             cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStory, for: indexPath) as? CommentCell
             
-            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
             
             
             if let title = self.story?.title {
@@ -130,7 +130,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             
             cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStoryButtons, for: indexPath) as? CommentCell
             
-            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
             
             cell.storyURL = self.story?.url
             
@@ -174,7 +174,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                     }
                     
                     tableView.performBatchUpdates({
-                        tableView.deleteRows(at: childCommentsForRemoval, with: UITableViewRowAnimation.fade)
+                        tableView.deleteRows(at: childCommentsForRemoval, with: UITableView.RowAnimation.fade)
                     }, completion: nil)
                 }
                 
@@ -193,7 +193,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                     for (index, _) in self.comments[indexPath.row].removedComments.enumerated() {
                         indexPaths.append(IndexPath(row: index + indexPath.row + 1, section: COMMENT_CELL_SECTION))
                     }
-                    tableView.insertRows(at: indexPaths, with: UITableViewRowAnimation.bottom)
+                    tableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.bottom)
                     self.comments[indexPath.row].removedComments.removeAll()
                     
                 }
@@ -214,7 +214,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 return CGFloat(integerLiteral: height)
             }
         }
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     @objc func labelTapped(sender:UITapGestureRecognizer) {

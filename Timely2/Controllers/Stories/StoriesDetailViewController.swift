@@ -9,6 +9,24 @@
 import UIKit
 
 
+extension NSMutableAttributedString {
+    func replaceFont(font: UIFont, color: UIColor? = nil) {
+        beginEditing()
+        self.enumerateAttribute(.font, in: NSRange(location: 0, length: self.length)) { (value, range, stop) in
+            if let f = value as? UIFont, let newFontDescriptor = f.fontDescriptor.withFamily(font.familyName).withSymbolicTraits(f.fontDescriptor.symbolicTraits) {
+                let newFont = UIFont(descriptor: newFontDescriptor, size: font.pointSize)
+                removeAttribute(.font, range: range)
+                addAttribute(.font, value: newFont, range: range)
+                if let color = color {
+                    removeAttribute(.foregroundColor, range: range)
+                    addAttribute(.foregroundColor, value: color, range: range)
+                }
+            }
+        }
+        endEditing()
+    }
+}
+
 struct CommentSource {
     var comment: Comment
     var depth: Int
@@ -59,13 +77,25 @@ class StoriesDetailViewController: UIViewController {
     var officialStoryItem: Item?
     var algoliaStoryItem: AlgoliaItem?
     var fetchedComment: Comment? = nil
-
+    
+    var isSetToUseCustomFontForComments: Bool { return UserDefaults.standard.bool(forKey: "isSetToUseCustomFontForComments") }
+    var customFontSizeComments: Float { return UserDefaults.standard.float(forKey: "customFontSizeComments") }
+    var prefferedFontSize: UIFont {
+    
+        if isSetToUseCustomFontForComments {
+            let font = UIFont.systemFont(ofSize: CGFloat(customFontSizeComments))
+            return UIFontMetrics.default.scaledFont(for: font)
+        } else {
+            return .preferredFont(forTextStyle: .body)
+        }
+    
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         commentsTableView.estimatedRowHeight = 100
-        commentsTableView.rowHeight = UITableViewAutomaticDimension
+        commentsTableView.rowHeight = UITableView.automaticDimension
         activityIndicator.color = UIColor.lightGray
         
         commentsTableView.delegate = storiesDetailDataSource
@@ -104,10 +134,34 @@ class StoriesDetailViewController: UIViewController {
         if story.numComments == 0 {
             self.state = .empty
         }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(fontSizeDidModify),
+                                               name: .commentsLabelAppearanceChangingFinished,
+                                               object: nil
+        )
+        
+        
     
     }
     
-
+    @objc private func fontSizeDidModify(_ notification: Notification) {
+        
+        print("Comments font size should modify to \(prefferedFontSize)")
+        
+        for (index, comment) in self.comments.enumerated() {
+            if let attributedString = comment.attributedString {
+                var mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+                
+                mutableAttributedString.replaceFont(font: self.prefferedFontSize)
+                
+                self.comments[index].attributedString = mutableAttributedString
+            }
+        }
+        
+        storiesDetailDataSource.setData(parent: self, story: self.story, comments: self.comments)
+        commentsTableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -193,12 +247,13 @@ class StoriesDetailViewController: UIViewController {
                     
                     //HTML Parsing / Attributed String Options
                     let color = UIColor.black
-                    let fontSize: Float = 14
+                    
+                    
                     
                     let options = [
-                        DTCoreTextStub.kDTCoreTextOptionKeyFontSize(): NSNumber(value: Float(fontSize)),
-                        DTCoreTextStub.kDTCoreTextOptionKeyFontName(): UIFont.systemFont(ofSize: 14).fontName, //"HelveticaNeue",
-                        DTCoreTextStub.kDTCoreTextOptionKeyFontFamily(): UIFont.systemFont(ofSize: 14).familyName, //"Helvetica Neue",
+                        DTCoreTextStub.kDTCoreTextOptionKeyFontSize(): self.prefferedFontSize.fontDescriptor.pointSize,
+                        DTCoreTextStub.kDTCoreTextOptionKeyFontName(): self.prefferedFontSize.fontName,
+                        DTCoreTextStub.kDTCoreTextOptionKeyFontFamily(): self.prefferedFontSize.familyName, //UIFont.systemFont(ofSize: 14).familyName, //"Helvetica Neue",
                         DTCoreTextStub.kDTCoreTextOptionKeyUseiOS6Attributes(): NSNumber(value: true),
                         DTCoreTextStub.kDTCoreTextOptionKeyTextColor(): color] as [String? : Any]
                     
@@ -209,8 +264,8 @@ class StoriesDetailViewController: UIViewController {
                         let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
                         self.comments[index].timeAgo = timeAgo
                         
-                        //Parse html in the .text parameter to NSAttributedString
-                        //Start working on a background thread - if parsing will not be ready, it will be done 'live' when displaying the row on the main thread
+                        // Parse html in the .text parameter to NSAttributedString
+                        // Start working on a background thread - if parsing will not be ready, it will be done 'live' when displaying the row on the main thread
 //                        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
 //                            guard let self = self else {
 //                                return
@@ -226,16 +281,11 @@ class StoriesDetailViewController: UIViewController {
                             let range = NSMakeRange(0, attributedString.length)
                             mutableAttributedString.mutableString.replaceOccurrences(of: "\n\n", with: "\n", options: NSString.CompareOptions.caseInsensitive, range: range)
                             
-//                                var style = NSMutableParagraphStyle()
-//                                style.lineSpacing = 3.5
-//                                mutableAttributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: style, range: range)
-                            
                             self.comments[index].attributedString = mutableAttributedString
                         }
                     }
                        
 
-//                    }
                     let delta = CFAbsoluteTimeGetCurrent() - t0
                     debugLog()
                     
