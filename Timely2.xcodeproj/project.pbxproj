@@ -156,7 +156,7 @@
 		893FB65B20B8494A007771A3 = {
 			isa = PBXGroup;
 			children = (
-				89C97E53224817D30092C9BA /* LICENSE */,
+				89C97E53224817D30092C9BA /* COPYRIGHT */,
 				893FB66620B8494A007771A3 /* Timely2 */,
 				893FB66520B8494A007771A3 /* Products */,
 				894B80C220B968DE002C313E /* Frameworks */,
@@ -273,12 +273,12 @@
 			path = Stories;
 			sourceTree = "<group>";
 		};
-		89C97E53224817D30092C9BA /* LICENSE */ = {
+		89C97E53224817D30092C9BA /* COPYRIGHT */ = {
 			isa = PBXGroup;
 			children = (
 				89C97E54224817FA0092C9BA /* LICENSE.md */,
 			);
-			path = LICENSE;
+			path = COPYRIGHT;
 			sourceTree = "<group>";
 		};
 		89D001662228F8D4003EBD5F /* Datasources */ = {
