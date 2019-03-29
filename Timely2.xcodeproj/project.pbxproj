@@ -25,8 +25,8 @@
 		893CA75D224BBBC800BDA9FF /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893CA75C224BBBC800BDA9FF /* UIImage.swift */; };
 		893CA75F224BBC0500BDA9FF /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893CA75E224BBC0500BDA9FF /* NSMutableAttributedString.swift */; };
 		893FB66820B8494A007771A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66720B8494A007771A3 /* AppDelegate.swift */; };
-		893FB66A20B8494B007771A3 /* StoriesMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66920B8494B007771A3 /* StoriesMasterViewController.swift */; };
-		893FB66C20B8494B007771A3 /* StoriesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66B20B8494B007771A3 /* StoriesDetailViewController.swift */; };
+		893FB66A20B8494B007771A3 /* StoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66920B8494B007771A3 /* StoriesViewController.swift */; };
+		893FB66C20B8494B007771A3 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893FB66B20B8494B007771A3 /* CommentsViewController.swift */; };
 		893FB66F20B8494B007771A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893FB66D20B8494B007771A3 /* Main.storyboard */; };
 		893FB67120B8494D007771A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 893FB67020B8494D007771A3 /* Assets.xcassets */; };
 		893FB67420B8494D007771A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893FB67220B8494D007771A3 /* LaunchScreen.storyboard */; };
@@ -43,6 +43,9 @@
 		89BE85BF223A2748001D7870 /* UISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85BE223A2748001D7870 /* UISlider.swift */; };
 		89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CD221E9E5500288A6D /* FeedSelectView.swift */; };
 		89C435D0221EA34F00288A6D /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C435CF221EA34F00288A6D /* UIView.swift */; };
+		89C997B6224E71D600694BD9 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997B5224E71D600694BD9 /* BookmarksViewController.swift */; };
+		89C997B8224E733B00694BD9 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997B7224E733B00694BD9 /* BookmarksDataSource.swift */; };
+		89C997BA224E73FB00694BD9 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997B9224E73FB00694BD9 /* BookmarkCell.swift */; };
 		89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001642228F8CD003EBD5F /* StoriesDataSource.swift */; };
 		89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001672228F8F5003EBD5F /* CommentsDataSource.swift */; };
 		89D0016A2229852A003EBD5F /* BreakpointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001692229852A003EBD5F /* BreakpointManager.swift */; };
@@ -74,8 +77,8 @@
 		893CA75E224BBC0500BDA9FF /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
 		893FB66420B8494A007771A3 /* Timely2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timely2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		893FB66720B8494A007771A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		893FB66920B8494B007771A3 /* StoriesMasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesMasterViewController.swift; sourceTree = "<group>"; };
-		893FB66B20B8494B007771A3 /* StoriesDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesDetailViewController.swift; sourceTree = "<group>"; };
+		893FB66920B8494B007771A3 /* StoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesViewController.swift; sourceTree = "<group>"; };
+		893FB66B20B8494B007771A3 /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		893FB66E20B8494B007771A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		893FB67020B8494D007771A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		893FB67320B8494D007771A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -94,6 +97,9 @@
 		89C435CD221E9E5500288A6D /* FeedSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSelectView.swift; sourceTree = "<group>"; };
 		89C435CF221EA34F00288A6D /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		89C97E54224817FA0092C9BA /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		89C997B5224E71D600694BD9 /* BookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
+		89C997B7224E733B00694BD9 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
+		89C997B9224E73FB00694BD9 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		89D001642228F8CD003EBD5F /* StoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesDataSource.swift; sourceTree = "<group>"; };
 		89D001672228F8F5003EBD5F /* CommentsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsDataSource.swift; sourceTree = "<group>"; };
 		89D001692229852A003EBD5F /* BreakpointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakpointManager.swift; sourceTree = "<group>"; };
@@ -195,10 +201,8 @@
 		894B80B820B95CC7002C313E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				894B80BC20B95D7E002C313E /* ItemCell.swift */,
-				8918A73320BC784E00129A0E /* CommentCell.swift */,
-				89089F5E21CD4DC2005E42B3 /* FeedCell.swift */,
-				89C435CD221E9E5500288A6D /* FeedSelectView.swift */,
+				89C997B4224E71AE00694BD9 /* Bookmarks */,
+				8966AD24224E70FC0035A430 /* Stories */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -222,6 +226,7 @@
 		894B80BB20B95D4B002C313E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8966AD22224E70A00035A430 /* Bookmarks */,
 				89BE85AF22326E2F001D7870 /* Stories */,
 				89BE85AE22326E1A001D7870 /* Settings */,
 			);
@@ -235,6 +240,32 @@
 				4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8966AD22224E70A00035A430 /* Bookmarks */ = {
+			isa = PBXGroup;
+			children = (
+				89C997B5224E71D600694BD9 /* BookmarksViewController.swift */,
+			);
+			path = Bookmarks;
+			sourceTree = "<group>";
+		};
+		8966AD23224E70F10035A430 /* Bookmarks */ = {
+			isa = PBXGroup;
+			children = (
+				89C997B7224E733B00694BD9 /* BookmarksDataSource.swift */,
+			);
+			path = Bookmarks;
+			sourceTree = "<group>";
+		};
+		8966AD24224E70FC0035A430 /* Stories */ = {
+			isa = PBXGroup;
+			children = (
+				89C997B3224E719E00694BD9 /* Feeds */,
+				894B80BC20B95D7E002C313E /* ItemCell.swift */,
+				8918A73320BC784E00129A0E /* CommentCell.swift */,
+			);
+			path = Stories;
 			sourceTree = "<group>";
 		};
 		89BE85AE22326E1A001D7870 /* Settings */ = {
@@ -252,8 +283,8 @@
 		89BE85AF22326E2F001D7870 /* Stories */ = {
 			isa = PBXGroup;
 			children = (
-				893FB66920B8494B007771A3 /* StoriesMasterViewController.swift */,
-				893FB66B20B8494B007771A3 /* StoriesDetailViewController.swift */,
+				893FB66920B8494B007771A3 /* StoriesViewController.swift */,
+				893FB66B20B8494B007771A3 /* CommentsViewController.swift */,
 			);
 			path = Stories;
 			sourceTree = "<group>";
@@ -287,9 +318,27 @@
 			path = COPYRIGHT;
 			sourceTree = "<group>";
 		};
+		89C997B3224E719E00694BD9 /* Feeds */ = {
+			isa = PBXGroup;
+			children = (
+				89089F5E21CD4DC2005E42B3 /* FeedCell.swift */,
+				89C435CD221E9E5500288A6D /* FeedSelectView.swift */,
+			);
+			path = Feeds;
+			sourceTree = "<group>";
+		};
+		89C997B4224E71AE00694BD9 /* Bookmarks */ = {
+			isa = PBXGroup;
+			children = (
+				89C997B9224E73FB00694BD9 /* BookmarkCell.swift */,
+			);
+			path = Bookmarks;
+			sourceTree = "<group>";
+		};
 		89D001662228F8D4003EBD5F /* Datasources */ = {
 			isa = PBXGroup;
 			children = (
+				8966AD23224E70F10035A430 /* Bookmarks */,
 				89BE85BC2237D17B001D7870 /* Stories */,
 			);
 			path = Datasources;
@@ -431,6 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89C997B6224E71D600694BD9 /* BookmarksViewController.swift in Sources */,
 				89C435D0221EA34F00288A6D /* UIView.swift in Sources */,
 				89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */,
 				89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */,
@@ -449,19 +499,21 @@
 				89089F5B21CD2C20005E42B3 /* Feed.swift in Sources */,
 				893CA75B224BB95A00BDA9FF /* AboutViewController.swift in Sources */,
 				89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */,
+				89C997B8224E733B00694BD9 /* BookmarksDataSource.swift in Sources */,
 				89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */,
-				893FB66C20B8494B007771A3 /* StoriesDetailViewController.swift in Sources */,
+				893FB66C20B8494B007771A3 /* CommentsViewController.swift in Sources */,
 				891E119A2143CD2900871615 /* Item.swift in Sources */,
 				893CA75F224BBC0500BDA9FF /* NSMutableAttributedString.swift in Sources */,
 				89336B2521E6237D00822673 /* JSONResponseParser.swift in Sources */,
 				89BE85B322326E98001D7870 /* DefaultsTableViewController.swift in Sources */,
 				89089F5921C7FA43005E42B3 /* Comment.swift in Sources */,
-				893FB66A20B8494B007771A3 /* StoriesMasterViewController.swift in Sources */,
+				893FB66A20B8494B007771A3 /* StoriesViewController.swift in Sources */,
 				893FB66820B8494A007771A3 /* AppDelegate.swift in Sources */,
 				897D066E2230EB57006B831F /* SettingsSplitViewController.swift in Sources */,
 				895B424C2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift in Sources */,
 				89336B2721E7918C00822673 /* HTMLParser.swift in Sources */,
 				89095A2721E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift in Sources */,
+				89C997BA224E73FB00694BD9 /* BookmarkCell.swift in Sources */,
 				89BE85B522327762001D7870 /* AppearanceTableViewController.swift in Sources */,
 				8918A73420BC784E00129A0E /* CommentCell.swift in Sources */,
 				89BE85BF223A2748001D7870 /* UISlider.swift in Sources */,

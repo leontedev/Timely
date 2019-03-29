@@ -10,5 +10,5 @@ import Foundation
 
 struct Bookmark: Codable {
     var id: String
-    var savedTimestamp: String
+    //var savedTimestamp: String
 }

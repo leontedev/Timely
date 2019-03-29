@@ -28,7 +28,7 @@ struct Story {
     var text: String?
 }
 
-class StoriesDetailViewController: UIViewController {
+class CommentsViewController: UIViewController {
     
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var emptyView: UIView!
@@ -36,7 +36,7 @@ class StoriesDetailViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    @IBOutlet weak var commentsTableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     @IBOutlet weak var urlDescriptionLabel: UILabel!
     @IBOutlet weak var commentStackView: UIStackView!
@@ -51,7 +51,7 @@ class StoriesDetailViewController: UIViewController {
             updateFooterView()
             
             storiesDetailDataSource.setData(parent: self, story: self.story, comments: self.comments)
-            commentsTableView.reloadData()
+            tableView.reloadData()
         }
     }
     
@@ -75,12 +75,12 @@ class StoriesDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        commentsTableView.estimatedRowHeight = 100
-        commentsTableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableView.automaticDimension
         activityIndicator.color = UIColor.lightGray
         
-        commentsTableView.delegate = storiesDetailDataSource
-        commentsTableView.dataSource = storiesDetailDataSource
+        tableView.delegate = storiesDetailDataSource
+        tableView.dataSource = storiesDetailDataSource
         
         if let story = self.officialStoryItem {
             //Update UI
@@ -141,7 +141,7 @@ class StoriesDetailViewController: UIViewController {
         }
         
         storiesDetailDataSource.setData(parent: self, story: self.story, comments: self.comments)
-        commentsTableView.reloadData()
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -297,15 +297,15 @@ class StoriesDetailViewController: UIViewController {
             
         case .error(let error):
             errorLabel.text = error.localizedDescription
-            commentsTableView.tableFooterView = errorView
+            tableView.tableFooterView = errorView
         case .loading:
-            commentsTableView.tableFooterView = loadingView
+            tableView.tableFooterView = loadingView
         //    case .paging:
         //        tableView.tableFooterView = loadingView
         case .empty:
-            commentsTableView.tableFooterView = emptyView
+            tableView.tableFooterView = emptyView
         case .populated:
-            commentsTableView.tableFooterView = nil
+            tableView.tableFooterView = nil
         }
         
     }
