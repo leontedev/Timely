@@ -51,6 +51,11 @@ class CommentCell: UITableViewCell {
         }
     }
     
+    @IBAction func saveBookmarkPressed(_ sender: Any) {
+        // append to bookmarks plist
+    }
+    
+    
     @IBAction func safariButtonPressed() {
         if let url = storyURL {
             UIApplication.shared.open(url)

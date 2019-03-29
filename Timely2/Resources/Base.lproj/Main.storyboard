@@ -24,7 +24,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fS-aE-onr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-46" y="-971"/>
+            <point key="canvasLocation" x="-486" y="-1350"/>
         </scene>
         <!--Detail-->
         <scene sceneID="yUG-lL-AsK">
@@ -171,10 +171,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="SMH-yM-gHv">
-                                                    <rect key="frame" x="60" y="-5.6666666666666679" width="255" height="51"/>
+                                                    <rect key="frame" x="60" y="-6.3333333333333321" width="255" height="52.333333333333329"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ash-GZ-rFM" userLabel="Open in Safari">
-                                                            <rect key="frame" x="8" y="13" width="25" height="25"/>
+                                                            <rect key="frame" x="8" y="13.666666666666664" width="25" height="25"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="JGb-GF-Hzc"/>
                                                                 <constraint firstAttribute="width" constant="25" id="geo-gA-W4p"/>
@@ -185,7 +185,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAG-kT-mdU" userLabel="Open in Webview">
-                                                            <rect key="frame" x="116" y="14" width="23" height="23"/>
+                                                            <rect key="frame" x="80.333333333333343" y="14.666666666666668" width="23" height="23.000000000000004"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="23" id="NAK-Jj-EBk"/>
                                                                 <constraint firstAttribute="width" constant="23" id="pPo-PX-BM3"/>
@@ -195,11 +195,22 @@
                                                                 <action selector="webviewButtonPressed" destination="QsZ-sU-q0H" eventType="touchUpInside" id="oMD-d4-48h"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0e-qC-viY" userLabel="Share">
-                                                            <rect key="frame" x="222" y="13" width="25" height="25"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cM-Rx-x7e" userLabel="Save Bookmark">
+                                                            <rect key="frame" x="155" y="15.333333333333332" width="15.666666666666657" height="21.999999999999996"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="25" id="Kph-Fg-3Pp"/>
-                                                                <constraint firstAttribute="width" constant="25" id="QuN-Z9-BwW"/>
+                                                                <constraint firstAttribute="height" constant="22" id="Dlo-T3-9FG"/>
+                                                                <constraint firstAttribute="width" secondItem="6cM-Rx-x7e" secondAttribute="height" multiplier="22:31" id="e6h-dK-LEf"/>
+                                                            </constraints>
+                                                            <state key="normal" image="icn_save"/>
+                                                            <connections>
+                                                                <action selector="saveBookmarkPressed:" destination="QsZ-sU-q0H" eventType="touchUpInside" id="axb-qQ-3MW"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B0e-qC-viY" userLabel="Share">
+                                                            <rect key="frame" x="221" y="13.333333333333332" width="26" height="25.999999999999996"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="26" id="Kph-Fg-3Pp"/>
+                                                                <constraint firstAttribute="width" constant="26" id="QuN-Z9-BwW"/>
                                                             </constraints>
                                                             <state key="normal" image="icn_share"/>
                                                             <connections>
@@ -393,7 +404,7 @@
                     <viewLayoutGuide key="safeArea" id="451-YB-LXS"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="2257" y="-177"/>
+            <point key="canvasLocation" x="1777" y="-1350"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Bzs-Pw-X7d">
@@ -406,6 +417,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="H1p-Uh-vWS" kind="relationship" relationship="viewControllers" id="muH-6f-qcR"/>
+                        <segue destination="Ina-Ki-5Uq" kind="relationship" relationship="viewControllers" id="Mpq-An-fBV"/>
                         <segue destination="1JU-8o-Ddk" kind="relationship" relationship="viewControllers" id="tsx-6f-ikQ"/>
                     </connections>
                 </tabBarController>
@@ -426,7 +438,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cZU-Oi-B1e" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-856" y="-330"/>
+            <point key="canvasLocation" x="-1238" y="-1350"/>
         </scene>
         <!--Master-->
         <scene sceneID="smW-Zh-WAh">
@@ -705,7 +717,36 @@
                 </panGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="Mnf-5S-F7Q" userLabel="Feed Table View Pan Gesture Recognizer"/>
             </objects>
-            <point key="canvasLocation" x="1318" y="-992"/>
+            <point key="canvasLocation" x="249" y="-1350"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="XgM-JK-iep">
+            <objects>
+                <tableViewController id="16f-9M-p4b" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="AC0-qU-DKe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="a5l-uz-BHn">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a5l-uz-BHn" id="ocJ-3S-8bA">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="16f-9M-p4b" id="LGg-We-JAh"/>
+                            <outlet property="delegate" destination="16f-9M-p4b" id="TMS-yn-xuI"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="YOJ-qD-2k0"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z6F-IX-YSf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="249" y="-653"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
@@ -721,7 +762,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SLD-UC-DBI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1318" y="-177"/>
+            <point key="canvasLocation" x="1014" y="-1350"/>
         </scene>
         <!--Defaults-->
         <scene sceneID="Ulg-8s-SRO">
@@ -1125,8 +1166,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="W3d-vs-WyD">
-                                <rect key="frame" x="8" y="120" width="359" height="128"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="W3d-vs-WyD">
+                                <rect key="frame" x="8" y="98" width="359" height="581"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Thank you for considering leaving a tip to support the app's development. As I have no current plans to monetize the app, this is very much appreciated!
 </string>
@@ -1136,6 +1177,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="F34-kz-lBe" firstAttribute="bottom" secondItem="W3d-vs-WyD" secondAttribute="bottom" constant="50" id="8iT-S6-Guh"/>
                             <constraint firstItem="W3d-vs-WyD" firstAttribute="leading" secondItem="F34-kz-lBe" secondAttribute="leading" constant="8" id="96j-OE-ThR"/>
                             <constraint firstItem="F34-kz-lBe" firstAttribute="trailing" secondItem="W3d-vs-WyD" secondAttribute="trailing" constant="8" id="dS4-ep-cs7"/>
                             <constraint firstItem="W3d-vs-WyD" firstAttribute="top" secondItem="F34-kz-lBe" secondAttribute="top" constant="10" id="mBW-HP-fWg"/>
@@ -1155,7 +1197,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rhl-Vy-3No">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rhl-Vy-3No">
                                 <rect key="frame" x="145" y="118" width="85.333333333333314" height="121.66666666666669"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timely" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZv-Ru-6m7">
@@ -1170,10 +1212,16 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tcm-sL-MQy">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tcm-sL-MQy">
                                         <rect key="frame" x="17.666666666666657" y="71.666666666666657" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="bJ4-B9-gbJ"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="tcm-sL-MQy" firstAttribute="top" secondItem="3Y2-98-6ZW" secondAttribute="bottom" constant="10" id="39M-t5-lcy"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1269,7 +1317,7 @@
             <objects>
                 <navigationController id="qJj-N4-I5d" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ZIt-WO-C3W">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1477,6 +1525,43 @@ By using Timely you're subject to the Hacker News Privacy Policy.
             </objects>
             <point key="canvasLocation" x="1466" y="1586"/>
         </scene>
+        <!--Item-->
+        <scene sceneID="EnN-s8-axg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DIV-tb-Dwb" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="e74-g6-h3X"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="frX-eP-mYL">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="16f-9M-p4b" kind="relationship" relationship="rootViewController" id="sua-BF-xxW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qkd-a4-CQ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-487" y="-653"/>
+        </scene>
+        <!--Saved-->
+        <scene sceneID="wPQ-pj-1Po">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Ina-Ki-5Uq" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Saved" image="tab_saved" id="h1p-bi-saw"/>
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="X3e-DK-iyb">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="DIV-tb-Dwb" kind="relationship" relationship="viewControllers" id="nyX-ai-OeG"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lDj-E5-WSw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1239" y="-653"/>
+        </scene>
     </scenes>
     <resources>
         <image name="icn_about" width="90" height="90"/>
@@ -1492,15 +1577,17 @@ By using Timely you're subject to the Hacker News Privacy Policy.
         <image name="icn_privacy" width="90" height="90"/>
         <image name="icn_rate" width="90" height="90"/>
         <image name="icn_safari" width="50" height="50"/>
+        <image name="icn_save" width="23" height="31"/>
         <image name="icn_share" width="30" height="30"/>
         <image name="icn_tipjar" width="90" height="90"/>
         <image name="icn_twitter" width="90" height="90"/>
         <image name="icn_upvotes" width="100" height="100"/>
+        <image name="tab_saved" width="20" height="23"/>
         <image name="tab_settings" width="23" height="25"/>
         <image name="tab_stories" width="19" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="vVv-uD-u8s"/>
+        <segue reference="Iav-28-noN"/>
         <segue reference="Tll-UG-LXB"/>
     </inferredMetricsTieBreakers>
 </document>
