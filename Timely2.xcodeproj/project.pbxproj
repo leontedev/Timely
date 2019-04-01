@@ -46,6 +46,7 @@
 		89C997B6224E71D600694BD9 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997B5224E71D600694BD9 /* BookmarksViewController.swift */; };
 		89C997B8224E733B00694BD9 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997B7224E733B00694BD9 /* BookmarksDataSource.swift */; };
 		89C997BA224E73FB00694BD9 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997B9224E73FB00694BD9 /* BookmarkCell.swift */; };
+		89C997C22252048E00694BD9 /* TimelyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997C12252048E00694BD9 /* TimelyTests.swift */; };
 		89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001642228F8CD003EBD5F /* StoriesDataSource.swift */; };
 		89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001672228F8F5003EBD5F /* CommentsDataSource.swift */; };
 		89D0016A2229852A003EBD5F /* BreakpointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001692229852A003EBD5F /* BreakpointManager.swift */; };
@@ -53,6 +54,16 @@
 		89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */; };
 		BB51F4A25D03D00A13F46680 /* Pods_Timely2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		89C997C42252048E00694BD9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 893FB65C20B8494A007771A3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 893FB66320B8494A007771A3;
+			remoteInfo = Timely2;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Timely2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +111,9 @@
 		89C997B5224E71D600694BD9 /* BookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		89C997B7224E733B00694BD9 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
 		89C997B9224E73FB00694BD9 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
+		89C997BF2252048E00694BD9 /* TimelyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimelyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		89C997C12252048E00694BD9 /* TimelyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelyTests.swift; sourceTree = "<group>"; };
+		89C997C32252048E00694BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89D001642228F8CD003EBD5F /* StoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesDataSource.swift; sourceTree = "<group>"; };
 		89D001672228F8F5003EBD5F /* CommentsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsDataSource.swift; sourceTree = "<group>"; };
 		89D001692229852A003EBD5F /* BreakpointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakpointManager.swift; sourceTree = "<group>"; };
@@ -118,6 +132,13 @@
 			files = (
 				89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */,
 				BB51F4A25D03D00A13F46680 /* Pods_Timely2.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89C997BC2252048E00694BD9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +189,7 @@
 			children = (
 				89C97E53224817D30092C9BA /* COPYRIGHT */,
 				893FB66620B8494A007771A3 /* Timely2 */,
+				89C997C02252048E00694BD9 /* TimelyTests */,
 				893FB66520B8494A007771A3 /* Products */,
 				894B80C220B968DE002C313E /* Frameworks */,
 				39D440D4B7363C3287E3CC2B /* Pods */,
@@ -178,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				893FB66420B8494A007771A3 /* Timely2.app */,
+				89C997BF2252048E00694BD9 /* TimelyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -335,6 +358,15 @@
 			path = Bookmarks;
 			sourceTree = "<group>";
 		};
+		89C997C02252048E00694BD9 /* TimelyTests */ = {
+			isa = PBXGroup;
+			children = (
+				89C997C12252048E00694BD9 /* TimelyTests.swift */,
+				89C997C32252048E00694BD9 /* Info.plist */,
+			);
+			path = TimelyTests;
+			sourceTree = "<group>";
+		};
 		89D001662228F8D4003EBD5F /* Datasources */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,13 +399,31 @@
 			productReference = 893FB66420B8494A007771A3 /* Timely2.app */;
 			productType = "com.apple.product-type.application";
 		};
+		89C997BE2252048E00694BD9 /* TimelyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89C997C62252048E00694BD9 /* Build configuration list for PBXNativeTarget "TimelyTests" */;
+			buildPhases = (
+				89C997BB2252048E00694BD9 /* Sources */,
+				89C997BC2252048E00694BD9 /* Frameworks */,
+				89C997BD2252048E00694BD9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				89C997C52252048E00694BD9 /* PBXTargetDependency */,
+			);
+			name = TimelyTests;
+			productName = TimelyTests;
+			productReference = 89C997BF2252048E00694BD9 /* TimelyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		893FB65C20B8494A007771A3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Mihai Leonte";
 				TargetAttributes = {
@@ -385,6 +435,10 @@
 								enabled = 1;
 							};
 						};
+					};
+					89C997BE2252048E00694BD9 = {
+						CreatedOnToolsVersion = 10.2;
+						TestTargetID = 893FB66320B8494A007771A3;
 					};
 				};
 			};
@@ -402,6 +456,7 @@
 			projectRoot = "";
 			targets = (
 				893FB66320B8494A007771A3 /* Timely2 */,
+				89C997BE2252048E00694BD9 /* TimelyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -416,6 +471,13 @@
 				893FB67120B8494D007771A3 /* Assets.xcassets in Resources */,
 				893FB66F20B8494B007771A3 /* Main.storyboard in Resources */,
 				8966AD1F224DF5060035A430 /* BookmarkList.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89C997BD2252048E00694BD9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,7 +583,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		89C997BB2252048E00694BD9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89C997C22252048E00694BD9 /* TimelyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		89C997C52252048E00694BD9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 893FB66320B8494A007771A3 /* Timely2 */;
+			targetProxy = 89C997C42252048E00694BD9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		893FB66D20B8494B007771A3 /* Main.storyboard */ = {
@@ -670,6 +748,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Timely2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -696,6 +775,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Timely2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -705,6 +785,51 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Timely2/Extensions/Timely2-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		89C997C72252048E00694BD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V7S7GB28P7;
+				INFOPLIST_FILE = TimelyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mihaileonte.TimelyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Timely2.app/Timely2";
+			};
+			name = Debug;
+		};
+		89C997C82252048E00694BD9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V7S7GB28P7;
+				INFOPLIST_FILE = TimelyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = mihaileonte.TimelyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Timely2.app/Timely2";
 			};
 			name = Release;
 		};
@@ -725,6 +850,15 @@
 			buildConfigurations = (
 				893FB67920B8494D007771A3 /* Debug */,
 				893FB67A20B8494D007771A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89C997C62252048E00694BD9 /* Build configuration list for PBXNativeTarget "TimelyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89C997C72252048E00694BD9 /* Debug */,
+				89C997C82252048E00694BD9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

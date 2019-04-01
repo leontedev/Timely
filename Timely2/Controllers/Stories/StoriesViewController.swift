@@ -38,6 +38,7 @@ class StoriesViewController: UITableViewController {
         didSet {
             debugLog()
             self.updateFooterView()
+            
             // Refresh DataSource
             storiesDataSource.setData(sourceAPI: currentSelectedSourceAPI, stories: storiesOfficialAPI, algoliaStories: storiesAlgoliaAPI)
             tableView.reloadAndScrollToFirstRow()
@@ -171,6 +172,10 @@ class StoriesViewController: UITableViewController {
     /// Initiate updating the Stories TableView based on the currently selected Feed (title, feedType/currentSourceAPI and feedURL)
     func fetchStories() {
         self.headerTitle.title = currentSelectedFeedTitle
+        self.storiesAlgoliaAPI.removeAll()
+        self.storiesOfficialAPI.removeAll()
+        
+        self.state = .loading
         
         switch currentSelectedSourceAPI {
             
@@ -181,8 +186,7 @@ class StoriesViewController: UITableViewController {
         case .algolia:
             fetchAlgoliaApiStories(from: currentSelectedFeedURL)
         }
-        
-        self.state = .loading
+
     }
     
     /// Sets up Pull To Refresh - and calls refreshData()
@@ -195,16 +199,7 @@ class StoriesViewController: UITableViewController {
     
     // FIXME: Defect use Refresh Control animation instead of the state.loading animation
     @objc func refreshData(sender: UIRefreshControl) {
-        
-        switch self.currentSelectedSourceAPI {
-        case .official:
-            fetchOfficialApiStories(from: self.currentSelectedFeedURL)
-        case .timely:
-            fetchOfficialApiStories(from: self.currentSelectedFeedURL)
-        case .algolia:
-            fetchAlgoliaApiStories(from: self.currentSelectedFeedURL)
-        }
-        
+        fetchStories()
         sender.endRefreshing()
     }
     
@@ -236,8 +231,6 @@ class StoriesViewController: UITableViewController {
         self.feedButton.title = nil
         
         self.feedPopoverView.isHidden = true
-
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -248,9 +241,6 @@ class StoriesViewController: UITableViewController {
     }
     
     func fetchAlgoliaApiStories(from urlComponents: URLComponents) {
-        
-        self.storiesOfficialAPI.removeAll()
-        self.state = .loading
         
         if let url = urlComponents.url {
         
@@ -290,9 +280,7 @@ class StoriesViewController: UITableViewController {
     
     // Official API
     func fetchOfficialApiStories(from urlComponents: URLComponents) {
-        self.storiesOfficialAPI.removeAll()
-        self.state = .loading
-        
+
         if let url = urlComponents.url {
         
             let task = self.defaultSession.dataTask(with: url) { data, response, error in

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class BookmarksDataSource: UITableViewDataSource {
+class BookmarksDataSource: NSObject, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -18,6 +18,12 @@ class BookmarksDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BookmarkCell", for: indexPath) as! ItemCell
+        
+        return cell
     }
     
 }

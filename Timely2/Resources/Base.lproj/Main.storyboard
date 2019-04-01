@@ -652,9 +652,17 @@
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="l2H-tu-Lfx">
                             <rect key="frame" x="101.66666666666667" y="50.666666666666657" width="37.000000000000014" height="37"/>
                         </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2n-Hk-IuL">
+                            <rect key="frame" x="97.666666666666671" y="95" width="45.000000000000014" height="14.333333333333329"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <constraints>
                         <constraint firstItem="l2H-tu-Lfx" firstAttribute="centerX" secondItem="LGM-4C-9GR" secondAttribute="centerX" id="5EM-ma-IPf"/>
+                        <constraint firstItem="R2n-Hk-IuL" firstAttribute="centerX" secondItem="IZx-5E-Msj" secondAttribute="centerX" id="5xd-AX-9hQ"/>
+                        <constraint firstItem="R2n-Hk-IuL" firstAttribute="top" secondItem="l2H-tu-Lfx" secondAttribute="bottom" constant="7.3333333333333428" id="nGg-qO-iQz"/>
                         <constraint firstItem="l2H-tu-Lfx" firstAttribute="centerY" secondItem="LGM-4C-9GR" secondAttribute="centerY" id="rXF-Tn-6q3"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="LGM-4C-9GR"/>
@@ -1589,6 +1597,6 @@ By using Timely you're subject to the Hacker News Privacy Policy.
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Iav-28-noN"/>
-        <segue reference="Tll-UG-LXB"/>
+        <segue reference="6S0-TO-JiA"/>
     </inferredMetricsTieBreakers>
 </document>

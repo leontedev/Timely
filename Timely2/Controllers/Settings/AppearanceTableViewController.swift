@@ -81,14 +81,12 @@ class AppearanceTableViewController: UITableViewController {
         if let newSliderPosition = storiesFontSizeSlider {
             customFontSizeStories = newSliderPosition.value
             updateStoriesUI()
-            notificationCenter.post(name: .storiesLabelAppearanceChanged, object: nil)
+            //notificationCenter.post(name: .storiesLabelAppearanceChanged, object: nil)
         }
     }
     
     @IBAction func finishedDraggingStoriesSliderFontSize(_ sender: Any) {
-        if let finalSliderPosition = storiesFontSizeSlider {
-            notificationCenter.post(name: .storiesLabelAppearanceChangingFinished, object: nil)
-        }
+        notificationCenter.post(name: .storiesLabelAppearanceChangingFinished, object: nil)
     }
     
     
@@ -102,14 +100,12 @@ class AppearanceTableViewController: UITableViewController {
         if let newSliderPosition = commentsFontSizeSlider {
             customFontSizeComments = newSliderPosition.value
             updateCommentsUI()
-            notificationCenter.post(name: .commentsLabelAppearanceChanged, object: nil)
+            //notificationCenter.post(name: .commentsLabelAppearanceChanged, object: nil)
         }
     }
     
     @IBAction func finishedDraggingCommentsSliderFontSize(_ sender: Any) {
-        if let finalSliderPosition = commentsFontSizeSlider {
-            notificationCenter.post(name: .commentsLabelAppearanceChangingFinished, object: nil)
-        }
+        notificationCenter.post(name: .commentsLabelAppearanceChangingFinished, object: nil)
     }
     
     override func viewDidLoad() {
@@ -118,12 +114,6 @@ class AppearanceTableViewController: UITableViewController {
         // Automatically resize when font changes are initiated
         storiesSystemFontLabel.adjustsFontForContentSizeCategory = true
         commentsSystemFontLabel.adjustsFontForContentSizeCategory = true
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        if let index = self.tableView.indexPathForSelectedRow{
-            self.tableView.deselectRow(at: index, animated: true)
-        }
         
         // Initial config of the UISlider with the position saved in UserDefaults
         storiesFontSizeSlider.setValue(customFontSizeStories, animated: false)
@@ -132,18 +122,24 @@ class AppearanceTableViewController: UITableViewController {
         // Initial config of the stories label font size, UISwitch on/off and if the UISlider is enabled
         updateStoriesUI()
         updateCommentsUI()
+        
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        if let index = self.tableView.indexPathForSelectedRow{
+            self.tableView.deselectRow(at: index, animated: true)
+        }
     }
     
     func updateStoriesUI() {
         // Configure the Switch toggle
         storiesSystemFontSwitch.setOn(!isSetToUseCustomFontForStories, animated: false)
         
-        
         if isSetToUseCustomFontForStories {
             let font = UIFont.systemFont(ofSize: CGFloat(customFontSizeStories))
             storiesSystemFontLabel.font = UIFontMetrics.default.scaledFont(for: font)
-            
             //storiesSystemFontLabel.font = storiesSystemFontLabel.font.withSize(CGFloat(customFontSizeStories))
+            
             storiesFontSizeSlider.isEnabled = true
         } else {
             storiesSystemFontLabel.font = .preferredFont(forTextStyle: .body)
@@ -156,7 +152,9 @@ class AppearanceTableViewController: UITableViewController {
         commentsSystemFontSwitch.setOn(!isSetToUseCustomFontForComments, animated: false)
         
         if isSetToUseCustomFontForComments {
-            commentsSystemFontLabel.font = commentsSystemFontLabel.font.withSize(CGFloat(customFontSizeComments))
+            let font = UIFont.systemFont(ofSize: CGFloat(customFontSizeComments))
+            commentsSystemFontLabel.font = UIFontMetrics.default.scaledFont(for: font)
+            //commentsSystemFontLabel.font = commentsSystemFontLabel.font.withSize(CGFloat(customFontSizeComments))
             commentsFontSizeSlider.isEnabled = true
         } else {
             commentsSystemFontLabel.font = .preferredFont(forTextStyle: .body)
