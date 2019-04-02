@@ -32,7 +32,6 @@
 		893FB67420B8494D007771A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 893FB67220B8494D007771A3 /* LaunchScreen.storyboard */; };
 		894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894B80BC20B95D7E002C313E /* ItemCell.swift */; };
 		895B424C2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */; };
-		8966AD1F224DF5060035A430 /* BookmarkList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8966AD1E224DF5060035A430 /* BookmarkList.plist */; };
 		8966AD21224DF51A0035A430 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966AD20224DF51A0035A430 /* Bookmark.swift */; };
 		897D066E2230EB57006B831F /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897D066D2230EB57006B831F /* SettingsSplitViewController.swift */; };
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
@@ -47,6 +46,9 @@
 		89C997B8224E733B00694BD9 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997B7224E733B00694BD9 /* BookmarksDataSource.swift */; };
 		89C997BA224E73FB00694BD9 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997B9224E73FB00694BD9 /* BookmarkCell.swift */; };
 		89C997C22252048E00694BD9 /* TimelyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997C12252048E00694BD9 /* TimelyTests.swift */; };
+		89C997CC22537C0F00694BD9 /* BookmarkList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89C997CA22532ABB00694BD9 /* BookmarkList.plist */; };
+		89C997CE22537F6A00694BD9 /* CommentNavBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997CD22537F6A00694BD9 /* CommentNavBarCell.swift */; };
+		89C997D022537F8400694BD9 /* CommentStoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C997CF22537F8400694BD9 /* CommentStoryCell.swift */; };
 		89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001642228F8CD003EBD5F /* StoriesDataSource.swift */; };
 		89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001672228F8F5003EBD5F /* CommentsDataSource.swift */; };
 		89D0016A2229852A003EBD5F /* BreakpointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001692229852A003EBD5F /* BreakpointManager.swift */; };
@@ -96,7 +98,6 @@
 		893FB67520B8494D007771A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		894B80BC20B95D7E002C313E /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString_TrimmingCharacters.swift; sourceTree = "<group>"; };
-		8966AD1E224DF5060035A430 /* BookmarkList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BookmarkList.plist; sourceTree = "<group>"; };
 		8966AD20224DF51A0035A430 /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
 		897D066D2230EB57006B831F /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		89A8A31F20DBA607007A8664 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -114,6 +115,9 @@
 		89C997BF2252048E00694BD9 /* TimelyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimelyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C997C12252048E00694BD9 /* TimelyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelyTests.swift; sourceTree = "<group>"; };
 		89C997C32252048E00694BD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89C997CA22532ABB00694BD9 /* BookmarkList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BookmarkList.plist; sourceTree = "<group>"; };
+		89C997CD22537F6A00694BD9 /* CommentNavBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentNavBarCell.swift; sourceTree = "<group>"; };
+		89C997CF22537F8400694BD9 /* CommentStoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentStoryCell.swift; sourceTree = "<group>"; };
 		89D001642228F8CD003EBD5F /* StoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesDataSource.swift; sourceTree = "<group>"; };
 		89D001672228F8F5003EBD5F /* CommentsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsDataSource.swift; sourceTree = "<group>"; };
 		89D001692229852A003EBD5F /* BreakpointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakpointManager.swift; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 		894B80B920B95D38002C313E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				89C997CA22532ABB00694BD9 /* BookmarkList.plist */,
 				891E11992143CD2900871615 /* Item.swift */,
 				89095A2821E321F100FAEDF2 /* AlgoliaItem.swift */,
 				89089F5821C7FA43005E42B3 /* Comment.swift */,
@@ -240,7 +245,6 @@
 				892749EC21D50BF100E67546 /* FeedList.plist */,
 				891E03A62213E9240001DB63 /* HNError.swift */,
 				891E03A82215C2DD0001DB63 /* State.swift */,
-				8966AD1E224DF5060035A430 /* BookmarkList.plist */,
 				8966AD20224DF51A0035A430 /* Bookmark.swift */,
 			);
 			path = Models;
@@ -287,6 +291,8 @@
 				89C997B3224E719E00694BD9 /* Feeds */,
 				894B80BC20B95D7E002C313E /* ItemCell.swift */,
 				8918A73320BC784E00129A0E /* CommentCell.swift */,
+				89C997CD22537F6A00694BD9 /* CommentNavBarCell.swift */,
+				89C997CF22537F8400694BD9 /* CommentStoryCell.swift */,
 			);
 			path = Stories;
 			sourceTree = "<group>";
@@ -470,7 +476,7 @@
 				893FB67420B8494D007771A3 /* LaunchScreen.storyboard in Resources */,
 				893FB67120B8494D007771A3 /* Assets.xcassets in Resources */,
 				893FB66F20B8494B007771A3 /* Main.storyboard in Resources */,
-				8966AD1F224DF5060035A430 /* BookmarkList.plist in Resources */,
+				89C997CC22537C0F00694BD9 /* BookmarkList.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,6 +556,7 @@
 				89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */,
 				8966AD21224DF51A0035A430 /* Bookmark.swift in Sources */,
 				89D0016A2229852A003EBD5F /* BreakpointManager.swift in Sources */,
+				89C997CE22537F6A00694BD9 /* CommentNavBarCell.swift in Sources */,
 				89D26093222E8D6D00FB0087 /* DebugLog.swift in Sources */,
 				894B80BD20B95D7E002C313E /* ItemCell.swift in Sources */,
 				89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */,
@@ -562,6 +569,7 @@
 				893CA75B224BB95A00BDA9FF /* AboutViewController.swift in Sources */,
 				89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */,
 				89C997B8224E733B00694BD9 /* BookmarksDataSource.swift in Sources */,
+				89C997D022537F8400694BD9 /* CommentStoryCell.swift in Sources */,
 				89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */,
 				893FB66C20B8494B007771A3 /* CommentsViewController.swift in Sources */,
 				891E119A2143CD2900871615 /* Item.swift in Sources */,

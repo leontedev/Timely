@@ -7,70 +7,13 @@
 //
 
 import UIKit
-import SafariServices
 
 class CommentCell: UITableViewCell {
     
+    // Required to dynamically modify the font size of the comments from Settings / Appearance
     private let notificationCenter: NotificationCenter = NotificationCenter.default
     
-    var shareItems: [Any] = []
-    var storyURL: URL?
-    weak var parentVC: UIViewController?
-    
-    // First static cell which contains the Story Information
-    static let reuseIdentifierStory = "StoryCell"
-    
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var urlLabel: UILabel!
-    @IBOutlet weak var storyElapsedLabel: UILabel!
-    @IBOutlet weak var storyUsernameLabel: UILabel!
-    @IBOutlet weak var storyNumComments: UILabel!
-    @IBOutlet weak var storyPoints: UILabel!
-    @IBOutlet weak var storyText: UILabel!
-    
-    
-    // Second static cell which contains the buttons for the Story actions
-    static let reuseIdentifierStoryButtons = "StoryButtonsCell"
-    
-    @IBOutlet weak var shareButton: UIButton!
-    
-    func showSafariVC(for url: URL?) {
-        if let url = url {
-            let safariVC = SFSafariViewController(url: url)
-            if let detailViewController = parentVC {
-                detailViewController.present(safariVC, animated: true)
-            }
-        }
-    }
-    
-    func displayShareSheet() {
-        let activityViewController = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
-        
-        if let detailViewController = parentVC {
-            detailViewController.present(activityViewController, animated: true)
-        }
-    }
-    
-    @IBAction func saveBookmarkPressed(_ sender: Any) {
-        // append to bookmarks plist
-    }
-    
-    
-    @IBAction func safariButtonPressed() {
-        if let url = storyURL {
-            UIApplication.shared.open(url)
-        }
-    }
-    
-    @IBAction func webviewButtonPressed() {
-        showSafariVC(for: self.storyURL)
-    }
-    
-    @IBAction func shareButtonPressed() {
-        displayShareSheet()
-    }
-    
-    // Third dynamic cell - which contain the comments
+    // Third dynamic cell - which contains the comments
     static let reuseIdentifierComment = "CommentCell"
     
     @IBOutlet weak var commentStackView: UIStackView!

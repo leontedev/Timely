@@ -19,6 +19,7 @@ struct CommentSource {
 }
 
 struct Story {
+    var id: String?
     var url: URL?
     var title: String?
     var author: String?
@@ -41,7 +42,7 @@ class CommentsViewController: UIViewController {
     @IBOutlet weak var urlDescriptionLabel: UILabel!
     @IBOutlet weak var commentStackView: UIStackView!
     
-    private let storiesDetailDataSource = CommentsDataSource()
+    private let dataSource = CommentsDataSource()
     var story: Story = Story()
     var comments: [CommentSource] = []
     
@@ -50,7 +51,7 @@ class CommentsViewController: UIViewController {
             debugLog()
             updateFooterView()
             
-            storiesDetailDataSource.setData(parent: self, story: self.story, comments: self.comments)
+            dataSource.setData(parent: self, story: self.story, comments: self.comments)
             tableView.reloadData()
         }
     }
@@ -79,11 +80,11 @@ class CommentsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         activityIndicator.color = UIColor.lightGray
         
-        tableView.delegate = storiesDetailDataSource
-        tableView.dataSource = storiesDetailDataSource
+        tableView.delegate = dataSource
+        tableView.dataSource = dataSource
         
         if let story = self.officialStoryItem {
-            //Update UI
+            self.story.id = String(story.id)
             self.story.title = story.title
             self.story.url = story.url
             self.story.author = story.by
@@ -98,6 +99,7 @@ class CommentsViewController: UIViewController {
             }
         }
         if let story = self.algoliaStoryItem {
+            self.story.id = story.objectID
             self.story.title = story.title
             self.story.url = story.url
             self.story.author = story.author
@@ -122,8 +124,6 @@ class CommentsViewController: UIViewController {
                                                object: nil
         )
         
-        
-    
     }
     
     @objc private func fontSizeDidModify(_ notification: Notification) {
@@ -140,7 +140,7 @@ class CommentsViewController: UIViewController {
             }
         }
         
-        storiesDetailDataSource.setData(parent: self, story: self.story, comments: self.comments)
+        dataSource.setData(parent: self, story: self.story, comments: self.comments)
         tableView.reloadData()
     }
 

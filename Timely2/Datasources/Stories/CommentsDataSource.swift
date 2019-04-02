@@ -46,11 +46,9 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: CommentCell!
         
         if indexPath.section == COMMENT_CELL_SECTION {
-            
-            cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierComment, for: indexPath) as? CommentCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierComment, for: indexPath) as! CommentCell
             
             let item = self.comments[indexPath.row].comment
             let depth = self.comments[indexPath.row].depth
@@ -80,9 +78,10 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             cell.byUserLabel?.text = item.author
             cell.elapsedTimeLabel?.text = self.comments[indexPath.row].timeAgo
             
+            return cell
         } else if indexPath.section == STORY_CELL_SECTION {
-            
-            cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStory, for: indexPath) as? CommentCell
+    
+            let cell = tableView.dequeueReusableCell(withIdentifier: CommentStoryCell.reuseIdentifier, for: indexPath) as! CommentStoryCell
             
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             
@@ -126,21 +125,24 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 cell.storyText.attributedText = text.htmlToAttributedString
             }
             
+            return cell
         } else if indexPath.section == STORY_BUTTONS_CELL_SECTION {
             
-            cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierStoryButtons, for: indexPath) as? CommentCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CommentNavBarCell.reuseIdentifier, for: indexPath) as! CommentNavBarCell
             
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
-            
             cell.storyURL = self.story?.url
-            
+            cell.storyID = self.story?.id
             cell.parentVC = self.parentVC
-            
             cell.shareItems = [story?.title as Any, story?.url as Any]
             
+            return cell
         }
         
-        return cell
+        // Not sure how I can avoid this :(
+        let cell2: UITableViewCell!
+        cell2 = tableView.dequeueReusableCell(withIdentifier: CommentNavBarCell.reuseIdentifier, for: indexPath)
+        return cell2
     }
     
     // MARK: - Delegates
