@@ -8,17 +8,23 @@
 
 import UIKit
 
-class BookmarksViewController: UITableViewController {
+class BookmarksViewController: UIViewController {
     
-    private let bookmarksDataSource = BookmarksDataSource()
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = bookmarksDataSource
-
+        
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showBookmarks" {
+//            let controller = (segue.destination as! UINavigationController).topViewController as! StoriesChildViewController
+            // initiate with the bookmarks list of story items
 
+        }
+        
+    }
 
    
 

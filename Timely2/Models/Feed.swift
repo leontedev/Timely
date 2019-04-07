@@ -71,3 +71,4 @@ struct LoadDefaultFeeds {
         self.feeds = self.feeds.filter { $0.isHidden == false }
     }
 }
+

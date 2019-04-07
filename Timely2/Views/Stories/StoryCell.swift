@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemCell: UITableViewCell {
+class StoryCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var urlLabel: UILabel!

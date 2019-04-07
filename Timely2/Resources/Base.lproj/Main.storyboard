@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,23 +18,148 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="7bK-jq-Zjz" kind="relationship" relationship="rootViewController" id="tsl-Nk-0bq"/>
+                        <segue destination="2pk-vo-Y6q" kind="relationship" relationship="rootViewController" id="Ja0-hl-lK1"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fS-aE-onr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-486" y="-1350"/>
+            <point key="canvasLocation" x="-487" y="-1350"/>
         </scene>
-        <!--Detail-->
-        <scene sceneID="yUG-lL-AsK">
+        <!--Stories View Controller-->
+        <scene sceneID="X0q-mJ-7Ia">
             <objects>
-                <viewController title="Detail" id="JEX-9P-axG" customClass="CommentsViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="svH-Pt-448">
+                <viewController id="2pk-vo-Y6q" userLabel="Stories View Controller" customClass="StoriesViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7TU-9H-BFb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yty-cz-3q2" userLabel="Stories Container View">
+                                <rect key="frame" x="0.0" y="140" width="375" height="589"/>
+                                <connections>
+                                    <segue destination="7bK-jq-Zjz" kind="embed" identifier="embedStoriesChildVC" id="6Ck-Cn-WLf"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="m6L-Yu-H34" firstAttribute="trailing" secondItem="Yty-cz-3q2" secondAttribute="trailing" id="0IH-BB-uU4"/>
+                            <constraint firstItem="m6L-Yu-H34" firstAttribute="bottom" secondItem="Yty-cz-3q2" secondAttribute="bottom" id="X3M-C2-hFC"/>
+                            <constraint firstItem="Yty-cz-3q2" firstAttribute="top" secondItem="m6L-Yu-H34" secondAttribute="top" id="Zko-lF-0ks"/>
+                            <constraint firstItem="Yty-cz-3q2" firstAttribute="leading" secondItem="m6L-Yu-H34" secondAttribute="leading" id="aOO-vb-uLV"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="m6L-Yu-H34"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Hacker News" largeTitleDisplayMode="always" id="Zdf-7t-Un8">
+                        <barButtonItem key="rightBarButtonItem" image="icn_feedSelect" id="E4u-zL-6Ra">
+                            <connections>
+                                <action selector="changeFeed:" destination="2pk-vo-Y6q" id="rrp-73-les"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="feedButton" destination="E4u-zL-6Ra" id="IqJ-K6-T6f"/>
+                        <outlet property="feedPopoverView" destination="Hrd-MF-nfC" id="76a-lR-b2B"/>
+                        <outlet property="feedTableView" destination="H8Z-cx-VwJ" id="aqK-NZ-Vqx"/>
+                        <outlet property="headerTitle" destination="Zdf-7t-Un8" id="Y5k-eR-G6T"/>
+                        <outlet property="storiesContainerView" destination="Yty-cz-3q2" id="gio-bB-dWT"/>
+                        <outlet property="tapGesture" destination="0YN-6Z-efK" id="zeL-BE-wYF"/>
+                        <outlet property="visualBlurEffectView" destination="thZ-ty-BBx" id="XpS-6C-MSa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lny-sr-1qa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" id="Hrd-MF-nfC" userLabel="Feed Popover View">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="thZ-ty-BBx">
+                            <rect key="frame" x="0.0" y="5" width="300" height="600"/>
+                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Cm3-NG-HV2">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
+                            </view>
+                            <gestureRecognizers/>
+                            <blurEffect style="extraLight"/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="0YN-6Z-efK" appends="YES" id="Qm7-7V-LE2"/>
+                                <outletCollection property="gestureRecognizers" destination="QHk-Rd-kRK" appends="YES" id="aoy-Vi-XtN"/>
+                            </connections>
+                        </visualEffectView>
+                        <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="H8Z-cx-VwJ">
+                            <rect key="frame" x="45" y="33" width="210" height="360"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <gestureRecognizers/>
+                            <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <prototypes>
+                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FeedCell" id="fib-wR-lEP" customClass="FeedCell" customModule="Timely2" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="28" width="210" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fib-wR-lEP" id="PHc-6c-G0e">
+                                        <rect key="frame" x="0.0" y="0.0" width="177" height="43.666666666666664"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HN Top Stories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32W-kP-Jv1">
+                                                <rect key="frame" x="17.000000000000007" y="11.666666666666666" width="115.66666666666669" height="20.333333333333336"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="32W-kP-Jv1" firstAttribute="leading" secondItem="PHc-6c-G0e" secondAttribute="leadingMargin" constant="2" id="d0x-a0-P7u"/>
+                                            <constraint firstItem="32W-kP-Jv1" firstAttribute="centerY" secondItem="PHc-6c-G0e" secondAttribute="centerY" id="kIA-8m-hT4"/>
+                                        </constraints>
+                                    </tableViewCellContentView>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <gestureRecognizers/>
+                                    <connections>
+                                        <outlet property="feedNameLabel" destination="32W-kP-Jv1" id="bdC-SU-XPO"/>
+                                    </connections>
+                                </tableViewCell>
+                            </prototypes>
+                            <sections/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="Mnf-5S-F7Q" appends="YES" id="GEd-im-Xvq"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="thZ-ty-BBx" firstAttribute="width" secondItem="Hrd-MF-nfC" secondAttribute="width" id="1yw-DH-VQ4"/>
+                        <constraint firstItem="thZ-ty-BBx" firstAttribute="centerX" secondItem="1qJ-0J-bO8" secondAttribute="centerX" id="7nE-MC-F7J"/>
+                        <constraint firstItem="thZ-ty-BBx" firstAttribute="centerY" secondItem="1qJ-0J-bO8" secondAttribute="centerY" id="EU8-Fn-fav"/>
+                        <constraint firstItem="1qJ-0J-bO8" firstAttribute="top" secondItem="H8Z-cx-VwJ" secondAttribute="top" constant="-20" id="JoP-Fv-RWp"/>
+                        <constraint firstItem="thZ-ty-BBx" firstAttribute="height" secondItem="Hrd-MF-nfC" secondAttribute="height" id="hT9-R3-VAE"/>
+                        <constraint firstItem="H8Z-cx-VwJ" firstAttribute="width" secondItem="Hrd-MF-nfC" secondAttribute="width" multiplier="0.7" id="lhO-QL-y25"/>
+                        <constraint firstItem="H8Z-cx-VwJ" firstAttribute="centerX" secondItem="1qJ-0J-bO8" secondAttribute="centerX" id="xNn-ZI-fHB"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="1qJ-0J-bO8"/>
+                </view>
+                <tapGestureRecognizer id="0YN-6Z-efK">
+                    <connections>
+                        <action selector="tapBlurEffectView:" destination="2pk-vo-Y6q" id="F9V-AB-2CQ"/>
+                        <outlet property="delegate" destination="r7i-6Z-zg0" id="jbC-TF-o5K"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="QHk-Rd-kRK" userLabel="Blur View Pan Gesture Recognizer">
+                    <connections>
+                        <outlet property="delegate" destination="r7i-6Z-zg0" id="oJf-ga-dDU"/>
+                    </connections>
+                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Mnf-5S-F7Q" userLabel="Feed Table View Pan Gesture Recognizer"/>
+            </objects>
+            <point key="canvasLocation" x="258" y="-1351"/>
+        </scene>
+        <!--Comments Child View Controller-->
+        <scene sceneID="yUG-lL-AsK">
+            <objects>
+                <viewController title="Detail" id="JEX-9P-axG" userLabel="Comments Child View Controller" customClass="CommentsViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="svH-Pt-448">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gDs-9P-uUA">
-                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="467"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StoryCell" rowHeight="100" id="xi8-SG-Bgr" userLabel="Comment Story Cell" customClass="CommentStoryCell" customModule="Timely2" customModuleProvider="target">
@@ -229,6 +353,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="saveBookmarkButton" destination="6cM-Rx-x7e" id="dd8-nA-F96"/>
                                             <outlet property="shareButton" destination="B0e-qC-viY" id="DJZ-ZH-7Dx"/>
                                         </connections>
                                     </tableViewCell>
@@ -404,7 +529,7 @@
                     <viewLayoutGuide key="safeArea" id="451-YB-LXS"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1777" y="-1350"/>
+            <point key="canvasLocation" x="2556" y="-1350"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Bzs-Pw-X7d">
@@ -438,18 +563,18 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cZU-Oi-B1e" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1238" y="-1350"/>
+            <point key="canvasLocation" x="-1239" y="-1350"/>
         </scene>
-        <!--Master-->
+        <!--Stories Child View Controller-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="StoriesViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r7i-6Z-zg0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" userLabel="Stories Child View Controller" customClass="StoriesChildViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r7i-6Z-zg0" userLabel="Stories Table View">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItemCell" rowHeight="100" id="WCw-Qf-5nD" customClass="ItemCell" customModule="Timely2" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItemCell" rowHeight="100" id="WCw-Qf-5nD" userLabel="StoryCell" customClass="StoryCell" customModule="Timely2" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
@@ -555,96 +680,15 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Hacker News" largeTitleDisplayMode="always" id="Zdf-7t-Un8">
-                        <barButtonItem key="rightBarButtonItem" image="icn_feedSelect" id="E4u-zL-6Ra">
-                            <connections>
-                                <action selector="changeFeed:" destination="7bK-jq-Zjz" id="4rK-Ab-C27"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="l2H-tu-Lfx" id="4op-1V-m8W"/>
                         <outlet property="emptyView" destination="KCK-SZ-W86" id="yen-lY-Jeg"/>
                         <outlet property="errorLabel" destination="Phl-mY-eTE" id="QzO-Ml-bB4"/>
                         <outlet property="errorView" destination="Zis-D4-Pxe" id="LQZ-g9-Klx"/>
-                        <outlet property="feedButton" destination="E4u-zL-6Ra" id="wHZ-mi-jnb"/>
-                        <outlet property="feedPopoverView" destination="Hrd-MF-nfC" id="MK3-Gr-csn"/>
-                        <outlet property="feedTableView" destination="H8Z-cx-VwJ" id="g7S-Q1-5SO"/>
-                        <outlet property="headerTitle" destination="Zdf-7t-Un8" id="KgZ-Jg-Myr"/>
                         <outlet property="loadingView" destination="IZx-5E-Msj" id="VzD-ic-z2I"/>
-                        <outlet property="tapGesture" destination="0YN-6Z-efK" id="TNU-2B-dCs"/>
-                        <outlet property="visualBlurEffectView" destination="thZ-ty-BBx" id="Dzq-Nd-bEd"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
-                <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" id="Hrd-MF-nfC" userLabel="Feed Popover View">
-                    <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="thZ-ty-BBx">
-                            <rect key="frame" x="0.0" y="5" width="300" height="600"/>
-                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Cm3-NG-HV2">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <gestureRecognizers/>
-                            </view>
-                            <gestureRecognizers/>
-                            <blurEffect style="extraLight"/>
-                            <connections>
-                                <outletCollection property="gestureRecognizers" destination="0YN-6Z-efK" appends="YES" id="Qm7-7V-LE2"/>
-                                <outletCollection property="gestureRecognizers" destination="QHk-Rd-kRK" appends="YES" id="aoy-Vi-XtN"/>
-                            </connections>
-                        </visualEffectView>
-                        <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="H8Z-cx-VwJ">
-                            <rect key="frame" x="45" y="33" width="210" height="360"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <gestureRecognizers/>
-                            <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <prototypes>
-                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FeedCell" id="fib-wR-lEP" customClass="FeedCell" customModule="Timely2" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="28" width="210" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fib-wR-lEP" id="PHc-6c-G0e">
-                                        <rect key="frame" x="0.0" y="0.0" width="177" height="43.666666666666664"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HN Top Stories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32W-kP-Jv1">
-                                                <rect key="frame" x="17.000000000000007" y="11.666666666666666" width="115.66666666666669" height="20.333333333333336"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="32W-kP-Jv1" firstAttribute="leading" secondItem="PHc-6c-G0e" secondAttribute="leadingMargin" constant="2" id="d0x-a0-P7u"/>
-                                            <constraint firstItem="32W-kP-Jv1" firstAttribute="centerY" secondItem="PHc-6c-G0e" secondAttribute="centerY" id="kIA-8m-hT4"/>
-                                        </constraints>
-                                    </tableViewCellContentView>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <gestureRecognizers/>
-                                    <connections>
-                                        <outlet property="feedNameLabel" destination="32W-kP-Jv1" id="bdC-SU-XPO"/>
-                                    </connections>
-                                </tableViewCell>
-                            </prototypes>
-                            <sections/>
-                            <connections>
-                                <outletCollection property="gestureRecognizers" destination="Mnf-5S-F7Q" appends="YES" id="GEd-im-Xvq"/>
-                            </connections>
-                        </tableView>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="thZ-ty-BBx" firstAttribute="width" secondItem="Hrd-MF-nfC" secondAttribute="width" id="1yw-DH-VQ4"/>
-                        <constraint firstItem="thZ-ty-BBx" firstAttribute="centerX" secondItem="1qJ-0J-bO8" secondAttribute="centerX" id="7nE-MC-F7J"/>
-                        <constraint firstItem="thZ-ty-BBx" firstAttribute="centerY" secondItem="1qJ-0J-bO8" secondAttribute="centerY" id="EU8-Fn-fav"/>
-                        <constraint firstItem="1qJ-0J-bO8" firstAttribute="top" secondItem="H8Z-cx-VwJ" secondAttribute="top" constant="-20" id="JoP-Fv-RWp"/>
-                        <constraint firstItem="thZ-ty-BBx" firstAttribute="height" secondItem="Hrd-MF-nfC" secondAttribute="height" id="hT9-R3-VAE"/>
-                        <constraint firstItem="H8Z-cx-VwJ" firstAttribute="width" secondItem="Hrd-MF-nfC" secondAttribute="width" multiplier="0.7" id="lhO-QL-y25"/>
-                        <constraint firstItem="H8Z-cx-VwJ" firstAttribute="centerX" secondItem="1qJ-0J-bO8" secondAttribute="centerX" id="xNn-ZI-fHB"/>
-                    </constraints>
-                    <viewLayoutGuide key="safeArea" id="1qJ-0J-bO8"/>
-                </view>
                 <view contentMode="scaleToFill" id="IZx-5E-Msj" userLabel="Loading View">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -712,49 +756,8 @@
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="hY7-s6-JLx"/>
                 </view>
-                <tapGestureRecognizer id="0YN-6Z-efK">
-                    <connections>
-                        <action selector="tapBlurEffectView:" destination="7bK-jq-Zjz" id="gn5-J1-V6B"/>
-                        <outlet property="delegate" destination="r7i-6Z-zg0" id="jbC-TF-o5K"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="QHk-Rd-kRK" userLabel="Blur View Pan Gesture Recognizer">
-                    <connections>
-                        <outlet property="delegate" destination="r7i-6Z-zg0" id="oJf-ga-dDU"/>
-                    </connections>
-                </panGestureRecognizer>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="Mnf-5S-F7Q" userLabel="Feed Table View Pan Gesture Recognizer"/>
             </objects>
-            <point key="canvasLocation" x="249" y="-1350"/>
-        </scene>
-        <!--Bookmarks View Controller-->
-        <scene sceneID="XgM-JK-iep">
-            <objects>
-                <tableViewController id="16f-9M-p4b" customClass="BookmarksViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="AC0-qU-DKe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="a5l-uz-BHn">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a5l-uz-BHn" id="ocJ-3S-8bA">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="16f-9M-p4b" id="LGg-We-JAh"/>
-                            <outlet property="delegate" destination="16f-9M-p4b" id="TMS-yn-xuI"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="YOJ-qD-2k0"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Z6F-IX-YSf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="249" y="-653"/>
+            <point key="canvasLocation" x="1124" y="-958"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
@@ -770,7 +773,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SLD-UC-DBI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1014" y="-1350"/>
+            <point key="canvasLocation" x="1852" y="-1351"/>
         </scene>
         <!--Defaults-->
         <scene sceneID="Ulg-8s-SRO">
@@ -1545,12 +1548,42 @@ By using Timely you're subject to the Hacker News Privacy Policy.
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="16f-9M-p4b" kind="relationship" relationship="rootViewController" id="sua-BF-xxW"/>
+                        <segue destination="7YE-2t-Ck1" kind="relationship" relationship="rootViewController" id="wBu-ni-2hA"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qkd-a4-CQ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-487" y="-653"/>
+        </scene>
+        <!--Bookmarks View Controller-->
+        <scene sceneID="P5Q-Wq-5b7">
+            <objects>
+                <viewController id="7YE-2t-Ck1" customClass="BookmarksViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XF5-9O-sMn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxb-NN-1S4">
+                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                                <connections>
+                                    <segue destination="7bK-jq-Zjz" kind="embed" identifier="showBookmarks" id="2ph-9Q-3F9"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5AO-dS-hWK" firstAttribute="trailing" secondItem="hxb-NN-1S4" secondAttribute="trailing" id="bf2-ZC-3IP"/>
+                            <constraint firstItem="hxb-NN-1S4" firstAttribute="leading" secondItem="5AO-dS-hWK" secondAttribute="leading" id="m7F-wX-UOH"/>
+                            <constraint firstItem="hxb-NN-1S4" firstAttribute="top" secondItem="5AO-dS-hWK" secondAttribute="top" id="mII-8R-qb3"/>
+                            <constraint firstItem="5AO-dS-hWK" firstAttribute="bottom" secondItem="hxb-NN-1S4" secondAttribute="bottom" id="pvK-Wc-unj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="5AO-dS-hWK"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="DwW-Zq-0tH"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FuC-kl-LGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="287" y="-649"/>
         </scene>
         <!--Saved-->
         <scene sceneID="wPQ-pj-1Po">
@@ -1598,5 +1631,6 @@ By using Timely you're subject to the Hacker News Privacy Policy.
     <inferredMetricsTieBreakers>
         <segue reference="Iav-28-noN"/>
         <segue reference="6S0-TO-JiA"/>
+        <segue reference="6Ck-Cn-WLf"/>
     </inferredMetricsTieBreakers>
 </document>
