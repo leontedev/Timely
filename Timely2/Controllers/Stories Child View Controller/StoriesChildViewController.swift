@@ -66,6 +66,18 @@ class StoriesChildViewController: UITableViewController {
                                                name: .storiesLabelAppearanceChangingFinished,
                                                object: nil
         )
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshBookmarks),
+                                               name: .bookmarkAdded,
+                                               object: nil
+        )
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshBookmarks),
+                                               name: .bookmarkRemoved,
+                                               object: nil
+        )
     }
     
     @objc private func fontSizeDidModify(_ notification: Notification) {
@@ -107,15 +119,18 @@ class StoriesChildViewController: UITableViewController {
         if isStoriesChildView {
             fetchStories()
         } else {
-            self.storiesOfficialAPI.removeAll()
-            self.state = .loading
-            self.storiesOfficialAPI = Bookmarks.shared.stories
-            self.state = .populated
-            self.fetchOfficialApiStoryItems()
+            refreshBookmarks()
         }
         sender.endRefreshing()
     }
     
+    @objc func refreshBookmarks() {
+        self.storiesOfficialAPI.removeAll()
+        self.state = .loading
+        self.storiesOfficialAPI = Bookmarks.shared.stories
+        self.state = .populated
+        self.fetchOfficialApiStoryItems()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         

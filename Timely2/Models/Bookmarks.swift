@@ -8,6 +8,18 @@
 
 import Foundation
 
+extension Notification.Name {
+    // to update continuously the font size of the label storiesSystemFontLabel: "Use System Font Size" in this View
+    static var bookmarkAdded: Notification.Name {
+        return .init(rawValue: "Bookmarks.addedNewId")
+    }
+    
+    // to update the Stories ItemCell font size, once, after the stories slider is released with the final value
+    static var bookmarkRemoved: Notification.Name {
+        return .init(rawValue: "Bookmarks.RemovedId")
+    }
+}
+
 // the Documents directory URL
 extension FileManager {
     static var documentDirectoryURL: URL {
@@ -59,6 +71,9 @@ public class Bookmarks {
         // add to the [Item] array
         guard let newId = Int(id) else { return }
         self.stories.append(Item(id: newId))
+        
+        // post notification to refresh the Stories Child View
+        NotificationCenter.default.post(name: .bookmarkAdded, object: nil)
     }
     
     func remove(id: String) {
@@ -79,6 +94,9 @@ public class Bookmarks {
         // remove from the [Item] array
         guard let newId = Int(id) else { return }
         self.stories = self.stories.filter { $0.id != newId }
+        
+        // post notification to refresh the Stories Child View
+        NotificationCenter.default.post(name: .bookmarkRemoved, object: nil)
     }
     
     func contains(id: String) -> Bool {
