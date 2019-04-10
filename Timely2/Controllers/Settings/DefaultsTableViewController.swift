@@ -8,33 +8,29 @@
 
 import UIKit
 
-enum LinkOpener: String, CaseIterable {
-    case safari = "Safari"
-    case webview = "Timely"
-}
 
 class DefaultsTableViewController: UITableViewController {
-
+    
     @IBOutlet weak var defaultFeedCell: UITableViewCell!
     @IBOutlet weak var openLinksInCell: UITableViewCell!
     
     @IBOutlet weak var defaultFeedLabel: UILabel!
     @IBOutlet weak var openLinksInLabel: UILabel!
     
-    let feeds = LoadDefaultFeeds().feeds
+    let feeds = Feeds.shared.feeds
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.updateTableViewDataSource()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        self.updateTableViewDataSource()
-        
         if let index = self.tableView.indexPathForSelectedRow{
             self.tableView.deselectRow(at: index, animated: true)
         }
+        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -53,21 +49,16 @@ class DefaultsTableViewController: UITableViewController {
             
             // Previously Selected option
             let previouslyUsedAction = UIAlertAction(title: "Previously Selected", style: .default) { action in
-                UserDefaults.standard.set(true, forKey: "isPreviouslySelectedFeed")
-                
-                self.updateTableViewDataSource()
-                self.tableView.reloadData()
+                Feeds.shared.isSetPreviouslySelectedFeed = true
+                self.refreshTableView()
             }
             alertController.addAction(previouslyUsedAction)
             
-            // plist Feeds options
+            // Feeds options
             for feed in feeds {
                 let defaultFeedAction = UIAlertAction(title: feed.feedName, style: .default) { action in
-                    UserDefaults.standard.set(feed.feedID, forKey: "initialFeedID")
-                    UserDefaults.standard.set(false, forKey: "isPreviouslySelectedFeed")
-                    
-                    self.updateTableViewDataSource()
-                    self.tableView.reloadData()
+                    Feeds.shared.selectedFeed = feed
+                    self.refreshTableView()
                 }
                 alertController.addAction(defaultFeedAction)
             }
@@ -85,10 +76,8 @@ class DefaultsTableViewController: UITableViewController {
             
             for appOption in LinkOpener.allCases {
                 let appAction = UIAlertAction(title: appOption.rawValue, style: .default) { (action) in
-                    UserDefaults.standard.set(appOption.rawValue, forKey: "defaultAppToOpenLinks")
-                    
-                    self.updateTableViewDataSource()
-                    self.tableView.reloadData()
+                    Defaults.shared.defaultLinkOpenerDescription = appOption.rawValue
+                    self.refreshTableView()
                 }
                 alertController.addAction(appAction)
             }
@@ -97,35 +86,16 @@ class DefaultsTableViewController: UITableViewController {
         }
     }
     
+    
     //MARK: - Helper Functions
     func updateTableViewDataSource() {
-        let isPreviouslySelectedFeed = UserDefaults.standard.bool(forKey: "isPreviouslySelectedFeed")
-        
-        if isPreviouslySelectedFeed {
-            defaultFeedLabel.text = "Previously Selected"
-        } else {
-            let feedID = UserDefaults.standard.integer(forKey: "initialFeedID")
-            
-            if feedID == 0 {
-                // id = 2 is set as the default in StoriesMasterViewController.swift, search for if feedID == 0 {
-                let selectedFeed = feeds.filter { $0.feedID == 2 }[0]
-                self.defaultFeedLabel.text = selectedFeed.feedName
-            } else {
-                let selectedFeed = feeds.filter { $0.feedID == feedID }[0]
-                self.defaultFeedLabel.text = selectedFeed.feedName
-            }
-        }
-        
-        let defaultAppToOpenLinks = UserDefaults.standard.string(forKey: "defaultAppToOpenLinks")
-        
-        if let defaultApp = defaultAppToOpenLinks {
-            openLinksInLabel.text = defaultApp
-        } else {
-            openLinksInLabel.text = LinkOpener.webview.rawValue
-        }
-        
+        self.defaultFeedLabel.text = Feeds.shared.defaultFeedDescription
+        self.openLinksInLabel.text = Defaults.shared.defaultLinkOpenerDescription
     }
-
-
-
+    
+    func refreshTableView() {
+        self.updateTableViewDataSource()
+        self.tableView.reloadData()
+    }
+    
 }

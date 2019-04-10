@@ -37,7 +37,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        debugLog()
+
         if section == COMMENT_CELL_SECTION {
             return self.comments.count
         }
@@ -68,7 +68,6 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             if let attributedString = self.comments[indexPath.row].attributedString {
                 cell.commentTextView?.attributedText = attributedString
             } else {
-                debugLog()
                 if let commentText = item.text {
                     // Use Apple's HTML to Attributed String parser and trimit whitespaces and extra new lines
                     cell.commentTextView.attributedText = commentText.htmlToAttributedString?.trimmingCharacters(in: .whitespacesAndNewlines)

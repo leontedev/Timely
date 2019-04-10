@@ -12,7 +12,7 @@
         <!--Sidebar-->
         <scene sceneID="pY4-Hu-kfo">
             <objects>
-                <navigationController title="Sidebar" id="RMx-3f-FxP" userLabel="Sidebar" sceneMemberID="viewController">
+                <navigationController title="Stories" id="RMx-3f-FxP" userLabel="Sidebar" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" largeTitles="YES" id="Pmd-2v-anx">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -23,7 +23,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fS-aE-onr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-487" y="-1350"/>
+            <point key="canvasLocation" x="-487" y="-1718"/>
         </scene>
         <!--Stories View Controller-->
         <scene sceneID="X0q-mJ-7Ia">
@@ -148,18 +148,18 @@
                 </panGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="Mnf-5S-F7Q" userLabel="Feed Table View Pan Gesture Recognizer"/>
             </objects>
-            <point key="canvasLocation" x="258" y="-1351"/>
+            <point key="canvasLocation" x="286" y="-1719"/>
         </scene>
         <!--Comments Child View Controller-->
         <scene sceneID="yUG-lL-AsK">
             <objects>
                 <viewController title="Detail" id="JEX-9P-axG" userLabel="Comments Child View Controller" customClass="CommentsViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="svH-Pt-448">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gDs-9P-uUA">
-                                <rect key="frame" x="0.0" y="88" width="375" height="467"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StoryCell" rowHeight="100" id="xi8-SG-Bgr" userLabel="Comment Story Cell" customClass="CommentStoryCell" customModule="Timely2" customModuleProvider="target">
@@ -529,7 +529,7 @@
                     <viewLayoutGuide key="safeArea" id="451-YB-LXS"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="2556" y="-1350"/>
+            <point key="canvasLocation" x="3183" y="-916"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Bzs-Pw-X7d">
@@ -542,7 +542,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="H1p-Uh-vWS" kind="relationship" relationship="viewControllers" id="muH-6f-qcR"/>
-                        <segue destination="Ina-Ki-5Uq" kind="relationship" relationship="viewControllers" id="Mpq-An-fBV"/>
+                        <segue destination="SIC-ML-RVb" kind="relationship" relationship="viewControllers" id="5rA-xA-tdX"/>
                         <segue destination="1JU-8o-Ddk" kind="relationship" relationship="viewControllers" id="tsx-6f-ikQ"/>
                     </connections>
                 </tabBarController>
@@ -570,7 +570,7 @@
             <objects>
                 <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" userLabel="Stories Child View Controller" customClass="StoriesChildViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r7i-6Z-zg0" userLabel="Stories Table View">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -757,7 +757,7 @@
                     <viewLayoutGuide key="safeArea" id="hY7-s6-JLx"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1124" y="-958"/>
+            <point key="canvasLocation" x="1743" y="-1288"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
@@ -773,7 +773,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SLD-UC-DBI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1852" y="-1351"/>
+            <point key="canvasLocation" x="2511" y="-916"/>
         </scene>
         <!--Defaults-->
         <scene sceneID="Ulg-8s-SRO">
@@ -1323,6 +1323,20 @@
             </objects>
             <point key="canvasLocation" x="2114" y="1586"/>
         </scene>
+        <!--Bookmarks Split View Controller-->
+        <scene sceneID="Lp1-kW-cxf">
+            <objects>
+                <splitViewController id="SIC-ML-RVb" customClass="BookmarksSplitViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="qiA-xV-Dfr"/>
+                    <connections>
+                        <segue destination="DIV-tb-Dwb" kind="relationship" relationship="masterViewController" id="3sK-hk-frC"/>
+                        <segue destination="vC3-pB-5Vb" kind="relationship" relationship="detailViewController" id="KMe-Ga-hDx"/>
+                    </connections>
+                </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zk2-EA-ruJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1204" y="21"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="nnM-xv-puO">
             <objects>
@@ -1536,11 +1550,10 @@ By using Timely you're subject to the Hacker News Privacy Policy.
             </objects>
             <point key="canvasLocation" x="1466" y="1586"/>
         </scene>
-        <!--Item-->
+        <!--Bookmarks-->
         <scene sceneID="EnN-s8-axg">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DIV-tb-Dwb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="e74-g6-h3X"/>
+                <navigationController title="Bookmarks" automaticallyAdjustsScrollViewInsets="NO" id="DIV-tb-Dwb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="frX-eP-mYL">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -1555,10 +1568,10 @@ By using Timely you're subject to the Hacker News Privacy Policy.
             </objects>
             <point key="canvasLocation" x="-487" y="-653"/>
         </scene>
-        <!--Bookmarks View Controller-->
+        <!--Bookmarks-->
         <scene sceneID="P5Q-Wq-5b7">
             <objects>
-                <viewController id="7YE-2t-Ck1" customClass="BookmarksViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Bookmarks" id="7YE-2t-Ck1" customClass="BookmarksViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XF5-9O-sMn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1566,7 +1579,7 @@ By using Timely you're subject to the Hacker News Privacy Policy.
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxb-NN-1S4">
                                 <rect key="frame" x="0.0" y="88" width="375" height="641"/>
                                 <connections>
-                                    <segue destination="7bK-jq-Zjz" kind="embed" identifier="showBookmarks" id="2ph-9Q-3F9"/>
+                                    <segue destination="7bK-jq-Zjz" kind="embed" identifier="embedBookmarksChildVC" id="2ph-9Q-3F9"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -1579,30 +1592,11 @@ By using Timely you're subject to the Hacker News Privacy Policy.
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5AO-dS-hWK"/>
                     </view>
-                    <navigationItem key="navigationItem" id="DwW-Zq-0tH"/>
+                    <navigationItem key="navigationItem" title="Bookmarks" largeTitleDisplayMode="always" id="DwW-Zq-0tH"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FuC-kl-LGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="287" y="-649"/>
-        </scene>
-        <!--Saved-->
-        <scene sceneID="wPQ-pj-1Po">
-            <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Ina-Ki-5Uq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Saved" image="tab_saved" id="h1p-bi-saw"/>
-                    <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="X3e-DK-iyb">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="DIV-tb-Dwb" kind="relationship" relationship="viewControllers" id="nyX-ai-OeG"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lDj-E5-WSw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1239" y="-653"/>
         </scene>
     </scenes>
     <resources>
@@ -1624,13 +1618,12 @@ By using Timely you're subject to the Hacker News Privacy Policy.
         <image name="icn_tipjar" width="90" height="90"/>
         <image name="icn_twitter" width="90" height="90"/>
         <image name="icn_upvotes" width="100" height="100"/>
-        <image name="tab_saved" width="20" height="23"/>
         <image name="tab_settings" width="23" height="25"/>
         <image name="tab_stories" width="19" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Iav-28-noN"/>
-        <segue reference="6S0-TO-JiA"/>
-        <segue reference="6Ck-Cn-WLf"/>
+        <segue reference="KMe-Ga-hDx"/>
+        <segue reference="2ph-9Q-3F9"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -24,15 +24,23 @@ public struct Bookmark: Codable {
 public class Bookmarks {
     static let shared = Bookmarks()
     var items: [Bookmark] = []
+    var stories: [Item] = []
     let url = FileManager.documentDirectoryURL.appendingPathComponent("bookmarks").appendingPathExtension("plist")
     
     private init() {
         // load previously saved Bookmarks from Documents / Bookmarks.plist
         do {
+            print(FileManager.documentDirectoryURL.path)
             let plistDecoder = PropertyListDecoder()
             let savedPlistData = try Data(contentsOf: url)
             self.items = try plistDecoder.decode([Bookmark].self, from: savedPlistData)
-        } catch { }
+            for item in self.items {
+                guard let id = Int(item.id) else { continue }
+                stories.append(Item(id: id))
+            }
+        } catch {
+            print(error)
+        }
     }
     
     func add(id: String) {
@@ -42,13 +50,20 @@ public class Bookmarks {
         // save to plist file
         do {
             let plistEncoder = PropertyListEncoder()
-            let plistData = try plistEncoder.encode(newBookmark)
+            let plistData = try plistEncoder.encode(self.items)
             try plistData.write(to: url)
-        } catch { }
+        } catch {
+            print(error)
+        }
+        
+        // add to the [Item] array
+        guard let newId = Int(id) else { return }
+        self.stories.append(Item(id: newId))
     }
     
     func remove(id: String) {
         self.items = self.items.filter { $0.id != id }
+        
         // remove from plist file
         do {
             if FileManager.default.fileExists(atPath: url.path) {
@@ -57,7 +72,13 @@ public class Bookmarks {
             let plistEncoder = PropertyListEncoder()
             let plistData = try plistEncoder.encode(self.items)
             try plistData.write(to: url)
-        } catch { }
+        } catch {
+            print(error)
+        }
+        
+        // remove from the [Item] array
+        guard let newId = Int(id) else { return }
+        self.stories = self.stories.filter { $0.id != newId }
     }
     
     func contains(id: String) -> Bool {

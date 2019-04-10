@@ -19,7 +19,6 @@ class StoriesChildViewController: UITableViewController {
     
     private let storiesDataSource = StoriesDataSource()
     
-    
     var state = State.loading {
         didSet {
             self.updateFooterView()
@@ -33,12 +32,14 @@ class StoriesChildViewController: UITableViewController {
     
     var defaultSession: URLSession = URLSession(configuration: .default)
     
-    weak var parentVC: StoriesViewController?
+    weak var parentVC: UIViewController?
     var currentSelectedSourceAPI: HNFeedType?
     var currentSelectedFeedURL: URLComponents? //= URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     
     var storiesAlgoliaAPI: [AlgoliaItem] = []
     var storiesOfficialAPI: [Item] = []
+    // true if this VC was initiated from the Stories View Controller, false if from Bookmarks or History
+    var isStoriesChildView = true
     
     
     override func viewDidLoad() {
@@ -75,6 +76,7 @@ class StoriesChildViewController: UITableViewController {
     func fetchStories() {
         
         self.storiesAlgoliaAPI.removeAll()
+        // this is where i have the bookmarks stored - on the bookmarks view this is why refresh fails
         self.storiesOfficialAPI.removeAll()
         
         self.state = .loading
@@ -85,8 +87,6 @@ class StoriesChildViewController: UITableViewController {
         switch currentSelectedSourceAPI {
             
         case .official:
-            fetchOfficialApiStories(from: currentSelectedFeedURL)
-        case .timely:
             fetchOfficialApiStories(from: currentSelectedFeedURL)
         case .algolia:
             fetchAlgoliaApiStories(from: currentSelectedFeedURL)
@@ -104,7 +104,15 @@ class StoriesChildViewController: UITableViewController {
     
     // FIXME: Defect use Refresh Control animation instead of the state.loading animation
     @objc func refreshData(sender: UIRefreshControl) {
-        fetchStories()
+        if isStoriesChildView {
+            fetchStories()
+        } else {
+            self.storiesOfficialAPI.removeAll()
+            self.state = .loading
+            self.storiesOfficialAPI = Bookmarks.shared.stories
+            self.state = .populated
+            self.fetchOfficialApiStoryItems()
+        }
         sender.endRefreshing()
     }
     
@@ -184,7 +192,7 @@ class StoriesChildViewController: UITableViewController {
                             
                             self.state = .populated
                             //self.tableView.reloadData()
-                            self.fetchOfficialApiStoryItem()
+                            self.fetchOfficialApiStoryItems()
                             
                         } catch let error {
                             self.state = .error(HNError.parsingJSON(error.localizedDescription))
@@ -197,7 +205,7 @@ class StoriesChildViewController: UITableViewController {
     }
 
     // Official API
-    func fetchOfficialApiStoryItem() {
+    func fetchOfficialApiStoryItems() {
 
         for (index, item) in self.storiesOfficialAPI.enumerated() {
             
@@ -266,7 +274,6 @@ class StoriesChildViewController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
 
-
     
     // MARK: - Segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -281,7 +288,7 @@ class StoriesChildViewController: UITableViewController {
                 case .official:
                     let selectedItem = storiesOfficialAPI[indexPath.row]
                     controller.officialStoryItem = selectedItem
-                case .algolia, .timely:
+                case .algolia:
                     let selectedItem = storiesAlgoliaAPI[indexPath.row]
                     controller.algoliaStoryItem = selectedItem
                 }
@@ -291,7 +298,6 @@ class StoriesChildViewController: UITableViewController {
             }
         }
     }
-    
     
     func updateFooterView() {
         
@@ -318,5 +324,3 @@ extension StoriesChildViewController: StoriesDataSourceDelegate {
         self.state = newState
     }
 }
-
-

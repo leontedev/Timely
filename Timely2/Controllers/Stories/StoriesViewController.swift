@@ -41,8 +41,7 @@ class StoriesViewController: UIViewController {
                 self.feedPopoverView.alpha = 1.0
             }
             
-            //self.tableView.isUserInteractionEnabled = false
-            //self.feedPopoverView.isUserInteractionEnabled = true
+
         } else {
             closePopoverView()
         }
@@ -52,58 +51,20 @@ class StoriesViewController: UIViewController {
     var childVC: StoriesChildViewController?
     
     var feedSelectionViewIsOpen: Bool = false
-    var feeds: [Feed] = []
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        feedDataSource.delegate = self
         
-        self.feeds = LoadDefaultFeeds().feeds
-        configureFeedTableView(with: self.feeds)
+        feedDataSource.delegate = self
+        configureFeedTableView(with: Feeds.shared.feeds)
         customizeFeedPopoverView()
         
-        loadCurrentlySelectedFeedFromUserDefaults()
+        self.headerTitle.title = Feeds.shared.selectedFeed.feedName
+        childVC?.currentSelectedSourceAPI = Feeds.shared.selectedFeed.feedType
+        childVC?.currentSelectedFeedURL = Feeds.shared.selectedFeedURLComponents
+        
         childVC?.fetchStories()
-    }
-    
-    /// Load The Previously Selected Feed ID from Userdefaults and update timestamps for feed URLs
-    func loadCurrentlySelectedFeedFromUserDefaults() {
-        
-        var feedID = UserDefaults.standard.integer(forKey: "initialFeedID")
-        
-        //defaults.integer(forKey: "initialFeedID") will return 0 if the value is not found
-        if feedID == 0 {
-            // automatically select the default feed if the setting was never changed by the user: "Last 24h"
-            feedID = 2
-        }
-        
-        let selectedFeed = feeds.filter { $0.feedID == feedID }[0]
-        let feedType = selectedFeed.feedType
-        
-        let feedURLstring = selectedFeed.feedURL
-        guard var feedURLComponents = URLComponents(string: feedURLstring) else {
-            return
-        }
-        
-        if feedType == .algolia {
-            if let feedFromCalendarComponentByAdding = selectedFeed.fromCalendarComponentByAdding {
-                if let feedFromCalendarComponentValue = selectedFeed.fromCalendarComponentValue {
-                    let currentTimestamp = Int(NSDate().timeIntervalSince1970)
-                    let today = Date()
-                    let priorDate = Calendar.current.date(byAdding: feedFromCalendarComponentByAdding, value: feedFromCalendarComponentValue, to: today)
-                    let priorTimestamp = Int(priorDate!.timeIntervalSince1970)
-                    
-                    let queryItemTimeRange = URLQueryItem(name: "numericFilters", value: "created_at_i>\(priorTimestamp),created_at_i<\(currentTimestamp)")
-                    
-                    feedURLComponents.addOrModify(queryItemTimeRange)
-                }
-            }
-        }
-        
-        self.headerTitle.title = selectedFeed.feedName
-        childVC?.currentSelectedSourceAPI = feedType
-        childVC?.currentSelectedFeedURL = feedURLComponents
     }
     
     
@@ -119,7 +80,6 @@ class StoriesViewController: UIViewController {
     /// - Parameter feed: the [Feed] object - FeedList.plist parsed
     func configureFeedTableView(with feed: [Feed]) {
         feedDataSource.setData(feedList: feed)
-        
         
         //Set height of the Feed Select tableview to be set automatic (based on the number of rows)
         let tableHeight = self.feedTableView.rowHeight * CGFloat(feed.count) + self.feedTableView.sectionHeaderHeight

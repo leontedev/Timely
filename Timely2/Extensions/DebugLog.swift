@@ -13,6 +13,7 @@ import Foundation
 ///
 /// To make it work you must set the "DEBUG" symbol, set it in the "Swift Compiler - Custom Flags" section, "Other Swift Flags" line.
 /// You add the DEBUG symbol with the -D DEBUG entry.
+
 public func debugLog(functionName: String = #function, fileName: String = #file, lineNumber: Int = #line) {
     #if DEBUG
     let className = (fileName as NSString).lastPathComponent

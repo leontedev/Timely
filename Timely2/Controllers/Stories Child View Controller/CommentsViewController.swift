@@ -48,7 +48,6 @@ class CommentsViewController: UIViewController {
     
     var state = State.loading {
         didSet {
-            debugLog()
             updateFooterView()
             
             dataSource.setData(parent: self, story: self.story, comments: self.comments)
@@ -93,7 +92,6 @@ class CommentsViewController: UIViewController {
             self.story.points = story.score
             self.story.text = story.text
             
-            debugLog()
             if let _ = story.kids {
                 fetchComments(forItemID: String(story.id))
             }
@@ -108,7 +106,6 @@ class CommentsViewController: UIViewController {
             self.story.points = story.points
             self.story.text = story.story_text
             
-            debugLog()
             if let _ = story.num_comments {
                 fetchComments(forItemID: story.objectID)
             }
@@ -268,7 +265,6 @@ class CommentsViewController: UIViewController {
                        
 
                     let delta = CFAbsoluteTimeGetCurrent() - t0
-                    debugLog()
                     
                     DispatchQueue.main.async {
                         self.state = .populated

@@ -1,15 +1,14 @@
 //
-//  SettingsSplitViewController.swift
+//  BookmarksSplitViewController.swift
 //  Timely2
 //
-//  Created by Mihai Leonte on 3/7/19.
+//  Created by Mihai Leonte on 4/7/19.
 //  Copyright © 2019 Mihai Leonte. All rights reserved.
 //
 
 import Foundation
 
-class SettingsSplitViewController: UISplitViewController, UISplitViewControllerDelegate {
-    
+class BookmarksSplitViewController: UISplitViewController, UISplitViewControllerDelegate {
     
     override func viewDidLoad() {
         self.delegate = self

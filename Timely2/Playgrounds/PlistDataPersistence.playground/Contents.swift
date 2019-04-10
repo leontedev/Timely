@@ -5,6 +5,15 @@ import Foundation
 //let viewcycle = OSLog(subsystem: "com.mihaileonte.timely", category: "ViewCycle")
 //let fileOperationsLog = OSLog(subsystem: "com.mihaileonte.timely", category: "FileOperations")
 
+// the Documents directory URL
+extension FileManager {
+    static var documentDirectoryURL: URL {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    }
+}
+
+FileManager.documentDirectoryURL
+print(FileManager.documentDirectoryURL.path)
 
 
 
@@ -34,12 +43,7 @@ do {
 
 
 
-// the Documents directory URL
-extension FileManager {
-    static var documentDirectoryURL: URL {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    }
-}
+
 
 public class Bookmarks {
     static let shared = Bookmarks()

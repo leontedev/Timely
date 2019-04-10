@@ -14,6 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        // this will initialize Singletons
+        print(Bookmarks.shared)
+        print(Feeds.shared)
+        
+        
         // Override point for customization after application launch.
         let splitViewController = window!.rootViewController?.children[0] as! UISplitViewController
         
@@ -26,6 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Forces devices where there is sufficient display estate to display both the master and detail VCs
         splitViewController.preferredDisplayMode = .allVisible
         
+
+        
+        
         
         return true
     }
@@ -33,8 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     // MARK: - Split view
     
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController:UIViewController, onto primaryViewController:UIViewController) -> Bool {
+        
         guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
+        
         guard let topAsDetailController = secondaryAsNavController.topViewController as? CommentsViewController else { return false }
+        
         if topAsDetailController.officialStoryItem == nil {
             // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
             return true
@@ -45,8 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationWillResignActive(_ application: UIApplication) {
         
         //Save the current timestamp to be used in the "Since Last Visit" feed
-        let currentTimestamp = Int(NSDate().timeIntervalSince1970)
-        UserDefaults.standard.set(currentTimestamp, forKey: "lastFeedLoadTimestamp")
+//        let currentTimestamp = Int(NSDate().timeIntervalSince1970)
+//        UserDefaults.standard.set(currentTimestamp, forKey: "lastFeedLoadTimestamp")
         
     }
 

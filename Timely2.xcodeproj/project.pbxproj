@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		89001E71225A048B009561B1 /* StoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89001E70225A048B009561B1 /* StoriesViewController.swift */; };
+		89001E73225A417B009561B1 /* BookmarksSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89001E72225A417A009561B1 /* BookmarksSplitViewController.swift */; };
+		89001E75225C5904009561B1 /* Feeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89001E74225C5904009561B1 /* Feeds.swift */; };
+		89001E77225CD1C1009561B1 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89001E76225CD1C1009561B1 /* Defaults.swift */; };
 		8907AE6A2225A03B00A1B6EC /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8907AE692225A03B00A1B6EC /* UITableView.swift */; };
 		89089F5921C7FA43005E42B3 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5821C7FA43005E42B3 /* Comment.swift */; };
-		89089F5B21CD2C20005E42B3 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5A21CD2C20005E42B3 /* Feed.swift */; };
 		89089F5D21CD49B7005E42B3 /* FeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5C21CD49B7005E42B3 /* FeedDataSource.swift */; };
 		89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5E21CD4DC2005E42B3 /* FeedCell.swift */; };
 		89095A2721E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89095A2621E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift */; };
@@ -69,9 +71,11 @@
 /* Begin PBXFileReference section */
 		4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Timely2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89001E70225A048B009561B1 /* StoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesViewController.swift; sourceTree = "<group>"; };
+		89001E72225A417A009561B1 /* BookmarksSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksSplitViewController.swift; sourceTree = "<group>"; };
+		89001E74225C5904009561B1 /* Feeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feeds.swift; sourceTree = "<group>"; };
+		89001E76225CD1C1009561B1 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		8907AE692225A03B00A1B6EC /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		89089F5821C7FA43005E42B3 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
-		89089F5A21CD2C20005E42B3 /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		89089F5C21CD49B7005E42B3 /* FeedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDataSource.swift; sourceTree = "<group>"; };
 		89089F5E21CD4DC2005E42B3 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		89095A2321DFB05A00FAEDF2 /* Timestamps.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Timestamps.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -248,11 +252,12 @@
 				891E11992143CD2900871615 /* Item.swift */,
 				89095A2821E321F100FAEDF2 /* AlgoliaItem.swift */,
 				89089F5821C7FA43005E42B3 /* Comment.swift */,
-				89089F5A21CD2C20005E42B3 /* Feed.swift */,
 				892749EC21D50BF100E67546 /* FeedList.plist */,
 				891E03A62213E9240001DB63 /* HNError.swift */,
 				891E03A82215C2DD0001DB63 /* State.swift */,
 				8966AD20224DF51A0035A430 /* Bookmarks.swift */,
+				89001E74225C5904009561B1 /* Feeds.swift */,
+				89001E76225CD1C1009561B1 /* Defaults.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -281,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				89C997B5224E71D600694BD9 /* BookmarksViewController.swift */,
+				89001E72225A417A009561B1 /* BookmarksSplitViewController.swift */,
 			);
 			path = Bookmarks;
 			sourceTree = "<group>";
@@ -551,6 +557,7 @@
 				89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */,
 				89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */,
 				89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */,
+				89001E73225A417B009561B1 /* BookmarksSplitViewController.swift in Sources */,
 				89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */,
 				8966AD21224DF51A0035A430 /* Bookmarks.swift in Sources */,
 				89D0016A2229852A003EBD5F /* BreakpointManager.swift in Sources */,
@@ -560,10 +567,10 @@
 				89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */,
 				89BE85B92236B5D3001D7870 /* Timely.xcdatamodeld in Sources */,
 				891E03A72213E9240001DB63 /* HNError.swift in Sources */,
+				89001E77225CD1C1009561B1 /* Defaults.swift in Sources */,
 				89089F5D21CD49B7005E42B3 /* FeedDataSource.swift in Sources */,
 				893CA75D224BBBC800BDA9FF /* UIImage.swift in Sources */,
 				891E03A92215C2DD0001DB63 /* State.swift in Sources */,
-				89089F5B21CD2C20005E42B3 /* Feed.swift in Sources */,
 				893CA75B224BB95A00BDA9FF /* AboutViewController.swift in Sources */,
 				89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */,
 				89C997D022537F8400694BD9 /* CommentStoryCell.swift in Sources */,
@@ -586,6 +593,7 @@
 				8918A73420BC784E00129A0E /* CommentCell.swift in Sources */,
 				89BE85BF223A2748001D7870 /* UISlider.swift in Sources */,
 				8907AE6A2225A03B00A1B6EC /* UITableView.swift in Sources */,
+				89001E75225C5904009561B1 /* Feeds.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

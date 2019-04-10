@@ -37,7 +37,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
         switch self.currentSourceAPI {
         case .official:
             return self.topStories.count
-        case .algolia, .timely:
+        case .algolia:
             return self.algoliaStories.count
         }
     }
@@ -120,7 +120,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                 self.delegate?.didUpdateState(.error(HNError.network("Invalid Response.")))
             }
             
-        case .algolia, .timely:
+        case .algolia:
             
             if self.algoliaStories.indices.contains(indexPath.row) {
                 let item = self.algoliaStories[indexPath.row]
