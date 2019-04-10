@@ -132,7 +132,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                 }
                 
                 if let itemURL = item.url?.host {
-                    cell.urlLabel?.text = itemURL
+                    cell.urlLabel?.text = itemURL.replacingOccurrences(of: "www.", with: "")
                 }
                 
                 
