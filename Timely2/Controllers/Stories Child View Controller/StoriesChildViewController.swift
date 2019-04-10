@@ -328,7 +328,7 @@ class StoriesChildViewController: UITableViewController {
         case .empty:
             tableView.tableFooterView = emptyView
         case .populated:
-            tableView.tableFooterView = nil
+            tableView.tableFooterView = UIView(frame: .zero)
         }
         
     }
