@@ -504,10 +504,18 @@
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="nMk-Sf-JUs">
                             <rect key="frame" x="101.66666666666667" y="50.666666666666657" width="37.000000000000014" height="37"/>
                         </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3s-DR-a38">
+                            <rect key="frame" x="98" y="95" width="45.000000000000014" height="14.333333333333329"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="p3s-DR-a38" firstAttribute="centerX" secondItem="vBV-TG-e0O" secondAttribute="centerX" id="9Uy-tW-HMe"/>
                         <constraint firstItem="nMk-Sf-JUs" firstAttribute="centerX" secondItem="8pF-Qp-bPs" secondAttribute="centerX" id="VdR-h7-uZk"/>
                         <constraint firstItem="nMk-Sf-JUs" firstAttribute="centerY" secondItem="8pF-Qp-bPs" secondAttribute="centerY" id="bgm-Ua-hN9"/>
+                        <constraint firstItem="p3s-DR-a38" firstAttribute="top" secondItem="nMk-Sf-JUs" secondAttribute="bottom" constant="7.3333333333333428" id="o7r-bm-DG4"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="8pF-Qp-bPs"/>
                 </view>
