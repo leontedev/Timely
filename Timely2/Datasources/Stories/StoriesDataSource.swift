@@ -133,8 +133,6 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                 
                 if let itemURL = item.url?.host {
                     cell.urlLabel?.text = itemURL
-                } else {
-                    cell.urlLabel?.text = "Story ID: " + String(item.objectID)
                 }
                 
                 
