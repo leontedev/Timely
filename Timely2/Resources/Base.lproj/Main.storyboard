@@ -51,6 +51,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Hacker News" largeTitleDisplayMode="always" id="Zdf-7t-Un8">
                         <barButtonItem key="rightBarButtonItem" image="icn_feedSelect" id="E4u-zL-6Ra">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
                                 <action selector="changeFeed:" destination="2pk-vo-Y6q" id="rrp-73-les"/>
                             </connections>
@@ -159,7 +160,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gDs-9P-uUA">
-                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StoryCell" rowHeight="100" id="xi8-SG-Bgr" userLabel="Comment Story Cell" customClass="CommentStoryCell" customModule="Timely2" customModuleProvider="target">
@@ -303,6 +304,7 @@
                                                                 <constraint firstAttribute="height" constant="25" id="JGb-GF-Hzc"/>
                                                                 <constraint firstAttribute="width" constant="25" id="geo-gA-W4p"/>
                                                             </constraints>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <state key="normal" image="icn_safari"/>
                                                             <connections>
                                                                 <action selector="safariButtonPressed" destination="QsZ-sU-q0H" eventType="touchUpInside" id="9ik-hd-9kf"/>
@@ -314,6 +316,7 @@
                                                                 <constraint firstAttribute="height" constant="23" id="NAK-Jj-EBk"/>
                                                                 <constraint firstAttribute="width" constant="23" id="pPo-PX-BM3"/>
                                                             </constraints>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <state key="normal" image="icn_link"/>
                                                             <connections>
                                                                 <action selector="webviewButtonPressed" destination="QsZ-sU-q0H" eventType="touchUpInside" id="oMD-d4-48h"/>
@@ -325,6 +328,7 @@
                                                                 <constraint firstAttribute="height" constant="22" id="Dlo-T3-9FG"/>
                                                                 <constraint firstAttribute="width" secondItem="6cM-Rx-x7e" secondAttribute="height" multiplier="22:31" id="e6h-dK-LEf"/>
                                                             </constraints>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <state key="normal" image="icn_save"/>
                                                             <connections>
                                                                 <action selector="saveBookmarkPressed:" destination="QsZ-sU-q0H" eventType="touchUpInside" id="jk1-nn-QSk"/>
@@ -336,6 +340,7 @@
                                                                 <constraint firstAttribute="height" constant="26" id="Kph-Fg-3Pp"/>
                                                                 <constraint firstAttribute="width" constant="26" id="QuN-Z9-BwW"/>
                                                             </constraints>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <state key="normal" image="icn_share"/>
                                                             <connections>
                                                                 <action selector="shareButtonPressed" destination="QsZ-sU-q0H" eventType="touchUpInside" id="a8Q-x4-27f"/>
@@ -547,6 +552,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="unselectedItemTintColor">
+                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
                         <segue destination="H1p-Uh-vWS" kind="relationship" relationship="viewControllers" id="muH-6f-qcR"/>
@@ -558,11 +571,13 @@
             </objects>
             <point key="canvasLocation" x="-2191" y="297"/>
         </scene>
-        <!--Stories-->
+        <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
             <objects>
                 <splitViewController id="H1p-Uh-vWS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Stories" image="tab_stories" id="iRu-TP-u7X"/>
+                    <tabBarItem key="tabBarItem" title="" image="tab_stories" id="iRu-TP-u7X">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="-30" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <connections>
                         <segue destination="RMx-3f-FxP" kind="relationship" relationship="masterViewController" id="BlO-5A-QYV"/>
@@ -1335,7 +1350,9 @@
         <scene sceneID="Lp1-kW-cxf">
             <objects>
                 <splitViewController id="SIC-ML-RVb" customClass="BookmarksSplitViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="qiA-xV-Dfr"/>
+                    <tabBarItem key="tabBarItem" image="tab_saved" selectedImage="tab_saved" id="qiA-xV-Dfr">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <connections>
                         <segue destination="DIV-tb-Dwb" kind="relationship" relationship="masterViewController" id="3sK-hk-frC"/>
                         <segue destination="vC3-pB-5Vb" kind="relationship" relationship="detailViewController" id="KMe-Ga-hDx"/>
@@ -1361,11 +1378,13 @@
             </objects>
             <point key="canvasLocation" x="206" y="786"/>
         </scene>
-        <!--Settings-->
+        <!--Settings Split View Controller-->
         <scene sceneID="rFE-Ku-Mo4">
             <objects>
                 <splitViewController id="1JU-8o-Ddk" customClass="SettingsSplitViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="tab_settings" id="K3A-fS-kbh"/>
+                    <tabBarItem key="tabBarItem" title="" image="tab_settings" id="K3A-fS-kbh">
+                        <inset key="imageInsets" minX="-30" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <connections>
                         <segue destination="qJj-N4-I5d" kind="relationship" relationship="masterViewController" id="ImL-jf-fWN"/>
                         <segue destination="3Kq-Ig-ZoA" kind="relationship" relationship="detailViewController" id="Iav-28-noN"/>
@@ -1626,12 +1645,13 @@ By using Timely you're subject to the Hacker News Privacy Policy.
         <image name="icn_tipjar" width="90" height="90"/>
         <image name="icn_twitter" width="90" height="90"/>
         <image name="icn_upvotes" width="100" height="100"/>
+        <image name="tab_saved" width="20" height="23"/>
         <image name="tab_settings" width="23" height="25"/>
         <image name="tab_stories" width="19" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Iav-28-noN"/>
-        <segue reference="Tll-UG-LXB"/>
+        <segue reference="6S0-TO-JiA"/>
         <segue reference="6Ck-Cn-WLf"/>
     </inferredMetricsTieBreakers>
 </document>
