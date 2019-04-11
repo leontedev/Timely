@@ -147,6 +147,8 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Delegates
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let feedbackGenerator = UINotificationFeedbackGenerator()
+        feedbackGenerator.prepare()
         if indexPath.section == COMMENT_CELL_SECTION {
             if !self.comments[indexPath.row].collapsed {
                 
@@ -180,6 +182,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 }
                 
                 //these tell the tableview something changed, and it checks cell heights and animates changes
+                feedbackGenerator.notificationOccurred(.success)
                 tableView.beginUpdates()
                 tableView.endUpdates()
             } else {
@@ -198,9 +201,9 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                     self.comments[indexPath.row].removedComments.removeAll()
                     
                 }
+                feedbackGenerator.notificationOccurred(.success)
                 tableView.beginUpdates()
                 tableView.endUpdates()
-                
             }
         }
         

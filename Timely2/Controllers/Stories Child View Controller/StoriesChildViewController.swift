@@ -116,6 +116,9 @@ class StoriesChildViewController: UITableViewController {
     
     // FIXME: Defect use Refresh Control animation instead of the state.loading animation
     @objc func refreshData(sender: UIRefreshControl) {
+        let feedbackGenerator = UINotificationFeedbackGenerator()
+        feedbackGenerator.notificationOccurred(.warning)
+        
         if isStoriesChildView {
             fetchStories()
         } else {
