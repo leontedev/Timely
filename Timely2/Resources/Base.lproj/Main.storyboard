@@ -34,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yty-cz-3q2" userLabel="Stories Container View">
-                                <rect key="frame" x="0.0" y="140" width="375" height="589"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <connections>
                                     <segue destination="7bK-jq-Zjz" kind="embed" identifier="embedStoriesChildVC" id="6Ck-Cn-WLf"/>
                                 </connections>
@@ -43,8 +43,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="m6L-Yu-H34" firstAttribute="trailing" secondItem="Yty-cz-3q2" secondAttribute="trailing" id="0IH-BB-uU4"/>
-                            <constraint firstItem="m6L-Yu-H34" firstAttribute="bottom" secondItem="Yty-cz-3q2" secondAttribute="bottom" id="X3M-C2-hFC"/>
-                            <constraint firstItem="Yty-cz-3q2" firstAttribute="top" secondItem="m6L-Yu-H34" secondAttribute="top" id="Zko-lF-0ks"/>
+                            <constraint firstAttribute="bottom" secondItem="Yty-cz-3q2" secondAttribute="bottom" id="X3M-C2-hFC"/>
+                            <constraint firstItem="Yty-cz-3q2" firstAttribute="top" secondItem="7TU-9H-BFb" secondAttribute="top" id="Zko-lF-0ks"/>
                             <constraint firstItem="Yty-cz-3q2" firstAttribute="leading" secondItem="m6L-Yu-H34" secondAttribute="leading" id="aOO-vb-uLV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="m6L-Yu-H34"/>
@@ -578,7 +578,7 @@
             <objects>
                 <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" userLabel="Stories Child View Controller" customClass="StoriesChildViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r7i-6Z-zg0" userLabel="Stories Table View">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -1585,7 +1585,7 @@ By using Timely you're subject to the Hacker News Privacy Policy.
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxb-NN-1S4">
-                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <connections>
                                     <segue destination="7bK-jq-Zjz" kind="embed" identifier="embedBookmarksChildVC" id="2ph-9Q-3F9"/>
                                 </connections>
@@ -1595,8 +1595,8 @@ By using Timely you're subject to the Hacker News Privacy Policy.
                         <constraints>
                             <constraint firstItem="5AO-dS-hWK" firstAttribute="trailing" secondItem="hxb-NN-1S4" secondAttribute="trailing" id="bf2-ZC-3IP"/>
                             <constraint firstItem="hxb-NN-1S4" firstAttribute="leading" secondItem="5AO-dS-hWK" secondAttribute="leading" id="m7F-wX-UOH"/>
-                            <constraint firstItem="hxb-NN-1S4" firstAttribute="top" secondItem="5AO-dS-hWK" secondAttribute="top" id="mII-8R-qb3"/>
-                            <constraint firstItem="5AO-dS-hWK" firstAttribute="bottom" secondItem="hxb-NN-1S4" secondAttribute="bottom" id="pvK-Wc-unj"/>
+                            <constraint firstItem="hxb-NN-1S4" firstAttribute="top" secondItem="XF5-9O-sMn" secondAttribute="top" id="mII-8R-qb3"/>
+                            <constraint firstAttribute="bottom" secondItem="hxb-NN-1S4" secondAttribute="bottom" id="pvK-Wc-unj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="5AO-dS-hWK"/>
                     </view>
@@ -1631,7 +1631,7 @@ By using Timely you're subject to the Hacker News Privacy Policy.
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Iav-28-noN"/>
-        <segue reference="KMe-Ga-hDx"/>
-        <segue reference="2ph-9Q-3F9"/>
+        <segue reference="Tll-UG-LXB"/>
+        <segue reference="6Ck-Cn-WLf"/>
     </inferredMetricsTieBreakers>
 </document>
