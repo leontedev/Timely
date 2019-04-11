@@ -185,6 +185,11 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 feedbackGenerator.notificationOccurred(.success)
                 tableView.beginUpdates()
                 tableView.endUpdates()
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierComment, for: indexPath) as! CommentCell
+                
+                // FIXME: - modify alpha for image outlets
+                
             } else {
                 self.comments[indexPath.row].height = nil
                 self.comments[indexPath.row].collapsed = false
