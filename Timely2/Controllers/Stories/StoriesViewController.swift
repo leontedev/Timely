@@ -115,7 +115,6 @@ class StoriesViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "embedStoriesChildVC" {
             if let childDestination = segue.destination as? StoriesChildViewController {
-                childDestination.parentVC = self
                 self.childVC = childDestination
             }
         }

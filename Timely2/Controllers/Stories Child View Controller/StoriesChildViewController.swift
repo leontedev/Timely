@@ -31,19 +31,34 @@ class StoriesChildViewController: UITableViewController {
     }
     
     var defaultSession: URLSession = URLSession(configuration: .default)
-    
-    weak var parentVC: UIViewController?
     var currentSelectedSourceAPI: HNFeedType?
     var currentSelectedFeedURL: URLComponents? //= URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     
     var storiesAlgoliaAPI: [AlgoliaItem] = []
     var storiesOfficialAPI: [Item] = []
+    
     // true if this VC was initiated from the Stories View Controller, false if from Bookmarks or History
     var isStoriesChildView = true
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        print(type(of: self.parent))
+        print(self.parent is StoriesViewController)
+        
+        if (self.parent as? StoriesViewController) != nil {
+            print("it's a StoriesViewController")
+        } else if (self.parent as? BookmarksViewController) != nil {
+            print("it's a BookmarksSplitViewController")
+        } else if (self.parent as? HistoryViewController) != nil {
+            print("it's a HistoryViewController")
+        } else {
+            print("?!!??")
+        }
+        
+        print(self.navigationController?.children)
         
         self.tableView.estimatedRowHeight = 120
         self.tableView.rowHeight = UITableView.automaticDimension
@@ -118,6 +133,8 @@ class StoriesChildViewController: UITableViewController {
     @objc func refreshData(sender: UIRefreshControl) {
         let feedbackGenerator = UINotificationFeedbackGenerator()
         feedbackGenerator.notificationOccurred(.warning)
+        
+        
         
         if isStoriesChildView {
             fetchStories()

@@ -77,6 +77,17 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             cell.byUserLabel?.text = item.author
             cell.elapsedTimeLabel?.text = self.comments[indexPath.row].timeAgo
             
+            
+            // Grey out the visible area (the Elapsed & Author icons) for collapsed comments
+            
+            if self.comments[indexPath.row].collapsed {
+                cell.elapsedImage.alpha = CGFloat(0.4)
+                cell.authorImage.alpha = CGFloat(0.4)
+            } else {
+                cell.elapsedImage.alpha = CGFloat(1.0)
+                cell.authorImage.alpha = CGFloat(1.0)
+            }
+            
             return cell
         } else if indexPath.section == STORY_CELL_SECTION {
     
@@ -138,7 +149,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             return cell
         }
         
-        // Not sure how I can avoid this :(
+        // FIXME: Not sure how I can avoid this mess below :(
         let cell2: UITableViewCell!
         cell2 = tableView.dequeueReusableCell(withIdentifier: CommentNavBarCell.reuseIdentifier, for: indexPath)
         return cell2
@@ -147,9 +158,13 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Delegates
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         let feedbackGenerator = UINotificationFeedbackGenerator()
         feedbackGenerator.prepare()
+        
         if indexPath.section == COMMENT_CELL_SECTION {
+            
+            // check if the comment (and it's leaves) are already marked as collapsed
             if !self.comments[indexPath.row].collapsed {
                 
                 let selectedItemDepth = self.comments[indexPath.row].depth
@@ -180,19 +195,21 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                         tableView.deleteRows(at: childCommentsForRemoval, with: UITableView.RowAnimation.fade)
                     }, completion: nil)
                 }
-                
-                //these tell the tableview something changed, and it checks cell heights and animates changes
+
                 feedbackGenerator.notificationOccurred(.success)
+                //these tell the tableview something changed, and it checks cell heights and animates changes
                 tableView.beginUpdates()
                 tableView.endUpdates()
                 
-                let cell = tableView.dequeueReusableCell(withIdentifier: CommentCell.reuseIdentifierComment, for: indexPath) as! CommentCell
-                
-                // FIXME: - modify alpha for image outlets
+                // required in order to grey out the elapsed & author icons
+                tableView.reloadRows(at: [indexPath], with: .none)
                 
             } else {
+                
                 self.comments[indexPath.row].height = nil
                 self.comments[indexPath.row].collapsed = false
+                
+                tableView.reloadRows(at: [indexPath], with: .none)
                 
                 if self.comments[indexPath.row].removedComments.count > 0 {
                     //re-insert the previously removed child comments (with higher depths)
@@ -206,9 +223,12 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                     self.comments[indexPath.row].removedComments.removeAll()
                     
                 }
+                
                 feedbackGenerator.notificationOccurred(.success)
+                
                 tableView.beginUpdates()
                 tableView.endUpdates()
+                
             }
         }
         

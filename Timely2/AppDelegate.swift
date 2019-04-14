@@ -15,9 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // this will initialize Singletons
-        print(Bookmarks.shared)
+        // voiinitialize Singletons
         print(Feeds.shared)
+        print(Bookmarks.shared)
+        print(History.shared)
         
         
         // Override point for customization after application launch.

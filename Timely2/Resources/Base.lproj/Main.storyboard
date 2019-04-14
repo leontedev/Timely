@@ -23,7 +23,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8fS-aE-onr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-487" y="-1718"/>
+            <point key="canvasLocation" x="-487" y="-1350"/>
         </scene>
         <!--Stories View Controller-->
         <scene sceneID="X0q-mJ-7Ia">
@@ -149,7 +149,7 @@
                 </panGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="Mnf-5S-F7Q" userLabel="Feed Table View Pan Gesture Recognizer"/>
             </objects>
-            <point key="canvasLocation" x="286" y="-1719"/>
+            <point key="canvasLocation" x="286" y="-1350"/>
         </scene>
         <!--Comments Child View Controller-->
         <scene sceneID="yUG-lL-AsK">
@@ -444,9 +444,11 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="authorImage" destination="1Tf-el-jkA" id="6z6-4n-pj2"/>
                                             <outlet property="byUserLabel" destination="aDI-lX-mPm" id="fDn-Th-JDm"/>
                                             <outlet property="commentStackView" destination="IoF-2V-2rN" id="a54-hQ-yfE"/>
                                             <outlet property="commentTextView" destination="iIv-kX-g5p" id="LbX-NY-W1I"/>
+                                            <outlet property="elapsedImage" destination="cxk-gZ-6XF" id="huB-GH-QdL"/>
                                             <outlet property="elapsedTimeLabel" destination="3Pl-fr-kkv" id="mjJ-tX-AfC"/>
                                         </connections>
                                     </tableViewCell>
@@ -510,7 +512,7 @@
                             <rect key="frame" x="101.66666666666667" y="50.666666666666657" width="37.000000000000014" height="37"/>
                         </activityIndicatorView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3s-DR-a38">
-                            <rect key="frame" x="98" y="95" width="45.000000000000014" height="14.333333333333329"/>
+                            <rect key="frame" x="97.666666666666671" y="95" width="45.000000000000014" height="14.333333333333329"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -564,19 +566,20 @@
                     <connections>
                         <segue destination="H1p-Uh-vWS" kind="relationship" relationship="viewControllers" id="muH-6f-qcR"/>
                         <segue destination="SIC-ML-RVb" kind="relationship" relationship="viewControllers" id="5rA-xA-tdX"/>
+                        <segue destination="8kk-7B-mFs" kind="relationship" relationship="viewControllers" id="iuA-Aa-a3r"/>
                         <segue destination="1JU-8o-Ddk" kind="relationship" relationship="viewControllers" id="tsx-6f-ikQ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hFn-8u-bzZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2191" y="297"/>
+            <point key="canvasLocation" x="-2516" y="306"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
             <objects>
                 <splitViewController id="H1p-Uh-vWS" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tab_stories" id="iRu-TP-u7X">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="-30" maxY="-6"/>
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="-45" maxY="-6"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <connections>
@@ -719,7 +722,7 @@
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="l2H-tu-Lfx">
                             <rect key="frame" x="101.66666666666667" y="50.666666666666657" width="37.000000000000014" height="37"/>
                         </activityIndicatorView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2n-Hk-IuL">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2n-Hk-IuL">
                             <rect key="frame" x="97.666666666666671" y="95" width="45.000000000000014" height="14.333333333333329"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -735,19 +738,28 @@
                     <viewLayoutGuide key="safeArea" id="LGM-4C-9GR"/>
                 </view>
                 <view contentMode="scaleToFill" id="KCK-SZ-W86" userLabel="Empty View">
-                    <rect key="frame" x="0.0" y="0.0" width="335" height="563"/>
+                    <rect key="frame" x="0.0" y="0.0" width="335" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No results! Try a different filter." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9wr-r0-ucN">
-                            <rect key="frame" x="49.666666666666657" y="74" width="235.99999999999997" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
+                        <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="attention" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hiB-Ep-bEF">
+                            <rect key="frame" x="147.66666666666666" y="74.666666666666671" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="Oyd-vU-dDC"/>
+                                <constraint firstAttribute="width" constant="40" id="rS9-mN-r4q"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No stories here yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9wr-r0-ucN">
+                            <rect key="frame" x="92.333333333333329" y="124.66666666666667" width="150.66666666666669" height="20.333333333333329"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="9wr-r0-ucN" firstAttribute="centerY" secondItem="KCK-SZ-W86" secondAttribute="centerY" multiplier="0.3" id="AaY-2U-gsw"/>
-                        <constraint firstItem="9wr-r0-ucN" firstAttribute="centerX" secondItem="KCK-SZ-W86" secondAttribute="centerX" id="NzO-Kk-nO8"/>
+                        <constraint firstItem="hiB-Ep-bEF" firstAttribute="centerX" secondItem="KCK-SZ-W86" secondAttribute="centerX" id="Kyk-8g-NVb"/>
+                        <constraint firstItem="hiB-Ep-bEF" firstAttribute="centerY" secondItem="KCK-SZ-W86" secondAttribute="centerY" multiplier="1/3" id="hjD-sn-0Cr"/>
+                        <constraint firstItem="9wr-r0-ucN" firstAttribute="centerX" secondItem="KCK-SZ-W86" secondAttribute="centerX" id="oYf-z5-dSN"/>
+                        <constraint firstItem="9wr-r0-ucN" firstAttribute="top" secondItem="hiB-Ep-bEF" secondAttribute="bottom" constant="10" id="yiU-9Q-KEY"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="eYq-8o-Ieo"/>
                 </view>
@@ -755,15 +767,15 @@
                     <rect key="frame" x="0.0" y="0.0" width="335" height="563"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oops!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSi-IV-xHk">
-                            <rect key="frame" x="136" y="84" width="63" height="29"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oops!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSi-IV-xHk">
+                            <rect key="frame" x="133.66666666666666" y="78.333333333333329" width="68" height="31.333333333333329"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                             <color key="textColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.94999999999999996" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Phl-mY-eTE">
-                            <rect key="frame" x="16" y="127.99999999999999" width="303" height="19.333333333333329"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.94999999999999996" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Phl-mY-eTE">
+                            <rect key="frame" x="16" y="119.66666666666667" width="303" height="20.333333333333329"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -771,16 +783,16 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="Phl-mY-eTE" firstAttribute="centerX" secondItem="Zis-D4-Pxe" secondAttribute="centerX" id="Lib-DZ-CWl"/>
-                        <constraint firstItem="Phl-mY-eTE" firstAttribute="top" secondItem="kSi-IV-xHk" secondAttribute="bottom" constant="15" id="Qmx-UQ-6Tf"/>
+                        <constraint firstItem="Phl-mY-eTE" firstAttribute="top" secondItem="kSi-IV-xHk" secondAttribute="bottom" constant="10" id="Qmx-UQ-6Tf"/>
                         <constraint firstItem="Phl-mY-eTE" firstAttribute="leading" secondItem="hY7-s6-JLx" secondAttribute="leading" constant="16" id="elQ-62-TaM"/>
                         <constraint firstItem="kSi-IV-xHk" firstAttribute="centerX" secondItem="Zis-D4-Pxe" secondAttribute="centerX" id="hGe-C2-OhU"/>
                         <constraint firstItem="hY7-s6-JLx" firstAttribute="trailing" secondItem="Phl-mY-eTE" secondAttribute="trailing" constant="16" id="pZx-gh-oen"/>
-                        <constraint firstItem="kSi-IV-xHk" firstAttribute="centerY" secondItem="Zis-D4-Pxe" secondAttribute="centerY" multiplier="0.35" id="tDB-4U-Jek"/>
+                        <constraint firstItem="kSi-IV-xHk" firstAttribute="centerY" secondItem="Zis-D4-Pxe" secondAttribute="centerY" multiplier="1/3" id="tDB-4U-Jek"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="hY7-s6-JLx"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1743" y="-1288"/>
+            <point key="canvasLocation" x="1466" y="-649"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
@@ -1190,7 +1202,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vrG-mk-gbg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1163" y="786"/>
+            <point key="canvasLocation" x="286" y="873"/>
         </scene>
         <!--Tip Jar-->
         <scene sceneID="5RA-dR-QQK">
@@ -1351,7 +1363,7 @@
             <objects>
                 <splitViewController id="SIC-ML-RVb" customClass="BookmarksSplitViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" image="tab_saved" selectedImage="tab_saved" id="qiA-xV-Dfr">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="-15" maxY="-6"/>
                     </tabBarItem>
                     <connections>
                         <segue destination="DIV-tb-Dwb" kind="relationship" relationship="masterViewController" id="3sK-hk-frC"/>
@@ -1360,7 +1372,53 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zk2-EA-ruJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1204" y="21"/>
+            <point key="canvasLocation" x="-1239" y="-650"/>
+        </scene>
+        <!--History Split View Controller-->
+        <scene sceneID="lVI-My-4Q4">
+            <objects>
+                <splitViewController id="8kk-7B-mFs" customClass="HistorySplitViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" image="tab_history" selectedImage="tab_history" id="Jcl-Wb-Vpo">
+                        <inset key="imageInsets" minX="-15" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
+                    <connections>
+                        <segue destination="JkQ-VC-1Eh" kind="relationship" relationship="masterViewController" id="evg-yl-OKL"/>
+                        <segue destination="vC3-pB-5Vb" kind="relationship" relationship="detailViewController" id="Iae-Vb-dlk"/>
+                    </connections>
+                </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lQP-yT-v8S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1239" y="123"/>
+        </scene>
+        <!--History-->
+        <scene sceneID="vnW-iS-E2t">
+            <objects>
+                <viewController title="History" id="kbt-BQ-wg9" customClass="HistoryViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MOd-mY-nvZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X4E-l7-ooz">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <connections>
+                                    <segue destination="7bK-jq-Zjz" kind="embed" identifier="embedHistoryChildVC" id="gDm-Vc-F7S"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="pGj-OL-qUX" firstAttribute="trailing" secondItem="X4E-l7-ooz" secondAttribute="trailing" id="3GA-0t-2GQ"/>
+                            <constraint firstItem="X4E-l7-ooz" firstAttribute="leading" secondItem="pGj-OL-qUX" secondAttribute="leading" id="dwD-nj-SQN"/>
+                            <constraint firstAttribute="bottom" secondItem="X4E-l7-ooz" secondAttribute="bottom" id="jNk-bH-hmn"/>
+                            <constraint firstItem="X4E-l7-ooz" firstAttribute="top" secondItem="MOd-mY-nvZ" secondAttribute="top" id="mHh-2u-Sd2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pGj-OL-qUX"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="History" id="TfT-I1-lIC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZYF-JR-bBO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="286" y="123"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nnM-xv-puO">
@@ -1376,14 +1434,14 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hzf-tZ-qbF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="206" y="786"/>
+            <point key="canvasLocation" x="-487" y="873"/>
         </scene>
         <!--Settings Split View Controller-->
         <scene sceneID="rFE-Ku-Mo4">
             <objects>
                 <splitViewController id="1JU-8o-Ddk" customClass="SettingsSplitViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tab_settings" id="K3A-fS-kbh">
-                        <inset key="imageInsets" minX="-30" minY="6" maxX="0.0" maxY="-6"/>
+                        <inset key="imageInsets" minX="-45" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
                     <connections>
                         <segue destination="qJj-N4-I5d" kind="relationship" relationship="masterViewController" id="ImL-jf-fWN"/>
@@ -1392,7 +1450,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OgI-qC-aSp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-815" y="1121"/>
+            <point key="canvasLocation" x="-1239" y="873"/>
         </scene>
         <!--Appearance-->
         <scene sceneID="xkm-dN-mUf">
@@ -1625,8 +1683,27 @@ By using Timely you're subject to the Hacker News Privacy Policy.
             </objects>
             <point key="canvasLocation" x="287" y="-649"/>
         </scene>
+        <!--History-->
+        <scene sceneID="mr1-nd-P2l">
+            <objects>
+                <navigationController title="History" automaticallyAdjustsScrollViewInsets="NO" id="JkQ-VC-1Eh" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Wzy-7K-zeZ">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kbt-BQ-wg9" kind="relationship" relationship="rootViewController" id="DxE-W0-zaO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6de-HA-jBB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-487" y="123"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="attention" width="40" height="40"/>
         <image name="icn_about" width="90" height="90"/>
         <image name="icn_appearance" width="90" height="90"/>
         <image name="icn_author" width="36" height="44"/>
@@ -1645,13 +1722,14 @@ By using Timely you're subject to the Hacker News Privacy Policy.
         <image name="icn_tipjar" width="90" height="90"/>
         <image name="icn_twitter" width="90" height="90"/>
         <image name="icn_upvotes" width="100" height="100"/>
-        <image name="tab_saved" width="20" height="23"/>
+        <image name="tab_history" width="25" height="25"/>
+        <image name="tab_saved" width="25" height="25"/>
         <image name="tab_settings" width="23" height="25"/>
-        <image name="tab_stories" width="19" height="24"/>
+        <image name="tab_stories" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Iav-28-noN"/>
         <segue reference="6S0-TO-JiA"/>
-        <segue reference="6Ck-Cn-WLf"/>
+        <segue reference="2ph-9Q-3F9"/>
     </inferredMetricsTieBreakers>
 </document>

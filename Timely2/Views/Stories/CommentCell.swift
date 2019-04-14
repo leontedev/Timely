@@ -21,6 +21,10 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var elapsedTimeLabel: UILabel!
     @IBOutlet weak var byUserLabel: UILabel!
     
+    @IBOutlet weak var elapsedImage: UIImageView!
+    @IBOutlet weak var authorImage: UIImageView!
+    
+    
     override func layoutSubviews() {
         // Custom layout cells don't apply indentationLevel automatically. We need to update layoutMargins manually
         super.layoutSubviews()

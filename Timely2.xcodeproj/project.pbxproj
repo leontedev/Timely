@@ -55,6 +55,11 @@
 		89D0016A2229852A003EBD5F /* BreakpointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D001692229852A003EBD5F /* BreakpointManager.swift */; };
 		89D26093222E8D6D00FB0087 /* DebugLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D26092222E8D6D00FB0087 /* DebugLog.swift */; };
 		89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */; };
+		89DEB8D622608B5100B70242 /* HistorySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DEB8D522608B5100B70242 /* HistorySplitViewController.swift */; };
+		89DEB8D822608B6400B70242 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DEB8D722608B6400B70242 /* HistoryViewController.swift */; };
+		89DEB8DA22608D0000B70242 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DEB8D922608D0000B70242 /* History.swift */; };
+		89DEB8DC2260C39E00B70242 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DEB8DB2260C39E00B70242 /* OSLog.swift */; };
+		89DEB8DE2260C41900B70242 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DEB8DD2260C41900B70242 /* FileManager.swift */; };
 		BB51F4A25D03D00A13F46680 /* Pods_Timely2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +133,11 @@
 		89DAB65721FF4CBE004390D9 /* DTCoreTextStub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTCoreTextStub.h; sourceTree = "<group>"; };
 		89DAB65921FF4CF9004390D9 /* DTCoreTextStub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTCoreTextStub.m; sourceTree = "<group>"; };
 		89DAB65B21FF4D8C004390D9 /* Timely2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Timely2-Bridging-Header.h"; sourceTree = "<group>"; };
+		89DEB8D522608B5100B70242 /* HistorySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySplitViewController.swift; sourceTree = "<group>"; };
+		89DEB8D722608B6400B70242 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		89DEB8D922608D0000B70242 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		89DEB8DB2260C39E00B70242 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
+		89DEB8DD2260C41900B70242 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		99349D8584915D52F7F05DBB /* Pods-Timely2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Timely2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Timely2/Pods-Timely2.debug.xcconfig"; sourceTree = "<group>"; };
 		CCEC6EF8B0C70B4D3CCFF889 /* Pods-Timely2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Timely2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Timely2/Pods-Timely2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,6 +206,8 @@
 				89BE85BE223A2748001D7870 /* UISlider.swift */,
 				893CA75C224BBBC800BDA9FF /* UIImage.swift */,
 				893CA75E224BBC0500BDA9FF /* NSMutableAttributedString.swift */,
+				89DEB8DB2260C39E00B70242 /* OSLog.swift */,
+				89DEB8DD2260C41900B70242 /* FileManager.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -258,6 +270,7 @@
 				8966AD20224DF51A0035A430 /* Bookmarks.swift */,
 				89001E74225C5904009561B1 /* Feeds.swift */,
 				89001E76225CD1C1009561B1 /* Defaults.swift */,
+				89DEB8D922608D0000B70242 /* History.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -265,6 +278,7 @@
 		894B80BB20B95D4B002C313E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				89DEB8D422608A5900B70242 /* History */,
 				89001E6F225A0476009561B1 /* Stories */,
 				8966AD22224E70A00035A430 /* Bookmarks */,
 				89BE85AF22326E2F001D7870 /* Stories Child View Controller */,
@@ -385,6 +399,15 @@
 				89BE85BC2237D17B001D7870 /* Stories */,
 			);
 			path = Datasources;
+			sourceTree = "<group>";
+		};
+		89DEB8D422608A5900B70242 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				89DEB8D522608B5100B70242 /* HistorySplitViewController.swift */,
+				89DEB8D722608B6400B70242 /* HistoryViewController.swift */,
+			);
+			path = History;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -555,11 +578,14 @@
 				89C997B6224E71D600694BD9 /* BookmarksViewController.swift in Sources */,
 				89C435D0221EA34F00288A6D /* UIView.swift in Sources */,
 				89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */,
+				89DEB8D622608B5100B70242 /* HistorySplitViewController.swift in Sources */,
 				89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */,
 				89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */,
 				89001E73225A417B009561B1 /* BookmarksSplitViewController.swift in Sources */,
 				89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */,
 				8966AD21224DF51A0035A430 /* Bookmarks.swift in Sources */,
+				89DEB8DA22608D0000B70242 /* History.swift in Sources */,
+				89DEB8DC2260C39E00B70242 /* OSLog.swift in Sources */,
 				89D0016A2229852A003EBD5F /* BreakpointManager.swift in Sources */,
 				89C997CE22537F6A00694BD9 /* CommentNavBarCell.swift in Sources */,
 				89D26093222E8D6D00FB0087 /* DebugLog.swift in Sources */,
@@ -578,6 +604,8 @@
 				893FB66C20B8494B007771A3 /* CommentsViewController.swift in Sources */,
 				891E119A2143CD2900871615 /* Item.swift in Sources */,
 				893CA75F224BBC0500BDA9FF /* NSMutableAttributedString.swift in Sources */,
+				89DEB8D822608B6400B70242 /* HistoryViewController.swift in Sources */,
+				89DEB8DE2260C41900B70242 /* FileManager.swift in Sources */,
 				89336B2521E6237D00822673 /* JSONResponseParser.swift in Sources */,
 				89BE85B322326E98001D7870 /* DefaultsTableViewController.swift in Sources */,
 				89089F5921C7FA43005E42B3 /* Comment.swift in Sources */,

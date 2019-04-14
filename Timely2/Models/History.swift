@@ -1,8 +1,8 @@
 //
-//  Bookmark.swift
+//  History.swift
 //  Timely2
 //
-//  Created by Mihai Leonte on 3/29/19.
+//  Created by Mihai Leonte on 4/12/19.
 //  Copyright © 2019 Mihai Leonte. All rights reserved.
 //
 
@@ -10,27 +10,23 @@ import Foundation
 
 extension Notification.Name {
     
-    static var bookmarkAdded: Notification.Name {
-        return .init(rawValue: "Bookmarks.addedNewId")
+    static var historyAdded: Notification.Name {
+        return .init(rawValue: "History.addedNewId")
     }
     
-    
-    static var bookmarkRemoved: Notification.Name {
-        return .init(rawValue: "Bookmarks.RemovedId")
-    }
 }
 
-public struct Bookmark: Codable {
+public struct HistoryItem: Codable {
     public let id: String
     public let bookmarkDate: Date
 }
 
 
-public class Bookmarks {
-    static let shared = Bookmarks()
-    var items: [Bookmark] = []
+public class History {
+    static let shared = History()
+    var items: [HistoryItem] = []
     var stories: [Item] = []
-    let url = FileManager.documentDirectoryURL.appendingPathComponent("bookmarks").appendingPathExtension("plist")
+    let url = FileManager.documentDirectoryURL.appendingPathComponent("history").appendingPathExtension("plist")
     
     private init() {
         // load previously saved Bookmarks from Documents / Bookmarks.plist
@@ -38,7 +34,7 @@ public class Bookmarks {
             print(FileManager.documentDirectoryURL.path)
             let plistDecoder = PropertyListDecoder()
             let savedPlistData = try Data(contentsOf: url)
-            self.items = try plistDecoder.decode([Bookmark].self, from: savedPlistData)
+            self.items = try plistDecoder.decode([HistoryItem].self, from: savedPlistData)
             for item in self.items {
                 guard let id = Int(item.id) else { continue }
                 stories.append(Item(id: id))
@@ -49,8 +45,8 @@ public class Bookmarks {
     }
     
     func add(id: String) {
-        let newBookmark = Bookmark(id: id, bookmarkDate: Date())
-        self.items.append(newBookmark)
+        let newHistoryEntry = HistoryItem(id: id, bookmarkDate: Date())
+        self.items.append(newHistoryEntry)
         
         // save to plist file
         do {
@@ -66,30 +62,25 @@ public class Bookmarks {
         self.stories.append(Item(id: newId))
         
         // post notification to refresh the Stories Child View
-        NotificationCenter.default.post(name: .bookmarkAdded, object: nil)
+        NotificationCenter.default.post(name: .historyAdded, object: nil)
     }
     
-    func remove(id: String) {
-        self.items = self.items.filter { $0.id != id }
+    func removeHistory() {
+        self.items = []
         
         // remove from plist file
         do {
             if FileManager.default.fileExists(atPath: url.path) {
                 try FileManager.default.removeItem(atPath: url.path)
             }
-            let plistEncoder = PropertyListEncoder()
-            let plistData = try plistEncoder.encode(self.items)
-            try plistData.write(to: url)
         } catch {
             print(error)
         }
         
         // remove from the [Item] array
-        guard let newId = Int(id) else { return }
-        self.stories = self.stories.filter { $0.id != newId }
+//        guard let newId = Int(id) else { return }
+//        self.stories = self.stories.filter { $0.id != newId }
         
-        // post notification to refresh the Stories Child View
-        NotificationCenter.default.post(name: .bookmarkRemoved, object: nil)
     }
     
     func contains(id: String) -> Bool {
