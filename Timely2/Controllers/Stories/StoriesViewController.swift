@@ -56,6 +56,7 @@ class StoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         feedDataSource.delegate = self
         configureFeedTableView(with: Feeds.shared.feeds)
         customizeFeedPopoverView()
@@ -116,6 +117,8 @@ class StoriesViewController: UIViewController {
         if segue.identifier == "embedStoriesChildVC" {
             if let childDestination = segue.destination as? StoriesChildViewController {
                 self.childVC = childDestination
+                self.addChild(childDestination)
+                self.childVC?.didMove(toParent: self)
             }
         }
     }

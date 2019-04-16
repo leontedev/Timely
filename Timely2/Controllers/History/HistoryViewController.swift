@@ -15,6 +15,12 @@ import os
 class HistoryViewController: UIViewController {
     var childVC: StoriesChildViewController?
     
+    @IBAction func clearHistoryPressed(_ sender: Any) {
+        History.shared.removeHistory()
+        childVC?.refreshHistory()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         os_log("HistoryViewController did load.", log: OSLog.viewCycle, type: .debug)
@@ -24,7 +30,7 @@ class HistoryViewController: UIViewController {
         childVC.isStoriesChildView = false
         childVC.currentSelectedSourceAPI = .official
         childVC.state = .loading
-        if History.shared.stories.isEmpty {
+        if History.shared.items.isEmpty {
             childVC.state = .empty
         } else {
             childVC.storiesOfficialAPI = History.shared.stories
@@ -40,6 +46,8 @@ class HistoryViewController: UIViewController {
         if segue.identifier == "embedHistoryChildVC" {
             if let childDestination = segue.destination as? StoriesChildViewController {
                 self.childVC = childDestination
+                self.addChild(childDestination)
+                self.childVC?.didMove(toParent: self)
             }
         }
     }

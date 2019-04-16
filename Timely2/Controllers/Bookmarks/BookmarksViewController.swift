@@ -40,6 +40,8 @@ class BookmarksViewController: UIViewController {
         if segue.identifier == "embedBookmarksChildVC" {
             if let childDestination = segue.destination as? StoriesChildViewController {
                 self.childVC = childDestination
+                self.addChild(childDestination)
+                self.childVC?.didMove(toParent: self)
             }
         }
     }

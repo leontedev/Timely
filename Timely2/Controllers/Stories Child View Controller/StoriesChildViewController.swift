@@ -8,6 +8,13 @@
 
 import UIKit
 
+// This ChildViewController can be embedded in one of the following types of View Controllers
+enum ParentStoriesChildViewController {
+    case stories
+    case bookmarks
+    case history
+}
+
 class StoriesChildViewController: UITableViewController {
     
     // State Outlets
@@ -39,26 +46,24 @@ class StoriesChildViewController: UITableViewController {
     
     // true if this VC was initiated from the Stories View Controller, false if from Bookmarks or History
     var isStoriesChildView = true
-    
+    var parentType: ParentStoriesChildViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        print(type(of: self.parent))
-        print(self.parent is StoriesViewController)
-        
+
         if (self.parent as? StoriesViewController) != nil {
-            print("it's a StoriesViewController")
+            print("self.parent is a StoriesViewController")
+            parentType = .stories
         } else if (self.parent as? BookmarksViewController) != nil {
-            print("it's a BookmarksSplitViewController")
+            print("self.parent is a BookmarksViewController")
+            parentType = .bookmarks
         } else if (self.parent as? HistoryViewController) != nil {
-            print("it's a HistoryViewController")
+            print("self.parent is a HistoryViewController")
+            parentType = .history
         } else {
-            print("?!!??")
+            print("fatal error")
         }
-        
-        print(self.navigationController?.children)
+
         
         self.tableView.estimatedRowHeight = 120
         self.tableView.rowHeight = UITableView.automaticDimension
@@ -74,7 +79,6 @@ class StoriesChildViewController: UITableViewController {
         configuration.waitsForConnectivity = true
         self.defaultSession = URLSession(configuration: configuration)
         
-        //fetchStories()
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(fontSizeDidModify),
@@ -93,6 +97,8 @@ class StoriesChildViewController: UITableViewController {
                                                name: .bookmarkRemoved,
                                                object: nil
         )
+        
+       
     }
     
     @objc private func fontSizeDidModify(_ notification: Notification) {
@@ -102,20 +108,18 @@ class StoriesChildViewController: UITableViewController {
     /// Initiate updating the Stories TableView based on the currently selected Feed (title, feedType/currentSourceAPI and feedURL)
     func fetchStories() {
         
-        self.storiesAlgoliaAPI.removeAll()
-        // this is where i have the bookmarks stored - on the bookmarks view this is why refresh fails
-        self.storiesOfficialAPI.removeAll()
-        
-        self.state = .loading
-        
         guard let currentSelectedSourceAPI = currentSelectedSourceAPI else { return }
         guard let currentSelectedFeedURL = currentSelectedFeedURL else { return }
+        
+        self.state = .loading
         
         switch currentSelectedSourceAPI {
             
         case .official:
+            self.storiesOfficialAPI.removeAll()
             fetchOfficialApiStories(from: currentSelectedFeedURL)
         case .algolia:
+            self.storiesAlgoliaAPI.removeAll()
             fetchAlgoliaApiStories(from: currentSelectedFeedURL)
         }
 
@@ -134,22 +138,45 @@ class StoriesChildViewController: UITableViewController {
         let feedbackGenerator = UINotificationFeedbackGenerator()
         feedbackGenerator.notificationOccurred(.warning)
         
+        guard let sourceParent = parentType else { return }
         
-        
-        if isStoriesChildView {
+        switch sourceParent {
+        case .stories:
             fetchStories()
-        } else {
+        case .bookmarks:
             refreshBookmarks()
+        case .history:
+            refreshHistory()
         }
+
         sender.endRefreshing()
     }
     
+    // TODO: use only one function instead of both refreshBookmarks and refreshHistory
     @objc func refreshBookmarks() {
         self.storiesOfficialAPI.removeAll()
         self.state = .loading
-        self.storiesOfficialAPI = Bookmarks.shared.stories
-        self.state = .populated
-        self.fetchOfficialApiStoryItems()
+        
+        if Bookmarks.shared.stories.isEmpty {
+            self.state = .empty
+        } else {
+            self.storiesOfficialAPI = Bookmarks.shared.stories
+            self.state = .populated
+            self.fetchOfficialApiStoryItems()
+        }
+    }
+    
+    @objc func refreshHistory() {
+        self.storiesOfficialAPI.removeAll()
+        self.state = .loading
+        
+        if History.shared.stories.isEmpty {
+            self.state = .empty
+        } else {
+            self.storiesOfficialAPI = History.shared.stories
+            self.state = .populated
+            self.fetchOfficialApiStoryItems()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

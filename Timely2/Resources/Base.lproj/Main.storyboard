@@ -544,7 +544,7 @@
                     <viewLayoutGuide key="safeArea" id="451-YB-LXS"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="3183" y="-916"/>
+            <point key="canvasLocation" x="3743" y="55"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Bzs-Pw-X7d">
@@ -792,7 +792,7 @@
                     <viewLayoutGuide key="safeArea" id="hY7-s6-JLx"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1466" y="-649"/>
+            <point key="canvasLocation" x="1767" y="-112"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
@@ -808,7 +808,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SLD-UC-DBI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2511" y="-916"/>
+            <point key="canvasLocation" x="3033" y="56"/>
         </scene>
         <!--Defaults-->
         <scene sceneID="Ulg-8s-SRO">
@@ -1414,7 +1414,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pGj-OL-qUX"/>
                     </view>
-                    <navigationItem key="navigationItem" title="History" id="TfT-I1-lIC"/>
+                    <navigationItem key="navigationItem" title="History" id="TfT-I1-lIC">
+                        <barButtonItem key="rightBarButtonItem" title="Clear" id="tpx-OU-xbM">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="clearHistoryPressed:" destination="kbt-BQ-wg9" id="zKW-OP-QLU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZYF-JR-bBO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1730,6 +1737,6 @@ By using Timely you're subject to the Hacker News Privacy Policy.
     <inferredMetricsTieBreakers>
         <segue reference="Iav-28-noN"/>
         <segue reference="6S0-TO-JiA"/>
-        <segue reference="2ph-9Q-3F9"/>
+        <segue reference="gDm-Vc-F7S"/>
     </inferredMetricsTieBreakers>
 </document>

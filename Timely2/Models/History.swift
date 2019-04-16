@@ -16,16 +16,268 @@ extension Notification.Name {
     
 }
 
-public struct HistoryItem: Codable {
+public struct HistoryItem: Codable, Hashable, Equatable {
     public let id: String
     public let bookmarkDate: Date
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    public static func == (lhs: HistoryItem, rhs: HistoryItem) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 
 public class History {
     static let shared = History()
-    var items: [HistoryItem] = []
-    var stories: [Item] = []
+    var items: Set<HistoryItem> = []
+    var stories: [Item] {
+        var stories: [Item] = []
+        
+        // show the newest visited stories first
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        let sortedSet = self.items.sorted(by: { $0.bookmarkDate > $1.bookmarkDate } )
+        
+        for item in sortedSet {
+            guard let id = Int(item.id) else { continue }
+            stories.append(Item(id: id))
+        }
+        return stories
+    }
+    
     let url = FileManager.documentDirectoryURL.appendingPathComponent("history").appendingPathExtension("plist")
     
     private init() {
@@ -34,11 +286,7 @@ public class History {
             print(FileManager.documentDirectoryURL.path)
             let plistDecoder = PropertyListDecoder()
             let savedPlistData = try Data(contentsOf: url)
-            self.items = try plistDecoder.decode([HistoryItem].self, from: savedPlistData)
-            for item in self.items {
-                guard let id = Int(item.id) else { continue }
-                stories.append(Item(id: id))
-            }
+            self.items = try plistDecoder.decode(Set<HistoryItem>.self, from: savedPlistData)
         } catch {
             print(error)
         }
@@ -46,7 +294,7 @@ public class History {
     
     func add(id: String) {
         let newHistoryEntry = HistoryItem(id: id, bookmarkDate: Date())
-        self.items.append(newHistoryEntry)
+        self.items.insert(newHistoryEntry)
         
         // save to plist file
         do {
@@ -58,15 +306,16 @@ public class History {
         }
         
         // add to the [Item] array
-        guard let newId = Int(id) else { return }
-        self.stories.append(Item(id: newId))
+//        guard let newId = Int(id) else { return }
+//        self.stories.append(Item(id: newId))
         
         // post notification to refresh the Stories Child View
         NotificationCenter.default.post(name: .historyAdded, object: nil)
     }
     
     func removeHistory() {
-        self.items = []
+        self.items.removeAll()
+        //self.stories = []
         
         // remove from plist file
         do {
@@ -77,9 +326,6 @@ public class History {
             print(error)
         }
         
-        // remove from the [Item] array
-//        guard let newId = Int(id) else { return }
-//        self.stories = self.stories.filter { $0.id != newId }
         
     }
     
@@ -87,3 +333,5 @@ public class History {
         return self.items.contains { $0.id == id }
     }
 }
+
+

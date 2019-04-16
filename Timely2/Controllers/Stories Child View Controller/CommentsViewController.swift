@@ -111,6 +111,12 @@ class CommentsViewController: UIViewController {
             }
         }
         
+        // Add to History
+        if let id = story.id {
+            History.shared.add(id: id)
+            
+        }
+        
         if story.numComments == 0 {
             self.state = .empty
         }
