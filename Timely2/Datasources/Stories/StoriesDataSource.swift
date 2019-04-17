@@ -18,15 +18,14 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
     var currentSourceAPI: HNFeedType = .algolia
     var topStories: [Item] = []
     var algoliaStories: [AlgoliaItem] = []
+    var parentType: ParentStoriesChildViewController?
     
     
-    
-    func setData(sourceAPI: HNFeedType, stories: [Item], algoliaStories: [AlgoliaItem]) {
+    func setData(sourceAPI: HNFeedType, stories: [Item], algoliaStories: [AlgoliaItem], parentType: ParentStoriesChildViewController?) {
         self.currentSourceAPI = sourceAPI
         self.topStories = stories
         self.algoliaStories = algoliaStories
-        
-        
+        self.parentType = parentType
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -55,6 +54,14 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
             
             if self.topStories.indices.contains(indexPath.row) {
                 let item = self.topStories[indexPath.row]
+                
+                cell.titleLabel.textColor = .black
+                // Check if this is the Stories View (and not Bookmarks or History) and that the story was already visited
+                if let parentType = parentType {
+                    if parentType == .stories && History.shared.contains(id: String(item.id)) {
+                        cell.titleLabel.textColor = .gray
+                    }
+                }
                 
                 if cell.accessoryView == nil {
                     let indicator = UIActivityIndicatorView(style: .gray)
@@ -124,6 +131,14 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
             
             if self.algoliaStories.indices.contains(indexPath.row) {
                 let item = self.algoliaStories[indexPath.row]
+                
+                // Check if it was already visited
+                if History.shared.contains(id: item.objectID) {
+                    cell.titleLabel.textColor = .gray
+                } else {
+                    cell.titleLabel.textColor = .black
+                }
+            
                 
                 if let itemTitle = item.title {
                     cell.titleLabel?.text = itemTitle

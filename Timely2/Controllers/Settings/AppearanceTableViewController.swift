@@ -8,29 +8,6 @@
 
 import UIKit
 
-extension Notification.Name {
-    // to update continuously the font size of the label storiesSystemFontLabel: "Use System Font Size" in this View
-    static var storiesLabelAppearanceChanged: Notification.Name {
-        return .init(rawValue: "AppearanceTableViewController.storiesLabelAppearanceChanged")
-    }
-    
-    // to update the Stories ItemCell font size, once, after the stories slider is released with the final value
-    static var storiesLabelAppearanceChangingFinished: Notification.Name {
-        return .init(rawValue: "AppearanceTableViewController.storiesLabelAppearanceChangingFinished")
-    }
-    
-    // to update continuously the font size of the label commentsSystemFontLabel: "Use System Font Size" in this View
-    static var commentsLabelAppearanceChanged: Notification.Name {
-        return .init(rawValue: "AppearanceTableViewController.commentsLabelAppearanceChanged")
-    }
-    
-    // to update the Comments attributed string, once, after the comments slider is released with the final value
-    static var commentsLabelAppearanceChangingFinished: Notification.Name {
-        return .init(rawValue: "AppearanceTableViewController.commentsLabelAppearanceChangingFinished")
-    }
-}
-
-
 class AppearanceTableViewController: UITableViewController {
     
     private let notificationCenter = NotificationCenter.default

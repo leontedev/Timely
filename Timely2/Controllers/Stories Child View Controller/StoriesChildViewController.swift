@@ -32,7 +32,12 @@ class StoriesChildViewController: UITableViewController {
             
             guard let currentSelectedSourceAPI = currentSelectedSourceAPI else { return }
             
-            storiesDataSource.setData(sourceAPI: currentSelectedSourceAPI, stories: storiesOfficialAPI, algoliaStories: storiesAlgoliaAPI)
+            storiesDataSource.setData(
+                sourceAPI: currentSelectedSourceAPI,
+                stories: storiesOfficialAPI,
+                algoliaStories: storiesAlgoliaAPI,
+                parentType: parentType
+            )
             tableView.reloadAndScrollToFirstRow()
         }
     }
@@ -46,22 +51,18 @@ class StoriesChildViewController: UITableViewController {
     
     // true if this VC was initiated from the Stories View Controller, false if from Bookmarks or History
     var isStoriesChildView = true
+    // Stories, Bookmarks or History?
     var parentType: ParentStoriesChildViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if (self.parent as? StoriesViewController) != nil {
-            print("self.parent is a StoriesViewController")
             parentType = .stories
         } else if (self.parent as? BookmarksViewController) != nil {
-            print("self.parent is a BookmarksViewController")
             parentType = .bookmarks
         } else if (self.parent as? HistoryViewController) != nil {
-            print("self.parent is a HistoryViewController")
             parentType = .history
-        } else {
-            print("fatal error")
         }
 
         
@@ -86,18 +87,27 @@ class StoriesChildViewController: UITableViewController {
                                                object: nil
         )
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(refreshBookmarks),
-                                               name: .bookmarkAdded,
-                                               object: nil
-        )
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(refreshBookmarks),
-                                               name: .bookmarkRemoved,
-                                               object: nil
-        )
-        
+        guard let parentType = parentType else { return }
+        if parentType == .bookmarks {
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(refreshBookmarks),
+                                                   name: .bookmarkAdded,
+                                                   object: nil
+            )
+            
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(refreshBookmarks),
+                                                   name: .bookmarkRemoved,
+                                                   object: nil
+            )
+        } else if parentType == .history {
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(refreshHistory),
+                                                   name: .historyAdded,
+                                                   object: nil
+            )
+        }
        
     }
     
@@ -350,9 +360,21 @@ class StoriesChildViewController: UITableViewController {
                 case .official:
                     let selectedItem = storiesOfficialAPI[indexPath.row]
                     controller.officialStoryItem = selectedItem
+                    
+                    History.shared.add(id: String(selectedItem.id))
                 case .algolia:
                     let selectedItem = storiesAlgoliaAPI[indexPath.row]
                     controller.algoliaStoryItem = selectedItem
+                    
+                    History.shared.add(id: selectedItem.objectID)
+                }
+                NotificationCenter.default.post(name: .historyAdded, object: nil)
+                
+                if let parentType = parentType {
+                    if parentType == .stories {
+                        // change aspect of the opened story cell as visited
+                        tableView.reloadRows(at: [indexPath], with: .none)
+                    }
                 }
                 
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem

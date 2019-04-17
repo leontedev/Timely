@@ -36,6 +36,7 @@
 		894B80BD20B95D7E002C313E /* StoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894B80BC20B95D7E002C313E /* StoryCell.swift */; };
 		895B424C2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */; };
 		8966AD21224DF51A0035A430 /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966AD20224DF51A0035A430 /* Bookmarks.swift */; };
+		89790554226759DE00A18FB7 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89790553226759DE00A18FB7 /* NotificationName.swift */; };
 		897D066E2230EB57006B831F /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897D066D2230EB57006B831F /* SettingsSplitViewController.swift */; };
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
 		89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */; };
@@ -108,6 +109,7 @@
 		894B80BC20B95D7E002C313E /* StoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCell.swift; sourceTree = "<group>"; };
 		895B424B2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString_TrimmingCharacters.swift; sourceTree = "<group>"; };
 		8966AD20224DF51A0035A430 /* Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
+		89790553226759DE00A18FB7 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		897D066D2230EB57006B831F /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
 		89A8A31F20DBA607007A8664 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMasterViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				893CA75E224BBC0500BDA9FF /* NSMutableAttributedString.swift */,
 				89DEB8DB2260C39E00B70242 /* OSLog.swift */,
 				89DEB8DD2260C41900B70242 /* FileManager.swift */,
+				89790553226759DE00A18FB7 /* NotificationName.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				893CA75B224BB95A00BDA9FF /* AboutViewController.swift in Sources */,
 				89C435CE221E9E5500288A6D /* FeedSelectView.swift in Sources */,
 				89C997D022537F8400694BD9 /* CommentStoryCell.swift in Sources */,
+				89790554226759DE00A18FB7 /* NotificationName.swift in Sources */,
 				89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */,
 				893FB66C20B8494B007771A3 /* CommentsViewController.swift in Sources */,
 				891E119A2143CD2900871615 /* Item.swift in Sources */,

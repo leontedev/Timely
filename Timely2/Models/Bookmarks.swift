@@ -8,17 +8,6 @@
 
 import Foundation
 
-extension Notification.Name {
-    
-    static var bookmarkAdded: Notification.Name {
-        return .init(rawValue: "Bookmarks.addedNewId")
-    }
-    
-    
-    static var bookmarkRemoved: Notification.Name {
-        return .init(rawValue: "Bookmarks.RemovedId")
-    }
-}
 
 public struct Bookmark: Codable {
     public let id: String
