@@ -107,6 +107,12 @@ class StoriesChildViewController: UITableViewController {
                                                    name: .historyAdded,
                                                    object: nil
             )
+        } else if parentType == .stories {
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(fetchStories),
+                                                   name: .historyCleared,
+                                                   object: nil
+            )
         }
        
     }
@@ -116,7 +122,7 @@ class StoriesChildViewController: UITableViewController {
     }
     
     /// Initiate updating the Stories TableView based on the currently selected Feed (title, feedType/currentSourceAPI and feedURL)
-    func fetchStories() {
+    @objc func fetchStories() {
         
         guard let currentSelectedSourceAPI = currentSelectedSourceAPI else { return }
         guard let currentSelectedFeedURL = currentSelectedFeedURL else { return }

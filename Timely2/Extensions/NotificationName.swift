@@ -27,6 +27,10 @@ extension Notification.Name {
         return .init(rawValue: "History.addedNewId")
     }
     
+    static var historyCleared: Notification.Name {
+        return .init(rawValue: "History.clearAll")
+    }
+    
     // Settings / Change Default Font Size
     
     // to update continuously the font size of the label storiesSystemFontLabel: "Use System Font Size" in this View

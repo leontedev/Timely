@@ -15,6 +15,9 @@ class StoryCell: UITableViewCell {
     @IBOutlet weak var commentsCountLabel: UILabel!
     @IBOutlet weak var upvotesCountLabel: UILabel!
     @IBOutlet weak var elapsedTimeLabel: UILabel!
+    @IBOutlet weak var commentsCountImage: UIImageView!
+    @IBOutlet weak var upvotesCountImage: UIImageView!
+    @IBOutlet weak var elapsedTimeImage: UIImageView!
     
     static let reuseIdentifier = "ItemCell"
     private let notificationCenter: NotificationCenter = NotificationCenter.default

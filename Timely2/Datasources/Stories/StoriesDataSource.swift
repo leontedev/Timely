@@ -41,8 +41,25 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
         }
     }
     
-
+    func updateVisitedStoryUI(forCell cell: StoryCell) {
+        cell.titleLabel.textColor = .lightGray
+        cell.commentsCountLabel.textColor = .lightGray
+        cell.elapsedTimeLabel.textColor = .lightGray
+        cell.upvotesCountLabel.textColor = .lightGray
+        cell.commentsCountImage.alpha = CGFloat(0.3)
+        cell.elapsedTimeImage.alpha = CGFloat(0.3)
+        cell.upvotesCountImage.alpha = CGFloat(0.3)
+    }
     
+    func updateStoryUI(forCell cell: StoryCell) {
+        cell.titleLabel.textColor = .black
+        cell.commentsCountLabel.textColor = .black
+        cell.elapsedTimeLabel.textColor = .black
+        cell.upvotesCountLabel.textColor = .black
+        cell.commentsCountImage.alpha = CGFloat(1)
+        cell.elapsedTimeImage.alpha = CGFloat(1)
+        cell.upvotesCountImage.alpha = CGFloat(1)
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: StoryCell.reuseIdentifier, for: indexPath) as! StoryCell
@@ -55,11 +72,11 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
             if self.topStories.indices.contains(indexPath.row) {
                 let item = self.topStories[indexPath.row]
                 
-                cell.titleLabel.textColor = .black
+                updateStoryUI(forCell: cell)
                 // Check if this is the Stories View (and not Bookmarks or History) and that the story was already visited
                 if let parentType = parentType {
                     if parentType == .stories && History.shared.contains(id: String(item.id)) {
-                        cell.titleLabel.textColor = .gray
+                        updateVisitedStoryUI(forCell: cell)
                     }
                 }
                 
@@ -132,13 +149,13 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
             if self.algoliaStories.indices.contains(indexPath.row) {
                 let item = self.algoliaStories[indexPath.row]
                 
-                // Check if it was already visited
-                if History.shared.contains(id: item.objectID) {
-                    cell.titleLabel.textColor = .gray
-                } else {
-                    cell.titleLabel.textColor = .black
+                updateStoryUI(forCell: cell)
+                // Check if this is the Stories View (and not Bookmarks or History) and that the story was already visited
+                if let parentType = parentType {
+                    if parentType == .stories && History.shared.contains(id: item.objectID) {
+                        updateVisitedStoryUI(forCell: cell)
+                    }
                 }
-            
                 
                 if let itemTitle = item.title {
                     cell.titleLabel?.text = itemTitle

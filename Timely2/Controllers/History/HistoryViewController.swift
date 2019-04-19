@@ -18,6 +18,7 @@ class HistoryViewController: UIViewController {
     @IBAction func clearHistoryPressed(_ sender: Any) {
         History.shared.removeHistory()
         childVC?.refreshHistory()
+        NotificationCenter.default.post(name: .historyCleared, object: nil)
     }
     
     

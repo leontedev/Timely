@@ -691,9 +691,12 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <connections>
+                                    <outlet property="commentsCountImage" destination="I11-pk-54j" id="wdD-UZ-bcp"/>
                                     <outlet property="commentsCountLabel" destination="PJK-Rx-2LJ" id="l3b-B3-ROH"/>
+                                    <outlet property="elapsedTimeImage" destination="9If-Q8-Efb" id="RH5-pZ-2ew"/>
                                     <outlet property="elapsedTimeLabel" destination="phD-uJ-5Vz" id="mLz-yc-1SL"/>
                                     <outlet property="titleLabel" destination="Umb-PP-NM0" id="S0w-QU-cZT"/>
+                                    <outlet property="upvotesCountImage" destination="bBv-4O-fkT" id="6pN-bD-wct"/>
                                     <outlet property="upvotesCountLabel" destination="8ao-g0-qs8" id="4m7-uX-aQu"/>
                                     <outlet property="urlLabel" destination="ieU-ck-BKg" id="g7g-3q-3Ec"/>
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
