@@ -20,13 +20,12 @@ class BookmarksViewController: UIViewController {
         
         guard let childVC = childVC else { return }
         
-        childVC.isStoriesChildView = false
         childVC.currentSelectedSourceAPI = .official
-        childVC.state = .loading
         
         if Bookmarks.shared.stories.isEmpty {
             childVC.state = .empty
         } else {
+            childVC.state = .loading
             childVC.storiesOfficialAPI = Bookmarks.shared.stories
             childVC.state = .populated
             childVC.fetchOfficialApiStoryItems()

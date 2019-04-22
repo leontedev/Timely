@@ -84,4 +84,9 @@ public class Bookmarks {
     func contains(id: String) -> Bool {
         return self.items.contains { $0.id == id }
     }
+    
+    func bookmarkDate(for id: String) -> Date {
+        let story = self.items.filter { $0.id == id }
+        return story[0].bookmarkDate
+    }
 }

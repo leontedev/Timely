@@ -49,6 +49,9 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
         cell.commentsCountImage.alpha = CGFloat(0.3)
         cell.elapsedTimeImage.alpha = CGFloat(0.3)
         cell.upvotesCountImage.alpha = CGFloat(0.3)
+        
+        cell.bookmarkedTimeImage.alpha = CGFloat(0.3)
+        cell.bookmarkedTimeLabel.textColor = .lightGray
     }
     
     func updateStoryUI(forCell cell: StoryCell) {
@@ -59,26 +62,27 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
         cell.commentsCountImage.alpha = CGFloat(1)
         cell.elapsedTimeImage.alpha = CGFloat(1)
         cell.upvotesCountImage.alpha = CGFloat(1)
+        
+        cell.bookmarkedTimeImage.alpha = CGFloat(1)
+        cell.bookmarkedTimeLabel.textColor = .black
+        
+        cell.bookmarkedTimeImage.isHidden = true
+        cell.bookmarkedTimeLabel.isHidden = true
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: StoryCell.reuseIdentifier, for: indexPath) as! StoryCell
+        var itemID = ""
         
+        updateStoryUI(forCell: cell)
         
         switch self.currentSourceAPI {
-            
         case .official:
             
             if self.topStories.indices.contains(indexPath.row) {
                 let item = self.topStories[indexPath.row]
+                itemID = String(item.id)
                 
-                updateStoryUI(forCell: cell)
-                // Check if this is the Stories View (and not Bookmarks or History) and that the story was already visited
-                if let parentType = parentType {
-                    if parentType == .stories && History.shared.contains(id: String(item.id)) {
-                        updateVisitedStoryUI(forCell: cell)
-                    }
-                }
                 
                 if cell.accessoryView == nil {
                     let indicator = UIActivityIndicatorView(style: .gray)
@@ -88,27 +92,19 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                 
                 if let itemTitle = item.title {
                     cell.titleLabel?.text = itemTitle
-                } else {
-                    cell.titleLabel?.text = "Loading..."
                 }
                 
                 if let itemURL = item.url?.host {
                     cell.urlLabel?.text = itemURL
-                } else {
-                    cell.urlLabel?.text = "Story ID: " + String(item.id)
                 }
                 
                 
                 if let itemDescendants = item.descendants {
                     cell.commentsCountLabel?.text = String(itemDescendants)
-                } else {
-                    cell.commentsCountLabel?.text = "-"
                 }
                 
                 if let itemScore = item.score {
                     cell.upvotesCountLabel?.text = String(itemScore)
-                } else {
-                    cell.upvotesCountLabel?.text = "-"
                 }
                 
                 if let epochTime = item.time {
@@ -121,8 +117,6 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                     
                     let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
                     cell.elapsedTimeLabel?.text = timeAgo
-                } else {
-                    cell.elapsedTimeLabel?.text = "-"
                 }
                 
                 switch (item.state) {
@@ -132,7 +126,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                     indicator.stopAnimating()
                     cell.titleLabel?.text = "Failed to load"
                 case .downloading?:
-                    cell.titleLabel?.text = "Download in progress..."
+                    cell.titleLabel?.text = "Downloading story..."
                 case .new?:
                     indicator.startAnimating()
                     //if !tableView.isDragging && !tableView.isDecelerating
@@ -148,19 +142,11 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
             
             if self.algoliaStories.indices.contains(indexPath.row) {
                 let item = self.algoliaStories[indexPath.row]
+                itemID = item.objectID
                 
-                updateStoryUI(forCell: cell)
-                // Check if this is the Stories View (and not Bookmarks or History) and that the story was already visited
-                if let parentType = parentType {
-                    if parentType == .stories && History.shared.contains(id: item.objectID) {
-                        updateVisitedStoryUI(forCell: cell)
-                    }
-                }
                 
                 if let itemTitle = item.title {
                     cell.titleLabel?.text = itemTitle
-                } else {
-                    cell.titleLabel?.text = "Loading..."
                 }
                 
                 if let itemURL = item.url?.host {
@@ -170,14 +156,10 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                 
                 if let itemDescendants = item.num_comments {
                     cell.commentsCountLabel?.text = String(itemDescendants)
-                } else {
-                    cell.commentsCountLabel?.text = "-"
                 }
                 
                 if let itemScore = item.points {
                     cell.upvotesCountLabel?.text = String(itemScore)
-                } else {
-                    cell.upvotesCountLabel?.text = "-"
                 }
                 
                 let componentsFormatter = DateComponentsFormatter()
@@ -191,6 +173,32 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
                 self.delegate?.didUpdateState(.error(HNError.network("Invalid Response.")))
             }
             
+        }
+        
+        // Check if this is the Stories View (and not Bookmarks or History) and that the story was already visited
+        if let parentType = parentType {
+            if parentType == .stories && History.shared.contains(id: itemID) {
+                updateVisitedStoryUI(forCell: cell)
+            }
+        }
+        
+        // Check if the story was bookmarked
+        if Bookmarks.shared.contains(id: itemID) {
+            
+            cell.bookmarkedTimeImage.isHidden = false
+            
+            // Display elapsed time
+            let bookmarkTime = Bookmarks.shared.bookmarkDate(for: itemID)
+            
+            let componentsFormatter = DateComponentsFormatter()
+            componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+            componentsFormatter.maximumUnitCount = 1
+            componentsFormatter.unitsStyle = .abbreviated
+            
+            
+            let timeAgo = componentsFormatter.string(from: bookmarkTime, to: Date())
+            cell.bookmarkedTimeLabel.text = timeAgo
+            cell.bookmarkedTimeLabel.isHidden = false
         }
         
         return cell

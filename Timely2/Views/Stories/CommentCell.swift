@@ -46,6 +46,10 @@ class CommentCell: UITableViewCell {
         }
     }
     
+    deinit {
+        notificationCenter.removeObserver(self)
+    }
+    
     @objc private func fontSizeDidModify(_ notification: Notification) {
         updateFontSizeUI()
     }

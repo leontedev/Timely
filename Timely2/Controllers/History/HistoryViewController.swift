@@ -28,12 +28,12 @@ class HistoryViewController: UIViewController {
         
         guard let childVC = childVC else { return }
         
-        childVC.isStoriesChildView = false
         childVC.currentSelectedSourceAPI = .official
-        childVC.state = .loading
+        
         if History.shared.items.isEmpty {
             childVC.state = .empty
         } else {
+            childVC.state = .loading
             childVC.storiesOfficialAPI = History.shared.stories
             childVC.state = .populated
             childVC.fetchOfficialApiStoryItems()

@@ -49,8 +49,7 @@ class StoriesChildViewController: UITableViewController {
     var storiesAlgoliaAPI: [AlgoliaItem] = []
     var storiesOfficialAPI: [Item] = []
     
-    // true if this VC was initiated from the Stories View Controller, false if from Bookmarks or History
-    var isStoriesChildView = true
+
     // Stories, Bookmarks or History?
     var parentType: ParentStoriesChildViewController?
     
@@ -115,6 +114,10 @@ class StoriesChildViewController: UITableViewController {
             )
         }
        
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     @objc private func fontSizeDidModify(_ notification: Notification) {

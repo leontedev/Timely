@@ -623,7 +623,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="W79-rt-Oce" userLabel="Status Stack View">
-                                                    <rect key="frame" x="0.0" y="63.666666666666671" width="141" height="16"/>
+                                                    <rect key="frame" x="0.0" y="63.666666666666671" width="153" height="16"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pF6-d9-KVP" userLabel="Comments Stack View">
                                                             <rect key="frame" x="0.0" y="0.0" width="42.666666666666664" height="16"/>
@@ -676,6 +676,23 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ABH-kP-KUP" userLabel="Bookmarked Stack View">
+                                                            <rect key="frame" x="153" y="8" width="0.0" height="0.0"/>
+                                                            <subviews>
+                                                                <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.89999997615814209" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_bookmarked" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hk8-lc-Hfc">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="12" height="15"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="15" id="AjK-87-C9a"/>
+                                                                        <constraint firstAttribute="width" constant="12" id="S1G-GF-ziX"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.89999997615814209" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTq-sp-mNb">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="15"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -691,6 +708,8 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <connections>
+                                    <outlet property="bookmarkedTimeImage" destination="hk8-lc-Hfc" id="ScP-nn-N7r"/>
+                                    <outlet property="bookmarkedTimeLabel" destination="YTq-sp-mNb" id="wxD-4e-90y"/>
                                     <outlet property="commentsCountImage" destination="I11-pk-54j" id="wdD-UZ-bcp"/>
                                     <outlet property="commentsCountLabel" destination="PJK-Rx-2LJ" id="l3b-B3-ROH"/>
                                     <outlet property="elapsedTimeImage" destination="9If-Q8-Efb" id="RH5-pZ-2ew"/>
@@ -1717,6 +1736,7 @@ By using Timely you're subject to the Hacker News Privacy Policy.
         <image name="icn_about" width="90" height="90"/>
         <image name="icn_appearance" width="90" height="90"/>
         <image name="icn_author" width="36" height="44"/>
+        <image name="icn_bookmarked" width="16" height="20"/>
         <image name="icn_comments" width="90" height="90"/>
         <image name="icn_copyright" width="90" height="90"/>
         <image name="icn_defaults" width="90" height="90"/>

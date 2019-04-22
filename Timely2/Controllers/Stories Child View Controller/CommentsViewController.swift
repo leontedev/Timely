@@ -123,6 +123,10 @@ class CommentsViewController: UIViewController {
         
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @objc private func fontSizeDidModify(_ notification: Notification) {
         
         print("Comments font size should modify to \(prefferedFontSize)")

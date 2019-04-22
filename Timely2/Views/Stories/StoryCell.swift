@@ -15,6 +15,8 @@ class StoryCell: UITableViewCell {
     @IBOutlet weak var commentsCountLabel: UILabel!
     @IBOutlet weak var upvotesCountLabel: UILabel!
     @IBOutlet weak var elapsedTimeLabel: UILabel!
+    @IBOutlet weak var bookmarkedTimeLabel: UILabel!
+    @IBOutlet weak var bookmarkedTimeImage: UIImageView!
     @IBOutlet weak var commentsCountImage: UIImageView!
     @IBOutlet weak var upvotesCountImage: UIImageView!
     @IBOutlet weak var elapsedTimeImage: UIImageView!
