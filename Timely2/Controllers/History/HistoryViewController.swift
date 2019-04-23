@@ -28,17 +28,48 @@ class HistoryViewController: UIViewController {
         
         guard let childVC = childVC else { return }
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshHistoryHeaderCount),
+                                               name: .historyAdded,
+                                               object: nil
+        )
+    
+        NotificationCenter.default.addObserver(self,
+                                                selector: #selector(refreshHistoryHeaderCount),
+                                                name: .historyCleared,
+                                                object: nil
+        )
+        
         childVC.currentSelectedSourceAPI = .official
         
         if History.shared.items.isEmpty {
             childVC.state = .empty
+            self.navigationItem.title = "History"
         } else {
+            let historyCount = String(History.shared.items.count)
+            self.navigationItem.title = "History (\(historyCount))"
+            
             childVC.state = .loading
             childVC.storiesOfficialAPI = History.shared.stories
             childVC.state = .populated
             childVC.fetchOfficialApiStoryItems()
         }
         
+    }
+    
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func refreshHistoryHeaderCount() {
+        let historyCount = History.shared.items.count
+        
+        if historyCount > 0 {
+            self.navigationItem.title = "History (\(historyCount))"
+        } else {
+            self.navigationItem.title = "History"
+        }
     }
     
     // MARK: Segues

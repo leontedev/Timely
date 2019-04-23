@@ -20,15 +20,45 @@ class BookmarksViewController: UIViewController {
         
         guard let childVC = childVC else { return }
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshBookmarkHeaderCount),
+                                               name: .bookmarkAdded,
+                                               object: nil
+        )
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshBookmarkHeaderCount),
+                                               name: .bookmarkRemoved,
+                                               object: nil
+        )
+        
         childVC.currentSelectedSourceAPI = .official
         
         if Bookmarks.shared.stories.isEmpty {
             childVC.state = .empty
+            self.navigationItem.title = "Bookmarks"
         } else {
+            let bookmarksCount = String(Bookmarks.shared.stories.count)
+            self.navigationItem.title = "Bookmarks (\(bookmarksCount))"
+            
             childVC.state = .loading
             childVC.storiesOfficialAPI = Bookmarks.shared.stories
             childVC.state = .populated
             childVC.fetchOfficialApiStoryItems()
+        }
+        
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func refreshBookmarkHeaderCount() {
+        let bookmarksCount = Bookmarks.shared.stories.count
+        if bookmarksCount > 0 {
+            self.navigationItem.title = "Bookmarks (\(bookmarksCount))"
+        } else {
+            self.navigationItem.title = "Bookmarks"
         }
         
     }
