@@ -67,17 +67,33 @@ public class History {
             print(error)
         }
         
-        // add to the [Item] array
-//        guard let newId = Int(id) else { return }
-//        self.stories.append(Item(id: newId))
-        
         // post notification to refresh the Stories Child View
         NotificationCenter.default.post(name: .historyAdded, object: nil)
     }
     
+    // TODO: - to implement mark item as unread
+    func remove(id: String) {
+        //self.items.remove(id)
+        
+        // recreate plist file without the removed item
+        do {
+            if FileManager.default.fileExists(atPath: url.path) {
+                try FileManager.default.removeItem(atPath: url.path)
+            }
+            let plistEncoder = PropertyListEncoder()
+            let plistData = try plistEncoder.encode(self.items)
+            try plistData.write(to: url)
+        } catch {
+            print(error)
+        }
+        
+        
+        // post notification to refresh the Stories Child View
+        // NotificationCenter.default.post(name: .historyItemRemoved, object: nil)
+    }
+    
     func removeHistory() {
         self.items.removeAll()
-        //self.stories = []
         
         // remove from plist file
         do {

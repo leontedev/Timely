@@ -209,13 +209,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let bookmark = bookmarkAction(at: indexPath)
-        
-        return UISwipeActionsConfiguration(actions: [bookmark])
-    }
-    
-    func bookmarkAction(at indexPath: IndexPath) -> UIContextualAction {
-        
+        // get the Item ID string
         var itemID = ""
         switch self.currentSourceAPI {
         case .official:
@@ -230,7 +224,16 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             }
         }
         
-        let action = UIContextualAction(style: .normal, title: "Bookmark") { (action, view, completion) in
+        // set up the actions
+        let bookmark = bookmarkAction(at: indexPath, for: itemID)
+        let history = historyAction(at: indexPath, for: itemID)
+        
+        // first item from the array is actually first from the right on the trailing swipe menu
+        return UISwipeActionsConfiguration(actions: [history, bookmark])
+    }
+    
+    func bookmarkAction(at indexPath: IndexPath, for itemID: String) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
 
             if Bookmarks.shared.contains(id: itemID) {
                 Bookmarks.shared.remove(id: itemID)
@@ -238,17 +241,29 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 Bookmarks.shared.add(id: itemID)
             }
             
-            
             self.delegate?.didUpdateRow(at: indexPath)
-            
             completion(true)
         }
         
         action.image = UIImage(named: "icn_bookmarked")
-        action.title = nil
         action.backgroundColor = Bookmarks.shared.contains(id: itemID) ? .red : .blue
         
         return action
     }
     
+    func historyAction(at indexPath: IndexPath, for itemID: String) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
+            
+            if !History.shared.contains(id: itemID) {
+                History.shared.add(id: itemID)
+            }
+            
+            self.delegate?.didUpdateRow(at: indexPath)
+            completion(true)
+        }
+        action.title = "Mark as Read"
+        action.backgroundColor = .lightGray
+        
+        return action
+    }
 }
