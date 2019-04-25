@@ -10,9 +10,10 @@ import Foundation
 
 protocol StoriesDataSourceDelegate: class {
     func didUpdateState(_ newState: State)
+    func didUpdateRow(at indexPath: IndexPath)
 }
 
-class StoriesDataSource: NSObject, UITableViewDataSource {
+class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     weak var delegate: StoriesDataSourceDelegate?
     var currentSourceAPI: HNFeedType = .algolia
@@ -202,6 +203,52 @@ class StoriesDataSource: NSObject, UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    //MARK: - Delegates
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let bookmark = bookmarkAction(at: indexPath)
+        
+        return UISwipeActionsConfiguration(actions: [bookmark])
+    }
+    
+    func bookmarkAction(at indexPath: IndexPath) -> UIContextualAction {
+        
+        var itemID = ""
+        switch self.currentSourceAPI {
+        case .official:
+            if self.topStories.indices.contains(indexPath.row) {
+                let item = self.topStories[indexPath.row]
+                itemID = String(item.id)
+            }
+        case .algolia:
+            if self.algoliaStories.indices.contains(indexPath.row) {
+                let item = self.algoliaStories[indexPath.row]
+                itemID = item.objectID
+            }
+        }
+        
+        let action = UIContextualAction(style: .normal, title: "Bookmark") { (action, view, completion) in
+
+            if Bookmarks.shared.contains(id: itemID) {
+                Bookmarks.shared.remove(id: itemID)
+            } else {
+                Bookmarks.shared.add(id: itemID)
+            }
+            
+            
+            self.delegate?.didUpdateRow(at: indexPath)
+            
+            completion(true)
+        }
+        
+        action.image = UIImage(named: "icn_bookmarked")
+        action.title = nil
+        action.backgroundColor = Bookmarks.shared.contains(id: itemID) ? .red : .blue
+        
+        return action
     }
     
 }

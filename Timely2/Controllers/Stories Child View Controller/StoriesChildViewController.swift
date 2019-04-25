@@ -73,6 +73,7 @@ class StoriesChildViewController: UITableViewController {
         
         storiesDataSource.delegate = self
         self.tableView.dataSource = storiesDataSource
+        self.tableView.delegate = storiesDataSource
         
 
         let configuration = URLSessionConfiguration.default
@@ -415,5 +416,9 @@ class StoriesChildViewController: UITableViewController {
 extension StoriesChildViewController: StoriesDataSourceDelegate {
     func didUpdateState(_ newState: State) {
         self.state = newState
+    }
+    
+    func didUpdateRow(at indexPath: IndexPath) {
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
