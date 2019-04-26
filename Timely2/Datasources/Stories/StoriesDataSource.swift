@@ -261,7 +261,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             self.delegate?.didUpdateRow(at: indexPath)
             completion(true)
         }
-        action.title = "Mark as Read"
+        action.title = "Mark\nRead"
         action.backgroundColor = .lightGray
         
         return action
