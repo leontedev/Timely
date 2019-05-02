@@ -71,9 +71,9 @@ public class History {
         NotificationCenter.default.post(name: .historyAdded, object: nil)
     }
     
-    // TODO: - to implement mark item as unread
     func remove(id: String) {
-        //self.items.remove(id)
+        
+        self.items = self.items.filter { $0.id != id }
         
         // recreate plist file without the removed item
         do {
@@ -87,11 +87,11 @@ public class History {
             print(error)
         }
         
-        
         // post notification to refresh the Stories Child View
-        // NotificationCenter.default.post(name: .historyItemRemoved, object: nil)
+        NotificationCenter.default.post(name: .historyItemRemoved, object: nil)
     }
-    
+
+    // Clear all history
     func removeHistory() {
         self.items.removeAll()
         

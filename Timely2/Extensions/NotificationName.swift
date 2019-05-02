@@ -18,13 +18,17 @@ extension Notification.Name {
     
     
     static var bookmarkRemoved: Notification.Name {
-        return .init(rawValue: "Bookmarks.RemovedId")
+        return .init(rawValue: "Bookmarks.removedId")
     }
 
     // History
     
     static var historyAdded: Notification.Name {
         return .init(rawValue: "History.addedNewId")
+    }
+    
+    static var historyItemRemoved: Notification.Name {
+        return .init(rawValue: "History.removedId")
     }
     
     static var historyCleared: Notification.Name {

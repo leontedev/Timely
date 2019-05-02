@@ -33,6 +33,12 @@ class HistoryViewController: UIViewController {
                                                name: .historyAdded,
                                                object: nil
         )
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshHistoryHeaderCount),
+                                               name: .historyItemRemoved,
+                                               object: nil
+        )
     
         NotificationCenter.default.addObserver(self,
                                                 selector: #selector(refreshHistoryHeaderCount),

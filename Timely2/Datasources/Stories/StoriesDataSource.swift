@@ -241,7 +241,9 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 Bookmarks.shared.add(id: itemID)
             }
             
-            self.delegate?.didUpdateRow(at: indexPath)
+            if self.parentType == .stories {
+                self.delegate?.didUpdateRow(at: indexPath)
+            }
             completion(true)
         }
         
@@ -254,15 +256,21 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     func historyAction(at indexPath: IndexPath, for itemID: String) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
             
-            if !History.shared.contains(id: itemID) {
+            if History.shared.contains(id: itemID) {
+                History.shared.remove(id: itemID)
+                
+            } else {
                 History.shared.add(id: itemID)
             }
             
-            self.delegate?.didUpdateRow(at: indexPath)
+            if self.parentType == .stories {
+                self.delegate?.didUpdateRow(at: indexPath)
+            }
             completion(true)
         }
-        action.title = "Mark\nRead"
-        action.backgroundColor = .lightGray
+        
+        action.title = History.shared.contains(id: itemID) ? "Mark\nUnread" : "Mark\nRead"
+        action.backgroundColor = History.shared.contains(id: itemID) ? .darkGray : .lightGray
         
         return action
     }

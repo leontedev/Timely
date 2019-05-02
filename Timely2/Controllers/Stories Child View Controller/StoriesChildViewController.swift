@@ -107,6 +107,12 @@ class StoriesChildViewController: UITableViewController {
                                                    name: .historyAdded,
                                                    object: nil
             )
+            
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(refreshHistory),
+                                                   name: .historyItemRemoved,
+                                                   object: nil
+            )
         } else if parentType == .stories {
             NotificationCenter.default.addObserver(self,
                                                    selector: #selector(fetchStories),
