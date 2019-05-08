@@ -29,6 +29,10 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         self.parentType = parentType
     }
     
+    func updateOfficialStories(with stories:[Item]) {
+        self.topStories = stories
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -97,15 +101,21 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 
                 if let itemURL = item.url?.host {
                     cell.urlLabel?.text = itemURL
+                } else {
+                    cell.urlLabel?.text = ""
                 }
                 
                 
                 if let itemDescendants = item.descendants {
                     cell.commentsCountLabel?.text = String(itemDescendants)
+                } else {
+                    cell.commentsCountLabel?.text = ""
                 }
                 
                 if let itemScore = item.score {
                     cell.upvotesCountLabel?.text = String(itemScore)
+                } else {
+                    cell.upvotesCountLabel?.text = ""
                 }
                 
                 if let epochTime = item.time {
@@ -118,6 +128,8 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                     
                     let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
                     cell.elapsedTimeLabel?.text = timeAgo
+                } else {
+                    cell.elapsedTimeLabel?.text = ""
                 }
                 
                 switch (item.state) {
@@ -257,7 +269,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         let action = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
             
             if History.shared.contains(id: itemID) {
-                History.shared.remove(id: itemID)
+                History.shared.remove(id: itemID, at: indexPath, from: self.parentType)
                 
             } else {
                 History.shared.add(id: itemID)

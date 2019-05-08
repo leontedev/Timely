@@ -159,7 +159,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let feedbackGenerator = UINotificationFeedbackGenerator()
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
         feedbackGenerator.prepare()
         
         if indexPath.section == COMMENT_CELL_SECTION {
@@ -195,8 +195,11 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                         tableView.deleteRows(at: childCommentsForRemoval, with: UITableView.RowAnimation.fade)
                     }, completion: nil)
                 }
-
-                feedbackGenerator.notificationOccurred(.success)
+                
+                // notification .success gives a double haptic feedback - impact .light gives a small single vibration
+                //feedbackGenerator.notificationOccurred(.success)
+                feedbackGenerator.impactOccurred()
+                
                 //these tell the tableview something changed, and it checks cell heights and animates changes
                 tableView.beginUpdates()
                 tableView.endUpdates()
@@ -224,7 +227,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                     
                 }
                 
-                feedbackGenerator.notificationOccurred(.success)
+                feedbackGenerator.impactOccurred()
                 
                 tableView.beginUpdates()
                 tableView.endUpdates()

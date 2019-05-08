@@ -101,6 +101,12 @@ class StoriesChildViewController: UITableViewController {
                                                    name: .bookmarkRemoved,
                                                    object: nil
             )
+            
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(refreshTableRow),
+                                                   name: .historyItemRemoved,
+                                                   object: nil
+            )
         } else if parentType == .history {
             NotificationCenter.default.addObserver(self,
                                                    selector: #selector(refreshHistory),
@@ -119,12 +125,22 @@ class StoriesChildViewController: UITableViewController {
                                                    name: .historyCleared,
                                                    object: nil
             )
+            
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(refreshTableRow),
+                                                   name: .historyItemRemoved,
+                                                   object: nil
+            )
         }
        
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc private func refreshTableRow(_ notification: Notification) {
+        tableView.reloadData()
     }
     
     @objc private func fontSizeDidModify(_ notification: Notification) {
@@ -192,6 +208,24 @@ class StoriesChildViewController: UITableViewController {
         }
     }
     
+    @objc func addHistoryRow(_ notification: Notification) {
+        
+        guard let itemID = notification.userInfo?["visitedItemID"] as? String else { return }
+        
+        // add the newly received "read" story to the history view data structure:
+        //storiesOfficialAPI.insert(item, at: 0)
+        
+        // refresh the data source
+        //storiesDataSource.updateOfficialStories(with: storiesOfficialAPI)
+        
+        // refresh the table view
+        //tableView.reloadData()
+        
+        //tableView.beginUpdates()
+        //tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+        //tableView.endUpdates()
+    }
+    
     @objc func refreshHistory() {
         self.storiesOfficialAPI.removeAll()
         self.state = .loading
@@ -213,6 +247,8 @@ class StoriesChildViewController: UITableViewController {
     }
     
     func fetchAlgoliaApiStories(from urlComponents: URLComponents) {
+        
+        self.storiesOfficialAPI.removeAll()
         
         if let url = urlComponents.url {
         
@@ -252,6 +288,8 @@ class StoriesChildViewController: UITableViewController {
     
     // Official API
     func fetchOfficialApiStories(from urlComponents: URLComponents) {
+        
+        self.storiesAlgoliaAPI.removeAll()
 
         if let url = urlComponents.url {
         
@@ -279,8 +317,10 @@ class StoriesChildViewController: UITableViewController {
                             }
                             
                             self.state = .populated
-                            //self.tableView.reloadData()
+
                             self.fetchOfficialApiStoryItems()
+                            
+                            
                             
                         } catch let error {
                             self.state = .error(HNError.parsingJSON(error.localizedDescription))
@@ -336,15 +376,15 @@ class StoriesChildViewController: UITableViewController {
                             self.storiesOfficialAPI[index].score = story.score
                             self.storiesOfficialAPI[index].time = story.time
                             self.storiesOfficialAPI[index].kids = story.kids
-                            //print(story.kids)
+
                             DispatchQueue.main.async {
-                                //reloadRows has an expected argument type of [IndexPath]
                                 self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
                             }
                         }
                         catch let error {
                             print("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription)
                             print(error)
+                            
                             self.storiesOfficialAPI[index].state = .failed
                             DispatchQueue.main.async {
                                 self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
@@ -384,13 +424,15 @@ class StoriesChildViewController: UITableViewController {
                     
                     History.shared.add(id: selectedItem.objectID)
                 }
-                NotificationCenter.default.post(name: .historyAdded, object: nil)
+                
                 
                 if let parentType = parentType {
+                    
                     if parentType == .stories {
                         // change aspect of the opened story cell as visited
                         tableView.reloadRows(at: [indexPath], with: .none)
                     }
+                    
                 }
                 
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem

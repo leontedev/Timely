@@ -56,6 +56,7 @@ class StoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //print("Current thread is \(Thread.current) and this is the main thread: \(Thread.current.isMainThread)")
         
         feedDataSource.delegate = self
         configureFeedTableView(with: Feeds.shared.feeds)

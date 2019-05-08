@@ -68,10 +68,11 @@ public class History {
         }
         
         // post notification to refresh the Stories Child View
-        NotificationCenter.default.post(name: .historyAdded, object: nil)
+        let userInfo: [String: String] = ["visitedItemID": id]
+        NotificationCenter.default.post(name: .historyAdded, object: nil, userInfo: userInfo)
     }
     
-    func remove(id: String) {
+    func remove(id: String, at indexPath: IndexPath?, from parentType: ParentStoriesChildViewController?) {
         
         self.items = self.items.filter { $0.id != id }
         
@@ -87,8 +88,14 @@ public class History {
             print(error)
         }
         
-        // post notification to refresh the Stories Child View
-        NotificationCenter.default.post(name: .historyItemRemoved, object: nil)
+        if let indexPath = indexPath, let parentType = parentType {
+            let userInfo: [String : Any] = ["indexPath": indexPath, "parentType": parentType]
+            
+            // post notification to refresh the Stories Child View
+            NotificationCenter.default.post(name: .historyItemRemoved, object: nil, userInfo: userInfo)
+        } else {
+            NotificationCenter.default.post(name: .historyItemRemoved, object: nil)
+        }
     }
 
     // Clear all history
