@@ -30,13 +30,13 @@ Any help you can offer with this project is most appreciated.
 Although all the source code of Timely is available under the Mozilla Public License Version 2.0, the assets are not redistributable.
 
 If you’d like to help, here are some suggestions:
-- Just try running the app and let me know if you hit any problems.
-- If you spot any redundant code, or code that repeats itself that can sensible be refactored not to repeat, you’re welcome to clean it up.
-- Write new tests. It doesn’t matter how small they might seem, tests are always appreciated and won’t require you to modify any of the core code.
+- Just run the app and let me know if you hit any problems.
+- If you spot redundant code, you could lend a hand in refactoring it.
+- Write new tests. Tests are always a great contribution and a great place to start.
 - If you find any bugs and can fix them, by all means do.
-- Right now the app is available only in English. If you could help with localization, that would be amazing!
+- Right now the app is available only in English. If you could help with localization, that would be a great contribution.
 - I postponed any work on theming, or a dark mode - as I am expecting some official API support at this WWDC. 
-
+- Feature ideas are great and all, problem is, I already have dozens of them queued up :)
 
 ## Credits
 Timely is built using some third-party frameworks: 
