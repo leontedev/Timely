@@ -2,14 +2,17 @@
 ### Timely is a free, open source Hacker News iOS client.
 
 <p align="center">
-    <img src="" alt="Timely logo" />
+    <img src="AppIcon.png" />
 </p>
 
 <p align="center">
     <img src="https://img.shields.io/badge/iOS-12.0+-blue.svg" />
     <img src="https://img.shields.io/badge/Swift-5.0-brightgreen.svg" />
     <a href="https://twitter.com/leonte_dev">
-        <img src="https://img.shields.io/badge/Contact-@leonte_dev-lightgrey.svg?style=flat" alt="Twitter: @leonte_dev" />
+        <img src="https://img.shields.io/badge/Twitter-@leonte_dev-lightgrey.svg?style=flat" alt="Twitter: @leonte_dev" />
+    </a>
+    <a href="https://leonte.dev">
+        <img src="https://img.shields.io/badge/Web-leonte.dev-lightgrey.svg?style=flat" alt="Website: leonte.dev" />
     </a>
 </p>
 
