@@ -55,10 +55,7 @@ class HistoryViewController: UIViewController {
             let historyCount = String(History.shared.items.count)
             self.navigationItem.title = "History (\(historyCount))"
             
-            childVC.state = .loading
-            childVC.storiesOfficialAPI = History.shared.stories
-            childVC.state = .populated
-            childVC.fetchOfficialApiStoryItems()
+            childVC.refreshHistory()
         }
         
     }

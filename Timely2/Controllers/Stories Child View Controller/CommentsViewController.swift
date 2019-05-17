@@ -54,8 +54,7 @@ class CommentsViewController: UIViewController {
             tableView.reloadData()
         }
     }
-    
-    var officialStoryItem: Item?
+  
     var algoliaStoryItem: AlgoliaItem?
     var fetchedComment: Comment? = nil
     
@@ -81,21 +80,8 @@ class CommentsViewController: UIViewController {
         
         tableView.delegate = dataSource
         tableView.dataSource = dataSource
-        
-        if let story = self.officialStoryItem {
-            self.story.id = String(story.id)
-            self.story.title = story.title
-            self.story.url = story.url
-            self.story.author = story.by
-            self.story.createdAt = story.time
-            self.story.numComments = story.descendants
-            self.story.points = story.score
-            self.story.text = story.text
-            
-            if let _ = story.kids {
-                fetchComments(forItemID: String(story.id))
-            }
-        }
+      
+
         if let story = self.algoliaStoryItem {
             self.story.id = story.objectID
             self.story.title = story.title
@@ -177,15 +163,16 @@ class CommentsViewController: UIViewController {
         
         let configuration = URLSessionConfiguration.default
         configuration.waitsForConnectivity = true
-        configuration.httpMaximumConnectionsPerHost = 2
+        //configuration.httpMaximumConnectionsPerHost = 2
         let defaultSession = URLSession(configuration: configuration)
         
         
         let commentUrl = "https://hn.algolia.com/api/v1/items/\(storyID)"
         guard let url = URL(string: commentUrl) else {
-            state = .error(HNError.badURL(fromString: commentUrl))
+            state = .error(HackerNewsError.invalidURL)
             return
         }
+      
         let commentRequest = URLRequest(url: url)
         
         _ = defaultSession.dataTask(with: commentRequest) { data, response, error in
@@ -230,8 +217,6 @@ class CommentsViewController: UIViewController {
                     //HTML Parsing / Attributed String Options
                     let color = UIColor.black
                     
-                    
-                    
                     let options = [
                         DTCoreTextStub.kDTCoreTextOptionKeyFontSize(): self.prefferedFontSize.fontDescriptor.pointSize,
                         DTCoreTextStub.kDTCoreTextOptionKeyFontName(): self.prefferedFontSize.fontName,
@@ -266,22 +251,20 @@ class CommentsViewController: UIViewController {
                             self.comments[index].attributedString = mutableAttributedString
                         }
                     }
-                       
 
                     let delta = CFAbsoluteTimeGetCurrent() - t0
                     
                     DispatchQueue.main.async {
                         self.state = .populated
                     }
-                    
-                    
+                  
                 }
                 catch let error {
-                    self.state = .error(HNError.parsingJSON("Could not convert JSON data into a dictionary. Error: " + error.localizedDescription))
+                    self.state = .error(HackerNewsError.jsonParsingFailure(message: "Could not convert JSON data into a dictionary"))
                 }
             } else {
                 // FIXME: Attach response status code
-                self.state = .error(HNError.network(String(statusCode)))
+                self.state = .error(HackerNewsError.responseUnsuccessful)
             }
             
         }.resume()

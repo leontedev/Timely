@@ -12,6 +12,10 @@ struct AlgoliaItemList: Codable {
     let hits: [AlgoliaItem]
 }
 
+struct AlgoliaItemResult: Codable {
+    let results: [AlgoliaItem]
+}
+
 class AlgoliaItem: Codable {
     let created_at: Date
     let title: String?

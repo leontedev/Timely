@@ -1,3 +1,1 @@
-github "Alamofire/Alamofire" ~> 4.7
-github "SwiftyJSON/SwiftyJSON" ~> 4.0
-github "mxcl/PromiseKit" ~> 6.0
+github "algolia/algoliasearch-client-swift" ~> 6.0.0

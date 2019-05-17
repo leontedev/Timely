@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class StoriesViewController: UIViewController {
     
     @IBOutlet weak var headerTitle: UINavigationItem!
@@ -56,7 +57,7 @@ class StoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print("Current thread is \(Thread.current) and this is the main thread: \(Thread.current.isMainThread)")
+        //print("Current thread is \(Thread.current) and it's <\(Thread.current.isMainThread)> that this is the main thread.")
         
         feedDataSource.delegate = self
         configureFeedTableView(with: Feeds.shared.feeds)

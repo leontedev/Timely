@@ -34,17 +34,14 @@ class BookmarksViewController: UIViewController {
         
         childVC.currentSelectedSourceAPI = .official
         
-        if Bookmarks.shared.stories.isEmpty {
+        if Bookmarks.shared.items.isEmpty {
             childVC.state = .empty
             self.navigationItem.title = "Bookmarks"
         } else {
-            let bookmarksCount = String(Bookmarks.shared.stories.count)
+            let bookmarksCount = String(Bookmarks.shared.items.count)
             self.navigationItem.title = "Bookmarks (\(bookmarksCount))"
             
-            childVC.state = .loading
-            childVC.storiesOfficialAPI = Bookmarks.shared.stories
-            childVC.state = .populated
-            childVC.fetchOfficialApiStoryItems()
+            childVC.refreshBookmarks()
         }
         
     }
@@ -54,7 +51,7 @@ class BookmarksViewController: UIViewController {
     }
     
     @objc func refreshBookmarkHeaderCount() {
-        let bookmarksCount = Bookmarks.shared.stories.count
+        let bookmarksCount = Bookmarks.shared.items.count
         if bookmarksCount > 0 {
             self.navigationItem.title = "Bookmarks (\(bookmarksCount))"
         } else {
