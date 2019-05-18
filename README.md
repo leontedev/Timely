@@ -19,9 +19,9 @@
 
 ## Running it yourself
 
-I plan to publish the app once I finish work on the 1.0 version. 
+The app will be published once milestone v1.0 is reached. 
 
-Until then you can clone the repo and build the project in Xcode.
+Until then you can clone the repo and build the project in Xcode (use the .xcworkspace file - or simply enter xed in Terminal).
 
 ## Contribution
 
