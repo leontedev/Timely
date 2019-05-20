@@ -10,6 +10,9 @@ import Foundation
 import SafariServices
 
 
+
+
+
 class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     var story: Story?
@@ -112,7 +115,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 cell.storyUsernameLabel.text = author
             }
             
-            if let createdAt = self.story?.createdAt {
+          if let createdAt = self.story?.created_at {
                 let componentsFormatter = DateComponentsFormatter()
                 componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
                 componentsFormatter.maximumUnitCount = 1
@@ -122,7 +125,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 cell.storyElapsedLabel.text = timeAgo
             }
             
-            if let numComments = self.story?.numComments {
+          if let numComments = self.story?.num_comments {
                 cell.storyNumComments.text = String(numComments)
                 
             }
@@ -131,7 +134,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 cell.storyPoints.text = String(points)
             }
             
-            if let text = self.story?.text {
+            if let text = self.story?.story_text {
                 cell.storyText.attributedText = text.htmlToAttributedString
             }
             
@@ -142,7 +145,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.storyURL = self.story?.url
-            cell.storyID = self.story?.id
+            cell.storyID = self.story?.objectID
             cell.parentVC = self.parentVC
             cell.shareItems = [story?.title as Any, story?.url as Any]
             

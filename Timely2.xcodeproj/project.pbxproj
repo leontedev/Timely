@@ -16,14 +16,13 @@
 		89089F5D21CD49B7005E42B3 /* FeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5C21CD49B7005E42B3 /* FeedDataSource.swift */; };
 		89089F5F21CD4DC2005E42B3 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89089F5E21CD4DC2005E42B3 /* FeedCell.swift */; };
 		89095A2721E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89095A2621E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift */; };
-		89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89095A2821E321F100FAEDF2 /* AlgoliaItem.swift */; };
+		89095A2921E321F100FAEDF2 /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89095A2821E321F100FAEDF2 /* Story.swift */; };
 		891191BD22858BE800191624 /* AlgoliaAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891191BC22858BE800191624 /* AlgoliaAPIClient.swift */; };
 		8913665A22831530009ADF5D /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891366592283152F009ADF5D /* InstantSearchClient.framework */; };
 		8913665B228319D2009ADF5D /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891366592283152F009ADF5D /* InstantSearchClient.framework */; };
 		8913665C228319D2009ADF5D /* InstantSearchClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 891366592283152F009ADF5D /* InstantSearchClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8918A73420BC784E00129A0E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8918A73320BC784E00129A0E /* CommentCell.swift */; };
 		891E03A92215C2DD0001DB63 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891E03A82215C2DD0001DB63 /* State.swift */; };
-		891E119A2143CD2900871615 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891E11992143CD2900871615 /* Item.swift */; };
 		892749ED21D50BF100E67546 /* FeedList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 892749EC21D50BF100E67546 /* FeedList.plist */; };
 		89336B2521E6237D00822673 /* JSONResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89336B2421E6237D00822673 /* JSONResponseParser.swift */; };
 		89336B2721E7918C00822673 /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89336B2621E7918C00822673 /* HTMLParser.swift */; };
@@ -107,13 +106,12 @@
 		89095A2321DFB05A00FAEDF2 /* Timestamps.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Timestamps.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		89095A2421DFB06E00FAEDF2 /* URLComponents.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = URLComponents.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		89095A2621E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLComponents+addOrModifyQueryItem.swift"; sourceTree = "<group>"; };
-		89095A2821E321F100FAEDF2 /* AlgoliaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaItem.swift; sourceTree = "<group>"; };
+		89095A2821E321F100FAEDF2 /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		891191BC22858BE800191624 /* AlgoliaAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgoliaAPIClient.swift; sourceTree = "<group>"; };
 		891366582281D0DF009ADF5D /* scratchpad.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = scratchpad.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		891366592283152F009ADF5D /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/iOS/InstantSearchClient.framework; sourceTree = "<group>"; };
 		8918A73320BC784E00129A0E /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		891E03A82215C2DD0001DB63 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
-		891E11992143CD2900871615 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		892749EC21D50BF100E67546 /* FeedList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FeedList.plist; sourceTree = "<group>"; };
 		89336B2421E6237D00822673 /* JSONResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResponseParser.swift; sourceTree = "<group>"; };
 		89336B2621E7918C00822673 /* HTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
@@ -304,8 +302,7 @@
 		894B80B920B95D38002C313E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				891E11992143CD2900871615 /* Item.swift */,
-				89095A2821E321F100FAEDF2 /* AlgoliaItem.swift */,
+				89095A2821E321F100FAEDF2 /* Story.swift */,
 				89089F5821C7FA43005E42B3 /* Comment.swift */,
 				892749EC21D50BF100E67546 /* FeedList.plist */,
 				891E03A82215C2DD0001DB63 /* State.swift */,
@@ -623,7 +620,7 @@
 				89C435D0221EA34F00288A6D /* UIView.swift in Sources */,
 				89D001682228F8F5003EBD5F /* CommentsDataSource.swift in Sources */,
 				89DEB8D622608B5100B70242 /* HistorySplitViewController.swift in Sources */,
-				89095A2921E321F100FAEDF2 /* AlgoliaItem.swift in Sources */,
+				89095A2921E321F100FAEDF2 /* Story.swift in Sources */,
 				89D001652228F8CD003EBD5F /* StoriesDataSource.swift in Sources */,
 				89001E73225A417B009561B1 /* BookmarksSplitViewController.swift in Sources */,
 				89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */,
@@ -647,7 +644,6 @@
 				89790554226759DE00A18FB7 /* NotificationName.swift in Sources */,
 				89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */,
 				893FB66C20B8494B007771A3 /* CommentsViewController.swift in Sources */,
-				891E119A2143CD2900871615 /* Item.swift in Sources */,
 				893CA75F224BBC0500BDA9FF /* NSMutableAttributedString.swift in Sources */,
 				89412614228AFC96009340E8 /* HNOfficialAPIClient.swift in Sources */,
 				89DEB8D822608B6400B70242 /* HistoryViewController.swift in Sources */,

@@ -20,8 +20,18 @@ import Foundation
 //parent_id: null,
 //children: [Comment]
 
+
+struct CommentSource {
+  var comment: Comment
+  var depth: Int
+  var timeAgo: String?
+  var height: Int?
+  var collapsed: Bool
+  var removedComments: [CommentSource]
+  var attributedString: NSAttributedString?
+}
+
 class Comment : Codable {
-    
     var id: Int
     var created_at: Date
     var author: String?

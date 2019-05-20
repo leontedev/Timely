@@ -9,14 +9,26 @@
 import Foundation
 
 struct AlgoliaItemList: Codable {
-    let hits: [AlgoliaItem]
+    let hits: [Story]
 }
 
 struct AlgoliaItemResult: Codable {
-    let results: [AlgoliaItem]
+    let results: [Story]
 }
 
-class AlgoliaItem: Codable {
+
+//struct Story {
+//  var url: URL?
+//  var title: String?
+//  var author: String?
+//  var createdAt: Date?
+//  var numComments: Int?
+//  var points: Int?
+//  var text: String?
+//}
+
+
+class Story: Codable {
     let created_at: Date
     let title: String?
     let url: URL?

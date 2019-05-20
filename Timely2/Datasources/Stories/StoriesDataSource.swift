@@ -16,11 +16,11 @@ protocol StoriesDataSourceDelegate: class {
 class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
   
   weak var delegate: StoriesDataSourceDelegate?
-  var algoliaStories: [AlgoliaItem] = []
+  var algoliaStories: [Story] = []
   var parentType: ParentStoriesChildViewController?
   
   
-  func setData(algoliaStories: [AlgoliaItem], parentType: ParentStoriesChildViewController?) {
+  func setData(algoliaStories: [Story], parentType: ParentStoriesChildViewController?) {
     self.algoliaStories = algoliaStories
     self.parentType = parentType
   }

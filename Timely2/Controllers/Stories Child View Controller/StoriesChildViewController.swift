@@ -45,7 +45,7 @@ class StoriesChildViewController: UITableViewController {
     var currentSelectedSourceAPI: HNFeedType?
     var currentSelectedFeedURL: URLComponents? //= URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
     
-    var stories: [AlgoliaItem] = []
+    var stories: [Story] = []
     var storyIDs: [String] = []
   
 
@@ -163,7 +163,7 @@ class StoriesChildViewController: UITableViewController {
               switch officialStoriesResult {
               case .success(let officialStories):
                 
-                self.AlgoliaClient.fetchStoryDetails(for: officialStories, completion: { algoliaResult in
+                self.AlgoliaClient.fetchStories(for: officialStories, completion: { algoliaResult in
                   switch algoliaResult {
                   case .success(let hits):
                     self.stories = hits
@@ -180,7 +180,7 @@ class StoriesChildViewController: UITableViewController {
           
         case .algolia:
           
-            self.AlgoliaClient.fetchAlgoliaApiStories(from: currentSelectedFeedURL) { algoliaResult in
+            self.AlgoliaClient.fetchStories(from: currentSelectedFeedURL) { algoliaResult in
               switch algoliaResult {
               case .success(let hits):
                 self.stories = hits
@@ -228,7 +228,7 @@ class StoriesChildViewController: UITableViewController {
         if Bookmarks.shared.items.isEmpty {
             self.state = .empty
         } else {
-            self.AlgoliaClient.fetchStoryDetails(for: Bookmarks.shared.sortedIds, completion: { algoliaResult in
+            self.AlgoliaClient.fetchStories(for: Bookmarks.shared.sortedIds, completion: { algoliaResult in
               switch algoliaResult {
               case .success(let hits):
                 self.stories = hits
@@ -248,7 +248,7 @@ class StoriesChildViewController: UITableViewController {
       if History.shared.items.isEmpty {
         self.state = .empty
       } else {
-        self.AlgoliaClient.fetchStoryDetails(for: History.shared.sortedIds, completion: { algoliaResult in
+        self.AlgoliaClient.fetchStories(for: History.shared.sortedIds, completion: { algoliaResult in
           switch algoliaResult {
           case .success(let hits):
             self.stories = hits
