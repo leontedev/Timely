@@ -160,7 +160,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gDs-9P-uUA">
-                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="641"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StoryCell" rowHeight="100" id="xi8-SG-Bgr" userLabel="Comment Story Cell" customClass="CommentStoryCell" customModule="Timely2" customModuleProvider="target">
@@ -544,12 +544,12 @@
                     <viewLayoutGuide key="safeArea" id="451-YB-LXS"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="3743" y="55"/>
+            <point key="canvasLocation" x="3804" y="55"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Timely Tab Bar Controller-->
         <scene sceneID="Bzs-Pw-X7d">
             <objects>
-                <tabBarController id="vTW-nK-abG" sceneMemberID="viewController">
+                <tabBarController id="vTW-nK-abG" customClass="TimelyTabBarController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eam-Eq-yL4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -574,11 +574,11 @@
             </objects>
             <point key="canvasLocation" x="-2516" y="306"/>
         </scene>
-        <!--Split View Controller-->
+        <!--Stories Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
             <objects>
-                <splitViewController id="H1p-Uh-vWS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tab_stories" id="iRu-TP-u7X">
+                <splitViewController id="H1p-Uh-vWS" customClass="StoriesSplitViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" tag="1000" title="" image="tab_stories" id="iRu-TP-u7X">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="-45" maxY="-6"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -1384,7 +1384,7 @@
         <scene sceneID="Lp1-kW-cxf">
             <objects>
                 <splitViewController id="SIC-ML-RVb" customClass="BookmarksSplitViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" image="tab_saved" selectedImage="tab_saved" id="qiA-xV-Dfr">
+                    <tabBarItem key="tabBarItem" tag="1001" image="tab_saved" selectedImage="tab_saved" id="qiA-xV-Dfr">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="-15" maxY="-6"/>
                     </tabBarItem>
                     <connections>
@@ -1400,7 +1400,7 @@
         <scene sceneID="lVI-My-4Q4">
             <objects>
                 <splitViewController id="8kk-7B-mFs" customClass="HistorySplitViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" image="tab_history" selectedImage="tab_history" id="Jcl-Wb-Vpo">
+                    <tabBarItem key="tabBarItem" tag="1002" image="tab_history" selectedImage="tab_history" id="Jcl-Wb-Vpo">
                         <inset key="imageInsets" minX="-15" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
                     <connections>
@@ -1759,7 +1759,7 @@ By using Timely you're subject to the Hacker News Privacy Policy.
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Iav-28-noN"/>
-        <segue reference="6S0-TO-JiA"/>
+        <segue reference="Tll-UG-LXB"/>
         <segue reference="6Ck-Cn-WLf"/>
     </inferredMetricsTieBreakers>
 </document>

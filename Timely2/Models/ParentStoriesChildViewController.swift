@@ -6,4 +6,10 @@
 //  Copyright © 2019 Mihai Leonte. All rights reserved.
 //
 
-import Foundation
+
+// StoriesChildViewController can be embedded in one of the following types of View Controllers
+enum ParentStoriesChildViewController {
+    case stories
+    case bookmarks
+    case history
+}

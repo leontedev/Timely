@@ -56,6 +56,21 @@ extension Notification.Name {
     static var commentsLabelAppearanceChangingFinished: Notification.Name {
         return .init(rawValue: "AppearanceTableViewController.commentsLabelAppearanceChangingFinished")
     }
+  
+  
+    // Tab Bar Items
+  
+    static var tabBarStoriesTapped: Notification.Name {
+      return .init(rawValue: "TabBar.stories")
+    }
+    
+    static var tabBarBookmarksTapped: Notification.Name {
+        return .init(rawValue: "TabBar.bookmarks")
+    }
+    
+    static var tabBarHistoryTapped: Notification.Name {
+        return .init(rawValue: "TabBar.history")
+    }
     
 }
 

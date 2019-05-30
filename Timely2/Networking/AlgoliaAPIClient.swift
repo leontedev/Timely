@@ -17,6 +17,7 @@ class AlgoliaAPIClient {
   func fetchStories(for storyIDs: [String], completion: @escaping (Result<[Story], HackerNewsError>) -> Void) {
     let algoliaClient = Client(appID: "UJ5WYC0L7X", apiKey: "8ece23f8eb07cd25d40262a1764599b1")
     let algoliaIndex = algoliaClient.index(withName: "Item_production")
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
     
     let subset = Array(storyIDs.prefix(300))
     
@@ -24,6 +25,8 @@ class AlgoliaAPIClient {
     algoliaIndex.getObjects(withIDs: subset, attributesToRetrieve: ["created_at", "title", "url", "author", "story_text", "points", "num_comments", "created_at_i"]) { content, error in
       
       DispatchQueue.main.async {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         guard let json = content else {
           completion(.failure(HackerNewsError.requestFailed))
@@ -57,11 +60,15 @@ class AlgoliaAPIClient {
       return
     }
     
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    
     let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 60.0)
     
     let task = downloader.jsonTask(with: request) { jsonResult in
       
       DispatchQueue.main.async {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         switch jsonResult {
         case .success(let json):
@@ -134,9 +141,13 @@ class AlgoliaAPIClient {
     
     let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 60.0)
     
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    
     let task = downloader.jsonTask(with: request) { jsonResult in
       
       DispatchQueue.main.async {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         switch jsonResult {
         case .success(let json):

@@ -6,7 +6,7 @@
 //  Copyright © 2019 Mihai Leonte. All rights reserved.
 //
 
-import Foundation
+
 
 struct AlgoliaItemList: Codable {
     let hits: [Story]

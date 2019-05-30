@@ -9,12 +9,6 @@
 
 import UIKit
 
-// This ChildViewController can be embedded in one of the following types of View Controllers
-enum ParentStoriesChildViewController {
-    case stories
-    case bookmarks
-    case history
-}
 
 class StoriesChildViewController: UITableViewController {
     
@@ -33,7 +27,7 @@ class StoriesChildViewController: UITableViewController {
             
             guard let currentSelectedSourceAPI = currentSelectedSourceAPI else { return }
             
-            storiesDataSource.setData(
+            storiesDataSource.update(
                 algoliaStories: stories,
                 parentType: parentType
             )
@@ -300,12 +294,16 @@ class StoriesChildViewController: UITableViewController {
                 let selectedItem = stories[indexPath.row]
                 controller.algoliaStoryItem = selectedItem
                 
-                History.shared.add(id: selectedItem.objectID)
+                
                 // change aspect of the opened story cell as visited
+                History.shared.add(id: selectedItem.objectID)
                 if let parentType = parentType {
                     if parentType == .stories {
                         tableView.reloadRows(at: [indexPath], with: .none)
                     }
+                    
+                    // Send the Parent Type for observing the proper Tab Bar notification
+                    controller.parentType = parentType
                 }
                 
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem

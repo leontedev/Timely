@@ -6,7 +6,6 @@
 //  Copyright © 2019 Mihai Leonte. All rights reserved.
 //
 
-import Foundation
 
 
 public struct Bookmark: Codable {

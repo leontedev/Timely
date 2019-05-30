@@ -6,7 +6,7 @@
 //  Copyright © 2019 Mihai Leonte. All rights reserved.
 //
 
-import Foundation
+
 
 enum LinkOpener: String, CaseIterable {
     case safari = "Safari"

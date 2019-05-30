@@ -20,7 +20,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
   var parentType: ParentStoriesChildViewController?
   
   
-  func setData(algoliaStories: [Story], parentType: ParentStoriesChildViewController?) {
+  func update(algoliaStories: [Story], parentType: ParentStoriesChildViewController?) {
     self.algoliaStories = algoliaStories
     self.parentType = parentType
   }

@@ -8,23 +8,34 @@
 
 import UIKit
 
-class TimelyTabBarController: UITabBarController {
-
+class TimelyTabBarController: UITabBarController, UITabBarControllerDelegate {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //print("viewDidLoad >>>>>>>>>>> selectedIndex didSet \(selectedIndex)")
+        
+        self.delegate = self
+        
         // Do any additional setup after loading the view.
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        
+        if tabBarController.selectedViewController == viewController {
+            
+            if type(of: viewController) == StoriesSplitViewController.self {
+                NotificationCenter.default.post(name: .tabBarStoriesTapped, object: nil)
+            } else if type(of: viewController) == BookmarksSplitViewController.self {
+                NotificationCenter.default.post(name: .tabBarBookmarksTapped, object: nil)
+            } else if type(of: viewController) == HistorySplitViewController.self {
+                NotificationCenter.default.post(name: .tabBarHistoryTapped, object: nil)
+            }
+        }
+        
+        return true
     }
-    */
-
+    
+    
 }

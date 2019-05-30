@@ -21,6 +21,7 @@ class BookmarksSplitViewController: UISplitViewController, UISplitViewController
         _ splitViewController: UISplitViewController,
         collapseSecondary secondaryViewController: UIViewController,
         onto primaryViewController: UIViewController) -> Bool {
+        
         // Return true to prevent UIKit from applying its default behavior
         return true
     }

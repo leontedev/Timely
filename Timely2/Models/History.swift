@@ -6,9 +6,6 @@
 //  Copyright © 2019 Mihai Leonte. All rights reserved.
 //
 
-import Foundation
-
-
 public struct HistoryItem: Codable, Hashable, Equatable {
   public let id: String
   public let bookmarkDate: Date

@@ -10,9 +10,6 @@ import Foundation
 import SafariServices
 
 
-
-
-
 class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     var story: Story?
@@ -26,7 +23,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     let COLLAPSED_ROW_HEIGHT = 38
     
-    func setData(parent: UIViewController, story: Story, comments: [CommentSource]) {
+    func update(parent: UIViewController, story: Story, comments: [CommentSource]) {
         self.story = story
         self.comments = comments
         self.parentVC = parent

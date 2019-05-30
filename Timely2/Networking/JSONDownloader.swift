@@ -24,6 +24,7 @@ class JSONDownloader {
   typealias JSONTaskCompletionHandler = (Result<Data, HackerNewsError>) -> Void
   
   func jsonTask(with request: URLRequest, completionHandler completion: @escaping  JSONTaskCompletionHandler) -> URLSessionDataTask {
+    
     let task = session.dataTask(with: request) { data, response, error in
       
       guard let httpResponse = response as? HTTPURLResponse else {

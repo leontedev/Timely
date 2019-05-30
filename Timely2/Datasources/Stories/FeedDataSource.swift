@@ -19,7 +19,7 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     var feed: [Feed] = []
     
 
-    func setData(feedList: [Feed]){
+    func update(feedList: [Feed]){
         self.feed = feedList
     }
     

@@ -48,10 +48,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         guard let topAsDetailController = secondaryAsNavController.topViewController as? CommentsViewController else { return false }
         
-      if topAsDetailController.algoliaStoryItem == nil {
+        if topAsDetailController.algoliaStoryItem == nil {
             // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
             return true
         }
+      
         return false
     }
 
@@ -60,11 +61,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         //Save the current timestamp to be used in the "Since Last Visit" feed
 //        let currentTimestamp = Int(NSDate().timeIntervalSince1970)
 //        UserDefaults.standard.set(currentTimestamp, forKey: "lastFeedLoadTimestamp")
+      
+      History.shared.persistData()
         
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        History.shared.persistData()
+      
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -73,10 +76,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+      
+      print(Feeds.shared)
+      print(Bookmarks.shared)
+      print(History.shared)
+      
+      
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        History.shared.persistData()
+      
     }
 
     

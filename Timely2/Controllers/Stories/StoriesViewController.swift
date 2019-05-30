@@ -66,6 +66,7 @@ class StoriesViewController: UIViewController {
         self.headerTitle.title = Feeds.shared.selectedFeed.feedName
         childVC?.currentSelectedSourceAPI = Feeds.shared.selectedFeed.feedType
         childVC?.currentSelectedFeedURL = Feeds.shared.selectedFeedURLComponents
+      
         
         childVC?.fetchStories()
     }
@@ -82,7 +83,7 @@ class StoriesViewController: UIViewController {
     ///
     /// - Parameter feed: the [Feed] object - FeedList.plist parsed
     func configureFeedTableView(with feed: [Feed]) {
-        feedDataSource.setData(feedList: feed)
+        feedDataSource.update(feedList: feed)
         
         //Set height of the Feed Select tableview to be set automatic (based on the number of rows)
         let tableHeight = self.feedTableView.rowHeight * CGFloat(feed.count) + self.feedTableView.sectionHeaderHeight
