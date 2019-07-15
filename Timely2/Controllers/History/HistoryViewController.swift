@@ -24,7 +24,10 @@ class HistoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         os_log("HistoryViewController did load.", log: OSLog.viewCycle, type: .debug)
+        
+        print("******************* History was loaded.")
         
         guard let childVC = childVC else { return }
         

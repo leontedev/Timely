@@ -12,10 +12,14 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
+    
+    var firstTime: TimeInterval = 0.0
+    var lastTime: TimeInterval = 0.0
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // voiinitialize Singletons
+        // initialize Singletons
         print(Feeds.shared)
         print(Bookmarks.shared)
         print(History.shared)
@@ -34,11 +38,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         splitViewController.preferredDisplayMode = .allVisible
         
 
-        
+        // Check for dropped frames
+        let link = CADisplayLink(target: self, selector: #selector(update(link:)))
+        // add to the run loop
+        link.add(to: .main, forMode: .common)
         
         
         return true
     }
+    
+    @objc func update(link: CADisplayLink) {
+        if lastTime == 0 {
+            firstTime = link.timestamp
+            lastTime = link.timestamp
+        }
+        
+        let currentTime = link.timestamp
+        let totalElapsedTime = currentTime - firstTime
+        
+        // display in ms
+        let elapsedTime = floor((currentTime - lastTime) * 10_000)/10
+        
+        if elapsedTime > 16.7 {
+            print("")
+        }
+    }
+    
     
     // MARK: - Split view
     
