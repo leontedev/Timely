@@ -46,7 +46,6 @@
 		8966AD21224DF51A0035A430 /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966AD20224DF51A0035A430 /* Bookmarks.swift */; };
 		89790554226759DE00A18FB7 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89790553226759DE00A18FB7 /* NotificationName.swift */; };
 		897D066E2230EB57006B831F /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897D066D2230EB57006B831F /* SettingsSplitViewController.swift */; };
-		89A1D1D022F3357B002DD526 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A1D1CF22F3357B002DD526 /* UIFont.swift */; };
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
 		89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */; };
 		89BE85B322326E98001D7870 /* DefaultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */; };
@@ -141,7 +140,6 @@
 		8966AD20224DF51A0035A430 /* Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
 		89790553226759DE00A18FB7 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		897D066D2230EB57006B831F /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
-		89A1D1CF22F3357B002DD526 /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIFont.swift; path = "../../../../../../../System/Volumes/Data/Users/mihaileonte/Documents/My Projects/Timely2/Timely2/Extensions/UIFont.swift"; sourceTree = "<group>"; };
 		89A8A31F20DBA607007A8664 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMasterViewController.swift; sourceTree = "<group>"; };
 		89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsTableViewController.swift; sourceTree = "<group>"; };
@@ -246,7 +244,6 @@
 				89DEB8DB2260C39E00B70242 /* OSLog.swift */,
 				89DEB8DD2260C41900B70242 /* FileManager.swift */,
 				89790553226759DE00A18FB7 /* NotificationName.swift */,
-				89A1D1CF22F3357B002DD526 /* UIFont.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -672,7 +669,6 @@
 				897D066E2230EB57006B831F /* SettingsSplitViewController.swift in Sources */,
 				895B424C2205A0B6008F5994 /* NSAttributedString_TrimmingCharacters.swift in Sources */,
 				89336B2721E7918C00822673 /* HTMLParser.swift in Sources */,
-				89A1D1D022F3357B002DD526 /* UIFont.swift in Sources */,
 				890CFB02229E89B20047E07C /* ParentStoriesChildViewController.swift in Sources */,
 				89095A2721E08F0700FAEDF2 /* URLComponents+addOrModifyQueryItem.swift in Sources */,
 				89C997BA224E73FB00694BD9 /* BookmarkCell.swift in Sources */,
