@@ -255,23 +255,23 @@ class StoriesChildViewController: UITableViewController {
       }
     }
   
-    @objc func addHistoryRow(_ notification: Notification) {
-        
-        guard let itemID = notification.userInfo?["visitedItemID"] as? String else { return }
-        
-        // add the newly received "read" story to the history view data structure:
-        //storiesOfficialAPI.insert(item, at: 0)
-        
-        // refresh the data source
-        //storiesDataSource.updateOfficialStories(with: storiesOfficialAPI)
-        
-        // refresh the table view
-        //tableView.reloadData()
-        
-        //tableView.beginUpdates()
-        //tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-        //tableView.endUpdates()
-    }
+//    @objc func addHistoryRow(_ notification: Notification) {
+//
+//        guard let itemID = notification.userInfo?["visitedItemID"] as? String else { return }
+//
+//        // add the newly received "read" story to the history view data structure:
+//        //storiesOfficialAPI.insert(item, at: 0)
+//
+//        // refresh the data source
+//        //storiesDataSource.updateOfficialStories(with: storiesOfficialAPI)
+//
+//        // refresh the table view
+//        //tableView.reloadData()
+//
+//        //tableView.beginUpdates()
+//        //tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+//        //tableView.endUpdates()
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -295,7 +295,7 @@ class StoriesChildViewController: UITableViewController {
                 controller.algoliaStoryItem = selectedItem
                 
                 
-                // change aspect of the opened story cell as visited
+                // change aspect of the opened story cell as now it's visited
                 History.shared.add(id: selectedItem.objectID)
                 if let parentType = parentType {
                     if parentType == .stories {

@@ -132,6 +132,10 @@ class StoriesViewController: UIViewController {
 extension StoriesViewController: FeedDataSourceDelegate {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
         
+        //Save the current timestamp to be used in the "Since Last Visit" feed
+        let currentTimestamp = Int(NSDate().timeIntervalSince1970)
+        UserDefaults.standard.set(currentTimestamp, forKey: "lastFeedLoadTimestamp")
+        
         //Cancel all existing requests which are in progress
         self.childVC?.defaultSession.getTasksWithCompletionHandler { dataTasks, uploadTasks, downloadTasks in
             for task in dataTasks {

@@ -83,10 +83,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationWillResignActive(_ application: UIApplication) {
         
-        //Save the current timestamp to be used in the "Since Last Visit" feed
-//        let currentTimestamp = Int(NSDate().timeIntervalSince1970)
-//        UserDefaults.standard.set(currentTimestamp, forKey: "lastFeedLoadTimestamp")
-      
       History.shared.persistData()
         
     }

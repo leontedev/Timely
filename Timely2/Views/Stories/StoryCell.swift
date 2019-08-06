@@ -63,8 +63,6 @@ class StoryCell: UITableViewCell {
         } else {
             titleLabel.font = .preferredFont(forTextStyle: .body)
         }
-        
-
     }
     
     
