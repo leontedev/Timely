@@ -1,13 +1,6 @@
-# Timely
-### Timely is a free, open source Hacker News iOS client.
-
 <p align="center">
     <img src="AppIcon.png" />
 </p>
-
-#### Easily find the most popular stories which you missed since your last visit. 
-##### The secret sauce?
-##### The stories you scroll through are marked as seen. The ones you open, as read. The Timely SmartFeed will only show you the new stories ordered by popularity. 
 
 <p align="center">
     <img src="https://img.shields.io/badge/iOS-12.0+-red.svg" />
@@ -19,6 +12,15 @@
         <img src="https://img.shields.io/badge/Web-leonte.dev-lightgrey.svg?style=flat" alt="Website: leonte.dev" />
     </a>
 </p>
+
+# Timely
+## Timely is a free, open source Hacker News iOS client.
+
+### Easily find the most popular stories which you missed since your last visit. 
+#### The secret sauce?
+#### The stories you scroll through are marked as seen. The ones you open, as read. The Timely SmartFeed will only show you the new stories ordered by popularity. 
+
+
 
 
 ## Running it yourself
