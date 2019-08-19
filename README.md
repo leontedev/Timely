@@ -17,11 +17,8 @@
 </p>
 
 
-### Easily find the most popular stories which you missed since your last visit. 
-### The secret sauce?
-### The stories you scroll through are marked as seen. The ones you open, as read. The Timely SmartFeed will only show you the new stories ordered by popularity. 
-
-
+#### Easily find the most popular stories which you missed since your last visit. 
+#### So what's the secret sauce? The stories you scroll through are marked as seen. The ones you open, as read. So the SmartFeed will only show you new stories, ordered by popularity. 
 
 
 ## Running it yourself
