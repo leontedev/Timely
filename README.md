@@ -17,9 +17,10 @@
 </p>
 
 
-#### Easily find the most popular stories which you missed since your last visit. 
+### Easily find the most popular new stories. 
 #### So what's the secret sauce? The stories you scroll through are marked as seen. The ones you open, as read. So the SmartFeed will only show you new stories, ordered by popularity. 
 
+<hr>
 
 ## Running it yourself
 
