@@ -13,6 +13,9 @@ protocol StoriesDataSourceDelegate: class {
     func didUpdateRow(at indexPath: IndexPath)
 }
 
+// to detect scrolling direction in tableView(_:didEndDisplaying:forRowAt:)
+// var verticalContentOffset: CGFloat  = 0
+
 class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     weak var delegate: StoriesDataSourceDelegate?
@@ -37,8 +40,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: StoryCell.reuseIdentifier, for: indexPath) as! StoryCell
         var itemID = ""
         
-        
-        
+
         if self.algoliaStories.indices.contains(indexPath.row) {
             let item = self.algoliaStories[indexPath.row]
             itemID = item.objectID
@@ -73,17 +75,24 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         
         
-        
-        // Check if this is the Stories View (and not Bookmarks or History) and that the story was already visited
         if let parentType = parentType {
-            if parentType == .stories && History.shared.contains(id: itemID) {
-                updateVisitedStoryUI(forCell: cell)
+            if parentType == .stories {
+                if History.shared.contains(itemID, withState: .read) {
+                    updateStoryUI(on: cell, forState: .read)
+                } else if History.shared.contains(itemID, withState: .seen) {
+                    updateStoryUI(on: cell, forState: .seen)
+                } else {
+                    updateStoryUI(on: cell, forState: .new)
+                }
+            // Bookmarks and History UI
             } else {
-                updateStoryUI(forCell: cell)
+                updateStoryUI(on: cell, forState: .seen)
             }
         } else {
-            updateStoryUI(forCell: cell)
+            updateStoryUI(on: cell, forState: .new)
         }
+        
+        
         
         // Check if the story was bookmarked
         if Bookmarks.shared.contains(id: itemID) {
@@ -107,7 +116,35 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    
     //MARK: - Delegates
+    
+    // Mark stories as seen
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+//        let previousvVerticalContentOffset = verticalContentOffset
+//        verticalContentOffset  = tableView.contentOffset.y
+//
+//        let differenceOffset = verticalContentOffset - previousvVerticalContentOffset
+//
+//        if differenceOffset > 60 {
+//
+//            if self.algoliaStories.indices.contains(indexPath.row) {
+//                History.shared.add(id: self.algoliaStories[indexPath.row].objectID, withState: .seen)
+//            } else {
+//                print("indexPath \(indexPath) from \(self.algoliaStories.count) (self.algoliaStories.count)")
+//            }
+//        }
+        
+        // We want to mark as seen only the stories which are scrolled over the top, and ignore the ones which are scrolled to the bottom. So we will compare the indexPath of the stories which were scrolled off with the indexPath of the firstVisible cell.
+        guard let firstVisibleIndexPath = tableView.indexPathsForVisibleRows?.first else { return }
+        
+        if indexPath.row < firstVisibleIndexPath.row {
+            // This cell has been scrolled off the top of the table view
+            History.shared.add(id: self.algoliaStories[indexPath.row].objectID, withState: .seen)
+        }
+        
+    }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
@@ -151,11 +188,11 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     func historyAction(at indexPath: IndexPath, for itemID: String) -> UIContextualAction {
         let action = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
             
-            if History.shared.contains(id: itemID) {
+            if History.shared.contains(itemID, withState: .read) {
                 History.shared.remove(id: itemID, at: indexPath, from: self.parentType)
                 
             } else {
-                History.shared.add(id: itemID)
+                History.shared.add(id: itemID, withState: .read)
             }
             
             if self.parentType == .stories {
@@ -164,8 +201,8 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             completion(true)
         }
         
-        action.title = History.shared.contains(id: itemID) ? "Mark\nUnread" : "Mark\nRead"
-        action.backgroundColor = History.shared.contains(id: itemID) ? .darkGray : .lightGray
+        action.title = History.shared.contains(itemID, withState: .read) ? "Mark\nUnread" : "Mark\nRead"
+        action.backgroundColor = History.shared.contains(itemID, withState: .read) ? .darkGray : .lightGray
         
         return action
     }
@@ -173,40 +210,70 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Helper Functions
     
-    // Set Appearance for Read Stories
-    func updateVisitedStoryUI(forCell cell: StoryCell) {
-        cell.titleLabel.textColor = .lightGray
-        cell.titleLabel.font = UIFont.systemFont(ofSize: cell.titleLabel.font.pointSize)
+    // Set Appearance for Stories (New unread, seen or read/opened)
+    func updateStoryUI(on cell: StoryCell, forState state: StoryState) {
         
-        cell.commentsCountLabel.textColor = .lightGray
-        cell.elapsedTimeLabel.textColor = .lightGray
-        cell.upvotesCountLabel.textColor = .lightGray
+        switch state {
+        case .new:
+            cell.titleLabel.textColor = .black
+            cell.titleLabel.font = UIFont.boldSystemFont(ofSize: cell.titleLabel.font.pointSize)
+            
+            // Show the orange cicle marking new stories
+            cell.newStoryCircleView.isHidden = false
+            
+            
+            cell.commentsCountLabel.textColor = .black
+            cell.elapsedTimeLabel.textColor = .black
+            cell.upvotesCountLabel.textColor = .black
+            
+            cell.commentsCountImage.alpha = CGFloat(1)
+            cell.elapsedTimeImage.alpha = CGFloat(1)
+            cell.upvotesCountImage.alpha = CGFloat(1)
+            
+            cell.bookmarkedTimeImage.alpha = CGFloat(1)
+            cell.bookmarkedTimeLabel.textColor = .black
+            
+            cell.bookmarkedTimeImage.isHidden = true
+            cell.bookmarkedTimeLabel.isHidden = true
+        case .seen:
+            cell.titleLabel.textColor = .black
+            cell.titleLabel.font = UIFont.systemFont(ofSize: cell.titleLabel.font.pointSize)
+            
+            // Hide the orange cicle marking new stories
+            cell.newStoryCircleView.isHidden = true
+            
+            cell.commentsCountLabel.textColor = .black
+            cell.elapsedTimeLabel.textColor = .black
+            cell.upvotesCountLabel.textColor = .black
+            
+            cell.commentsCountImage.alpha = CGFloat(1)
+            cell.elapsedTimeImage.alpha = CGFloat(1)
+            cell.upvotesCountImage.alpha = CGFloat(1)
+            
+            cell.bookmarkedTimeImage.alpha = CGFloat(1)
+            cell.bookmarkedTimeLabel.textColor = .black
+            
+            cell.bookmarkedTimeImage.isHidden = true
+            cell.bookmarkedTimeLabel.isHidden = true
+        case .read:
+            cell.titleLabel.textColor = .lightGray
+            cell.titleLabel.font = UIFont.systemFont(ofSize: cell.titleLabel.font.pointSize)
+            
+            // Hide the orange cicle marking new stories
+            cell.newStoryCircleView.isHidden = true
+            
+            cell.commentsCountLabel.textColor = .lightGray
+            cell.elapsedTimeLabel.textColor = .lightGray
+            cell.upvotesCountLabel.textColor = .lightGray
+            
+            cell.commentsCountImage.alpha = CGFloat(0.3)
+            cell.elapsedTimeImage.alpha = CGFloat(0.3)
+            cell.upvotesCountImage.alpha = CGFloat(0.3)
+            
+            cell.bookmarkedTimeImage.alpha = CGFloat(0.3)
+            cell.bookmarkedTimeLabel.textColor = .lightGray
+        }
         
-        cell.commentsCountImage.alpha = CGFloat(0.3)
-        cell.elapsedTimeImage.alpha = CGFloat(0.3)
-        cell.upvotesCountImage.alpha = CGFloat(0.3)
         
-        cell.bookmarkedTimeImage.alpha = CGFloat(0.3)
-        cell.bookmarkedTimeLabel.textColor = .lightGray
-    }
-    
-    // Set Appearance for New Stories (Unread & Unseen)
-    func updateStoryUI(forCell cell: StoryCell) {
-        cell.titleLabel.textColor = .black
-        cell.titleLabel.font = UIFont.boldSystemFont(ofSize: cell.titleLabel.font.pointSize)
-        
-        cell.commentsCountLabel.textColor = .black
-        cell.elapsedTimeLabel.textColor = .black
-        cell.upvotesCountLabel.textColor = .black
-        
-        cell.commentsCountImage.alpha = CGFloat(1)
-        cell.elapsedTimeImage.alpha = CGFloat(1)
-        cell.upvotesCountImage.alpha = CGFloat(1)
-        
-        cell.bookmarkedTimeImage.alpha = CGFloat(1)
-        cell.bookmarkedTimeLabel.textColor = .black
-        
-        cell.bookmarkedTimeImage.isHidden = true
-        cell.bookmarkedTimeLabel.isHidden = true
     }
 }

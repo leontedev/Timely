@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         splitViewController.preferredDisplayMode = .allVisible
         
 
-        // Check for dropped frames
+        // TODO: Check for dropped frames
         let link = CADisplayLink(target: self, selector: #selector(update(link:)))
         // add to the run loop
         link.add(to: .main, forMode: .common)
@@ -99,8 +99,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
       
       print(Feeds.shared)
-      print(Bookmarks.shared)
-      print(History.shared)
+      //print(Bookmarks.shared)
+      //print(History.shared)
       
       
     }

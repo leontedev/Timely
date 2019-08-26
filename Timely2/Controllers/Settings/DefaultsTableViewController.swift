@@ -13,9 +13,15 @@ class DefaultsTableViewController: UITableViewController {
     
     @IBOutlet weak var defaultFeedCell: UITableViewCell!
     @IBOutlet weak var openLinksInCell: UITableViewCell!
+    @IBOutlet weak var backhistoryCell: UITableViewCell!
+    @IBOutlet weak var hideSeenCell: UITableViewCell!
+    @IBOutlet weak var hideReadCell: UITableViewCell!
     
     @IBOutlet weak var defaultFeedLabel: UILabel!
     @IBOutlet weak var openLinksInLabel: UILabel!
+    @IBOutlet weak var backhistoryLabel: UILabel!
+    @IBOutlet weak var hideSeenSwitch: UISwitch!
+    @IBOutlet weak var hideReadSwitch: UISwitch!
     
     let feeds = Feeds.shared.feeds
     
@@ -83,7 +89,26 @@ class DefaultsTableViewController: UITableViewController {
             }
             
             self.present(alertController, animated: true) { }
+        } else if cell === backhistoryCell {
+//            let alertController = UIAlertController(title: nil, message: "Select backhistory period", preferredStyle: .actionSheet)
+//            
+//            // Cancel option
+//            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+//                self.tableView.deselectRow(at: indexPath, animated: true)
+//            }
+//            alertController.addAction(cancelAction)
+//            
+//            
+//            var appAction = UIAlertAction(title: "1 month", style: .default) { (action) in
+//                Defaults.shared.defaultLinkOpenerDescription = appOption.rawValue
+//                self.refreshTableView()
+//            }
+//            alertController.addAction(appAction)
+//            
+//            
+//            self.present(alertController, animated: true) { }
         }
+        
     }
     
     

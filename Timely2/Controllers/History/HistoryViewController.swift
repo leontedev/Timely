@@ -51,11 +51,11 @@ class HistoryViewController: UIViewController {
         
         childVC.currentSelectedSourceAPI = .official
         
-        if History.shared.items.isEmpty {
+        if History.shared.readItems.isEmpty {
             childVC.state = .empty
             self.navigationItem.title = "History"
         } else {
-            let historyCount = String(History.shared.items.count)
+            let historyCount = String(History.shared.readItems.count)
             self.navigationItem.title = "History (\(historyCount))"
             
             childVC.refreshHistory()
@@ -69,7 +69,7 @@ class HistoryViewController: UIViewController {
     }
     
     @objc func refreshHistoryHeaderCount() {
-        let historyCount = History.shared.items.count
+        let historyCount = History.shared.sortedIds.count
         
         if historyCount > 0 {
             self.navigationItem.title = "History (\(historyCount))"

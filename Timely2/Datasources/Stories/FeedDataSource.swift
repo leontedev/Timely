@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol FeedDataSourceDelegate: class {
-    func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType)
+    func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType, id: Int8)
 }
 
 class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
@@ -52,6 +52,7 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         
         var feedName = feed[indexPath.row].feedName
         let feedType = feed[indexPath.row].feedType
+        
         let currentTimestamp = Int(NSDate().timeIntervalSince1970)
         
         if feedType == .algolia {
@@ -66,31 +67,39 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                     
                     feedURLComponents.addOrModify(queryItemTimeRange)
                 }
-            } else {
-                // feedID 8 is the "Since Last Visit" feed
-                if feed[indexPath.row].feedID == 8 {
-                    var sinceTimestamp = UserDefaults.standard.integer(forKey: "lastFeedLoadTimestamp")
-                    //it will return 0 if it was never saved previously
-                    if sinceTimestamp == 0 {
-                        sinceTimestamp = currentTimestamp
-                    }
-                    let queryItemTimeRange = URLQueryItem(name: "numericFilters", value: "created_at_i>\(sinceTimestamp),created_at_i<\(currentTimestamp)")
-                    
-                    // Display elapsed time in the Feed Title, eg: Since Last Visit - 2h ago
-                    let componentsFormatter = DateComponentsFormatter()
-                    componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
-                    componentsFormatter.maximumUnitCount = 1
-                    componentsFormatter.unitsStyle = .abbreviated
-                    
-                    let epochTime = Date(timeIntervalSince1970: TimeInterval(sinceTimestamp))
-                    let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
-                    
-                    if let validTime = timeAgo {
-                        feedName = "Since " + validTime + " ago"
-                    }
-                    
-                    feedURLComponents.addOrModify(queryItemTimeRange)
+                
+            // Timely SmartFeed
+            } else if feed[indexPath.row].feedID == 10 {
+                
+                let priorTimestamp = UserDefaults.standard.integer(forKey: "backhistoryStartDate")
+                let queryItemTimeRange = URLQueryItem(name: "numericFilters", value: "created_at_i>\(priorTimestamp),created_at_i<\(currentTimestamp)")
+                
+                feedURLComponents.addOrModify(queryItemTimeRange)
+            
+                
+            // Since Last Visit Feed
+            } else if feed[indexPath.row].feedID == 8 {
+                var sinceTimestamp = UserDefaults.standard.integer(forKey: "lastFeedLoadTimestamp")
+                //it will return 0 if it was never saved previously
+                if sinceTimestamp == 0 {
+                    sinceTimestamp = currentTimestamp
                 }
+                let queryItemTimeRange = URLQueryItem(name: "numericFilters", value: "created_at_i>\(sinceTimestamp),created_at_i<\(currentTimestamp)")
+                
+                // Display elapsed time in the Feed Title, eg: Since Last Visit - 2h ago
+                let componentsFormatter = DateComponentsFormatter()
+                componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+                componentsFormatter.maximumUnitCount = 1
+                componentsFormatter.unitsStyle = .abbreviated
+                
+                let epochTime = Date(timeIntervalSince1970: TimeInterval(sinceTimestamp))
+                let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+                
+                if let validTime = timeAgo {
+                    feedName = "Since " + validTime + " ago"
+                }
+                
+                feedURLComponents.addOrModify(queryItemTimeRange)
             }
         }
         
@@ -105,11 +114,8 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             UserDefaults.standard.set(feedID, forKey: "initialFeedID")
         }
         
-        self.delegate?.didTapCell(feedURL: feedURLComponents, title: feedName, type: feedType)
+        self.delegate?.didTapCell(feedURL: feedURLComponents, title: feedName, type: feedType, id: feedID)
         
-        if let feedURL = feedURLComponents.url {
-            print(feedURL)
-        }
     }
 }
 

@@ -20,9 +20,13 @@ class StoryCell: UITableViewCell {
     @IBOutlet weak var commentsCountImage: UIImageView!
     @IBOutlet weak var upvotesCountImage: UIImageView!
     @IBOutlet weak var elapsedTimeImage: UIImageView!
+    @IBOutlet weak var urlAndCircleStackView: UIStackView!
+    
+    var newStoryCircleView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
     
     static let reuseIdentifier = "ItemCell"
     private let notificationCenter: NotificationCenter = NotificationCenter.default
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,6 +38,20 @@ class StoryCell: UITableViewCell {
                                        name: .storiesLabelAppearanceChangingFinished,
                                        object: nil
         )
+        
+        
+        newStoryCircleView.backgroundColor = .orange
+        newStoryCircleView.layer.cornerRadius = 8
+        newStoryCircleView.isHidden = true
+
+        // Define size constraints for the new Circle View (otherwise it will be shrunk to 0:0
+        newStoryCircleView.translatesAutoresizingMaskIntoConstraints = false
+        newStoryCircleView.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        newStoryCircleView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        
+        
+        // Add the orange bullet on the right side of stories to mark the ones which are NEW (Unread & Unseen)
+        urlAndCircleStackView.addArrangedSubview(newStoryCircleView)
         
         updateFontSizeUI()
     }

@@ -55,7 +55,7 @@ public class Feeds {
     var feeds: [Feed] = []
     var selectedFeedURLComponents: URLComponents = URLComponents()
     
-    // Default Feed setting - eg: Previously Selected, or HN Last 24h
+    // Default Feed setting Name - eg: Previously Selected, or HN Last 24h
     var defaultFeedDescription: String = ""
     
     // initially, if userdefaults is not set, it will return 0
@@ -67,6 +67,7 @@ public class Feeds {
             }
         }
     }
+
     
     var selectedFeed: Feed {
         didSet {
@@ -90,6 +91,8 @@ public class Feeds {
                 
             }
         }
+        
+        // ignore the Feeds flagged .isHidden = true
         self.feeds = self.feeds.filter { $0.isHidden == false }
 
         
@@ -104,11 +107,10 @@ public class Feeds {
 
         selectedFeed = feeds.filter { $0.feedID == feedID }[0]
     
-        guard var feedURLComponents = URLComponents(string: selectedFeed.feedURL) else {
-            return
+        if let selectedURL = URLComponents(string: selectedFeed.feedURL) {
+            selectedFeedURLComponents = selectedURL
         }
         
-        selectedFeedURLComponents = feedURLComponents
         
         if selectedFeed.feedType == .algolia {
             if let feedFromCalendarComponentByAdding = selectedFeed.fromCalendarComponentByAdding {

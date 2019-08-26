@@ -17,18 +17,16 @@ struct AlgoliaItemResult: Codable {
 }
 
 
-//struct Story {
-//  var url: URL?
-//  var title: String?
-//  var author: String?
-//  var createdAt: Date?
-//  var numComments: Int?
-//  var points: Int?
-//  var text: String?
-//}
-
-
-class Story: Codable {
+class Story: Codable, Hashable, Equatable {
+    
+    static func == (lhs: Story, rhs: Story) -> Bool {
+        return lhs.objectID == rhs.objectID
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(objectID)
+    }
+    
     let created_at: Date
     let title: String?
     let url: URL?

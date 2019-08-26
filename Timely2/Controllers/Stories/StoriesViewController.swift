@@ -66,7 +66,7 @@ class StoriesViewController: UIViewController {
         self.headerTitle.title = Feeds.shared.selectedFeed.feedName
         childVC?.currentSelectedSourceAPI = Feeds.shared.selectedFeed.feedType
         childVC?.currentSelectedFeedURL = Feeds.shared.selectedFeedURLComponents
-      
+        childVC?.currentSelectedFeedID = Feeds.shared.selectedFeed.feedID
         
         childVC?.fetchStories()
     }
@@ -130,7 +130,7 @@ class StoriesViewController: UIViewController {
 
 // A new Feed was Selected from the Feed Selection View Controller
 extension StoriesViewController: FeedDataSourceDelegate {
-    func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType) {
+    func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType, id: Int8) {
         
         //Save the current timestamp to be used in the "Since Last Visit" feed
         let currentTimestamp = Int(NSDate().timeIntervalSince1970)
@@ -152,7 +152,7 @@ extension StoriesViewController: FeedDataSourceDelegate {
         
         self.childVC?.currentSelectedSourceAPI = type
         self.childVC?.currentSelectedFeedURL = feedURL
-        
+        self.childVC?.currentSelectedFeedID = id
         
         self.childVC?.fetchStories()
     }

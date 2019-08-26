@@ -38,6 +38,7 @@ class StoriesChildViewController: UITableViewController {
     var defaultSession: URLSession = URLSession(configuration: .default)
     var currentSelectedSourceAPI: HNFeedType?
     var currentSelectedFeedURL: URLComponents? //= URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
+    var currentSelectedFeedID: Int8?
     
     var stories: [Story] = []
     var storyIDs: [String] = []
@@ -177,7 +178,42 @@ class StoriesChildViewController: UITableViewController {
             self.AlgoliaClient.fetchStories(from: currentSelectedFeedURL) { algoliaResult in
               switch algoliaResult {
               case .success(let hits):
-                self.stories = hits
+                
+                guard let feedID = self.currentSelectedFeedID else { return }
+                
+                // SmartFeed was selected - we need to potentially hide seen & read stories
+                // History is already a Set but hits is an array of stories [Story]
+                if feedID == 10 {
+                    
+                    var storiesSet: Set<UInt32> = []
+                    for story in hits {
+                        let newID = UInt32(story.objectID) ?? 0
+                        storiesSet.insert(newID)
+                    }
+                    
+                    var seenSet: Set<UInt32> = []
+                    for item in History.shared.seenItems {
+                        let newID = UInt32(item.id) ?? 0
+                        seenSet.insert(newID)
+                    }
+                    
+                    var filteredStoriesSet: Set<UInt32> = storiesSet.subtracting(seenSet)
+                    
+                    var readSet: Set<UInt32> = []
+                    for item in History.shared.readItems {
+                        let newID = UInt32(item.id) ?? 0
+                        readSet.insert(newID)
+                    }
+                    
+                    filteredStoriesSet = filteredStoriesSet.subtracting(readSet)
+                    
+                    let filteredStories = hits.filter { filteredStoriesSet.contains(UInt32($0.objectID) ?? 0) }
+                    self.stories = filteredStories
+                    
+                } else {
+                    self.stories = hits
+                }
+                
                 self.state = .populated
               case .failure(let error):
                 self.state = .error(error)
@@ -239,7 +275,7 @@ class StoriesChildViewController: UITableViewController {
       self.stories.removeAll()
       self.state = .loading
       
-      if History.shared.items.isEmpty {
+      if History.shared.readItems.isEmpty {
         self.state = .empty
       } else {
         self.AlgoliaClient.fetchStories(for: History.shared.sortedIds, completion: { algoliaResult in
@@ -296,7 +332,8 @@ class StoriesChildViewController: UITableViewController {
                 
                 
                 // change aspect of the opened story cell as now it's visited
-                History.shared.add(id: selectedItem.objectID)
+                History.shared.add(id: selectedItem.objectID, withState: .read)
+                
                 if let parentType = parentType {
                     if parentType == .stories {
                         tableView.reloadRows(at: [indexPath], with: .none)

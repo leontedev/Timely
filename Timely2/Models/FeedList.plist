@@ -4,6 +4,18 @@
 <array>
 	<dict>
 		<key>feedID</key>
+		<integer>10</integer>
+		<key>feedName</key>
+		<string>Timely SmartFeed</string>
+		<key>feedType</key>
+		<string>algolia</string>
+		<key>feedURL</key>
+		<string>https://hn.algolia.com/api/v1/search?tags=story&amp;page=0&amp;hitsPerPage=100</string>
+		<key>isHidden</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>feedID</key>
 		<integer>8</integer>
 		<key>feedName</key>
 		<string>Since Last Visit</string>
