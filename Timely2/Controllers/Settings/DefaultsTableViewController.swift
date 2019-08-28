@@ -28,7 +28,9 @@ class DefaultsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.updateTableViewDataSource()
+        //self.updateTableViewDataSource()
+        self.defaultFeedLabel.text = Feeds.shared.defaultFeedDescription
+        self.openLinksInLabel.text = Defaults.shared.defaultLinkOpenerDescription
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +72,8 @@ class DefaultsTableViewController: UITableViewController {
             // Previously Selected option
             let previouslyUsedAction = UIAlertAction(title: "Previously Selected", style: .default) { action in
                 Feeds.shared.isSetPreviouslySelectedFeed = true
-                self.refreshTableView()
+                self.defaultFeedLabel.text = Feeds.shared.defaultFeedDescription
+                self.tableView.reloadData()
             }
             alertController.addAction(previouslyUsedAction)
             
@@ -78,7 +81,8 @@ class DefaultsTableViewController: UITableViewController {
             for feed in feeds {
                 let defaultFeedAction = UIAlertAction(title: feed.feedName, style: .default) { action in
                     Feeds.shared.selectedFeed = feed
-                    self.refreshTableView()
+                    self.defaultFeedLabel.text = Feeds.shared.defaultFeedDescription
+                    self.tableView.reloadData()
                 }
                 alertController.addAction(defaultFeedAction)
             }
@@ -97,44 +101,48 @@ class DefaultsTableViewController: UITableViewController {
             for appOption in LinkOpener.allCases {
                 let appAction = UIAlertAction(title: appOption.rawValue, style: .default) { (action) in
                     Defaults.shared.defaultLinkOpenerDescription = appOption.rawValue
-                    self.refreshTableView()
+                    self.openLinksInLabel.text = appOption.rawValue
+                    self.tableView.reloadData()
+                    
                 }
                 alertController.addAction(appAction)
             }
             
             self.present(alertController, animated: true) { }
         } else if cell === backhistoryCell {
-//            let alertController = UIAlertController(title: nil, message: "Select backhistory period", preferredStyle: .actionSheet)
-//            
-//            // Cancel option
-//            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-//                self.tableView.deselectRow(at: indexPath, animated: true)
-//            }
-//            alertController.addAction(cancelAction)
-//            
-//            
-//            var appAction = UIAlertAction(title: "1 month", style: .default) { (action) in
-//                Defaults.shared.defaultLinkOpenerDescription = appOption.rawValue
-//                self.refreshTableView()
-//            }
-//            alertController.addAction(appAction)
-//            
-//            
-//            self.present(alertController, animated: true) { }
+            let alertController = UIAlertController(title: nil, message: "Select backhistory period", preferredStyle: .actionSheet)
+
+            // Cancel option
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                self.tableView.deselectRow(at: indexPath, animated: true)
+            }
+            alertController.addAction(cancelAction)
+
+            for option in BackhistoryOptions.allCases {
+                var appAction = UIAlertAction(title: option.rawValue, style: .default) { (action) in
+                    Defaults.shared.setBackhistory(at: option)
+                    
+                    self.backhistoryLabel.text = option.rawValue
+                    self.tableView.reloadData()
+                }
+                alertController.addAction(appAction)
+            }
+            
+            self.present(alertController, animated: true) { }
         }
         
     }
     
     
     //MARK: - Helper Functions
-    func updateTableViewDataSource() {
-        self.defaultFeedLabel.text = Feeds.shared.defaultFeedDescription
-        self.openLinksInLabel.text = Defaults.shared.defaultLinkOpenerDescription
-    }
-    
-    func refreshTableView() {
-        self.updateTableViewDataSource()
-        self.tableView.reloadData()
-    }
+//    func updateTableViewDataSource() {
+//        self.defaultFeedLabel.text = Feeds.shared.defaultFeedDescription
+//
+//    }
+//
+//    func refreshTableView() {
+//        self.updateTableViewDataSource()
+//        self.tableView.reloadData()
+//    }
     
 }
