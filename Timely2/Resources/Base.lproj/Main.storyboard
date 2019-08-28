@@ -963,6 +963,9 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6UW-N3-XRK">
                                                     <rect key="frame" x="310" y="6.3333333333333321" width="51" height="30.999999999999996"/>
+                                                    <connections>
+                                                        <action selector="toggleHideSeen:" destination="3Kq-Ig-ZoA" eventType="valueChanged" id="8By-fA-FZw"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -988,6 +991,9 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0EE-zj-3Y2">
                                                     <rect key="frame" x="310" y="6.3333333333333321" width="51" height="30.999999999999996"/>
+                                                    <connections>
+                                                        <action selector="toggleHideRead:" destination="3Kq-Ig-ZoA" eventType="valueChanged" id="PJH-8y-QYH"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>

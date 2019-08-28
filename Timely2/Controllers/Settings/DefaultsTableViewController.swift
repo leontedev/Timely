@@ -37,7 +37,21 @@ class DefaultsTableViewController: UITableViewController {
             self.tableView.deselectRow(at: index, animated: true)
         }
         
+        hideSeenCell.selectionStyle = .none
+        hideReadCell.selectionStyle = .none
+        hideSeenSwitch.isOn = Defaults.shared.hideSeen
+        hideReadSwitch.isOn = Defaults.shared.hideRead
+        
     }
+    
+    @IBAction func toggleHideSeen(_ sender: UISwitch) {
+        Defaults.shared.hideSeen = sender.isOn
+    }
+    
+    @IBAction func toggleHideRead(_ sender: UISwitch) {
+        Defaults.shared.hideRead = sender.isOn
+    }
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

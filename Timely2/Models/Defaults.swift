@@ -19,9 +19,21 @@ public class Defaults {
     // initially, if userdefaults is not set, it will return false
     let launchedBefore = UserDefaults.standard.bool(forKey: "appWasLaunchedBefore")
     
-    var defaultLinkOpenerDescription: String = "" {
+    var defaultLinkOpenerDescription: String {
         didSet {
             UserDefaults.standard.set(defaultLinkOpenerDescription, forKey: "defaultAppToOpenLinks")
+        }
+    }
+    
+    var hideSeen: Bool {
+        didSet {
+            UserDefaults.standard.set(hideSeen, forKey: "hideSeen")
+        }
+    }
+    
+    var hideRead: Bool {
+        didSet {
+            UserDefaults.standard.set(hideRead, forKey: "hideRead")
         }
     }
     
@@ -37,7 +49,6 @@ public class Defaults {
             let priorTimestamp = Int(priorDate!.timeIntervalSince1970)
             UserDefaults.standard.set(priorTimestamp, forKey: "backhistoryStartDate")
             
-            // Set Default config for SmartFeed Settings: Hide Seen and Hide Read
             UserDefaults.standard.set(true, forKey: "hideSeen")
             UserDefaults.standard.set(true, forKey: "hideRead")
         }
@@ -49,6 +60,9 @@ public class Defaults {
             defaultLinkOpenerDescription = LinkOpener.webview.rawValue
         }
         
+        hideSeen = UserDefaults.standard.bool(forKey: "hideSeen")
+        hideRead = UserDefaults.standard.bool(forKey: "hideRead")
+
     }
     
 }

@@ -181,31 +181,46 @@ class StoriesChildViewController: UITableViewController {
                 
                 guard let feedID = self.currentSelectedFeedID else { return }
                 
-                // SmartFeed was selected - we need to potentially hide seen & read stories
-                // History is already a Set but hits is an array of stories [Story]
-                if feedID == 10 {
+                // check if SmartFeed was selected - and we need to hide seen and/or read stories
+                if feedID == 10 && (Defaults.shared.hideSeen || Defaults.shared.hideRead) {
                     
+                    
+                    // History is already a Set but hits is an array of stories [Story]
                     var storiesSet: Set<UInt32> = []
                     for story in hits {
                         let newID = UInt32(story.objectID) ?? 0
                         storiesSet.insert(newID)
                     }
                     
-                    var seenSet: Set<UInt32> = []
-                    for item in History.shared.seenItems {
-                        let newID = UInt32(item.id) ?? 0
-                        seenSet.insert(newID)
+                    
+                    
+                    var filteredStoriesSet: Set<UInt32> = []
+                    
+                    if Defaults.shared.hideSeen {
+                        var seenSet: Set<UInt32> = []
+                        for item in History.shared.seenItems {
+                            let newID = UInt32(item.id) ?? 0
+                            seenSet.insert(newID)
+                        }
+                        
+                        filteredStoriesSet = storiesSet.subtracting(seenSet)
                     }
                     
-                    var filteredStoriesSet: Set<UInt32> = storiesSet.subtracting(seenSet)
-                    
-                    var readSet: Set<UInt32> = []
-                    for item in History.shared.readItems {
-                        let newID = UInt32(item.id) ?? 0
-                        readSet.insert(newID)
+                    if Defaults.shared.hideRead {
+                        var readSet: Set<UInt32> = []
+                        for item in History.shared.readItems {
+                            let newID = UInt32(item.id) ?? 0
+                            readSet.insert(newID)
+                        }
+                        
+                        
+                        if Defaults.shared.hideSeen {
+                            filteredStoriesSet = filteredStoriesSet.subtracting(readSet)
+                        } else {
+                            filteredStoriesSet = storiesSet.subtracting(readSet)
+                        }
                     }
                     
-                    filteredStoriesSet = filteredStoriesSet.subtracting(readSet)
                     
                     let filteredStories = hits.filter { filteredStoriesSet.contains(UInt32($0.objectID) ?? 0) }
                     self.stories = filteredStories
