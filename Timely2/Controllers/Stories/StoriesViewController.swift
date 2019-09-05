@@ -57,8 +57,6 @@ class StoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print("Current thread is \(Thread.current) and it's <\(Thread.current.isMainThread)> that this is the main thread.")
-        
         feedDataSource.delegate = self
         configureFeedTableView(with: Feeds.shared.feeds)
         customizeFeedPopoverView()
@@ -83,7 +81,7 @@ class StoriesViewController: UIViewController {
     ///
     /// - Parameter feed: the [Feed] object - FeedList.plist parsed
     func configureFeedTableView(with feed: [Feed]) {
-        feedDataSource.update(feedList: feed)
+        //feedDataSource.update(feedList: feed)
         
         //Set height of the Feed Select tableview to be set automatic (based on the number of rows)
         let tableHeight = self.feedTableView.rowHeight * CGFloat(feed.count) + self.feedTableView.sectionHeaderHeight
@@ -96,6 +94,8 @@ class StoriesViewController: UIViewController {
         self.feedTableView.dataSource = feedDataSource
         self.feedTableView.delegate = feedDataSource
         self.feedTableView.register(FeedCell.self, forCellReuseIdentifier: "TableViewCell")
+        
+        
     }
     
     /// Sets up the Popover View which contains the Feed/Sort TableView.

@@ -71,7 +71,16 @@ public class Defaults {
         }
         let priorTimestamp = Int(priorDate!.timeIntervalSince1970)
         UserDefaults.standard.set(priorTimestamp, forKey: "backhistoryStartDate")
+        
     }
+    
+    var backhistoryStartDate: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: "backhistoryStartDate")
+        }
+    }
+    
+    
     
     private init() {
 

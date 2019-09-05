@@ -6,7 +6,7 @@
 		<key>feedID</key>
 		<integer>10</integer>
 		<key>feedName</key>
-		<string>Timely SmartFeed</string>
+		<string>SmartFeed</string>
 		<key>feedType</key>
 		<string>algolia</string>
 		<key>feedURL</key>

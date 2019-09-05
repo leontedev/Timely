@@ -31,6 +31,14 @@ class DefaultsTableViewController: UITableViewController {
         //self.updateTableViewDataSource()
         self.defaultFeedLabel.text = Feeds.shared.defaultFeedDescription
         self.openLinksInLabel.text = Defaults.shared.defaultLinkOpenerDescription
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yy"
+        
+        let timestamp = Date(timeIntervalSince1970: TimeInterval(Defaults.shared.backhistoryStartDate))
+        let date = dateFormatter.string(from: timestamp)
+        
+        self.backhistoryLabel.text = "from \(date)"
     }
     
     override func viewWillAppear(_ animated: Bool) {

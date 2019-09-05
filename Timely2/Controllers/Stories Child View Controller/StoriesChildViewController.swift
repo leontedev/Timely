@@ -37,7 +37,8 @@ class StoriesChildViewController: UITableViewController {
     
     var defaultSession: URLSession = URLSession(configuration: .default)
     var currentSelectedSourceAPI: HNFeedType?
-    var currentSelectedFeedURL: URLComponents? //= URLComponents(string: "https://hacker-news.firebaseio.com/v0/topstories.json")!
+    
+    var currentSelectedFeedURL: URLComponents?
     var currentSelectedFeedID: Int8?
     
     var stories: [Story] = []
@@ -248,6 +249,10 @@ class StoriesChildViewController: UITableViewController {
     
     // FIXME: Defect use Refresh Control animation instead of the state.loading animation
     @objc func refreshData(sender: UIRefreshControl) {
+        
+        // refresh Feed URL
+        currentSelectedFeedURL = Feeds.shared.selectedFeedURLComponents
+        
         let feedbackGenerator = UINotificationFeedbackGenerator()
         feedbackGenerator.notificationOccurred(.warning)
         
