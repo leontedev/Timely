@@ -25,7 +25,7 @@ class StoriesChildViewController: UITableViewController {
         didSet {
             self.updateFooterView()
             
-            guard let currentSelectedSourceAPI = currentSelectedSourceAPI else { return }
+            guard currentSelectedSourceAPI != nil else { return }
             
             storiesDataSource.update(
                 algoliaStories: stories,

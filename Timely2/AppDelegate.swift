@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // initialize Singletons
+        print(Defaults.shared)
         print(Feeds.shared)
         print(Bookmarks.shared)
         print(History.shared)
@@ -54,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
         
         let currentTime = link.timestamp
-        let totalElapsedTime = currentTime - firstTime
+        _ = currentTime - firstTime
         
         // display in ms
         let elapsedTime = floor((currentTime - lastTime) * 10_000)/10
@@ -87,8 +88,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
     }
 
+    // user pressed the Home button
     func applicationDidEnterBackground(_ application: UIApplication) {
-      
+        //Save the current timestamp to be used in the "Since Last Visit" feed
+        let currentTimestamp = Int(NSDate().timeIntervalSince1970)
+        UserDefaults.standard.set(currentTimestamp, forKey: "lastFeedLoadTimestamp")
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -98,11 +102,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
       
-      print(Feeds.shared)
-      //print(Bookmarks.shared)
-      //print(History.shared)
-      
-      
+      Feeds.shared.refreshSinceLastVisitFeedName()
+
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

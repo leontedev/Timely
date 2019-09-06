@@ -207,6 +207,28 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         return action
     }
     
+    func seenAction(at indexPath: IndexPath, for itemID: String) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
+            
+            if History.shared.contains(itemID, withState: .seen) {
+                History.shared.remove(id: itemID, at: indexPath, from: self.parentType)
+                
+            } else {
+                History.shared.add(id: itemID, withState: .read)
+            }
+            
+            if self.parentType == .stories {
+                self.delegate?.didUpdateRow(at: indexPath)
+            }
+            completion(true)
+        }
+        
+        action.title = History.shared.contains(itemID, withState: .read) ? "Mark\nUnread" : "Mark\nRead"
+        action.backgroundColor = History.shared.contains(itemID, withState: .read) ? .darkGray : .lightGray
+        
+        return action
+    }
+    
     
     // MARK: - Helper Functions
     

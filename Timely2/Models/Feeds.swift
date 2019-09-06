@@ -111,21 +111,6 @@ public class Feeds {
                     
                     let queryItemTimeRange = URLQueryItem(name: "numericFilters", value: "created_at_i>\(sinceTimestamp),created_at_i<\(currentTimestamp)")
                     
-                    // Display elapsed time in the Feed Title, eg: Since Last Visit - 2h ago
-                    let componentsFormatter = DateComponentsFormatter()
-                    componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
-                    componentsFormatter.maximumUnitCount = 1
-                    componentsFormatter.unitsStyle = .abbreviated
-                    
-                    let epochTime = Date(timeIntervalSince1970: TimeInterval(sinceTimestamp))
-                    let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
-                    
-                    if let validTime = timeAgo {
-                        //feedName = "Since " + validTime + " ago"
-                        // Update Since Last Visit name
-                        //self.feeds[selectedFeed.feedID].feedName = "Since " + validTime + " ago"
-                    }
-                    
                     selectedFeedURL.addOrModify(queryItemTimeRange)
                 }
             }
@@ -188,14 +173,59 @@ public class Feeds {
         if feedID == 0 {
             // automatically select the default feed if the setting was never changed by the user: "Last 24h"
             feedID = 2
-        } else if feedID == 8 {
-            // Since Last Visit - rename the feed
-            
         }
-
+        
+        // Since Last Visit - rename the feed. Display elapsed time in the Feed Title, eg: Since Last Visit - 2h ago
+        let currentTimestamp = Int(NSDate().timeIntervalSince1970)
+        var sinceTimestamp = UserDefaults.standard.integer(forKey: "lastFeedLoadTimestamp")
+        
+        //it will return 0 if it was never saved previously
+        if sinceTimestamp == 0 {
+            sinceTimestamp = currentTimestamp
+        }
+        
+        let componentsFormatter = DateComponentsFormatter()
+        componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+        componentsFormatter.maximumUnitCount = 1
+        componentsFormatter.unitsStyle = .abbreviated
+        
+        let epochTime = Date(timeIntervalSince1970: TimeInterval(sinceTimestamp))
+        let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+        
+        if let validTime = timeAgo {
+            if let row = self.feeds.firstIndex(where: {$0.feedID == 8}) {
+                feeds[row].feedName = "Since \(validTime) ago"
+            }
+        }
+        
         selectedFeed = feeds.filter { $0.feedID == feedID }[0]
         
         self.defaultFeedDescription = isSetPreviouslySelectedFeed ? "Previously Selected" : selectedFeed.feedName
+    }
+    
+    func refreshSinceLastVisitFeedName() {
+        // Since Last Visit - rename the feed. Display elapsed time in the Feed Title, eg: Since Last Visit - 2h ago
+        let currentTimestamp = Int(NSDate().timeIntervalSince1970)
+        var sinceTimestamp = UserDefaults.standard.integer(forKey: "lastFeedLoadTimestamp")
+        
+        //it will return 0 if it was never saved previously
+        if sinceTimestamp == 0 {
+            sinceTimestamp = currentTimestamp
+        }
+        
+        let componentsFormatter = DateComponentsFormatter()
+        componentsFormatter.allowedUnits = [.second, .minute, .hour, .day]
+        componentsFormatter.maximumUnitCount = 1
+        componentsFormatter.unitsStyle = .abbreviated
+        
+        let epochTime = Date(timeIntervalSince1970: TimeInterval(sinceTimestamp))
+        let timeAgo = componentsFormatter.string(from: epochTime, to: Date())
+        
+        if let validTime = timeAgo {
+            if let row = self.feeds.firstIndex(where: {$0.feedID == 8}) {
+                feeds[row].feedName = "Since \(validTime) ago"
+            }
+        }
     }
     
 }

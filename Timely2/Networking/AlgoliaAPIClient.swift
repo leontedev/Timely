@@ -37,13 +37,13 @@ class AlgoliaAPIClient {
         decoder.dateDecodingStrategy = .customISO8601
         
         do {
-          let jsonData = try JSONSerialization.data(withJSONObject: json["results"])
+          let jsonData = try JSONSerialization.data(withJSONObject: json["results"] as Any)
           let stories = try decoder.decode([Story?].self, from: jsonData)
           let results = stories.compactMap { $0 }
           
           completion(.success(results))
           
-        } catch let error {
+        } catch _ {
           completion(.failure(HackerNewsError.jsonParsingFailure(message: "Unexpected server response")))
         }
         
@@ -143,7 +143,7 @@ class AlgoliaAPIClient {
     
     UIApplication.shared.isNetworkActivityIndicatorVisible = true
     
-    let task = downloader.jsonTask(with: request) { jsonResult in
+    let _ = downloader.jsonTask(with: request) { jsonResult in
       
       DispatchQueue.main.async {
         
@@ -175,7 +175,7 @@ class AlgoliaAPIClient {
             }
             
             
-            let t0 = CFAbsoluteTimeGetCurrent()
+            let _ = CFAbsoluteTimeGetCurrent()
             let componentsFormatter = DateComponentsFormatter()
             
             // For parsing the 'Elapsed Time' Date to a 'Time Ago' String

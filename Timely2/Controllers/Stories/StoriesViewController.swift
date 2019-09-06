@@ -29,6 +29,7 @@ class StoriesViewController: UIViewController {
     // feedButton pressed
     @IBAction func changeFeed(_ sender: Any) {
         
+        self.feedTableView.reloadData()
         self.feedSelectionViewIsOpen.toggle()
         
         if feedSelectionViewIsOpen {
@@ -131,10 +132,6 @@ class StoriesViewController: UIViewController {
 // A new Feed was Selected from the Feed Selection View Controller
 extension StoriesViewController: FeedDataSourceDelegate {
     func didTapCell(feedURL: URLComponents, title: String, type: HNFeedType, id: Int8) {
-        
-        //Save the current timestamp to be used in the "Since Last Visit" feed
-        let currentTimestamp = Int(NSDate().timeIntervalSince1970)
-        UserDefaults.standard.set(currentTimestamp, forKey: "lastFeedLoadTimestamp")
         
         //Cancel all existing requests which are in progress
         self.childVC?.defaultSession.getTasksWithCompletionHandler { dataTasks, uploadTasks, downloadTasks in

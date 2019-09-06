@@ -128,7 +128,7 @@ class CommentsViewController: UIViewController {
         
         for (index, comment) in self.comments.enumerated() {
             if let attributedString = comment.attributedString {
-                var mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+                let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
                 
                 mutableAttributedString.replaceFont(font: self.prefferedFontSize)
                 

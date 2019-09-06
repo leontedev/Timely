@@ -127,7 +127,7 @@ class DefaultsTableViewController: UITableViewController {
             alertController.addAction(cancelAction)
 
             for option in BackhistoryOptions.allCases {
-                var appAction = UIAlertAction(title: option.rawValue, style: .default) { (action) in
+                let appAction = UIAlertAction(title: option.rawValue, style: .default) { (action) in
                     Defaults.shared.setBackhistory(at: option)
                     
                     self.backhistoryLabel.text = option.rawValue

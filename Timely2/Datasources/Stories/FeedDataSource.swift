@@ -18,7 +18,7 @@ class FeedDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     weak var delegate: FeedDataSourceDelegate?
     // var feed: [Feed] = []
     
-// Not required as the Feeds.shared singleton is used
+// Not required anymore as the Feeds.shared singleton is used
 //    func update(feedList: [Feed]){
 //        self.feed = feedList
 //    }
