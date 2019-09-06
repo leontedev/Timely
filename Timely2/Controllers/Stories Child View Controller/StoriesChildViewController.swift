@@ -43,8 +43,8 @@ class StoriesChildViewController: UITableViewController {
     
     var stories: [Story] = []
     var storyIDs: [String] = []
-  
-
+    
+    
     // Stories, Bookmarks or History?
     var parentType: ParentStoriesChildViewController?
     
@@ -62,7 +62,7 @@ class StoriesChildViewController: UITableViewController {
         } else if (self.parent as? HistoryViewController) != nil {
             parentType = .history
         }
-
+        
         
         self.tableView.estimatedRowHeight = 120
         self.tableView.rowHeight = UITableView.automaticDimension
@@ -73,7 +73,7 @@ class StoriesChildViewController: UITableViewController {
         storiesDataSource.delegate = self
         self.tableView.dataSource = storiesDataSource
         self.tableView.delegate = storiesDataSource
-      
+        
         
         
         NotificationCenter.default.addObserver(self,
@@ -127,7 +127,7 @@ class StoriesChildViewController: UITableViewController {
                                                    object: nil
             )
         }
-       
+        
     }
     
     deinit {
@@ -147,7 +147,7 @@ class StoriesChildViewController: UITableViewController {
         
         guard let currentSelectedSourceAPI = currentSelectedSourceAPI else { return }
         guard let currentSelectedFeedURL = currentSelectedFeedURL else { return }
-      
+        
         self.stories.removeAll()
         self.state = .loading
         
@@ -156,87 +156,80 @@ class StoriesChildViewController: UITableViewController {
         case .official:
             
             self.OfficialClient.fetchOfficialApiStoryIds(from: currentSelectedFeedURL) { officialStoriesResult in
-              switch officialStoriesResult {
-              case .success(let officialStories):
-                
-                self.AlgoliaClient.fetchStories(for: officialStories, completion: { algoliaResult in
-                  switch algoliaResult {
-                  case .success(let hits):
-                    self.stories = hits
-                    self.state = .populated
-                  case .failure(let error):
+                switch officialStoriesResult {
+                case .success(let officialStories):
+                    
+                    self.AlgoliaClient.fetchStories(for: officialStories, completion: { algoliaResult in
+                        switch algoliaResult {
+                        case .success(let hits):
+                            self.stories = self.filterSeenAndRead(stories: hits)
+                            self.state = .populated
+                        case .failure(let error):
+                            self.state = .error(error)
+                        }
+                    })
+                    
+                case .failure(let error):
                     self.state = .error(error)
-                  }
-                })
-                
-              case .failure(let error):
-                self.state = .error(error)
-              }
-          }
-          
+                }
+            }
+            
         case .algolia:
-          
             self.AlgoliaClient.fetchStories(from: currentSelectedFeedURL) { algoliaResult in
-              switch algoliaResult {
-              case .success(let hits):
-                
-                guard let feedID = self.currentSelectedFeedID else { return }
-                
-                // check if SmartFeed was selected - and we need to hide seen and/or read stories
-                if feedID == 10 && (Defaults.shared.hideSeen || Defaults.shared.hideRead) {
-                    
-                    
-                    // History is already a Set but hits is an array of stories [Story]
-                    var storiesSet: Set<UInt32> = []
-                    for story in hits {
-                        let newID = UInt32(story.objectID) ?? 0
-                        storiesSet.insert(newID)
-                    }
-                    
-                    
-                    
-                    var filteredStoriesSet: Set<UInt32> = []
-                    
-                    if Defaults.shared.hideSeen {
-                        var seenSet: Set<UInt32> = []
-                        for item in History.shared.seenItems {
-                            let newID = UInt32(item.id) ?? 0
-                            seenSet.insert(newID)
-                        }
-                        
-                        filteredStoriesSet = storiesSet.subtracting(seenSet)
-                    }
-                    
-                    if Defaults.shared.hideRead {
-                        var readSet: Set<UInt32> = []
-                        for item in History.shared.readItems {
-                            let newID = UInt32(item.id) ?? 0
-                            readSet.insert(newID)
-                        }
-                        
-                        
-                        if Defaults.shared.hideSeen {
-                            filteredStoriesSet = filteredStoriesSet.subtracting(readSet)
-                        } else {
-                            filteredStoriesSet = storiesSet.subtracting(readSet)
-                        }
-                    }
-                    
-                    
-                    let filteredStories = hits.filter { filteredStoriesSet.contains(UInt32($0.objectID) ?? 0) }
-                    self.stories = filteredStories
-                    
-                } else {
-                    self.stories = hits
+                switch algoliaResult {
+                case .success(let hits):
+                    self.stories = self.filterSeenAndRead(stories: hits)
+                    self.state = .populated
+                case .failure(let error):
+                    self.state = .error(error)
+                }
+            }
+        }
+        
+    }
+    
+    func filterSeenAndRead(stories: [Story]) -> [Story] {
+        if Defaults.shared.hideSeen || Defaults.shared.hideRead {
+            
+            // History is already a Set but hits is an array of stories [Story]
+            var storiesSet: Set<UInt32> = []
+            for story in stories {
+                let newID = UInt32(story.objectID) ?? 0
+                storiesSet.insert(newID)
+            }
+            
+            var filteredStoriesSet: Set<UInt32> = []
+            
+            if Defaults.shared.hideSeen {
+                var seenSet: Set<UInt32> = []
+                for item in History.shared.seenItems {
+                    let newID = UInt32(item.id) ?? 0
+                    seenSet.insert(newID)
                 }
                 
-                self.state = .populated
-              case .failure(let error):
-                self.state = .error(error)
-              }
-          }
+                filteredStoriesSet = storiesSet.subtracting(seenSet)
+            }
+            
+            if Defaults.shared.hideRead {
+                var readSet: Set<UInt32> = []
+                for item in History.shared.readItems {
+                    let newID = UInt32(item.id) ?? 0
+                    readSet.insert(newID)
+                }
+                
+                
+                if Defaults.shared.hideSeen {
+                    filteredStoriesSet = filteredStoriesSet.subtracting(readSet)
+                } else {
+                    filteredStoriesSet = storiesSet.subtracting(readSet)
+                }
+            }
+            
+            
+            return stories.filter { filteredStoriesSet.contains(UInt32($0.objectID) ?? 0) }
+        } else {
+            return stories
         }
-
     }
     
     /// Sets up Pull To Refresh - and calls refreshData()
@@ -266,7 +259,7 @@ class StoriesChildViewController: UITableViewController {
         case .history:
             refreshHistory()
         }
-
+        
         sender.endRefreshing()
     }
     
@@ -279,55 +272,55 @@ class StoriesChildViewController: UITableViewController {
             self.state = .empty
         } else {
             self.AlgoliaClient.fetchStories(for: Bookmarks.shared.sortedIds, completion: { algoliaResult in
-              switch algoliaResult {
-              case .success(let hits):
-                self.stories = hits
-                self.state = .populated
-              case .failure(let error):
-                self.state = .error(error)
-              }
+                switch algoliaResult {
+                case .success(let hits):
+                    self.stories = hits
+                    self.state = .populated
+                case .failure(let error):
+                    self.state = .error(error)
+                }
             })
             self.state = .populated
         }
     }
-  
+    
     @objc func refreshHistory() {
-      self.stories.removeAll()
-      self.state = .loading
-      
-      if History.shared.readItems.isEmpty {
-        self.state = .empty
-      } else {
-        self.AlgoliaClient.fetchStories(for: History.shared.sortedIds, completion: { algoliaResult in
-          switch algoliaResult {
-          case .success(let hits):
-            self.stories = hits
+        self.stories.removeAll()
+        self.state = .loading
+        
+        if History.shared.readItems.isEmpty {
+            self.state = .empty
+        } else {
+            self.AlgoliaClient.fetchStories(for: History.shared.sortedIds, completion: { algoliaResult in
+                switch algoliaResult {
+                case .success(let hits):
+                    self.stories = hits
+                    self.state = .populated
+                case .failure(let error):
+                    self.state = .error(error)
+                }
+            })
             self.state = .populated
-          case .failure(let error):
-            self.state = .error(error)
-          }
-        })
-        self.state = .populated
-      }
+        }
     }
-  
-//    @objc func addHistoryRow(_ notification: Notification) {
-//
-//        guard let itemID = notification.userInfo?["visitedItemID"] as? String else { return }
-//
-//        // add the newly received "read" story to the history view data structure:
-//        //storiesOfficialAPI.insert(item, at: 0)
-//
-//        // refresh the data source
-//        //storiesDataSource.updateOfficialStories(with: storiesOfficialAPI)
-//
-//        // refresh the table view
-//        //tableView.reloadData()
-//
-//        //tableView.beginUpdates()
-//        //tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-//        //tableView.endUpdates()
-//    }
+    
+    //    @objc func addHistoryRow(_ notification: Notification) {
+    //
+    //        guard let itemID = notification.userInfo?["visitedItemID"] as? String else { return }
+    //
+    //        // add the newly received "read" story to the history view data structure:
+    //        //storiesOfficialAPI.insert(item, at: 0)
+    //
+    //        // refresh the data source
+    //        //storiesDataSource.updateOfficialStories(with: storiesOfficialAPI)
+    //
+    //        // refresh the table view
+    //        //tableView.reloadData()
+    //
+    //        //tableView.beginUpdates()
+    //        //tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+    //        //tableView.endUpdates()
+    //    }
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -339,7 +332,7 @@ class StoriesChildViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     
     // MARK: - Segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -378,8 +371,8 @@ class StoriesChildViewController: UITableViewController {
             tableView.tableFooterView = errorView
         case .loading:
             tableView.tableFooterView = loadingView
-//      case .paging:
-//          tableView.tableFooterView = loadingView
+            //      case .paging:
+        //          tableView.tableFooterView = loadingView
         case .empty:
             tableView.tableFooterView = emptyView
         case .populated:

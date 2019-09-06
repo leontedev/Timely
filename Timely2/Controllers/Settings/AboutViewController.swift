@@ -7,20 +7,30 @@
 //
 
 import UIKit
+import WebKit
 
 class AboutViewController: UIViewController {
-
-    @IBOutlet weak var versionLabel: UILabel!
-    @IBOutlet weak var appIconImageView: UIImageView!
     
-    let versionKey = "CFBundleShortVersionString"
+    var webView: WKWebView!
+
+//    @IBOutlet weak var versionLabel: UILabel!
+//    @IBOutlet weak var appIconImageView: UIImageView!
+//
+//    let versionKey = "CFBundleShortVersionString"
+    
+    override func loadView() {
+        webView = WKWebView()
+        //webView.navigationDelegate = self
+        view = webView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let infoList = Bundle.main.infoDictionary!
-        versionLabel.text = infoList[versionKey] as? String
-        appIconImageView.image = UIImage.appIcon
+        let url = URL(string: "https://github.com/leontedev/Timely")!
+        let request = URLRequest(url: url)
+        webView.load(request)
+        webView.allowsBackForwardNavigationGestures = true
     }
     
 }

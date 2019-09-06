@@ -860,8 +860,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Feed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lE-Qz-bcR">
-                                                    <rect key="frame" x="20.000000000000007" y="11.333333333333336" width="97.666666666666686" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default Starting Feed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lE-Qz-bcR">
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="163" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -911,45 +911,13 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Timely SmartFeed" footerTitle="This will affect how old the stories included in the Timely SmartFeed are." id="SpQ-bc-ifP">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="7dW-da-Q8g" userLabel="Backhistory Cell">
-                                        <rect key="frame" x="0.0" y="186.33333333333334" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7dW-da-Q8g" id="stp-8n-c1l">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Backhistory" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ZP-sx-SoN">
-                                                    <rect key="frame" x="20" y="11.333333333333336" width="90" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24 Feb 2019" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rCH-ia-chd">
-                                                    <rect key="frame" x="259" y="11.333333333333336" width="96" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="rCH-ia-chd" secondAttribute="trailing" constant="4" id="5jt-r9-L64"/>
-                                                <constraint firstItem="1ZP-sx-SoN" firstAttribute="centerY" secondItem="stp-8n-c1l" secondAttribute="centerY" id="Mqr-48-Xhv"/>
-                                                <constraint firstItem="rCH-ia-chd" firstAttribute="centerY" secondItem="stp-8n-c1l" secondAttribute="centerY" id="QZG-d5-4tv"/>
-                                                <constraint firstItem="1ZP-sx-SoN" firstAttribute="leading" secondItem="stp-8n-c1l" secondAttribute="leadingMargin" constant="4" id="enV-Jb-Ah7"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Timely SmartFeed" id="oem-T1-cM7">
+                            <tableViewSection id="oem-T1-cM7">
                                 <string key="footerTitle">A story is marked as "Seen" when the story is scrolled off the top of the screen. 
 
 A story is marked as "Read" when it's tapped and its comments are being loaded.</string>
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Wn7-bX-ztF" userLabel="Hide Seen Cell">
-                                        <rect key="frame" x="0.0" y="321.66666666666669" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="159" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wn7-bX-ztF" id="beS-Pu-ie2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
@@ -977,7 +945,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="bWR-tn-22r" userLabel="Hide Read Cell">
-                                        <rect key="frame" x="0.0" y="365.66666666666674" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="203" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bWR-tn-22r" id="2ZB-5Z-K9D">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
@@ -1001,6 +969,38 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                                 <constraint firstItem="ZHc-4Q-EGo" firstAttribute="leading" secondItem="2ZB-5Z-K9D" secondAttribute="leadingMargin" constant="4" id="gaj-WF-6A0"/>
                                                 <constraint firstItem="ZHc-4Q-EGo" firstAttribute="centerY" secondItem="2ZB-5Z-K9D" secondAttribute="centerY" id="iCa-RU-uQ2"/>
                                                 <constraint firstItem="0EE-zj-3Y2" firstAttribute="centerY" secondItem="2ZB-5Z-K9D" secondAttribute="centerY" id="vsP-ke-MRA"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Timely SmartFeed" footerTitle="This will affect how old the stories included in the SmartFeed are." id="SpQ-bc-ifP">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="7dW-da-Q8g" userLabel="Backhistory Cell">
+                                        <rect key="frame" x="0.0" y="386.66666666666663" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7dW-da-Q8g" id="stp-8n-c1l">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SmartFeed Backhistory" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ZP-sx-SoN">
+                                                    <rect key="frame" x="20" y="11.333333333333336" width="178.66666666666666" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24 Feb 2019" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rCH-ia-chd">
+                                                    <rect key="frame" x="259" y="11.333333333333336" width="96" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="rCH-ia-chd" secondAttribute="trailing" constant="4" id="5jt-r9-L64"/>
+                                                <constraint firstItem="1ZP-sx-SoN" firstAttribute="centerY" secondItem="stp-8n-c1l" secondAttribute="centerY" id="Mqr-48-Xhv"/>
+                                                <constraint firstItem="rCH-ia-chd" firstAttribute="centerY" secondItem="stp-8n-c1l" secondAttribute="centerY" id="QZG-d5-4tv"/>
+                                                <constraint firstItem="1ZP-sx-SoN" firstAttribute="leading" secondItem="stp-8n-c1l" secondAttribute="leadingMargin" constant="4" id="enV-Jb-Ah7"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1691,7 +1691,7 @@ Timely is an open-source project released under the MPL-2.0 license. The source 
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timely Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kkl-kY-rKM">
-                                <rect key="frame" x="74" y="118" width="227" height="28"/>
+                                <rect key="frame" x="12" y="118" width="355" height="28"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1702,9 +1702,11 @@ Timely is an open-source project released under the MPL-2.0 license. The source 
                             <constraint firstItem="kkl-kY-rKM" firstAttribute="centerX" secondItem="dvZ-cu-6yB" secondAttribute="centerX" id="1A4-Ur-pVy"/>
                             <constraint firstItem="upF-C0-oHK" firstAttribute="bottom" secondItem="uM4-Hl-hgW" secondAttribute="bottom" constant="10" id="OCw-CB-mkk"/>
                             <constraint firstItem="upF-C0-oHK" firstAttribute="leading" secondItem="uM4-Hl-hgW" secondAttribute="leading" constant="8" id="W0Q-fB-L1l"/>
+                            <constraint firstItem="kkl-kY-rKM" firstAttribute="leading" secondItem="uM4-Hl-hgW" secondAttribute="leading" constant="12" id="XBh-bV-u2k"/>
                             <constraint firstItem="upF-C0-oHK" firstAttribute="top" secondItem="kkl-kY-rKM" secondAttribute="bottom" constant="40" id="ech-tm-Yf9"/>
                             <constraint firstItem="upF-C0-oHK" firstAttribute="trailing" secondItem="uM4-Hl-hgW" secondAttribute="trailing" constant="-8" id="rbl-WS-V5f"/>
                             <constraint firstItem="kkl-kY-rKM" firstAttribute="top" secondItem="uM4-Hl-hgW" secondAttribute="top" constant="30" id="rt8-sp-KI9"/>
+                            <constraint firstItem="uM4-Hl-hgW" firstAttribute="trailing" secondItem="kkl-kY-rKM" secondAttribute="trailing" constant="8" id="xpg-AB-idr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uM4-Hl-hgW"/>
                     </view>
