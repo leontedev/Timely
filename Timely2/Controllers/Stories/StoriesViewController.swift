@@ -67,6 +67,8 @@ class StoriesViewController: UIViewController {
         childVC?.currentSelectedFeedURL = Feeds.shared.selectedFeedURLComponents
         childVC?.currentSelectedFeedID = Feeds.shared.selectedFeed.feedID
         
+        childVC?.stories.removeAll()
+        childVC?.currentPage = 0
         childVC?.fetchStories()
     }
     
@@ -151,6 +153,8 @@ extension StoriesViewController: FeedDataSourceDelegate {
         self.childVC?.currentSelectedFeedURL = feedURL
         self.childVC?.currentSelectedFeedID = id
         
+        self.childVC?.stories.removeAll()
+        self.childVC?.currentPage = 0
         self.childVC?.fetchStories()
     }
     
