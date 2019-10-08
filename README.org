@@ -1,56 +1,50 @@
 * Timely
 ** a free, open source Hacker News iOS client.
 
-<p align="center">
-    <img src="AppIcon.png" />
-</p>
+[[gif.gif]]
 
-<p align="center">
-    <img src="https://img.shields.io/badge/iOS-12.0+-red.svg" />
-    <img src="https://img.shields.io/badge/Swift-5.0-brightgreen.svg" />
-    <a href="https://twitter.com/leonte_dev">
-        <img src="https://img.shields.io/badge/Twitter-@leonte_dev-blue.svg?style=flat" alt="Twitter: @leonte_dev" />
-    </a>
-    <a href="https://leonte.dev">
-        <img src="https://img.shields.io/badge/Web-leonte.dev-lightgrey.svg?style=flat" alt="Website: leonte.dev" />
-    </a>
-</p>
+[[AppIcon.png]]
+
+[[https://img.shields.io/badge/iOS-12.0+-red.svg]]
+https://img.shields.io/badge/Swift-5.0-brightgreen.svg
+https://twitter.com/leonte_dev
+https://img.shields.io/badge/Twitter-@leonte_dev-blue.svg?style=flat
+
+[[https://leonte.dev][https://img.shields.io/badge/Web-leonte.dev-lightgrey.svg?style=flat]]
 
 
-### Easily find the most popular new stories. 
-#### So what's the secret sauce? The stories you scroll through are marked as seen. The ones you open, as read. So the SmartFeed will only show you new stories, ordered by popularity. 
+*** Easily find the most popular new stories.  
+*So what's so different from other HN apps? What's the secret sauce? The stories you scroll through are marked as seen. The ones you open, are marked as read. You can customize your feed to only show you new stories, ordered by popularity to quickly get back in the loop.*
 
-<hr>
 
-## Running it yourself
 
-The app will be published once milestone v1.0 is reached. 
+*** Running it yourself
+The app will be published once milestone "v1.0" is reached. (currently working on v0.9)
 
-Until then you can clone the repo and build the project in Xcode (use the .xcworkspace file - or simply enter xed in Terminal).
+Until then you can clone the repo and build the project in Xcode (use the .xcworkspace file - or simply enter "xed ." in Terminal).
 
-## Contribution
-
+*** Contribution
 Any help you can offer with this project is most appreciated.
 **However, before you start please read the COPYRIGHT\LICENSE.md file inside this repository.** 
 Although all the source code of Timely is available under the Mozilla Public License Version 2.0, the assets are not redistributable.
 
 If you’d like to help, here are some suggestions:
-- Just run the app and let me know if you hit any problems.
-- If you spot redundant code, you could lend a hand in refactoring it.
-- Write new tests. Tests are always a great contribution and a great place to start.
-- If you find any bugs and can fix them, by all means do.
-- Right now the app is available only in English. If you could help with localization, that would be a great contribution.
-- I postponed any work on theming, or a dark mode - as I am expecting some official API support at this WWDC. 
-- Feature ideas are great and all, problem is, I already have dozens of them queued up :)
+ - Just run the app and let me know if you hit any problems.
+ - Any kind of feedback would be awesome!
+ - If you spot redundant code, you could lend a hand in refactoring it. I've done it a few times, as I've started working on this app right from my very start as an iOS developer. There is a LOT of optimizations and tidying up to do.
+ - If you find any bugs - raise an issue. If you want/can fix them, that would make my day.
+ - Right now the app is available only in English. If you could help with localization, that would be really nice. I plan to add Spanish next. 
+ - I postponed any work on theming, or a dark mode - as I am expecting some official API support at this WWDC. (Later edit, after WWDC '19: I was right. I will be adding it for 1.1)
+ - Feature ideas are great. The problem with them, I already have dozens of them queued up :) And my queue is the FIFO kind :)
 
-## Credits
+*** Credits
 Timely is built using some third-party frameworks: 
-- [DTCoreText](https://github.com/Cocoanetics/DTCoreText)
-- [algoliasearch-client-swift](https://github.com/algolia/algoliasearch-client-swift)
+ - [[https://github.com/Cocoanetics/DTCoreText][DTCoreText]]
+ - [[https://github.com/algolia/algoliasearch-client-swift][Algolia Search Client]]
 
 Timely was designed and built by Doru Mihai Leonte. 
 Timely, and the Timely logo are copyright © Doru Mihai Leonte 2019.
 
-Swift, the Swift logo, Xcode, Instruments, Cocoa Touch, Touch ID, AirDrop, iBeacon, iPhone, iPad, Safari, App Store, watchOS, tvOS, Mac and macOS are trademarks of Apple Inc., registered in the U.S. and other countries. 
+Swift, the Swift logo, Xcode, Instruments, Cocoa Touch, Touch ID, AirDrop, iPhone, iPad, Safari, App Store, watchOS, tvOS, Mac and macOS are trademarks of Apple Inc., registered in the U.S. and other countries. 
 
-If you like Timely and want more like it, I have [a portofolio website where you can find all my projects](https://www.leonte.dev).
+If you like Timely, check out my [[https://www.leonte.dev][portfolio site]]. And follow me on Twitter [[https://twitter.com/leonte_dev][@leonte_dev]].
