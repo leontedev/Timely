@@ -6,23 +6,16 @@
 [[AppIcon.png]]
 
 [[https://img.shields.io/badge/iOS-12.0+-red.svg]]
-https://img.shields.io/badge/Swift-5.0-brightgreen.svg
-https://twitter.com/leonte_dev
-https://img.shields.io/badge/Twitter-@leonte_dev-blue.svg?style=flat
-
+[[https://img.shields.io/badge/Swift-5.0-brightgreen.svg]]
+[[https://twitter.com/leonte_dev]]
+[[https://img.shields.io/badge/Twitter-@leonte_dev-blue.svg?style=flat]]
 [[https://leonte.dev][https://img.shields.io/badge/Web-leonte.dev-lightgrey.svg?style=flat]]
 
-
 *** Easily find the most popular new stories.  
-*So what's so different from other HN apps? What's the secret sauce? The stories you scroll through are marked as seen. The ones you open, are marked as read. You can customize your feed to only show you new stories, ordered by popularity to quickly get back in the loop.*
-
-
-
+So what's so different from other HN apps? What's the secret sauce? The stories you scroll through are marked as seen. The ones you open, are marked as read. You can customize your feed to only show you new stories, ordered by popularity to quickly get back in the loop.
 *** Running it yourself
 The app will be published once milestone "v1.0" is reached. (currently working on v0.9)
-
 Until then you can clone the repo and build the project in Xcode (use the .xcworkspace file - or simply enter "xed ." in Terminal).
-
 *** Contribution
 Any help you can offer with this project is most appreciated.
 **However, before you start please read the COPYRIGHT\LICENSE.md file inside this repository.** 
