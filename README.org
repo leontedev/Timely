@@ -1,9 +1,5 @@
 * Timely
-** a free, open source Hacker News iOS client.
-
-<p align="center">
-    <img src="AppIcon.png" />
-</p>
+*Free, open source Hacker News iOS client.*
 
 [[AppIcon.png]]
 

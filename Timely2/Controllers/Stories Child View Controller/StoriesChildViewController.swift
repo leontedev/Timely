@@ -185,6 +185,7 @@ class StoriesChildViewController: UITableViewController {
                 case .success(let hits):
                     self.currentPage += 1
                     print("self.currentPage \(self.currentPage)")
+                    
                     self.stories.append(contentsOf: self.filterSeenAndRead(stories: hits))
                     self.state = .populated
                 case .failure(let error):
