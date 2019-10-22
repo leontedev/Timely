@@ -33,6 +33,10 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.algoliaStories.count > 0 {
+            return self.algoliaStories.count + 100
+        }
+        
         return self.algoliaStories.count
     }
     
@@ -299,3 +303,5 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         
     }
 }
+
+

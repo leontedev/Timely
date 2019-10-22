@@ -6,9 +6,7 @@
 //  Copyright © 2018 Mihai Leonte. All rights reserved.
 //
 
-
 import UIKit
-
 
 class StoriesChildViewController: UITableViewController {
     
@@ -31,23 +29,24 @@ class StoriesChildViewController: UITableViewController {
                 algoliaStories: stories,
                 parentType: parentType
             )
-            tableView.reloadAndScrollToFirstRow()
+            if currentPage <= 1 {
+                tableView.reloadAndScrollToFirstRow()
+            } else {
+                tableView.reloadData()
+            }
         }
     }
     
     var defaultSession: URLSession = URLSession(configuration: .default)
     var currentSelectedSourceAPI: HNFeedType?
-    
     var currentSelectedFeedURL: URLComponents?
     var currentSelectedFeedID: Int8?
-    
     var stories: [Story] = []
-    var storyIDs: [String] = []
-    
+    var currentPage  = 0
+    var isFetchInProgress = false
     
     // Stories, Bookmarks or History?
     var parentType: ParentStoriesChildViewController?
-    
     let AlgoliaClient = AlgoliaAPIClient()
     let OfficialClient = HNOfficialAPIClient()
     
@@ -64,16 +63,16 @@ class StoriesChildViewController: UITableViewController {
         }
         
         
-        self.tableView.estimatedRowHeight = 120
-        self.tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 120
+        tableView.rowHeight = UITableView.automaticDimension
         
         activityIndicator.color = UIColor.lightGray
         setUpPullToRefresh()
         
         storiesDataSource.delegate = self
-        self.tableView.dataSource = storiesDataSource
-        self.tableView.delegate = storiesDataSource
-        
+        tableView.dataSource = storiesDataSource
+        tableView.delegate = storiesDataSource
+        tableView.prefetchDataSource = self
         
         
         NotificationCenter.default.addObserver(self,
@@ -145,10 +144,12 @@ class StoriesChildViewController: UITableViewController {
     /// Initiate updating the Stories TableView based on the currently selected Feed (title, feedType/currentSourceAPI and feedURL)
     @objc func fetchStories() {
         
+        guard !isFetchInProgress else { return }
+        isFetchInProgress = true
+        
         guard let currentSelectedSourceAPI = currentSelectedSourceAPI else { return }
         guard let currentSelectedFeedURL = currentSelectedFeedURL else { return }
         
-        self.stories.removeAll()
         self.state = .loading
         
         switch currentSelectedSourceAPI {
@@ -156,6 +157,8 @@ class StoriesChildViewController: UITableViewController {
         case .official:
             
             self.OfficialClient.fetchOfficialApiStoryIds(from: currentSelectedFeedURL) { officialStoriesResult in
+                self.isFetchInProgress = false
+                
                 switch officialStoriesResult {
                 case .success(let officialStories):
                     
@@ -175,10 +178,14 @@ class StoriesChildViewController: UITableViewController {
             }
             
         case .algolia:
-            self.AlgoliaClient.fetchStories(from: currentSelectedFeedURL) { algoliaResult in
+            self.AlgoliaClient.fetchStories(from: currentSelectedFeedURL, page: currentPage) { algoliaResult in
+                self.isFetchInProgress = false
+                
                 switch algoliaResult {
                 case .success(let hits):
-                    self.stories = self.filterSeenAndRead(stories: hits)
+                    self.currentPage += 1
+                    print("self.currentPage \(self.currentPage)")
+                    self.stories.append(contentsOf: self.filterSeenAndRead(stories: hits))
                     self.state = .populated
                 case .failure(let error):
                     self.state = .error(error)
@@ -253,6 +260,8 @@ class StoriesChildViewController: UITableViewController {
         
         switch sourceParent {
         case .stories:
+            stories.removeAll()
+            currentPage = 0
             fetchStories()
         case .bookmarks:
             refreshBookmarks()
@@ -389,5 +398,29 @@ extension StoriesChildViewController: StoriesDataSourceDelegate {
     
     func didUpdateRow(at indexPath: IndexPath) {
         tableView.reloadRows(at: [indexPath], with: .none)
+    }
+}
+
+extension StoriesChildViewController {
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.row >= stories.count
+    }
+}
+
+extension StoriesChildViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: isLoadingCell) {
+            guard let currentSelectedSourceAPI = currentSelectedSourceAPI else { return }
+            if currentSelectedSourceAPI == .algolia {
+                
+//                let ac = UIAlertController(title: "Fetching new page", message: "Fetching page \(currentPage)", preferredStyle: .alert)
+//                ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//                present(ac, animated: true)
+                
+                
+                self.fetchStories()
+            }
+        }
+        
     }
 }
