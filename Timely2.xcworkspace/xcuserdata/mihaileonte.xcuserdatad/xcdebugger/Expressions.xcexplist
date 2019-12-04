@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "StoriesChildViewController.fetchStories():StoriesChildViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Feeds.().init():Feeds.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "selectedFeedURLComponents.url">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CommentNavBarCell.isBookmarked.didset:CommentNavBarCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "saveBookmarkButton.isHighlighted">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "mach_msg_trap:(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "Bookmarks.shared.items">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CommentNavBarCell.saveBookmarkPressed(_:):CommentNavBarCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Bookmarks.shared.items">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "StoriesChildViewController.refreshData(sender:):StoriesChildViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #2 in StoriesChildViewController.fetchStories():StoriesChildViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "History.shared.seenItems">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "StoriesChildViewController.fetchOfficialApiStoryItems():StoriesChildViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SettingsDetailViewController.viewDidLoad():SettingsDetailViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "StoriesMasterViewController.viewDidLoad():StoriesMasterViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SettingsMasterViewController.prepare(for:sender:):SettingsMasterViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Bookmarks.().init():Bookmarks.swift">
+      </ContextState>
+      <ContextState
+         contextName = "MasterViewController.viewDidLoad():MasterViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "feedURL.url">
+            </PersistentString>
+            <PersistentString
+               value = "myFeeds">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in MasterViewController.fetchItems():MasterViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "topStories">
+            </PersistentString>
+            <PersistentString
+               value = "taskItem">
+            </PersistentString>
+            <PersistentString
+               value = "URLSession.shared">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "StoryCell.awakeFromNib():StoryCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "verticalStackView?.subviews">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CommentNavBarCell.storyID.didset:CommentNavBarCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Bookmarks.shared.items">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HighlightedButton.isHighlighted.didset:HighlightedButton.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "isHighlighted">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CommentCell.fontSizeDidModify(_:):CommentCell.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "commentTextView.font">
+            </PersistentString>
+            <PersistentString
+               value = "elapsedTimeLabel">
+            </PersistentString>
+            <PersistentString
+               value = "commentTextView">
+            </PersistentString>
+            <PersistentString
+               value = "UIFont.systemFont(ofSize: CGFloat(15))">
+            </PersistentString>
+            <PersistentString
+               value = "shareButton">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BookmarksViewController.viewDidLoad():BookmarksViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Bookmarks">
+            </PersistentString>
+            <PersistentString
+               value = "Bookmarks.shared">
+            </PersistentString>
+            <PersistentString
+               value = "Bookmarks.shared.items">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CommentsDataSource.tableView(_:cellForRowAt:):CommentsDataSource.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.comments[indexPath.row]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AppDelegate.application(_:didFinishLaunchingWithOptions:):AppDelegate.swift">
+      </ContextState>
+      <ContextState
+         contextName = "StoriesViewController.viewDidLoad():StoriesViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Feeds.shared">
+            </PersistentString>
+            <PersistentString
+               value = "childVC?.currentSelectedFeedURL?.url">
+            </PersistentString>
+            <PersistentString
+               value = "URLComponents(string: Feeds.shared.selectedFeed.feedURL)?.url">
+            </PersistentString>
+            <PersistentString
+               value = "Feeds.shared.selectedFeedURLComponents?.url">
+            </PersistentString>
+            <PersistentString
+               value = "childVC?.currentSelectedSourceAPI">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "AppearanceTableViewController.updateStoriesUI():AppearanceTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "isSetToUseCustomFontForStories">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "StoriesChildViewController.state.didset:StoriesChildViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "state">
+            </PersistentString>
+            <PersistentString
+               value = "storiesOfficialAPI">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DetailViewController.setFooterView():DetailViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "error.localizedDescription">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

@@ -1,0 +1,10 @@
+{
+  "commitish" : "7.0.1",
+  "iOS" : [
+    {
+      "name" : "InstantSearchClient",
+      "hash" : "f2e29dd76910423d680393331f6733e6ab127cea4360cf1ca50df01591b1be67",
+      "swiftToolchainVersion" : "5.1.2 (swiftlang-1100.0.278 clang-1100.0.33.9)"
+    }
+  ]
+}
