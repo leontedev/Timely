@@ -105,6 +105,7 @@ class AlgoliaAPIClient {
         
         var isSetToUseCustomFontForComments: Bool { return UserDefaults.standard.bool(forKey: "isSetToUseCustomFontForComments") }
         var customFontSizeComments: Float { return UserDefaults.standard.float(forKey: "customFontSizeComments") }
+        
         var prefferedFontSize: UIFont {
             
             if isSetToUseCustomFontForComments {
@@ -191,6 +192,16 @@ class AlgoliaAPIClient {
                         // HTML Parsing / Attributed String Options
                         let color = UIColor.black
                         
+//                        for (index, comment) in self.comments.enumerated() {
+//                            if let attributedString = comment.attributedString {
+//                                let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+//
+//                                mutableAttributedString.replaceFont(font: self.prefferedFontSize)
+//
+//                                self.comments[index].attributedString = mutableAttributedString
+//                            }
+//                        }
+                        
                         let options = [
                             DTCoreTextStub.kDTCoreTextOptionKeyFontSize(): prefferedFontSize.fontDescriptor.pointSize,
                             DTCoreTextStub.kDTCoreTextOptionKeyFontName(): prefferedFontSize.fontName,
@@ -220,6 +231,10 @@ class AlgoliaAPIClient {
                                 
                                 let range = NSMakeRange(0, attributedString.length)
                                 mutableAttributedString.mutableString.replaceOccurrences(of: "\n\n", with: "\n", options: NSString.CompareOptions.caseInsensitive, range: range)
+                                
+                                // Issue #63
+                                mutableAttributedString.replaceFont(font: prefferedFontSize)
+                                // END
                                 
                                 comments[index].attributedString = mutableAttributedString
                             }
