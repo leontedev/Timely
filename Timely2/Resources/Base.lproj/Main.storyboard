@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vTW-nK-abG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vTW-nK-abG">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -48,7 +48,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="m6L-Yu-H34"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Hacker News" largeTitleDisplayMode="always" id="Zdf-7t-Un8">
+                    <navigationItem key="navigationItem" title="Hacker News" largeTitleDisplayMode="never" id="Zdf-7t-Un8">
                         <barButtonItem key="rightBarButtonItem" image="icn_feedSelect" id="E4u-zL-6Ra">
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
@@ -96,7 +96,7 @@
                                     <rect key="frame" x="0.0" y="28" width="210" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fib-wR-lEP" id="PHc-6c-G0e">
-                                        <rect key="frame" x="0.0" y="0.0" width="183.66666666666666" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="184" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HN Top Stories" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32W-kP-Jv1">
@@ -155,7 +155,7 @@
             <objects>
                 <viewController title="Detail" id="JEX-9P-axG" userLabel="Comments Child View Controller" customClass="CommentsViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="svH-Pt-448">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gDs-9P-uUA">
@@ -377,6 +377,7 @@
                                                             <accessibility key="accessibilityConfiguration">
                                                                 <accessibilityTraits key="traits" staticText="YES" notEnabled="YES"/>
                                                             </accessibility>
+                                                            <gestureRecognizers/>
                                                             <attributedString key="attributedText">
                                                                 <fragment>
                                                                     <string key="content">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -387,6 +388,9 @@
                                                             </attributedString>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" spellCheckingType="no"/>
                                                             <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                                            <connections>
+                                                                <outletCollection property="gestureRecognizers" destination="msR-Vk-oSk" appends="YES" id="uSh-kk-390"/>
+                                                            </connections>
                                                         </textView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="50" verticalHuggingPriority="750" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YbV-TX-nsM">
                                                             <rect key="frame" x="10" y="124" width="73.333333333333329" height="15"/>
@@ -475,6 +479,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
+                <exit id="BU2-5r-Zd6" userLabel="Exit" sceneMemberID="exit"/>
                 <view contentMode="scaleToFill" id="rYR-4v-48k" userLabel="Error View">
                     <rect key="frame" x="0.0" y="0.0" width="335" height="563"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -542,6 +547,11 @@
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="451-YB-LXS"/>
                 </view>
+                <tapGestureRecognizer id="msR-Vk-oSk">
+                    <connections>
+                        <action selector="tapped:" destination="BU2-5r-Zd6" id="LzR-eb-A1a"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3804" y="55"/>
         </scene>
@@ -593,7 +603,7 @@
         <!--Stories Child View Controller-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" userLabel="Stories Child View Controller" customClass="StoriesChildViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="StoriesChildViewID" title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" userLabel="Stories Child View Controller" customClass="StoriesChildViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r7i-6Z-zg0" userLabel="Stories Table View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -799,13 +809,13 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oops!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSi-IV-xHk">
-                            <rect key="frame" x="133.66666666666666" y="78.333333333333329" width="68" height="31.333333333333329"/>
+                            <rect key="frame" x="131" y="77" width="73" height="33.666666666666657"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                             <color key="textColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.94999999999999996" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Phl-mY-eTE">
-                            <rect key="frame" x="16" y="119.66666666666667" width="303" height="20.333333333333329"/>
+                            <rect key="frame" x="16" y="120.66666666666667" width="303" height="20.333333333333329"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -823,14 +833,14 @@
                     <viewLayoutGuide key="safeArea" id="hY7-s6-JLx"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1767" y="-112"/>
+            <point key="canvasLocation" x="1564" y="-163"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
             <objects>
                 <navigationController id="vC3-pB-5Vb" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1044,7 +1054,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                         <rect key="frame" x="0.0" y="18" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0p0-vZ-sG6" id="tMK-0g-RZI">
-                                            <rect key="frame" x="0.0" y="0.0" width="347.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_defaults" highlightedImage="icn_defaults" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oUJ-MA-jmF">
@@ -1078,7 +1088,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                         <rect key="frame" x="0.0" y="62" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0IQ-mZ-SZG" id="q9A-jk-Vp5">
-                                            <rect key="frame" x="0.0" y="0.0" width="347.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_appearance" translatesAutoresizingMaskIntoConstraints="NO" id="7RR-Kk-gbX">
@@ -1141,7 +1151,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                         <rect key="frame" x="0.0" y="186" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QC4-oK-5I8" id="qLX-T8-ERJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="347.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_about" translatesAutoresizingMaskIntoConstraints="NO" id="X7R-nx-OpB">
@@ -1200,7 +1210,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                         <rect key="frame" x="0.0" y="274" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KhF-oZ-ySw" id="oHj-Y3-5n6">
-                                            <rect key="frame" x="0.0" y="0.0" width="347.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_privacy" translatesAutoresizingMaskIntoConstraints="NO" id="ZPb-XC-3jh">
@@ -1231,7 +1241,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                         <rect key="frame" x="0.0" y="318" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JSg-QD-crp" id="jXB-ac-IGx">
-                                            <rect key="frame" x="0.0" y="0.0" width="347.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_copyright" translatesAutoresizingMaskIntoConstraints="NO" id="MTx-vX-7SV">
@@ -1314,22 +1324,22 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rhl-Vy-3No">
-                                <rect key="frame" x="144.66666666666666" y="118" width="86" height="121.66666666666669"/>
+                                <rect key="frame" x="139" y="118" width="97.333333333333314" height="126.33333333333331"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timely" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZv-Ru-6m7">
-                                        <rect key="frame" x="0.0" y="0.0" width="86" height="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="97.333333333333329" height="40.666666666666664"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0.0" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Y2-98-6ZW">
-                                        <rect key="frame" x="29" y="46" width="28" height="15.666666666666664"/>
+                                        <rect key="frame" x="34.666666666666657" y="50.666666666666657" width="28" height="15.666666666666671"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tcm-sL-MQy">
-                                        <rect key="frame" x="18" y="71.666666666666657" width="50" height="50"/>
+                                        <rect key="frame" x="23.666666666666657" y="76.333333333333343" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="bJ4-B9-gbJ"/>
                                         </constraints>
@@ -1399,7 +1409,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                         <rect key="frame" x="0.0" y="243.33333206176758" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HRN-tY-9yQ" id="v9J-3W-Co0">
-                                            <rect key="frame" x="0.0" y="0.0" width="347.66666666666669" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="348" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HN-Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcp-8J-koi">
@@ -1492,6 +1502,9 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="containerView" destination="X4E-l7-ooz" id="a1u-Is-Ilf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZYF-JR-bBO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1757,6 +1770,9 @@ Timely is an open-source project released under the MPL-2.0 license. The source 
                         <viewLayoutGuide key="safeArea" id="5AO-dS-hWK"/>
                     </view>
                     <navigationItem key="navigationItem" title="Bookmarks" largeTitleDisplayMode="always" id="DwW-Zq-0tH"/>
+                    <connections>
+                        <outlet property="containerView" destination="hxb-NN-1S4" id="bXF-xZ-Lf3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FuC-kl-LGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1808,7 +1824,7 @@ Timely is an open-source project released under the MPL-2.0 license. The source 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Iav-28-noN"/>
-        <segue reference="Tll-UG-LXB"/>
+        <segue reference="6S0-TO-JiA"/>
         <segue reference="6Ck-Cn-WLf"/>
     </inferredMetricsTieBreakers>
 </document>

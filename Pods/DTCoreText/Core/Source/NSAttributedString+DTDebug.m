@@ -32,7 +32,7 @@
 		[tmpString appendFormat:@"%@ %@ '%@'\n", NSStringFromRange(range), valueString, [rangeString stringByReplacingOccurrencesOfString:@"\n" withString:@"\\n"]];
 	}];
 	
-	printf("%s", [tmpString UTF8String]);
+	//printf("%s", [tmpString UTF8String]);
 }
 
 

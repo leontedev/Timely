@@ -25,15 +25,24 @@ class StoriesChildViewController: UITableViewController {
             
             guard currentSelectedSourceAPI != nil else { return }
             
+            print("OUTPUT storiesDataSource.update with parentType = \(parentType) and \(stories.count) stories")
+            print("OUTPUT story title \(stories.first?.title)")
+            print("OUTPUT self.tableView.frame.size \(self.tableView.frame.size)")
+            print("OUTPUT self.tableView.frame.size \(self.tableView.frame.size)")
+            
+            
             storiesDataSource.update(
                 algoliaStories: stories,
                 parentType: parentType
             )
-            if currentPage <= 1 {
-                tableView.reloadAndScrollToFirstRow()
-            } else {
-                tableView.reloadData()
-            }
+            tableView.reloadData()
+            
+//            if currentPage <= 1 {
+//                //tableView.reloadAndScrollToFirstRow()
+//                tableView.reloadData()
+//            } else {
+//                tableView.reloadData()
+//            }
         }
     }
     
@@ -46,21 +55,22 @@ class StoriesChildViewController: UITableViewController {
     var isFetchInProgress = false
     
     // Stories, Bookmarks or History?
-    var parentType: ParentStoriesChildViewController?
+    var parentType: ParentStoriesChildViewController? 
     let AlgoliaClient = AlgoliaAPIClient()
     let OfficialClient = HNOfficialAPIClient()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //print("OUTPUT: parentType = \(parentType)")
         
-        if (self.parent as? StoriesViewController) != nil {
-            parentType = .stories
-        } else if (self.parent as? BookmarksViewController) != nil {
-            parentType = .bookmarks
-        } else if (self.parent as? HistoryViewController) != nil {
-            parentType = .history
-        }
+//        if (self.parent as? StoriesViewController) != nil {
+//            parentType = .stories
+//        } else if (self.parent as? BookmarksViewController) != nil {
+//            parentType = .bookmarks
+//        } else if (self.parent as? HistoryViewController) != nil {
+//            parentType = .history
+//        }
         
         
         tableView.estimatedRowHeight = 120
@@ -141,7 +151,7 @@ class StoriesChildViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    /// Initiate updating the Stories TableView based on the currently selected Feed (title, feedType/currentSourceAPI and feedURL)
+    // Initiate updating the Stories TableView based on the currently selected Feed (title, feedType/currentSourceAPI and feedURL)
     @objc func fetchStories() {
         
         guard !isFetchInProgress else { return }
@@ -184,7 +194,7 @@ class StoriesChildViewController: UITableViewController {
                 switch algoliaResult {
                 case .success(let hits):
                     self.currentPage += 1
-                    print("self.currentPage \(self.currentPage)")
+                    print("OUTPUT self.currentPage \(self.currentPage)")
                     
                     self.stories.append(contentsOf: self.filterSeenAndRead(stories: hits))
                     self.state = .populated
@@ -240,27 +250,33 @@ class StoriesChildViewController: UITableViewController {
         }
     }
     
-    /// Sets up Pull To Refresh - and calls refreshData()
+    // Sets up Pull To Refresh - and calls refreshData()
     func setUpPullToRefresh() {
         let myRefreshControl = UIRefreshControl()
         myRefreshControl.addTarget(self, action: #selector(refreshData(sender:)), for: .valueChanged)
         myRefreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        
         self.tableView.refreshControl = myRefreshControl
     }
     
     // FIXME: Defect use Refresh Control animation instead of the state.loading animation
     @objc func refreshData(sender: UIRefreshControl) {
         
-        // refresh Feed URL
-        currentSelectedFeedURL = Feeds.shared.selectedFeedURLComponents
-        
         let feedbackGenerator = UINotificationFeedbackGenerator()
         feedbackGenerator.notificationOccurred(.warning)
         
-        guard let sourceParent = parentType else { return }
+        print("OUTPUT refreshData(): parentType = \(self.parentType)")
+        
+        guard let sourceParent = self.parentType else {
+            sender.endRefreshing()
+            return
+        }
         
         switch sourceParent {
         case .stories:
+            // refresh Feed URL
+            currentSelectedFeedURL = Feeds.shared.selectedFeedURLComponents
+            
             stories.removeAll()
             currentPage = 0
             fetchStories()
@@ -273,7 +289,6 @@ class StoriesChildViewController: UITableViewController {
         sender.endRefreshing()
     }
     
-    // TODO: use only one function instead of both refreshBookmarks and refreshHistory
     @objc func refreshBookmarks() {
         self.stories.removeAll()
         self.state = .loading
@@ -290,7 +305,7 @@ class StoriesChildViewController: UITableViewController {
                     self.state = .error(error)
                 }
             })
-            self.state = .populated
+            //self.state = .populated
         }
     }
     
@@ -310,27 +325,11 @@ class StoriesChildViewController: UITableViewController {
                     self.state = .error(error)
                 }
             })
-            self.state = .populated
+            
+            //self.state = .populated
         }
     }
-    
-    //    @objc func addHistoryRow(_ notification: Notification) {
-    //
-    //        guard let itemID = notification.userInfo?["visitedItemID"] as? String else { return }
-    //
-    //        // add the newly received "read" story to the history view data structure:
-    //        //storiesOfficialAPI.insert(item, at: 0)
-    //
-    //        // refresh the data source
-    //        //storiesDataSource.updateOfficialStories(with: storiesOfficialAPI)
-    //
-    //        // refresh the table view
-    //        //tableView.reloadData()
-    //
-    //        //tableView.beginUpdates()
-    //        //tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-    //        //tableView.endUpdates()
-    //    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -379,12 +378,14 @@ class StoriesChildViewController: UITableViewController {
         case .error(let error):
             errorLabel.text = error.localizedDescription
             tableView.tableFooterView = errorView
+            
         case .loading:
             tableView.tableFooterView = loadingView
             //      case .paging:
         //          tableView.tableFooterView = loadingView
         case .empty:
             tableView.tableFooterView = emptyView
+            
         case .populated:
             tableView.tableFooterView = UIView(frame: .zero)
         }
@@ -414,9 +415,9 @@ extension StoriesChildViewController: UITableViewDataSourcePrefetching {
             guard let currentSelectedSourceAPI = currentSelectedSourceAPI else { return }
             if currentSelectedSourceAPI == .algolia {
                 
-//                let ac = UIAlertController(title: "Fetching new page", message: "Fetching page \(currentPage)", preferredStyle: .alert)
-//                ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//                present(ac, animated: true)
+                let ac = UIAlertController(title: "Fetching new page", message: "Fetching page \(currentPage)", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                present(ac, animated: true)
                 
                 
                 self.fetchStories()

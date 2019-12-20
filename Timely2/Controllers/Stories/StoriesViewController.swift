@@ -42,8 +42,6 @@ class StoriesViewController: UIViewController {
             UIView.animate(withDuration: 0.2) {
                 self.feedPopoverView.alpha = 1.0
             }
-            
-
         } else {
             closePopoverView()
         }
@@ -58,6 +56,13 @@ class StoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "StoriesChildViewID") as? StoriesChildViewController else { return }
+        vc.parentType = .stories
+        self.storiesContainerView.addSubview(vc.view)
+        self.addChild(vc)
+        vc.didMove(toParent: self)
+        self.childVC = vc
+
         feedDataSource.delegate = self
         configureFeedTableView(with: Feeds.shared.feeds)
         customizeFeedPopoverView()
@@ -117,17 +122,6 @@ class StoriesViewController: UIViewController {
         feedTableView.clipsToBounds = true
     }
     
-    // MARK: Segues
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "embedStoriesChildVC" {
-            if let childDestination = segue.destination as? StoriesChildViewController {
-                self.childVC = childDestination
-                self.addChild(childDestination)
-                self.childVC?.didMove(toParent: self)
-            }
-        }
-    }
     
 }
 

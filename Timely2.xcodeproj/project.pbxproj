@@ -207,8 +207,8 @@
 		89001E6F225A0476009561B1 /* Stories */ = {
 			isa = PBXGroup;
 			children = (
-				89001E70225A048B009561B1 /* StoriesViewController.swift */,
 				8942097D229FC4D300B819D5 /* StoriesSplitViewController.swift */,
+				89001E70225A048B009561B1 /* StoriesViewController.swift */,
 			);
 			path = Stories;
 			sourceTree = "<group>";
@@ -348,8 +348,8 @@
 		8966AD22224E70A00035A430 /* Bookmarks */ = {
 			isa = PBXGroup;
 			children = (
-				89C997B5224E71D600694BD9 /* BookmarksViewController.swift */,
 				89001E72225A417A009561B1 /* BookmarksSplitViewController.swift */,
+				89C997B5224E71D600694BD9 /* BookmarksViewController.swift */,
 			);
 			path = Bookmarks;
 			sourceTree = "<group>";

@@ -1,4 +1,4 @@
-print("hello");
+
 import UIKit
 
 let currentTimestamp = Int(NSDate().timeIntervalSince1970)

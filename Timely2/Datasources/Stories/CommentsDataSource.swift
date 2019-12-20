@@ -9,12 +9,11 @@
 import Foundation
 import SafariServices
 
-
 class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
-    
     var story: Story?
     var comments: [CommentSource] = []
     weak var parentVC: UIViewController?
+    weak var tableView: UITableView?
     
     // Section indexes
     let STORY_CELL_SECTION = 0
@@ -23,10 +22,11 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     let COLLAPSED_ROW_HEIGHT = 38
     
-    func update(parent: UIViewController, story: Story, comments: [CommentSource]) {
+    func update(parent: UIViewController, story: Story, comments: [CommentSource], tableView: UITableView) {
         self.story = story
         self.comments = comments
         self.parentVC = parent
+        self.tableView = tableView
     }
     
     //MARK: - DataSource
@@ -87,6 +87,11 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
                 cell.elapsedImage.alpha = CGFloat(1.0)
                 cell.authorImage.alpha = CGFloat(1.0)
             }
+            
+            // Add a tap gesture
+            let tap = UITapGestureRecognizer(target: self, action: #selector(CommentsDataSource.commentTapped))
+            cell.addGestureRecognizer(tap)
+            cell.commentTextView.addGestureRecognizer(tap)
             
             return cell
         } else if indexPath.section == STORY_CELL_SECTION {
@@ -157,87 +162,177 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Delegates
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-        feedbackGenerator.prepare()
-        
-        if indexPath.section == COMMENT_CELL_SECTION {
-            
-            // check if the comment (and it's leaves) are already marked as collapsed
-            if !self.comments[indexPath.row].collapsed {
-                
-                let selectedItemDepth = self.comments[indexPath.row].depth
-                
-                //self.collapsedCellsIndexPaths.append(indexPath)
-                self.comments[indexPath.row].height = self.COLLAPSED_ROW_HEIGHT
-                self.comments[indexPath.row].collapsed = true
-                
-                // Find all the child comments
-                var index = indexPath.row + 1
-                var childCommentsForRemoval: [IndexPath] = []
-                while index < self.comments.count && self.comments[index].depth > selectedItemDepth {
-                    // Construct the array of removed Comments to be able to retrieve them on Expanding the collapsed comment tree
-                    self.comments[indexPath.row].removedComments.append(self.comments[index])
-                    // FIXME: [IndexPath] for rows to be deleted
-                    childCommentsForRemoval.append(IndexPath(row: index, section: COMMENT_CELL_SECTION))
+    @objc func commentTapped(recognizer: UITapGestureRecognizer) {
+        if recognizer.state == UIGestureRecognizer.State.ended {
+            if let tableView = self.tableView {
+                let tapLocation = recognizer.location(in: tableView)
+                if let indexPath = tableView.indexPathForRow(at: tapLocation) {
                     
-                    index = index + 1
-                }
-                
-                if childCommentsForRemoval.count > 0 {
+                    let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                    feedbackGenerator.prepare()
                     
-                    for childComment in childCommentsForRemoval.sorted(by: >) {
-                        self.comments.remove(at: childComment.row)
+                    if indexPath.section == COMMENT_CELL_SECTION {
+                        
+                        // check if the comment (and it's leaves) are already marked as collapsed
+                        if !self.comments[indexPath.row].collapsed {
+                            
+                            let selectedItemDepth = self.comments[indexPath.row].depth
+                            
+                            //self.collapsedCellsIndexPaths.append(indexPath)
+                            self.comments[indexPath.row].height = self.COLLAPSED_ROW_HEIGHT
+                            self.comments[indexPath.row].collapsed = true
+                            
+                            // Find all the child comments
+                            var index = indexPath.row + 1
+                            var childCommentsForRemoval: [IndexPath] = []
+                            while index < self.comments.count && self.comments[index].depth > selectedItemDepth {
+                                // Construct the array of removed Comments to be able to retrieve them on Expanding the collapsed comment tree
+                                self.comments[indexPath.row].removedComments.append(self.comments[index])
+                                // FIXME: [IndexPath] for rows to be deleted
+                                childCommentsForRemoval.append(IndexPath(row: index, section: COMMENT_CELL_SECTION))
+                                
+                                index = index + 1
+                            }
+                            
+                            if childCommentsForRemoval.count > 0 {
+                                
+                                for childComment in childCommentsForRemoval.sorted(by: >) {
+                                    self.comments.remove(at: childComment.row)
+                                }
+                                
+                                tableView.performBatchUpdates({
+                                    tableView.deleteRows(at: childCommentsForRemoval, with: UITableView.RowAnimation.fade)
+                                }, completion: nil)
+                            }
+                            
+                            // notification .success gives a double haptic feedback - impact .light gives a small single vibration
+                            //feedbackGenerator.notificationOccurred(.success)
+                            feedbackGenerator.impactOccurred()
+                            
+                            //these tell the tableview something changed, and it checks cell heights and animates changes
+                            tableView.beginUpdates()
+                            tableView.endUpdates()
+                            
+                            // required in order to grey out the elapsed & author icons
+                            tableView.reloadRows(at: [indexPath], with: .none)
+                            
+                        } else {
+                            
+                            self.comments[indexPath.row].height = nil
+                            self.comments[indexPath.row].collapsed = false
+                            
+                            tableView.reloadRows(at: [indexPath], with: .none)
+                            
+                            if self.comments[indexPath.row].removedComments.count > 0 {
+                                //re-insert the previously removed child comments (with higher depths)
+                                self.comments.insert(contentsOf: self.comments[indexPath.row].removedComments, at: indexPath.row + 1)
+                                
+                                var indexPaths: [IndexPath] = []
+                                for (index, _) in self.comments[indexPath.row].removedComments.enumerated() {
+                                    indexPaths.append(IndexPath(row: index + indexPath.row + 1, section: COMMENT_CELL_SECTION))
+                                }
+                                tableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.bottom)
+                                self.comments[indexPath.row].removedComments.removeAll()
+                                
+                            }
+                            
+                            feedbackGenerator.impactOccurred()
+                            
+                            tableView.beginUpdates()
+                            tableView.endUpdates()
+                            
+                        }
                     }
                     
-                    tableView.performBatchUpdates({
-                        tableView.deleteRows(at: childCommentsForRemoval, with: UITableView.RowAnimation.fade)
-                    }, completion: nil)
-                }
-                
-                // notification .success gives a double haptic feedback - impact .light gives a small single vibration
-                //feedbackGenerator.notificationOccurred(.success)
-                feedbackGenerator.impactOccurred()
-                
-                //these tell the tableview something changed, and it checks cell heights and animates changes
-                tableView.beginUpdates()
-                tableView.endUpdates()
-                
-                // required in order to grey out the elapsed & author icons
-                tableView.reloadRows(at: [indexPath], with: .none)
-                
-            } else {
-                
-                self.comments[indexPath.row].height = nil
-                self.comments[indexPath.row].collapsed = false
-                
-                tableView.reloadRows(at: [indexPath], with: .none)
-                
-                if self.comments[indexPath.row].removedComments.count > 0 {
-                    //re-insert the previously removed child comments (with higher depths)
-                    self.comments.insert(contentsOf: self.comments[indexPath.row].removedComments, at: indexPath.row + 1)
-                    
-                    var indexPaths: [IndexPath] = []
-                    for (index, _) in self.comments[indexPath.row].removedComments.enumerated() {
-                        indexPaths.append(IndexPath(row: index + indexPath.row + 1, section: COMMENT_CELL_SECTION))
-                    }
-                    tableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.bottom)
-                    self.comments[indexPath.row].removedComments.removeAll()
+                    // To deselect the collapsed/expanded cell upon reload (otherwise it remains highligted)
+                    tableView.deselectRow(at: indexPath, animated: false)
                     
                 }
-                
-                feedbackGenerator.impactOccurred()
-                
-                tableView.beginUpdates()
-                tableView.endUpdates()
-                
             }
         }
-        
-        // To deselect the collapsed/expanded cell upon reload (otherwise it remains highligted)
-        tableView.deselectRow(at: indexPath, animated: false)
     }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        
+//        let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+//        feedbackGenerator.prepare()
+//        
+//        if indexPath.section == COMMENT_CELL_SECTION {
+//            
+//            // check if the comment (and it's leaves) are already marked as collapsed
+//            if !self.comments[indexPath.row].collapsed {
+//                
+//                let selectedItemDepth = self.comments[indexPath.row].depth
+//                
+//                //self.collapsedCellsIndexPaths.append(indexPath)
+//                self.comments[indexPath.row].height = self.COLLAPSED_ROW_HEIGHT
+//                self.comments[indexPath.row].collapsed = true
+//                
+//                // Find all the child comments
+//                var index = indexPath.row + 1
+//                var childCommentsForRemoval: [IndexPath] = []
+//                while index < self.comments.count && self.comments[index].depth > selectedItemDepth {
+//                    // Construct the array of removed Comments to be able to retrieve them on Expanding the collapsed comment tree
+//                    self.comments[indexPath.row].removedComments.append(self.comments[index])
+//                    // FIXME: [IndexPath] for rows to be deleted
+//                    childCommentsForRemoval.append(IndexPath(row: index, section: COMMENT_CELL_SECTION))
+//                    
+//                    index = index + 1
+//                }
+//                
+//                if childCommentsForRemoval.count > 0 {
+//                    
+//                    for childComment in childCommentsForRemoval.sorted(by: >) {
+//                        self.comments.remove(at: childComment.row)
+//                    }
+//                    
+//                    tableView.performBatchUpdates({
+//                        tableView.deleteRows(at: childCommentsForRemoval, with: UITableView.RowAnimation.fade)
+//                    }, completion: nil)
+//                }
+//                
+//                // notification .success gives a double haptic feedback - impact .light gives a small single vibration
+//                //feedbackGenerator.notificationOccurred(.success)
+//                feedbackGenerator.impactOccurred()
+//                
+//                //these tell the tableview something changed, and it checks cell heights and animates changes
+//                tableView.beginUpdates()
+//                tableView.endUpdates()
+//                
+//                // required in order to grey out the elapsed & author icons
+//                tableView.reloadRows(at: [indexPath], with: .none)
+//                
+//            } else {
+//                
+//                self.comments[indexPath.row].height = nil
+//                self.comments[indexPath.row].collapsed = false
+//                
+//                tableView.reloadRows(at: [indexPath], with: .none)
+//                
+//                if self.comments[indexPath.row].removedComments.count > 0 {
+//                    //re-insert the previously removed child comments (with higher depths)
+//                    self.comments.insert(contentsOf: self.comments[indexPath.row].removedComments, at: indexPath.row + 1)
+//                    
+//                    var indexPaths: [IndexPath] = []
+//                    for (index, _) in self.comments[indexPath.row].removedComments.enumerated() {
+//                        indexPaths.append(IndexPath(row: index + indexPath.row + 1, section: COMMENT_CELL_SECTION))
+//                    }
+//                    tableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.bottom)
+//                    self.comments[indexPath.row].removedComments.removeAll()
+//                    
+//                }
+//                
+//                feedbackGenerator.impactOccurred()
+//                
+//                tableView.beginUpdates()
+//                tableView.endUpdates()
+//                
+//            }
+//        }
+//        
+//        // To deselect the collapsed/expanded cell upon reload (otherwise it remains highligted)
+//        tableView.deselectRow(at: indexPath, animated: false)
+//    }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -248,6 +343,7 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         return UITableView.automaticDimension
     }
+    
     
     @objc func labelTapped(sender:UITapGestureRecognizer) {
         if let url = story?.url {

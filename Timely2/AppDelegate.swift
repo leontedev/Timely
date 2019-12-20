@@ -26,66 +26,73 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         print(History.shared)
         
         
-        // Override point for customization after application launch.
-        let splitViewController = window!.rootViewController?.children[0] as! UISplitViewController
+//        // Override point for customization after application launch.
+//        let splitViewController = window!.rootViewController?.children[0] as! UISplitViewController
+//        let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
+//        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+//        splitViewController.delegate = self
+//        // Forces devices where there is sufficient display estate to display both the master and detail VCs
+//        splitViewController.preferredDisplayMode = .automatic
         
-        let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         
-        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         
-        splitViewController.delegate = self
-        
-        // Forces devices where there is sufficient display estate to display both the master and detail VCs
-        splitViewController.preferredDisplayMode = .allVisible
+//        // SplitViewController bug for History & Bookmarks
+//        let bookmarksSplitViewController = window!.rootViewController?.children[1] as! UISplitViewController
+//        bookmarksSplitViewController.delegate = self
+//        bookmarksSplitViewController.preferredDisplayMode = .allVisible
+//
+//        let historySplitViewController = window!.rootViewController?.children[2] as! UISplitViewController
+//        historySplitViewController.delegate = self
+//        historySplitViewController.preferredDisplayMode = .allVisible
+//        //+END
         
 
-        // TODO: Check for dropped frames
-        let link = CADisplayLink(target: self, selector: #selector(update(link:)))
-        // add to the run loop
-        link.add(to: .main, forMode: .common)
+//        // TODO: Check for dropped frames
+//        let link = CADisplayLink(target: self, selector: #selector(update(link:)))
+//        // add to the run loop
+//        link.add(to: .main, forMode: .common)
         
         
         return true
     }
     
-    @objc func update(link: CADisplayLink) {
-        if lastTime == 0 {
-            firstTime = link.timestamp
-            lastTime = link.timestamp
-        }
-        
-        let currentTime = link.timestamp
-        _ = currentTime - firstTime
-        
-        // display in ms
-        let elapsedTime = floor((currentTime - lastTime) * 10_000)/10
-        
-        if elapsedTime > 16.7 {
-            print("")
-        }
-    }
+//    @objc func update(link: CADisplayLink) {
+//        if lastTime == 0 {
+//            firstTime = link.timestamp
+//            lastTime = link.timestamp
+//        }
+//        
+//        let currentTime = link.timestamp
+//        _ = currentTime - firstTime
+//        
+//        // display in ms
+//        let elapsedTime = floor((currentTime - lastTime) * 10_000)/10
+//        
+//        if elapsedTime > 16.7 {
+//            print("")
+//        }
+//    }
     
     
-    // MARK: - Split view
-    
-    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController:UIViewController, onto primaryViewController:UIViewController) -> Bool {
-        
-        guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
-        
-        guard let topAsDetailController = secondaryAsNavController.topViewController as? CommentsViewController else { return false }
-        
-        if topAsDetailController.algoliaStoryItem == nil {
-            // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
-            return true
-        }
-      
-        return false
-    }
+//    // MARK: - Split view
+//    
+//    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController:UIViewController, onto primaryViewController:UIViewController) -> Bool {
+//        
+////        guard let secondaryAsNavController = secondaryViewController as? UINavigationController else { return false }
+////
+////        guard let topAsDetailController = secondaryAsNavController.topViewController as? CommentsViewController else { return false }
+////
+////        if topAsDetailController.algoliaStoryItem == nil {
+////            // Return true to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
+////            return true
+////        }
+//      
+//        return true
+//    }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        
-      History.shared.persistData()
-        
+        History.shared.persistData()
+        Bookmarks.shared.persistData()
     }
 
     // user pressed the Home button

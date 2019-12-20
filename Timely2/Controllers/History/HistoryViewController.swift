@@ -20,17 +20,12 @@ class HistoryViewController: UIViewController {
         childVC?.refreshHistory()
         NotificationCenter.default.post(name: .historyCleared, object: nil)
     }
+    @IBOutlet weak var containerView: UIView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        os_log("HistoryViewController did load.", log: OSLog.viewCycle, type: .debug)
-        
-        print("******************* History was loaded.")
-        
-        guard let childVC = childVC else { return }
-        
+ 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refreshHistoryHeaderCount),
                                                name: .historyAdded,
@@ -49,16 +44,21 @@ class HistoryViewController: UIViewController {
                                                 object: nil
         )
         
-        childVC.currentSelectedSourceAPI = .official
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "StoriesChildViewID") as? StoriesChildViewController else { return }
+        vc.parentType = .history
+        self.containerView.addSubview(vc.view)
+        self.addChild(vc)
+        vc.didMove(toParent: self)
+        self.childVC = vc
+        vc.currentSelectedSourceAPI = .official
         
         if History.shared.readItems.isEmpty {
-            childVC.state = .empty
+            vc.state = .empty
             self.navigationItem.title = "History"
         } else {
             let historyCount = String(History.shared.readItems.count)
             self.navigationItem.title = "History (\(historyCount))"
-            
-            childVC.refreshHistory()
+            vc.refreshHistory()
         }
         
     }
@@ -77,17 +77,6 @@ class HistoryViewController: UIViewController {
             self.navigationItem.title = "History"
         }
     }
-    
-    // MARK: Segues
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "embedHistoryChildVC" {
-            if let childDestination = segue.destination as? StoriesChildViewController {
-                self.childVC = childDestination
-                self.addChild(childDestination)
-                self.childVC?.didMove(toParent: self)
-            }
-        }
-    }
+
     
 }

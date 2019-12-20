@@ -13,7 +13,7 @@ extension FileManager {
 }
 
 FileManager.documentDirectoryURL
-print(FileManager.documentDirectoryURL.path)
+//print(FileManager.documentDirectoryURL.path)
 
 
 

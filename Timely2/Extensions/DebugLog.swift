@@ -28,6 +28,6 @@ public func debugLog(functionName: String = #function, fileName: String = #file,
 //    }
     
     debugOutput += "\n"
-    print(debugOutput)
+    //print(debugOutput)
     #endif
 }

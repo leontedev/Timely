@@ -14,10 +14,8 @@ class StoriesSplitViewController: UISplitViewController, UISplitViewControllerDe
         super.viewDidLoad()
         self.delegate = self
         self.preferredDisplayMode = .allVisible
-        // Do any additional setup after loading the view.
     }
     
-
     func splitViewController(
         _ splitViewController: UISplitViewController,
         collapseSecondary secondaryViewController: UIViewController,

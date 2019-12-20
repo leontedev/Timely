@@ -37,7 +37,7 @@ class CommentsViewController: UIViewController {
             
             guard let story = algoliaStoryItem else { return }
             
-            dataSource.update(parent: self, story: story, comments: self.comments)
+            dataSource.update(parent: self, story: story, comments: self.comments, tableView: tableView)
             tableView.reloadData()
         }
     }
@@ -138,7 +138,7 @@ class CommentsViewController: UIViewController {
         
         guard let story = self.algoliaStoryItem else { return }
         
-        dataSource.update(parent: self, story: story, comments: self.comments)
+        dataSource.update(parent: self, story: story, comments: self.comments, tableView: tableView)
         
         tableView.reloadData()
     }

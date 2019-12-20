@@ -12,13 +12,10 @@ import os
 
 class BookmarksViewController: UIViewController {
     var childVC: StoriesChildViewController?
-   
-
+    @IBOutlet weak var containerView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        os_log("BookmarksViewController did load.", log: OSLog.viewCycle, type: .debug)
-        
-        guard let childVC = childVC else { return }
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refreshBookmarkHeaderCount),
@@ -32,16 +29,22 @@ class BookmarksViewController: UIViewController {
                                                object: nil
         )
         
-        childVC.currentSelectedSourceAPI = .official
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "StoriesChildViewID") as? StoriesChildViewController else { return }
+        vc.parentType = .bookmarks
+        self.containerView.addSubview(vc.view)
+        self.addChild(vc)
+        vc.didMove(toParent: self)
+        self.childVC = vc
+        vc.currentSelectedSourceAPI = .official
         
         if Bookmarks.shared.items.isEmpty {
-            childVC.state = .empty
+            vc.state = .empty
             self.navigationItem.title = "Bookmarks"
         } else {
             let bookmarksCount = String(Bookmarks.shared.items.count)
             self.navigationItem.title = "Bookmarks (\(bookmarksCount))"
             
-            childVC.refreshBookmarks()
+            vc.refreshBookmarks()
         }
         
     }
@@ -60,15 +63,4 @@ class BookmarksViewController: UIViewController {
         
     }
 
-    // MARK: Segues
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "embedBookmarksChildVC" {
-            if let childDestination = segue.destination as? StoriesChildViewController {
-                self.childVC = childDestination
-                self.addChild(childDestination)
-                self.childVC?.didMove(toParent: self)
-            }
-        }
-    }
 }

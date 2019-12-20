@@ -13,8 +13,6 @@ protocol StoriesDataSourceDelegate: class {
     func didUpdateRow(at indexPath: IndexPath)
 }
 
-// to detect scrolling direction in tableView(_:didEndDisplaying:forRowAt:)
-// var verticalContentOffset: CGFloat  = 0
 
 class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
@@ -29,14 +27,15 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.algoliaStories.count > 0 {
-            return self.algoliaStories.count + 100
-        }
-        
+//        if self.algoliaStories.count > 0 {
+//            return self.algoliaStories.count + 100
+//        }
+
         return self.algoliaStories.count
     }
     
@@ -184,7 +183,7 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         
         action.image = UIImage(named: "icn_bookmarked")
-        action.backgroundColor = Bookmarks.shared.contains(id: itemID) ? .red : .blue
+        action.backgroundColor = Bookmarks.shared.contains(id: itemID) ? UIColor(named: "RemoveBookmarkAction") : UIColor(named: "BookmarkAction")
         
         return action
     }
