@@ -1,15 +1,15 @@
 //
-//  AboutViewController.swift
+//  CopyrightViewController.swift
 //  Timely2
 //
-//  Created by Mihai Leonte on 3/27/19.
+//  Created by Mihai Leonte on 23/12/2019.
 //  Copyright © 2019 Mihai Leonte. All rights reserved.
 //
 
 import UIKit
 import WebKit
 
-class AboutViewController: UIViewController {
+class CopyrightViewController: UIViewController {
     
     var webView: WKWebView!
     

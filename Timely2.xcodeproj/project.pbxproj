@@ -46,6 +46,7 @@
 		8966AD21224DF51A0035A430 /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966AD20224DF51A0035A430 /* Bookmarks.swift */; };
 		89790554226759DE00A18FB7 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89790553226759DE00A18FB7 /* NotificationName.swift */; };
 		897D066E2230EB57006B831F /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897D066D2230EB57006B831F /* SettingsSplitViewController.swift */; };
+		89A0BFED23B10A10005F2169 /* CopyrightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0BFEC23B10A10005F2169 /* CopyrightViewController.swift */; };
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
 		89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */; };
 		89BE85B322326E98001D7870 /* DefaultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */; };
@@ -140,6 +141,7 @@
 		8966AD20224DF51A0035A430 /* Bookmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmarks.swift; sourceTree = "<group>"; };
 		89790553226759DE00A18FB7 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		897D066D2230EB57006B831F /* SettingsSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSplitViewController.swift; sourceTree = "<group>"; };
+		89A0BFEC23B10A10005F2169 /* CopyrightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyrightViewController.swift; sourceTree = "<group>"; };
 		89A8A31F20DBA607007A8664 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMasterViewController.swift; sourceTree = "<group>"; };
 		89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsTableViewController.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				89BE85B222326E98001D7870 /* DefaultsTableViewController.swift */,
 				89BE85B422327762001D7870 /* AppearanceTableViewController.swift */,
 				893CA75A224BB95A00BDA9FF /* AboutViewController.swift */,
+				89A0BFEC23B10A10005F2169 /* CopyrightViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -653,6 +656,7 @@
 				89C997D022537F8400694BD9 /* CommentStoryCell.swift in Sources */,
 				89790554226759DE00A18FB7 /* NotificationName.swift in Sources */,
 				89DAB65A21FF4CF9004390D9 /* DTCoreTextStub.m in Sources */,
+				89A0BFED23B10A10005F2169 /* CopyrightViewController.swift in Sources */,
 				893FB66C20B8494B007771A3 /* CommentsViewController.swift in Sources */,
 				893CA75F224BBC0500BDA9FF /* NSMutableAttributedString.swift in Sources */,
 				890CFAF62296624E0047E07C /* TimelyTabBarController.swift in Sources */,

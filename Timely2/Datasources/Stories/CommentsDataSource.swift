@@ -253,21 +253,21 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        
+//
 //        let feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
 //        feedbackGenerator.prepare()
-//        
+//
 //        if indexPath.section == COMMENT_CELL_SECTION {
-//            
+//
 //            // check if the comment (and it's leaves) are already marked as collapsed
 //            if !self.comments[indexPath.row].collapsed {
-//                
+//
 //                let selectedItemDepth = self.comments[indexPath.row].depth
-//                
+//
 //                //self.collapsedCellsIndexPaths.append(indexPath)
 //                self.comments[indexPath.row].height = self.COLLAPSED_ROW_HEIGHT
 //                self.comments[indexPath.row].collapsed = true
-//                
+//
 //                // Find all the child comments
 //                var index = indexPath.row + 1
 //                var childCommentsForRemoval: [IndexPath] = []
@@ -276,60 +276,60 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
 //                    self.comments[indexPath.row].removedComments.append(self.comments[index])
 //                    // FIXME: [IndexPath] for rows to be deleted
 //                    childCommentsForRemoval.append(IndexPath(row: index, section: COMMENT_CELL_SECTION))
-//                    
+//
 //                    index = index + 1
 //                }
-//                
+//
 //                if childCommentsForRemoval.count > 0 {
-//                    
+//
 //                    for childComment in childCommentsForRemoval.sorted(by: >) {
 //                        self.comments.remove(at: childComment.row)
 //                    }
-//                    
+//
 //                    tableView.performBatchUpdates({
 //                        tableView.deleteRows(at: childCommentsForRemoval, with: UITableView.RowAnimation.fade)
 //                    }, completion: nil)
 //                }
-//                
+//
 //                // notification .success gives a double haptic feedback - impact .light gives a small single vibration
 //                //feedbackGenerator.notificationOccurred(.success)
 //                feedbackGenerator.impactOccurred()
-//                
+//
 //                //these tell the tableview something changed, and it checks cell heights and animates changes
 //                tableView.beginUpdates()
 //                tableView.endUpdates()
-//                
+//
 //                // required in order to grey out the elapsed & author icons
 //                tableView.reloadRows(at: [indexPath], with: .none)
-//                
+//
 //            } else {
-//                
+//
 //                self.comments[indexPath.row].height = nil
 //                self.comments[indexPath.row].collapsed = false
-//                
+//
 //                tableView.reloadRows(at: [indexPath], with: .none)
-//                
+//
 //                if self.comments[indexPath.row].removedComments.count > 0 {
 //                    //re-insert the previously removed child comments (with higher depths)
 //                    self.comments.insert(contentsOf: self.comments[indexPath.row].removedComments, at: indexPath.row + 1)
-//                    
+//
 //                    var indexPaths: [IndexPath] = []
 //                    for (index, _) in self.comments[indexPath.row].removedComments.enumerated() {
 //                        indexPaths.append(IndexPath(row: index + indexPath.row + 1, section: COMMENT_CELL_SECTION))
 //                    }
 //                    tableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.bottom)
 //                    self.comments[indexPath.row].removedComments.removeAll()
-//                    
+//
 //                }
-//                
+//
 //                feedbackGenerator.impactOccurred()
-//                
+//
 //                tableView.beginUpdates()
 //                tableView.endUpdates()
-//                
+//
 //            }
 //        }
-//        
+//
 //        // To deselect the collapsed/expanded cell upon reload (otherwise it remains highligted)
 //        tableView.deselectRow(at: indexPath, animated: false)
 //    }
