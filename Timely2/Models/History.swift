@@ -91,6 +91,8 @@ public class History {
             
         }
         
+        persistData()
+        
     }
     
     func remove(id: String, at indexPath: IndexPath?, from parentType: ParentStoriesChildViewController?) {
@@ -107,10 +109,13 @@ public class History {
         } else {
             NotificationCenter.default.post(name: .historyItemRemoved, object: nil)
         }
+        
+        persistData()
     }
     
     public func removeHistory() {
         self.readItems.removeAll()
+        persistData()
     }
     
     public func contains(_ id: String) -> Bool {

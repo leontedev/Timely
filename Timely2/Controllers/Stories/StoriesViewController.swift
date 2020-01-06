@@ -108,7 +108,7 @@ class StoriesViewController: UIViewController {
     
     /// Sets up the Popover View which contains the Feed/Sort TableView.
     func customizeFeedPopoverView() {
-        
+        feedPopoverView.backgroundColor = UIColor(named: "FeedColor")
         self.view.addSubview(feedPopoverView)
         feedPopoverView.translatesAutoresizingMaskIntoConstraints = false
         feedPopoverView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true

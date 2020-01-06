@@ -16,6 +16,9 @@ class TimelyTabBarController: UITabBarController, UITabBarControllerDelegate {
         //print("viewDidLoad >>>>>>>>>>> selectedIndex didSet \(selectedIndex)")
         
         self.delegate = self
+        tabBar.tintColor = UIColor(named: "ButtonColor")
+        //tabBar.barTintColor = UIColor.orange
+        tabBar.unselectedItemTintColor = UIColor.gray
         
         // Do any additional setup after loading the view.
     }

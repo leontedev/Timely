@@ -190,7 +190,7 @@ class AlgoliaAPIClient {
                         componentsFormatter.unitsStyle = .abbreviated
                         
                         // HTML Parsing / Attributed String Options
-                        let color = UIColor.black
+                        let color = UIColor(named: "CommentColor")
                         
 //                        for (index, comment) in self.comments.enumerated() {
 //                            if let attributedString = comment.attributedString {

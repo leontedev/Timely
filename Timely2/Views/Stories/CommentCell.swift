@@ -36,6 +36,8 @@ class CommentCell: UITableViewCell {
         
         if commentTextView != nil {
             commentTextView.adjustsFontForContentSizeCategory = true
+            //commentTextView.textColor = UIColor(named: "CommentColor")
+            
             updateFontSizeUI()
             
             notificationCenter.addObserver(self,

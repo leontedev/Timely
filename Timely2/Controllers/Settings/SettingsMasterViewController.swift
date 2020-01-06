@@ -52,7 +52,7 @@ class SettingsMasterViewController: UITableViewController, MFMailComposeViewCont
                     UIApplication.shared.openURL(appURL as URL)
                 }
             } else {
-                //redirect to safari because the user doesn't have Instagram
+                //redirect to safari because the user doesn't have the app installed
                 if #available(iOS 10.0, *) {
                     UIApplication.shared.open(webURL as URL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
                 } else {

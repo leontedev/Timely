@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        self.window?.tintColor = UIColor(named: "ButtonColor")
+        
         // initialize Singletons
         print(Defaults.shared)
         print(Feeds.shared)

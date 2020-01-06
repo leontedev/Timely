@@ -22,7 +22,7 @@ class CopyrightViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let url = URL(string: "https://github.com/leontedev/Timely")!
+        let url = URL(string: "https://github.com/leontedev/Timely/blob/master/LICENSE.md")!
         let request = URLRequest(url: url)
         webView.load(request)
         webView.allowsBackForwardNavigationGestures = true

@@ -45,6 +45,7 @@ public class Bookmarks {
     
     // post notification to refresh the Stories Child View
     NotificationCenter.default.post(name: .bookmarkAdded, object: nil)
+    persistData()
   }
   
   func remove(id: String) {
@@ -52,6 +53,7 @@ public class Bookmarks {
     
     // post notification to refresh the Stories Child View
     NotificationCenter.default.post(name: .bookmarkRemoved, object: nil)
+    persistData()
   }
   
   func contains(id: String) -> Bool {

@@ -240,63 +240,65 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         
         switch state {
         case .new:
-            cell.titleLabel.textColor = .black
+            cell.titleLabel.textColor = UIColor(named: "CommentColor")
             cell.titleLabel.font = UIFont.boldSystemFont(ofSize: cell.titleLabel.font.pointSize)
             
             // Show the orange cicle marking new stories
             cell.newStoryCircleView.isHidden = false
             
             
-            cell.commentsCountLabel.textColor = .black
-            cell.elapsedTimeLabel.textColor = .black
-            cell.upvotesCountLabel.textColor = .black
+            cell.commentsCountLabel.textColor = UIColor(named: "CommentColor")
+            cell.elapsedTimeLabel.textColor = UIColor(named: "CommentColor")
+            cell.upvotesCountLabel.textColor = UIColor(named: "CommentColor")
             
             cell.commentsCountImage.alpha = CGFloat(1)
             cell.elapsedTimeImage.alpha = CGFloat(1)
             cell.upvotesCountImage.alpha = CGFloat(1)
             
             cell.bookmarkedTimeImage.alpha = CGFloat(1)
-            cell.bookmarkedTimeLabel.textColor = .black
+            cell.bookmarkedTimeLabel.textColor = UIColor(named: "CommentColor")
             
             cell.bookmarkedTimeImage.isHidden = true
             cell.bookmarkedTimeLabel.isHidden = true
         case .seen:
-            cell.titleLabel.textColor = .black
+            cell.titleLabel.textColor = UIColor(named: "CommentColor")
             cell.titleLabel.font = UIFont.systemFont(ofSize: cell.titleLabel.font.pointSize)
             
             // Hide the orange cicle marking new stories
             cell.newStoryCircleView.isHidden = true
             
-            cell.commentsCountLabel.textColor = .black
-            cell.elapsedTimeLabel.textColor = .black
-            cell.upvotesCountLabel.textColor = .black
+            cell.commentsCountLabel.textColor = UIColor(named: "CommentColor")
+            cell.elapsedTimeLabel.textColor = UIColor(named: "CommentColor")
+            cell.upvotesCountLabel.textColor = UIColor(named: "CommentColor")
             
             cell.commentsCountImage.alpha = CGFloat(1)
             cell.elapsedTimeImage.alpha = CGFloat(1)
             cell.upvotesCountImage.alpha = CGFloat(1)
             
             cell.bookmarkedTimeImage.alpha = CGFloat(1)
-            cell.bookmarkedTimeLabel.textColor = .black
+            cell.bookmarkedTimeLabel.textColor = UIColor(named: "CommentColor")
             
             cell.bookmarkedTimeImage.isHidden = true
             cell.bookmarkedTimeLabel.isHidden = true
         case .read:
-            cell.titleLabel.textColor = .lightGray
+            cell.titleLabel.textColor = UIColor(named: "ReadCommentColor")
             cell.titleLabel.font = UIFont.systemFont(ofSize: cell.titleLabel.font.pointSize)
+            
+            cell.urlLabel.textColor = UIColor(named: "ReadCommentColor")
             
             // Hide the orange cicle marking new stories
             cell.newStoryCircleView.isHidden = true
             
-            cell.commentsCountLabel.textColor = .lightGray
-            cell.elapsedTimeLabel.textColor = .lightGray
-            cell.upvotesCountLabel.textColor = .lightGray
+            cell.commentsCountLabel.textColor = UIColor(named: "ReadCommentColor")
+            cell.elapsedTimeLabel.textColor = UIColor(named: "ReadCommentColor")
+            cell.upvotesCountLabel.textColor = UIColor(named: "ReadCommentColor")
             
             cell.commentsCountImage.alpha = CGFloat(0.3)
             cell.elapsedTimeImage.alpha = CGFloat(0.3)
             cell.upvotesCountImage.alpha = CGFloat(0.3)
             
             cell.bookmarkedTimeImage.alpha = CGFloat(0.3)
-            cell.bookmarkedTimeLabel.textColor = .lightGray
+            cell.bookmarkedTimeLabel.textColor = UIColor(named: "ReadCommentColor")
         }
         
         

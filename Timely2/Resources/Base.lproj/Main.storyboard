@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,6 +35,7 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yty-cz-3q2" userLabel="Stories Container View">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <connections>
                                     <segue destination="7bK-jq-Zjz" kind="embed" identifier="embedStoriesChildVC" id="6Ck-Cn-WLf"/>
                                 </connections>
@@ -50,7 +52,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Hacker News" largeTitleDisplayMode="never" id="Zdf-7t-Un8">
                         <barButtonItem key="rightBarButtonItem" image="icn_feedSelect" id="E4u-zL-6Ra">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="tintColor" name="ButtonColor"/>
                             <connections>
                                 <action selector="changeFeed:" destination="2pk-vo-Y6q" id="rrp-73-les"/>
                             </connections>
@@ -76,8 +78,10 @@
                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Cm3-NG-HV2">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <gestureRecognizers/>
                             </view>
+                            <color key="backgroundColor" name="FeedColor"/>
                             <gestureRecognizers/>
                             <blurEffect style="extraLight"/>
                             <connections>
@@ -160,7 +164,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gDs-9P-uUA">
                                 <rect key="frame" x="0.0" y="56" width="375" height="668"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StoryCell" rowHeight="100" id="xi8-SG-Bgr" userLabel="Comment Story Cell" customClass="CommentStoryCell" customModule="Timely2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
@@ -174,19 +178,19 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ScU-O9-osD">
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                            <nil key="textColor"/>
+                                                            <color key="textColor" name="CommentColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="800" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrD-xQ-h1I" userLabel="URL Label">
                                                             <rect key="frame" x="0.0" y="17" width="0.0" height="0.0"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" name="LinkCustomColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="900" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Svy-Yz-kRM" userLabel="Story Text">
                                                             <rect key="frame" x="0.0" y="34" width="0.0" height="0.0"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <nil key="textColor"/>
+                                                            <color key="textColor" name="CommentColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="50" verticalHuggingPriority="750" distribution="equalSpacing" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="JiM-Pm-SoH" userLabel="Horiz Stack View">
@@ -197,6 +201,7 @@
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" image="icn_upvotes" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="twZ-ct-OaI">
                                                                             <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
+                                                                            <color key="tintColor" name="CommentColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="17" id="2SN-Yd-bas"/>
                                                                                 <constraint firstAttribute="width" secondItem="twZ-ct-OaI" secondAttribute="height" multiplier="1:1" id="eiN-Fg-Aw5"/>
@@ -205,7 +210,7 @@
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="128-LN-aha" userLabel="points">
                                                                             <rect key="frame" x="21" y="0.0" width="5.6666666666666679" height="17"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <color key="textColor" name="CommentColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
@@ -215,6 +220,7 @@
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" image="icn_comments" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O5u-Vu-3qx">
                                                                             <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
+                                                                            <color key="tintColor" name="CommentColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="17" id="ayP-Hk-ziy"/>
                                                                                 <constraint firstAttribute="width" secondItem="O5u-Vu-3qx" secondAttribute="height" multiplier="1:1" id="iK9-b3-Erm"/>
@@ -223,7 +229,7 @@
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EuO-6b-X1y" userLabel="comments">
                                                                             <rect key="frame" x="21.000000000000007" y="0.0" width="5.6666666666666679" height="17"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <color key="textColor" name="CommentColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
@@ -233,6 +239,7 @@
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" image="icn_elapsed" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Lh-Ks-ZxC">
                                                                             <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
+                                                                            <color key="tintColor" name="CommentColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="1Lh-Ks-ZxC" secondAttribute="height" multiplier="1:1" id="iGd-WM-Nyq"/>
                                                                                 <constraint firstAttribute="width" constant="17" id="wNu-FM-gdH"/>
@@ -241,7 +248,7 @@
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbc-9x-vmV" userLabel="elapsed">
                                                                             <rect key="frame" x="21" y="0.0" width="5.6666666666666679" height="17"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <color key="textColor" name="CommentColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
@@ -251,6 +258,7 @@
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" image="icn_author" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f91-Ar-rA6">
                                                                             <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
+                                                                            <color key="tintColor" name="CommentColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" secondItem="f91-Ar-rA6" secondAttribute="height" multiplier="1:1" id="6B1-2w-6eL"/>
                                                                                 <constraint firstAttribute="height" constant="17" id="Nhg-WY-Ztf"/>
@@ -259,7 +267,7 @@
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="248" verticalHuggingPriority="251" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpF-bX-92b" userLabel="author">
                                                                             <rect key="frame" x="21" y="0.0" width="5.6666666666666679" height="17"/>
                                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <color key="textColor" name="CommentColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
@@ -303,7 +311,7 @@
                                                                 <constraint firstAttribute="height" constant="25" id="JGb-GF-Hzc"/>
                                                                 <constraint firstAttribute="width" constant="25" id="geo-gA-W4p"/>
                                                             </constraints>
-                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="tintColor" name="CommentColor"/>
                                                             <state key="normal" image="icn_safari"/>
                                                             <connections>
                                                                 <action selector="safariButtonPressed" destination="QsZ-sU-q0H" eventType="touchUpInside" id="9ik-hd-9kf"/>
@@ -315,7 +323,7 @@
                                                                 <constraint firstAttribute="height" constant="23" id="NAK-Jj-EBk"/>
                                                                 <constraint firstAttribute="width" constant="23" id="pPo-PX-BM3"/>
                                                             </constraints>
-                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="tintColor" name="CommentColor"/>
                                                             <state key="normal" image="icn_link"/>
                                                             <connections>
                                                                 <action selector="webviewButtonPressed" destination="QsZ-sU-q0H" eventType="touchUpInside" id="oMD-d4-48h"/>
@@ -327,7 +335,7 @@
                                                                 <constraint firstAttribute="height" constant="22" id="Dlo-T3-9FG"/>
                                                                 <constraint firstAttribute="width" secondItem="6cM-Rx-x7e" secondAttribute="height" multiplier="22:31" id="e6h-dK-LEf"/>
                                                             </constraints>
-                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="tintColor" name="CommentColor"/>
                                                             <state key="normal" image="icn_save"/>
                                                             <connections>
                                                                 <action selector="saveBookmarkPressed:" destination="QsZ-sU-q0H" eventType="touchUpInside" id="jk1-nn-QSk"/>
@@ -339,7 +347,7 @@
                                                                 <constraint firstAttribute="height" constant="26" id="Kph-Fg-3Pp"/>
                                                                 <constraint firstAttribute="width" constant="26" id="QuN-Z9-BwW"/>
                                                             </constraints>
-                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="tintColor" name="CommentColor"/>
                                                             <state key="normal" image="icn_share"/>
                                                             <connections>
                                                                 <action selector="shareButtonPressed" destination="QsZ-sU-q0H" eventType="touchUpInside" id="a8Q-x4-27f"/>
@@ -400,6 +408,7 @@
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="icn_elapsed" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cxk-gZ-6XF">
                                                                             <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                                                                            <color key="tintColor" name="CommentColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="15" id="LgG-Qu-tBV"/>
                                                                                 <constraint firstAttribute="width" secondItem="cxk-gZ-6XF" secondAttribute="height" multiplier="1:1" id="d3N-3c-uhF"/>
@@ -418,6 +427,7 @@
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="icn_author" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Tf-el-jkA">
                                                                             <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                                                                            <color key="tintColor" name="CommentColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="15" id="2hN-ne-VGx"/>
                                                                                 <constraint firstAttribute="width" secondItem="1Tf-el-jkA" secondAttribute="height" multiplier="1:1" id="rYF-Kb-r6y"/>
@@ -563,6 +573,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
                                 <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -607,7 +618,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="r7i-6Z-zg0" userLabel="Stories Table View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItemCell" rowHeight="100" id="WCw-Qf-5nD" userLabel="StoryCell" customClass="StoryCell" customModule="Timely2" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
@@ -644,6 +655,7 @@
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_upvotes" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bBv-4O-fkT">
                                                                     <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                                                                    <color key="tintColor" name="CommentColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="15" id="90f-is-c1i"/>
                                                                         <constraint firstAttribute="width" constant="15" id="yd4-fG-vf6"/>
@@ -661,6 +673,7 @@
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_comments" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I11-pk-54j">
                                                                     <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                                                    <color key="tintColor" name="CommentColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="16" id="4ly-AF-mbD"/>
                                                                         <constraint firstAttribute="height" constant="16" id="c3T-8B-y2E"/>
@@ -678,6 +691,7 @@
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_elapsed" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9If-Q8-Efb">
                                                                     <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
+                                                                    <color key="tintColor" name="CommentColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="15" id="Czp-6y-heh"/>
                                                                         <constraint firstAttribute="width" constant="15" id="JqH-4p-JOk"/>
@@ -723,7 +737,6 @@
                                         <constraint firstAttribute="bottom" secondItem="bxb-YG-5UT" secondAttribute="bottom" constant="10" id="nza-uZ-BK0"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <connections>
                                     <outlet property="bookmarkedTimeImage" destination="hk8-lc-Hfc" id="ScP-nn-N7r"/>
@@ -762,11 +775,12 @@
                     <subviews>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="l2H-tu-Lfx">
                             <rect key="frame" x="101.66666666666667" y="67.666666666666671" width="37.000000000000014" height="37"/>
+                            <color key="tintColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </activityIndicatorView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2n-Hk-IuL">
                             <rect key="frame" x="97.666666666666671" y="112" width="45.000000000000014" height="14.333333333333329"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -821,7 +835,6 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="Phl-mY-eTE" firstAttribute="centerX" secondItem="Zis-D4-Pxe" secondAttribute="centerX" id="Lib-DZ-CWl"/>
                         <constraint firstItem="Phl-mY-eTE" firstAttribute="top" secondItem="kSi-IV-xHk" secondAttribute="bottom" constant="10" id="Qmx-UQ-6Tf"/>
@@ -1265,7 +1278,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Mtj-Lt-axV" kind="showDetail" id="pqf-vF-cuD"/>
+                                            <segue destination="jc5-57-Xtq" kind="showDetail" id="U5n-I5-9J4"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="feedback" id="DvO-IR-iOh" userLabel="Feedback Cell">
@@ -1324,7 +1337,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rhl-Vy-3No">
-                                <rect key="frame" x="139" y="118" width="97.333333333333314" height="126.33333333333331"/>
+                                <rect key="frame" x="139" y="118" width="97.333333333333314" height="66.333333333333314"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timely" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZv-Ru-6m7">
                                         <rect key="frame" x="0.0" y="0.0" width="97.333333333333329" height="40.666666666666664"/>
@@ -1338,16 +1351,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tcm-sL-MQy">
-                                        <rect key="frame" x="23.666666666666657" y="76.333333333333343" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="bJ4-B9-gbJ"/>
-                                        </constraints>
-                                    </imageView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="tcm-sL-MQy" firstAttribute="top" secondItem="3Y2-98-6ZW" secondAttribute="bottom" constant="10" id="39M-t5-lcy"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1358,85 +1362,12 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                         <viewLayoutGuide key="safeArea" id="BJr-cj-zYZ"/>
                     </view>
                     <connections>
-                        <outlet property="appIconImageView" destination="tcm-sL-MQy" id="t18-Po-Gj9"/>
                         <outlet property="versionLabel" destination="3Y2-98-6ZW" id="75u-2m-1Z4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbh-E3-KyA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3480" y="1586"/>
-        </scene>
-        <!--Copyrights-->
-        <scene sceneID="zSM-J7-s2Q">
-            <objects>
-                <tableViewController title="Copyrights" id="Mtj-Lt-axV" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="WOo-hm-ufR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <sections>
-                            <tableViewSection headerTitle="Icons" id="TYs-po-Pm4">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="gYU-qB-B4y">
-                                        <rect key="frame" x="0.0" y="55.333332061767578" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gYU-qB-B4y" id="8O3-DD-UaG">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="wbf-gN-GpD">
-                                        <rect key="frame" x="0.0" y="99.333332061767578" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wbf-gN-GpD" id="k4J-Sy-04b">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="A3D-eM-D7f">
-                                        <rect key="frame" x="0.0" y="143.33333206176758" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A3D-eM-D7f" id="oSu-4S-ASg">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="API" id="jwM-Kh-zPs">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="55" id="HRN-tY-9yQ">
-                                        <rect key="frame" x="0.0" y="243.33333206176758" width="375" height="55"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HRN-tY-9yQ" id="v9J-3W-Co0">
-                                            <rect key="frame" x="0.0" y="0.0" width="348" height="55"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HN-Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcp-8J-koi">
-                                                    <rect key="frame" x="26.000000000000007" y="17" width="85.666666666666686" height="21"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Fcp-8J-koi" firstAttribute="leading" secondItem="v9J-3W-Co0" secondAttribute="leadingMargin" constant="10" id="OY5-EK-4yp"/>
-                                                <constraint firstItem="Fcp-8J-koi" firstAttribute="centerY" secondItem="v9J-3W-Co0" secondAttribute="centerY" id="itB-DI-xYt"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="Mtj-Lt-axV" id="mV0-uW-Die"/>
-                            <outlet property="delegate" destination="Mtj-Lt-axV" id="vW8-5d-251"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hrU-HD-Wjn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2114" y="1586"/>
         </scene>
         <!--Bookmarks Split View Controller-->
         <scene sceneID="Lp1-kW-cxf">
@@ -1496,7 +1427,7 @@ A story is marked as "Read" when it's tapped and its comments are being loaded.<
                     </view>
                     <navigationItem key="navigationItem" title="History" id="TfT-I1-lIC">
                         <barButtonItem key="rightBarButtonItem" title="Clear" id="tpx-OU-xbM">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" name="ButtonColor"/>
                             <connections>
                                 <action selector="clearHistoryPressed:" destination="kbt-BQ-wg9" id="zKW-OP-QLU"/>
                             </connections>
@@ -1727,6 +1658,21 @@ Timely is an open-source project released under the MPL-2.0 license. The source 
             </objects>
             <point key="canvasLocation" x="1466" y="1586"/>
         </scene>
+        <!--Copyright View Controller-->
+        <scene sceneID="G80-Ev-KkB">
+            <objects>
+                <viewController id="jc5-57-Xtq" customClass="CopyrightViewController" customModule="Timely2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hu8-3d-nAC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="M0F-gi-qh7"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xbz-iI-G5h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2404" y="1581"/>
+        </scene>
         <!--Bookmarks-->
         <scene sceneID="EnN-s8-axg">
             <objects>
@@ -1821,10 +1767,22 @@ Timely is an open-source project released under the MPL-2.0 license. The source 
         <image name="tab_saved" width="25" height="25"/>
         <image name="tab_settings" width="23" height="25"/>
         <image name="tab_stories" width="25" height="25"/>
+        <namedColor name="ButtonColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
+        <namedColor name="CommentColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="FeedColor">
+            <color red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="LinkCustomColor">
+            <color red="0.10871148849999999" green="0.49914032219999999" blue="0.96314829589999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Iav-28-noN"/>
+        <segue reference="vVv-uD-u8s"/>
         <segue reference="6S0-TO-JiA"/>
-        <segue reference="6Ck-Cn-WLf"/>
+        <segue reference="2ph-9Q-3F9"/>
     </inferredMetricsTieBreakers>
 </document>

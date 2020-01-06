@@ -40,7 +40,7 @@ class StoryCell: UITableViewCell {
         )
         
         
-        newStoryCircleView.backgroundColor = .orange
+        newStoryCircleView.backgroundColor = UIColor(named: "ButtonColor")
         newStoryCircleView.layer.cornerRadius = 8
         newStoryCircleView.isHidden = true
 
