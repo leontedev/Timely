@@ -91,7 +91,9 @@ class CommentsDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             // Add a tap gesture
             let tap = UITapGestureRecognizer(target: self, action: #selector(CommentsDataSource.commentTapped))
             cell.addGestureRecognizer(tap)
-            cell.commentTextView.addGestureRecognizer(tap)
+            
+            let tap2 = UITapGestureRecognizer(target: self, action: #selector(CommentsDataSource.commentTapped))
+            cell.commentTextView.addGestureRecognizer(tap2)
             
             return cell
         } else if indexPath.section == STORY_CELL_SECTION {

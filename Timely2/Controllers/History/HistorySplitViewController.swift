@@ -13,7 +13,7 @@ class HistorySplitViewController: UISplitViewController, UISplitViewControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
-        self.preferredDisplayMode = .allVisible
+        self.preferredDisplayMode = .automatic
     }
     
     // present the Master View Controller when first loaded, instead of the Detail View Controller (as that's the default behavior)
