@@ -27,7 +27,7 @@ class StoriesChildViewController: UITableViewController {
             
             if case .populated = state {
                 let newIndexPaths =  (self.previousStoriesCount..<self.stories.count).map { IndexPath(row: $0, section: 0) }
-                if currentPage == 1 {
+                if currentPage <= 1 {
                     storiesDataSource.update(
                         algoliaStories: stories,
                         parentType: parentType
@@ -41,13 +41,14 @@ class StoriesChildViewController: UITableViewController {
                     let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPaths)
                     tableView.reloadRows(at: indexPathsToReload, with: .automatic)
                 }
-                if stories.count < 10 {
+                if stories.count < 10 && currentSelectedSourceAPI == .algolia {
                     print("Not enough stories on front page (\(stories.count)), fetching new page: \(currentPage)")
                     self.fetchStories()
                 }
             } else {
                 tableView.reloadData()
             }
+            
         }
     }
     
