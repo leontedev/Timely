@@ -25,24 +25,29 @@ class StoriesChildViewController: UITableViewController {
             
             guard currentSelectedSourceAPI != nil else { return }
             
-            print("OUTPUT storiesDataSource.update with parentType = \(parentType) and \(stories.count) stories")
-            print("OUTPUT story title \(stories.first?.title)")
-            print("OUTPUT self.tableView.frame.size \(self.tableView.frame.size)")
-            print("OUTPUT self.tableView.frame.size \(self.tableView.frame.size)")
-            
-            
-            storiesDataSource.update(
-                algoliaStories: stories,
-                parentType: parentType
-            )
-            tableView.reloadData()
-            
-//            if currentPage <= 1 {
-//                //tableView.reloadAndScrollToFirstRow()
-//                tableView.reloadData()
-//            } else {
-//                tableView.reloadData()
-//            }
+            if case .populated = state {
+                let newIndexPaths =  (self.previousStoriesCount..<self.stories.count).map { IndexPath(row: $0, section: 0) }
+                if currentPage == 1 {
+                    storiesDataSource.update(
+                        algoliaStories: stories,
+                        parentType: parentType
+                    )
+                    tableView.reloadData()
+                } else if currentPage > 1 {
+                    storiesDataSource.add(stories: newPageStories)
+                    tableView.beginUpdates()
+                    tableView.insertRows(at: newIndexPaths, with: .automatic)
+                    tableView.endUpdates()
+                    let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPaths)
+                    tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+                }
+                if stories.count < 10 {
+                    print("Not enough stories on front page (\(stories.count)), fetching new page: \(currentPage)")
+                    self.fetchStories()
+                }
+            } else {
+                tableView.reloadData()
+            }
         }
     }
     
@@ -51,6 +56,8 @@ class StoriesChildViewController: UITableViewController {
     var currentSelectedFeedURL: URLComponents?
     var currentSelectedFeedID: Int8?
     var stories: [Story] = []
+    var newPageStories: [Story] = []
+    var previousStoriesCount = 0
     var currentPage  = 0
     var isFetchInProgress = false
     
@@ -173,12 +180,14 @@ class StoriesChildViewController: UITableViewController {
                 case .success(let officialStories):
                     
                     self.AlgoliaClient.fetchStories(for: officialStories, completion: { algoliaResult in
-                        switch algoliaResult {
-                        case .success(let hits):
-                            self.stories = self.filterSeenAndRead(stories: hits)
-                            self.state = .populated
-                        case .failure(let error):
-                            self.state = .error(error)
+                        DispatchQueue.main.async {
+                            switch algoliaResult {
+                            case .success(let hits):
+                                self.stories = self.filterSeenAndRead(stories: hits)
+                                self.state = .populated
+                            case .failure(let error):
+                                self.state = .error(error)
+                            }
                         }
                     })
                     
@@ -189,17 +198,20 @@ class StoriesChildViewController: UITableViewController {
             
         case .algolia:
             self.AlgoliaClient.fetchStories(from: currentSelectedFeedURL, page: currentPage) { algoliaResult in
-                self.isFetchInProgress = false
-                
-                switch algoliaResult {
-                case .success(let hits):
-                    self.currentPage += 1
-                    print("OUTPUT self.currentPage \(self.currentPage)")
+                DispatchQueue.main.async {
+                    self.isFetchInProgress = false
                     
-                    self.stories.append(contentsOf: self.filterSeenAndRead(stories: hits))
-                    self.state = .populated
-                case .failure(let error):
-                    self.state = .error(error)
+                    switch algoliaResult {
+                    case .success(let hits):
+                        print("OUTPUT self.currentPage \(self.currentPage)")
+                        self.currentPage += 1
+                        self.previousStoriesCount = self.stories.count
+                        self.newPageStories = self.filterSeenAndRead(stories: hits)
+                        self.stories.append(contentsOf: self.newPageStories)
+                        self.state = .populated
+                    case .failure(let error):
+                        self.state = .error(error)
+                    }
                 }
             }
         }
@@ -405,7 +417,13 @@ extension StoriesChildViewController: StoriesDataSourceDelegate {
 
 extension StoriesChildViewController {
     func isLoadingCell(for indexPath: IndexPath) -> Bool {
-        return indexPath.row >= stories.count
+        return indexPath.row >= stories.count-1
+    }
+    
+    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+        let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows ?? []
+        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+        return Array(indexPathsIntersection)
     }
 }
 
@@ -413,16 +431,11 @@ extension StoriesChildViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: isLoadingCell) {
             guard let currentSelectedSourceAPI = currentSelectedSourceAPI else { return }
+            
             if currentSelectedSourceAPI == .algolia {
-                
-                let ac = UIAlertController(title: "Fetching new page", message: "Fetching page \(currentPage)", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                present(ac, animated: true)
-                
-                
+                print("Fetching new page: \(currentPage)")
                 self.fetchStories()
             }
         }
-        
     }
 }

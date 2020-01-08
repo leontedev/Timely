@@ -143,6 +143,11 @@ extension StoriesViewController: FeedDataSourceDelegate {
         //Fetch the new stories for the new Feed & Update the TableView
         self.headerTitle.title = title
         
+        guard let vc = childVC else {
+            print("OUTPUT childvc nill")
+            return
+        }
+        
         self.childVC?.currentSelectedSourceAPI = type
         self.childVC?.currentSelectedFeedURL = feedURL
         self.childVC?.currentSelectedFeedID = id

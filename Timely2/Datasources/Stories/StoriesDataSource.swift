@@ -26,16 +26,16 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         self.parentType = parentType
     }
     
+    func add(stories: [Story]) {
+        self.algoliaStories += stories
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if self.algoliaStories.count > 0 {
-//            return self.algoliaStories.count + 100
-//        }
-
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {        
         return self.algoliaStories.count
     }
     
@@ -51,6 +51,8 @@ class StoriesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
             
             if let itemTitle = item.title {
                 cell.titleLabel?.text = itemTitle
+            } else {
+                cell.titleLabel?.text = "Loading..."
             }
             
             if let itemURL = item.url?.host {

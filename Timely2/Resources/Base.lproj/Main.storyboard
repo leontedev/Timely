@@ -173,8 +173,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-FO-45W" userLabel="Vertical Stack View">
-                                                    <rect key="frame" x="6" y="8" width="365" height="82"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-FO-45W" userLabel="Vertical Stack View">
+                                                    <rect key="frame" x="12" y="12" width="355" height="78"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ScU-O9-osD">
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -182,22 +182,21 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="800" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PrD-xQ-h1I" userLabel="URL Label">
-                                                            <rect key="frame" x="0.0" y="17" width="0.0" height="0.0"/>
+                                                            <rect key="frame" x="0.0" y="20.333333333333336" width="0.0" height="0.0"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <color key="textColor" name="LinkCustomColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="900" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Svy-Yz-kRM" userLabel="Story Text">
-                                                            <rect key="frame" x="0.0" y="34" width="0.0" height="0.0"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <color key="textColor" name="CommentColor"/>
+                                                            <rect key="frame" x="0.0" y="40.666666666666664" width="0.0" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="50" verticalHuggingPriority="750" distribution="equalSpacing" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="JiM-Pm-SoH" userLabel="Horiz Stack View">
-                                                            <rect key="frame" x="0.0" y="51" width="139.66666666666666" height="31"/>
+                                                            <rect key="frame" x="0.0" y="61" width="139.66666666666666" height="17"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="otO-5L-8JM" userLabel="Upvotes Stack View">
-                                                                    <rect key="frame" x="0.0" y="7" width="26.666666666666668" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="26.666666666666668" height="17"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" image="icn_upvotes" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="twZ-ct-OaI">
                                                                             <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
@@ -216,7 +215,7 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="yLv-qE-GJc" userLabel="Comments Stack View">
-                                                                    <rect key="frame" x="37.666666666666664" y="7" width="26.666666666666664" height="17"/>
+                                                                    <rect key="frame" x="37.666666666666664" y="0.0" width="26.666666666666664" height="17"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" image="icn_comments" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O5u-Vu-3qx">
                                                                             <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
@@ -235,7 +234,7 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="OBb-O6-gHF" userLabel="Elapsed Stack View">
-                                                                    <rect key="frame" x="75.333333333333329" y="7" width="26.666666666666671" height="17"/>
+                                                                    <rect key="frame" x="75.333333333333329" y="0.0" width="26.666666666666671" height="17"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" image="icn_elapsed" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Lh-Ks-ZxC">
                                                                             <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
@@ -254,7 +253,7 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="v31-9I-cnV" userLabel="Author Stack View">
-                                                                    <rect key="frame" x="113" y="7" width="26.666666666666657" height="17"/>
+                                                                    <rect key="frame" x="113" y="0.0" width="26.666666666666657" height="17"/>
                                                                     <subviews>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" image="icn_author" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f91-Ar-rA6">
                                                                             <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
@@ -279,9 +278,9 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="7KU-FO-45W" secondAttribute="bottom" constant="10" id="9Q5-k2-ESc"/>
-                                                <constraint firstAttribute="trailing" secondItem="7KU-FO-45W" secondAttribute="trailing" constant="4" id="PUz-4a-mug"/>
-                                                <constraint firstItem="7KU-FO-45W" firstAttribute="top" secondItem="0vu-3U-K9o" secondAttribute="top" constant="8" id="bZc-8D-bni"/>
-                                                <constraint firstItem="7KU-FO-45W" firstAttribute="leading" secondItem="0vu-3U-K9o" secondAttribute="leading" constant="6" id="w27-YY-zGH"/>
+                                                <constraint firstAttribute="trailing" secondItem="7KU-FO-45W" secondAttribute="trailing" constant="8" id="PUz-4a-mug"/>
+                                                <constraint firstItem="7KU-FO-45W" firstAttribute="top" secondItem="0vu-3U-K9o" secondAttribute="top" constant="12" id="bZc-8D-bni"/>
+                                                <constraint firstItem="7KU-FO-45W" firstAttribute="leading" secondItem="0vu-3U-K9o" secondAttribute="leading" constant="12" id="w27-YY-zGH"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>

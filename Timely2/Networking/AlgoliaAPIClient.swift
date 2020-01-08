@@ -13,13 +13,14 @@ import InstantSearchClient
 class AlgoliaAPIClient {
     let downloader = JSONDownloader()
     
-    
     func fetchStories(for storyIDs: [String], completion: @escaping (Result<[Story], HackerNewsError>) -> Void) {
         let algoliaClient = Client(appID: "UJ5WYC0L7X", apiKey: "8ece23f8eb07cd25d40262a1764599b1")
         let algoliaIndex = algoliaClient.index(withName: "Item_production")
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         let subset = Array(storyIDs.prefix(300))
+        //let subset = Array(storyIDs)
+        //print("OUTPUT, fetching \(subset.count) stories")
         
         // all attributes are received if attributesToRetrieve is sent as nil
         algoliaIndex.getObjects(withIDs: subset, attributesToRetrieve: ["created_at", "title", "url", "author", "story_text", "points", "num_comments", "created_at_i"]) { content, error in

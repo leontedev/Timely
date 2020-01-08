@@ -10,12 +10,17 @@
 
 //Track State of View Controllers
 enum State {
+//    static func == (lhs: State, rhs: State) -> Bool {
+//        return lhs.r == rhs
+//    }
     
     case loading
     //case paging([Recording], next: Int)
     case populated
     case empty
     case error(Error)
+    
+    
     
     //    var currentRecordings: [Recording] {
     //        switch self {
