@@ -15,6 +15,7 @@ class SettingsSplitViewController: UISplitViewController, UISplitViewControllerD
         super.viewDidLoad()
         self.delegate = self
         self.preferredDisplayMode = .allVisible
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     // present the Master View Controller when first loaded, instead of the Detail View Controller (as that's the default behavior)

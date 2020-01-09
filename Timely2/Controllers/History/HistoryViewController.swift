@@ -25,6 +25,8 @@ class HistoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.popToRootViewController(animated: true)
  
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refreshHistoryHeaderCount),

@@ -17,6 +17,8 @@ class BookmarksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.popToRootViewController(animated: true)
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refreshBookmarkHeaderCount),
                                                name: .bookmarkAdded,

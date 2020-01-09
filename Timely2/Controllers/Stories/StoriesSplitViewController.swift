@@ -14,6 +14,7 @@ class StoriesSplitViewController: UISplitViewController, UISplitViewControllerDe
         super.viewDidLoad()
         self.delegate = self
         self.preferredDisplayMode = .allVisible
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func splitViewController(
