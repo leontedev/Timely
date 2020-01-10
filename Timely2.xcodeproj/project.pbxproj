@@ -21,7 +21,6 @@
 		890CFB02229E89B20047E07C /* ParentStoriesChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CFB01229E89B20047E07C /* ParentStoriesChildViewController.swift */; };
 		891191BD22858BE800191624 /* AlgoliaAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891191BC22858BE800191624 /* AlgoliaAPIClient.swift */; };
 		8913665A22831530009ADF5D /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891366592283152F009ADF5D /* InstantSearchClient.framework */; };
-		8913665B228319D2009ADF5D /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891366592283152F009ADF5D /* InstantSearchClient.framework */; };
 		8918A73420BC784E00129A0E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8918A73320BC784E00129A0E /* CommentCell.swift */; };
 		891E03A92215C2DD0001DB63 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891E03A82215C2DD0001DB63 /* State.swift */; };
 		892749ED21D50BF100E67546 /* FeedList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 892749EC21D50BF100E67546 /* FeedList.plist */; };
@@ -45,6 +44,7 @@
 		8966AD21224DF51A0035A430 /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966AD20224DF51A0035A430 /* Bookmarks.swift */; };
 		89790554226759DE00A18FB7 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89790553226759DE00A18FB7 /* NotificationName.swift */; };
 		897D066E2230EB57006B831F /* SettingsSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897D066D2230EB57006B831F /* SettingsSplitViewController.swift */; };
+		8988E67723C84B8D00EC27EF /* InstantSearchClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 891366592283152F009ADF5D /* InstantSearchClient.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		89A0BFED23B10A10005F2169 /* CopyrightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A0BFEC23B10A10005F2169 /* CopyrightViewController.swift */; };
 		89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89A8A31F20DBA607007A8664 /* StoreKit.framework */; };
 		89BE85AB22316604001D7870 /* SettingsMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BE85AA22316604001D7870 /* SettingsMasterViewController.swift */; };
@@ -81,6 +81,20 @@
 			remoteInfo = Timely2;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8988E67823C84B8D00EC27EF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8988E67723C84B8D00EC27EF /* InstantSearchClient.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Timely2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,7 +182,6 @@
 				89A8A32020DBA607007A8664 /* StoreKit.framework in Frameworks */,
 				BB51F4A25D03D00A13F46680 /* Pods_Timely2.framework in Frameworks */,
 				8913665A22831530009ADF5D /* InstantSearchClient.framework in Frameworks */,
-				8913665B228319D2009ADF5D /* InstantSearchClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +473,8 @@
 				893FB66220B8494A007771A3 /* Resources */,
 				894B80C720B9695D002C313E /* ShellScript */,
 				5829065095D51424AE626D2D /* [CP] Embed Pods Frameworks */,
+				8988E67823C84B8D00EC27EF /* Embed Frameworks */,
+				8988E67923C84E1700EC27EF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -586,6 +601,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+		8988E67923C84E1700EC27EF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# skip if we run in debug\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\necho \"Skip frameworks cleaning in debug version\"\nexit 0\nfi\n\nAPP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\n# This script loops through the frameworks embedded in the application and\n# removes unused architectures.\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\nEXTRACTED_ARCHS=()\n\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\ndone\n";
 		};
 		8E1B1FCFFBDC72925DF86F7F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -839,7 +871,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = mihaileonte.Timely2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Timely2/Extensions/Timely2-Bridging-Header.h";
@@ -867,7 +899,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = mihaileonte.Timely2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Timely2/Extensions/Timely2-Bridging-Header.h";
