@@ -37,7 +37,7 @@ class SettingsMasterViewController: UITableViewController, MFMailComposeViewCont
         if cell === feedbackCell {
             sendEmail()
         } else if cell === rateCell {
-            rateApp(appId: "id959379869") { success in
+            rateApp(appId: "1389959690") { success in
                 print("RateApp \(success)")
             }
         } else if cell === twitterCell {
@@ -66,7 +66,7 @@ class SettingsMasterViewController: UITableViewController, MFMailComposeViewCont
         
     //MARK: - Helper Functions
     func rateApp(appId: String, completion: @escaping ((_ success: Bool)->())) {
-        guard let url = URL(string : "itms-apps://itunes.apple.com/app/" + appId) else {
+        guard let url = URL(string : "itms-apps://itunes.apple.com/app/id" + appId + "?action=write-review") else {
             completion(false)
             return
         }
