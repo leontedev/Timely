@@ -22,7 +22,6 @@
 		891191BD22858BE800191624 /* AlgoliaAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891191BC22858BE800191624 /* AlgoliaAPIClient.swift */; };
 		8913665A22831530009ADF5D /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891366592283152F009ADF5D /* InstantSearchClient.framework */; };
 		8913665B228319D2009ADF5D /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891366592283152F009ADF5D /* InstantSearchClient.framework */; };
-		8913665C228319D2009ADF5D /* InstantSearchClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 891366592283152F009ADF5D /* InstantSearchClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8918A73420BC784E00129A0E /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8918A73320BC784E00129A0E /* CommentCell.swift */; };
 		891E03A92215C2DD0001DB63 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891E03A82215C2DD0001DB63 /* State.swift */; };
 		892749ED21D50BF100E67546 /* FeedList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 892749EC21D50BF100E67546 /* FeedList.plist */; };
@@ -82,20 +81,6 @@
 			remoteInfo = Timely2;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		8913665D228319D2009ADF5D /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				8913665C228319D2009ADF5D /* InstantSearchClient.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4B620E4A07EE49F5FACD881E /* Pods_Timely2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Timely2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -475,7 +460,6 @@
 				893FB66220B8494A007771A3 /* Resources */,
 				894B80C720B9695D002C313E /* ShellScript */,
 				5829065095D51424AE626D2D /* [CP] Embed Pods Frameworks */,
-				8913665D228319D2009ADF5D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

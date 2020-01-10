@@ -37,16 +37,16 @@
  
  To add additional video services please add them in the mentioned location and submit a pull request for the addition.
  */
-@interface DTWebVideoView : UIView <UIWebViewDelegate>
-
-/**
- The delegate of the video view
- */
-@property (nonatomic, DT_WEAK_PROPERTY) id <DTWebVideoViewDelegate> delegate;
-
-/**
- The text attachment representing an embedded video.
- */
-@property (nonatomic, strong) DTTextAttachment *attachment;
-
-@end
+//@interface DTWebVideoView : UIView <UIWebViewDelegate>
+//
+///**
+// The delegate of the video view
+// */
+//@property (nonatomic, DT_WEAK_PROPERTY) id <DTWebVideoViewDelegate> delegate;
+//
+///**
+// The text attachment representing an embedded video.
+// */
+//@property (nonatomic, strong) DTTextAttachment *attachment;
+//
+//@end
