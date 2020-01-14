@@ -58,7 +58,8 @@ class StoriesViewController: UIViewController {
         
         guard let vc = storyboard?.instantiateViewController(withIdentifier: "StoriesChildViewID") as? StoriesChildViewController else { return }
         vc.parentType = .stories
-        self.storiesContainerView.addSubview(vc.view)
+        //self.storiesContainerView.addSubview(vc.view)
+        self.view.addSubview(vc.view)
         self.addChild(vc)
         vc.didMove(toParent: self)
         self.childVC = vc

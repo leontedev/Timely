@@ -49,8 +49,7 @@ class StoryCell: UITableViewCell {
         newStoryCircleView.widthAnchor.constraint(equalToConstant: 16).isActive = true
         newStoryCircleView.heightAnchor.constraint(equalToConstant: 16).isActive = true
         
-        
-        // Add the orange bullet on the right side of stories to mark the ones which are NEW (Unread & Unseen)
+        // Add the black/orange bullet on the right side of stories to mark the ones which are NEW (Unread & Unseen)
         urlAndCircleStackView.addArrangedSubview(newStoryCircleView)
         
         updateFontSizeUI()

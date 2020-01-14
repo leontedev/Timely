@@ -48,7 +48,7 @@ class HistoryViewController: UIViewController {
         
         guard let vc = storyboard?.instantiateViewController(withIdentifier: "StoriesChildViewID") as? StoriesChildViewController else { return }
         vc.parentType = .history
-        self.containerView.addSubview(vc.view)
+        self.view.addSubview(vc.view)
         self.addChild(vc)
         vc.didMove(toParent: self)
         self.childVC = vc
