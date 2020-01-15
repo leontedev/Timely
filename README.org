@@ -1,8 +1,7 @@
 * Timely
 *Free, open source Hacker News iOS client.*
 
-*** Easily find the most popular new stories.  
-So what's so different from other HN apps? What's the secret sauce? The stories you scroll through are marked as seen. The ones you open, are marked as read. You can customize your feed to only show you new stories, ordered by popularity to quickly get back in the loop.
+So what's different from other HN apps? What's the "unique value proposition"? See the top stories for custom time periods and keep track of seen & read stories. The stories you scroll through are marked as seen. The ones you open, are marked as read. You can customize your feed to only show you new stories, ordered by popularity to quickly get back in the loop.
 
 [[AppIcon.png]]
 
@@ -17,6 +16,7 @@ So what's so different from other HN apps? What's the secret sauce? The stories 
 *** Running it yourself
 The app will be published once milestone "v1.0" is reached. (currently working on v0.9)
 Until then you can clone the repo and build the project in Xcode (use the .xcworkspace file - or simply enter "xed ." in Terminal).
+
 *** Contribution
 Any help you can offer with this project is most appreciated.
 **However, before you start please read the COPYRIGHT\LICENSE.md file inside this repository.** 
