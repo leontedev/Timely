@@ -27,7 +27,7 @@ If you’d like to help, here are some suggestions:
  - If you spot redundant code, you could lend a hand in refactoring it. I've done it a few times, as I've started working on this app right from my very start as an iOS developer. There is a LOT of optimizations and tidying up to do.
  - If you find any bugs - raise an issue. If you want/can fix them, that would make my day.
  - Right now the app is available only in English. If you could help with localization, that would be really nice. I plan to add Spanish next. 
- - I postponed any work on theming, or a dark mode - as I am expecting some official API support at this WWDC. (Later edit, after WWDC '19: I was right. I will be adding it for 1.1)
+ - I postponed any work on theming, or a dark mode - as I am expecting some official API support at this WWDC. (Later edit, after WWDC '19: I guess I was right. Dark Mode is ready for 1.0 release)
  - Feature ideas are great. The problem with them, I already have dozens of them queued up :) And my queue is the FIFO kind :)
 
 *** Credits
