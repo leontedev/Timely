@@ -1,4 +1,4 @@
-* Timely
+* Timely HN
 *Free, open source Hacker News iOS client.*
 
 So what's different from other HN apps? The "unique value proposition"? With Timely you can see the top stories for custom periods of time and *filter seen & read stories*. The stories you scroll through are marked as seen. The ones you open, are marked as read. You can customize your feed to only show you new stories, ordered by popularity to quickly get back in the loop.
@@ -12,6 +12,9 @@ So what's different from other HN apps? The "unique value proposition"? With Tim
 
 [[gif.gif]]
 
+*** Planned features
+**** Release 1.1 - Search
+**** Release 1.2 - CloudKit Sync
 
 *** Running it yourself
 Until the app is published you can clone the repo and build the project in Xcode (use the .xcworkspace file - or simply enter "xed ." in Terminal).
